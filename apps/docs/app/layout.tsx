@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { Box } from '@mui/material';
 import { VortexUIProvider } from 'vortex-ui';
@@ -18,6 +18,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'VortexUI - Material UI Component System',
   description: 'Enterprise React component library built on top of Material UI.',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#121212',
 };
 
 export default async function RootLayout({
