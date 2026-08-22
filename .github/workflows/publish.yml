@@ -28,7 +28,7 @@ jobs:
           node-version: '22.x'
           registry-url: 'https://npm.pkg.github.com'
           # We scope it to your username to match GitHub Packages requirements
-          scope: '@manoj-murali-s-huge-it'
+          scope: '@huge-it'
           
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -45,7 +45,7 @@ jobs:
         run: |
           # GitHub Packages requires the package name to be scoped to the repo owner.
           # We dynamically update it here so you don't have to change your local monorepo imports.
-          npm pkg set name="@manoj-murali-s-huge-it/vortex-ui"
+          npm pkg set name="@huge-it/vortex-ui"
           
           # Explicitly set the publish registry
           npm pkg set publishConfig.registry="https://npm.pkg.github.com"
