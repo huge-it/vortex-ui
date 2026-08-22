@@ -12,7 +12,6 @@ out/
 
 # production / build outputs
 build/
-dist/
 storybook-static/
 
 # turbo
