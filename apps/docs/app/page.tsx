@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Typography, Box, Divider, Stack } from '@mui/material';
-import { ComponentInstallation } from '../components/docs/ComponentInstallation';
-import { ComponentCode } from '../components/docs/ComponentCode';
-import { Button } from 'vortex-ui';
-import Link from 'next/link';
+import React from "react";
+import { Typography, Box, Divider, Stack } from "@mui/material";
+import { ComponentInstallation } from "../components/docs/ComponentInstallation";
+import { ComponentCode } from "../components/docs/ComponentCode";
+import { Button } from "vortex-ui";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -16,11 +16,11 @@ export default function Page() {
           sx={{
             fontWeight: 800,
             mb: 2,
-            fontSize: '3.5rem',
-            letterSpacing: '-0.04em',
-            background: 'linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            fontSize: "3.5rem",
+            letterSpacing: "-0.04em",
+            background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
           }}
         >
           VortexUI
@@ -28,17 +28,34 @@ export default function Page() {
         <Typography
           variant="body1"
           color="text.secondary"
-          sx={{ fontSize: '1.25rem', lineHeight: 1.6, maxWidth: '800px', mb: 4 }}
+          sx={{
+            fontSize: "1.25rem",
+            lineHeight: 1.6,
+            maxWidth: "800px",
+            mb: 4,
+          }}
         >
-          An organization-wide React component library built on top of Material UI.
-          VortexUI owns the public API, styling, theme, naming, variants, and component
-          behavior, providing a recognized styling identity in browser DevTools.
+          An organization-wide React component library built on top of Material
+          UI. VortexUI owns the public API, styling, theme, naming, variants,
+          and component behavior, providing a recognized styling identity in
+          browser DevTools.
         </Typography>
         <Stack direction="row" gap={2}>
-          <Button variant="primary" size="large" component={Link} href="/components/button">
+          <Button
+            variant="filled"
+            size="large"
+            component={Link}
+            href="/components/button"
+          >
             Explore Components
           </Button>
-          <Button variant="outlined" size="large" component="a" href="https://github.com" target="_blank">
+          <Button
+            variant="outlined"
+            size="large"
+            component="a"
+            href="https://github.com"
+            target="_blank"
+          >
             GitHub Repository
           </Button>
         </Stack>
@@ -51,15 +68,27 @@ export default function Page() {
       <Divider sx={{ my: 5 }} />
 
       <Box sx={{ mb: 6 }}>
-        <Typography variant="h2" sx={{ fontWeight: 700, mb: 2, fontSize: '1.75rem', letterSpacing: '-0.02em' }}>
+        <Typography
+          variant="h2"
+          sx={{
+            fontWeight: 700,
+            mb: 2,
+            fontSize: "1.75rem",
+            letterSpacing: "-0.02em",
+          }}
+        >
           Quick Start
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          Wrap your root application in `VortexUIProvider` to enable custom themes,
-          class name generator configurations, and custom Emotion caches.
+          Wrap your root application in `VortexUIProvider` to enable custom
+          themes, class name generator configurations, and custom Emotion
+          caches.
         </Typography>
 
-        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5, color: 'text.primary' }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 600, mb: 1.5, color: "text.primary" }}
+        >
           1. Wrap your application with the Provider:
         </Typography>
         <ComponentCode
@@ -74,7 +103,10 @@ export default function App({ children }) {
 }`}
         />
 
-        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5, color: 'text.primary' }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 600, mb: 1.5, color: "text.primary" }}
+        >
           2. Import and use VortexUI components:
         </Typography>
         <ComponentCode
@@ -82,7 +114,7 @@ export default function App({ children }) {
 
 export default function MyComponent() {
   return (
-    <Button variant="primary" onClick={() => console.log('Clicked!')}>
+    <Button variant="filled" onClick={() => console.log('Clicked!')}>
       Click Me
     </Button>
   );

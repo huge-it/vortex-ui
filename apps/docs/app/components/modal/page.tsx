@@ -1,50 +1,55 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Typography, Box, Divider, Typography as MuiTypography } from '@mui/material';
-import { Modal, Button } from 'vortex-ui';
-import { ComponentPreview } from '../../../components/docs/ComponentPreview';
-import { ComponentCode } from '../../../components/docs/ComponentCode';
-import { ComponentStates } from '../../../components/docs/ComponentStates';
-import { ComponentProps } from '../../../components/docs/ComponentProps';
-import { ComponentInstallation } from '../../../components/docs/ComponentInstallation';
+import React, { useState } from "react";
+import {
+  Typography,
+  Box,
+  Divider,
+  Typography as MuiTypography,
+} from "@mui/material";
+import { Modal, Button } from "vortex-ui";
+import { ComponentPreview } from "../../../components/docs/ComponentPreview";
+import { ComponentCode } from "../../../components/docs/ComponentCode";
+import { ComponentStates } from "../../../components/docs/ComponentStates";
+import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
 
 const modalPropsList = [
   {
-    name: 'open',
-    type: 'boolean',
-    default: 'false',
-    description: 'Determines whether the modal dialog is visible.',
+    name: "open",
+    type: "boolean",
+    default: "false",
+    description: "Determines whether the modal dialog is visible.",
   },
   {
-    name: 'title',
-    type: 'string',
-    default: 'undefined',
-    description: 'Header text displayed at the top of the dialog.',
+    name: "title",
+    type: "string",
+    default: "undefined",
+    description: "Header text displayed at the top of the dialog.",
   },
   {
-    name: 'onClose',
-    type: '() => void',
-    default: 'undefined',
-    description: 'Callback function triggered when clicking closing elements.',
+    name: "onClose",
+    type: "() => void",
+    default: "undefined",
+    description: "Callback function triggered when clicking closing elements.",
   },
   {
-    name: 'actions',
-    type: 'ReactNode',
-    default: 'undefined',
-    description: 'Buttons or components displayed in the footer action bar.',
+    name: "actions",
+    type: "ReactNode",
+    default: "undefined",
+    description: "Buttons or components displayed in the footer action bar.",
   },
   {
-    name: 'maxWidth',
+    name: "maxWidth",
     type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
     default: "'sm'",
-    description: 'The maximum width constraints of the dialog.',
+    description: "The maximum width constraints of the dialog.",
   },
   {
-    name: 'fullWidth',
-    type: 'boolean',
-    default: 'true',
-    description: 'If true, expand the dialog container to fit max-width.',
+    name: "fullWidth",
+    type: "boolean",
+    default: "true",
+    description: "If true, expand the dialog container to fit max-width.",
   },
 ];
 
@@ -53,18 +58,36 @@ export default function ModalDocs() {
 
   return (
     <Box>
-      <Typography variant="h1" color='text.primary' sx={{ fontWeight: 800, mb: 1, fontSize: '2.5rem', letterSpacing: '-0.03em' }}>
+      <Typography
+        variant="h1"
+        color="text.primary"
+        sx={{
+          fontWeight: 800,
+          mb: 1,
+          fontSize: "2.5rem",
+          letterSpacing: "-0.03em",
+        }}
+      >
         Modal
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4, fontSize: '1.1rem' }}>
-        An overlay dialog component for focusing user tasks, wrapping MUI's Dialog.
+      <Typography
+        variant="body1"
+        color="text.secondary"
+        sx={{ mb: 4, fontSize: "1.1rem" }}
+      >
+        An overlay dialog component for focusing user tasks, wrapping MUI's
+        Dialog.
       </Typography>
 
-     <Typography variant="h5" color="text.secondary" sx={{ fontWeight: 600, mb: 2, fontSize: '1.25rem' }}>
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+      >
         Preview
       </Typography>
       <ComponentPreview>
-        <Button variant="primary" onClick={() => setIsOpen(true)}>
+        <Button variant="filled" onClick={() => setIsOpen(true)}>
           Open Live Modal
         </Button>
         <Modal
@@ -73,13 +96,18 @@ export default function ModalDocs() {
           onClose={() => setIsOpen(false)}
           actions={
             <>
-              <Button variant="text" onClick={() => setIsOpen(false)}>Cancel</Button>
-              <Button variant="danger" onClick={() => setIsOpen(false)}>Disconnect</Button>
+              <Button variant="text" onClick={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => setIsOpen(false)}>
+                Disconnect
+              </Button>
             </>
           }
         >
           <MuiTypography variant="body2" color="text.secondary">
-            Are you sure you want to disconnect this database source? Connecting it again will require manual credentials entering.
+            Are you sure you want to disconnect this database source? Connecting
+            it again will require manual credentials entering.
           </MuiTypography>
         </Modal>
       </ComponentPreview>
@@ -87,13 +115,27 @@ export default function ModalDocs() {
       <ComponentStates
         states={[
           {
-            name: 'With Footer Actions',
+            name: "With Footer Actions",
             element: (
-              <Box sx={{ border: '1px solid #e2e8f0', p: 2, borderRadius: '8px', width: '250px', backgroundColor: '#f8fafc' }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>Dialog Footer Example</Typography>
+              <Box
+                sx={{
+                  border: "1px solid #e2e8f0",
+                  p: 2,
+                  borderRadius: "8px",
+                  width: "250px",
+                  backgroundColor: "#f8fafc",
+                }}
+              >
+                <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                  Dialog Footer Example
+                </Typography>
                 <Box display="flex" gap={1}>
-                  <Button variant="text" size="small">Cancel</Button>
-                  <Button variant="primary" size="small">Save</Button>
+                  <Button variant="text" size="small">
+                    Cancel
+                  </Button>
+                  <Button variant="filled" size="small">
+                    Save
+                  </Button>
                 </Box>
               </Box>
             ),
@@ -101,7 +143,11 @@ export default function ModalDocs() {
         ]}
       />
 
-     <Typography variant="h5" color="text.secondary" sx={{ fontWeight: 600, mb: 2, fontSize: '1.25rem' }}>
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+      >
         Usage
       </Typography>
       <ComponentCode
@@ -121,7 +167,7 @@ function ModalExample() {
         title="Settings Saved"
         onClose={() => setOpen(false)}
         actions={
-          <Button variant="primary" onClick={() => setOpen(false)}>
+          <Button variant="filled" onClick={() => setOpen(false)}>
             Close
           </Button>
         }
