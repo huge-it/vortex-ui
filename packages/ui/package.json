@@ -1,9 +1,10 @@
 {
   "name": "vortex-ui",
   "version": "0.1.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
+    "build": "tsup",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -26,6 +27,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "storybook": "^10.5.10",
+    "tsup": "^8.0.2",
     "typescript": "^5.0.0"
   }
 }

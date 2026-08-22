@@ -36,6 +36,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
         
+      - name: Build package
+        working-directory: ./packages/ui
+        run: pnpm build
+        
       - name: Prepare package for GitHub Packages
         working-directory: ./packages/ui
         run: |
