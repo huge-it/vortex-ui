@@ -1,0 +1,55 @@
+name: Publish vortex-ui to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+    # Only run when files in packages/ui change
+    paths:
+      - 'packages/ui/**'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # Required permissions to publish to GitHub Packages
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
+          # We scope it to your username to match GitHub Packages requirements
+          scope: '@manoj-murali-s-huge-it'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          
+      - name: Install dependencies
+        run: pnpm install
+        
+      - name: Prepare package for GitHub Packages
+        working-directory: ./packages/ui
+        run: |
+          # GitHub Packages requires the package name to be scoped to the repo owner.
+          # We dynamically update it here so you don't have to change your local monorepo imports.
+          npm pkg set name="@manoj-murali-s-huge-it/vortex-ui"
+          
+          # Explicitly set the publish registry
+          npm pkg set publishConfig.registry="https://npm.pkg.github.com"
+          
+      - name: Publish to GitHub Packages
+        working-directory: ./packages/ui
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
