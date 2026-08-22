@@ -1,6 +1,35 @@
-# Vortex Frontend (Monorepo)
+# 🌪️ VORTEX
+**Visual & Operational Rules for Technical EXecution**
 
-This is the frontend monorepo for Vortex, powered by [pnpm workspaces](https://pnpm.io/workspaces) and [Next.js](https://nextjs.org).
+## What is VORTEX?
+VORTEX is Huge IT Solutions' official framework for standardizing code architecture, UI/UX design, development practices, and review protocols across all teams and projects.
+
+It is more than just a set of rules — VORTEX is the central force that ensures:
+- Every product we build looks, feels, and behaves consistently.
+- Every line of code follows scalable, reviewable, and maintainable patterns.
+- Every team aligns with the same language, structure, and execution principles.
+
+VORTEX is how we bring unity to velocity. Precision to creativity. Discipline to scale.
+
+## Why VORTEX?
+- **Consistency** across all frontend and backend codebases.
+- **Scalable Architecture** that's easy to maintain and audit.
+- **Unified UI/UX Language** with theme, spacing, and interaction patterns.
+- **Simplified Code Reviews** through shared rules and linting policies.
+- **Shared Engineering Culture** across all teams and departments.
+
+## What Does VORTEX Include?
+- **VORTEX.UI** – Shared design tokens, components, and theming.
+- **VORTEX.ARCH** – Architectural patterns and directory structures.
+- **VORTEX.LINT** – Code formatting and static analysis rules.
+- **VORTEX.API** – Standards for APIs, responses, versioning, and error handling.
+- **VORTEX.REVIEW** – PR checklist and review guidelines.
+- **VORTEX.DEVOPS** – CI/CD, environments, and deployment practices.
+
+> **The VORTEX Principle:**
+> "When everyone builds differently, everything breaks eventually. When everyone builds through VORTEX, we scale with confidence."
+
+---
 
 ## Project Structure
 
