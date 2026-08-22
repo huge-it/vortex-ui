@@ -8,6 +8,7 @@ import { ComponentCode } from "../../../components/docs/ComponentCode";
 import { ComponentVariants } from "../../../components/docs/ComponentVariants";
 import { ComponentStates } from "../../../components/docs/ComponentStates";
 import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "../../../components/docs/ComponentHeader";
 import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
 
 const inputPropsList = [
@@ -58,25 +59,10 @@ const inputPropsList = [
 export default function InputDocs() {
   return (
     <Box>
-      <Typography
-        variant="h1"
-        color="text.primary"
-        sx={{
-          fontWeight: 800,
-          mb: 1,
-          fontSize: "2.5rem",
-          letterSpacing: "-0.03em",
-        }}
-      >
-        Input
-      </Typography>
-      <Typography
-        variant="body1"
-        color="text.secondary"
-        sx={{ mb: 4, fontSize: "1.1rem" }}
-      >
-        A text field component for form inputs, wrapping MUI's TextField.
-      </Typography>
+      <ComponentHeader
+        title="Input"
+        description={<>A text field component for form inputs, wrapping MUI&apos;s TextField.</>}
+      />
 
       <Typography
         variant="h5"

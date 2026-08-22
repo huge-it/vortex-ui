@@ -1,19 +1,16 @@
 "use client";
 
-import React from "react";
+import { LightbulbCircle } from "@mui/icons-material";
 import {
   AppBar,
+  Box,
+  IconButton,
+  Link,
   Toolbar,
   Typography,
-  Box,
-  Link,
-  IconButton,
 } from "@mui/material";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import { useColorMode } from "vortex-ui";
 import { Search } from "./Search";
-import { LightbulbCircle } from "@mui/icons-material";
 
 export function Header() {
   const { mode, toggleColorMode } = useColorMode();
@@ -73,7 +70,6 @@ export function Header() {
           <Search />
           <IconButton onClick={toggleColorMode} color="inherit">
             <LightbulbCircle />
-            {/* {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />} */}
           </IconButton>
         </Box>
       </Toolbar>

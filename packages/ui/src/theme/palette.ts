@@ -140,13 +140,13 @@ const colors = {
       paper: "#ffffff",
     },
     dark: {
-      default: "#0f172a",
+      default: "#1c263c",
       paper: "#1e293b",
     },
   },
   text: {
     light: {
-      primary: "#0f172a",
+      primary: "#1c263c",
       secondary: "#475569",
       disabled: "#94a3b8",
     },

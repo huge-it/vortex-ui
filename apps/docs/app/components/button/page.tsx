@@ -4,6 +4,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import { ComponentCode } from "../../../components/docs/ComponentCode";
 import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
 import { ComponentPreview } from "../../../components/docs/ComponentPreview";
+import { ComponentHeader } from "../../../components/docs/ComponentHeader";
 import { ComponentProps } from "../../../components/docs/ComponentProps";
 import { ComponentStates } from "../../../components/docs/ComponentStates";
 import { ComponentVariants } from "../../../components/docs/ComponentVariants";
@@ -70,26 +71,10 @@ const buttonPropsList = [
 export default function ButtonDocs() {
   return (
     <Box>
-      <Typography
-        variant="h1"
-        color="text.primary"
-        sx={{
-          fontWeight: 800,
-          mb: 1,
-          fontSize: "2.5rem",
-          letterSpacing: "-0.03em",
-        }}
-      >
-        Button
-      </Typography>
-      <Typography
-        variant="body1"
-        color="text.secondary"
-        sx={{ mb: 4, fontSize: "1.1rem" }}
-      >
-        A wrapper component around Material UI's Button, styled with the
-        VortexUI design language.
-      </Typography>
+      <ComponentHeader
+        title="Button"
+        description={<>A wrapper component around Material UI&apos;s Button, styled with the VortexUI design language.</>}
+      />
 
       <Typography
         variant="h5"

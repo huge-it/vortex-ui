@@ -12,6 +12,7 @@ import { ComponentPreview } from "../../../components/docs/ComponentPreview";
 import { ComponentCode } from "../../../components/docs/ComponentCode";
 import { ComponentStates } from "../../../components/docs/ComponentStates";
 import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "../../../components/docs/ComponentHeader";
 import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
 
 const modalPropsList = [
@@ -58,26 +59,10 @@ export default function ModalDocs() {
 
   return (
     <Box>
-      <Typography
-        variant="h1"
-        color="text.primary"
-        sx={{
-          fontWeight: 800,
-          mb: 1,
-          fontSize: "2.5rem",
-          letterSpacing: "-0.03em",
-        }}
-      >
-        Modal
-      </Typography>
-      <Typography
-        variant="body1"
-        color="text.secondary"
-        sx={{ mb: 4, fontSize: "1.1rem" }}
-      >
-        An overlay dialog component for focusing user tasks, wrapping MUI's
-        Dialog.
-      </Typography>
+      <ComponentHeader
+        title="Modal"
+        description={<>An overlay dialog component for focusing user tasks, wrapping MUI&apos;s Dialog.</>}
+      />
 
       <Typography
         variant="h5"

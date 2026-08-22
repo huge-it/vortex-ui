@@ -7,6 +7,7 @@ import { ComponentPreview } from '../../../components/docs/ComponentPreview';
 import { ComponentCode } from '../../../components/docs/ComponentCode';
 import { ComponentStates } from '../../../components/docs/ComponentStates';
 import { ComponentProps } from '../../../components/docs/ComponentProps';
+import { ComponentHeader } from "../../../components/docs/ComponentHeader";
 import { ComponentInstallation } from '../../../components/docs/ComponentInstallation';
 
 const tablePropsList = [
@@ -63,6 +64,12 @@ const columnSchemaProps = [
   },
 ];
 
+interface ClientData {
+  name: string;
+  tier: string;
+  sla: string;
+}
+
 const mockColumns = [
   { key: 'name', header: 'Client Name' },
   { key: 'tier', header: 'Support Tier' },
@@ -70,7 +77,7 @@ const mockColumns = [
     key: 'sla',
     header: 'SLA Status',
     align: 'center' as const,
-    render: (row: any) => (
+    render: (row: ClientData) => (
       <Chip
         label={row.sla}
         size="small"
@@ -89,12 +96,10 @@ const mockData = [
 export default function TableDocs() {
   return (
     <Box>
-      <Typography variant="h1" color='text.primary' sx={{ fontWeight: 800, mb: 1, fontSize: '2.5rem', letterSpacing: '-0.03em' }}>
-        DataTable
-      </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4, fontSize: '1.1rem' }}>
-        A table presentation component with built-in empty displays and loading hooks, wrapping MUI Table.
-      </Typography>
+      <ComponentHeader
+        title="DataTable"
+        description={<>A table presentation component with built-in empty displays and loading hooks, wrapping MUI Table.</>}
+      />
 
      <Typography variant="h5" color="text.secondary" sx={{ fontWeight: 600, mb: 2, fontSize: '1.25rem' }}>
         Preview
