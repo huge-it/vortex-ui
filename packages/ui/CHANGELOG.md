@@ -2,6 +2,13 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.2] - 2026-08-22
+
+### Fixed
+- Added `"use client"` directive to the compiled output bundle so that Next.js App Router treats the library as Client Components.
+
+---
+
 ## [0.1.1] - 2026-08-22
 
 ### Added
