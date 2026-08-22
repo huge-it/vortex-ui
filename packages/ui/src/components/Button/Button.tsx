@@ -58,7 +58,7 @@ function DefaultCircleIcon({ size }: { size: number }) {
   );
 }
 
-export default function Button({
+export const Button = ({
   size = "md",
   variant = "filled",
   severity = "primary",
@@ -71,7 +71,7 @@ export default function Button({
   children,
   sx,
   ...rest
-}: ButtonProps) {
+}: ButtonProps) => {
   const { height, fontSize, px, borderRadius, iconSize, gap } =
     SIZE_MAP[size] ?? SIZE_MAP.md;
 
@@ -102,7 +102,10 @@ export default function Button({
     color: "#fff",
     border: "none",
     "&:hover": { bgcolor: colors.hover },
-    [`&.${buttonClasses.disabled}`]: { bgcolor: colors.disabledMain, color: "#ffffff" },
+    [`&.${buttonClasses.disabled}`]: {
+      bgcolor: colors.disabledMain,
+      color: "#ffffff",
+    },
   };
 
   const outlinedSx = {
@@ -287,4 +290,4 @@ export default function Button({
       {content}
     </MuiButton>
   );
-}
+};
