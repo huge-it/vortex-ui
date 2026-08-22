@@ -4,8 +4,8 @@ import React from "react";
 import { Typography, Box, Divider, Stack } from "@mui/material";
 import { ComponentInstallation } from "../components/docs/ComponentInstallation";
 import { ComponentCode } from "../components/docs/ComponentCode";
-import { Button } from "vortex-ui";
 import Link from "next/link";
+import { Button } from "vortex-ui";
 
 export default function Page() {
   return (
@@ -43,7 +43,7 @@ export default function Page() {
         <Stack direction="row" gap={2}>
           <Button
             variant="filled"
-            size="large"
+            size="lg"
             component={Link}
             href="/components/button"
           >
@@ -51,7 +51,7 @@ export default function Page() {
           </Button>
           <Button
             variant="outlined"
-            size="large"
+            size="lg"
             component="a"
             href="https://github.com"
             target="_blank"

@@ -99,7 +99,11 @@ export default function ModalDocs() {
               <Button variant="text" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button variant="danger" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="filled"
+                severity="error"
+                onClick={() => setIsOpen(false)}
+              >
                 Disconnect
               </Button>
             </>
@@ -130,10 +134,10 @@ export default function ModalDocs() {
                   Dialog Footer Example
                 </Typography>
                 <Box display="flex" gap={1}>
-                  <Button variant="text" size="small">
+                  <Button variant="text" size="sm">
                     Cancel
                   </Button>
-                  <Button variant="filled" size="small">
+                  <Button variant="filled" size="sm">
                     Save
                   </Button>
                 </Box>
