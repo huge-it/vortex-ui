@@ -1,24 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import type { Meta, StoryObj } from "@storybook/react";
+import Button from "./Button";
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: Button,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'outlined', 'text', 'danger'],
+      control: "select",
+      options: ["filled", "outlined", "ghost", "text"],
+    },
+    severity: {
+      control: "select",
+      options: ["primary", "error", "success", "info", "warning"],
     },
     size: {
-      control: 'select',
-      options: ['small', 'medium', 'large'],
+      control: "select",
+      options: ["lg", "md", "sm"],
     },
     loading: {
-      control: 'boolean',
+      control: "boolean",
     },
     disabled: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
@@ -26,53 +30,53 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const Filled: Story = {
   args: {
-    variant: 'primary',
-    children: 'Primary Button',
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-    children: 'Secondary Button',
+    variant: "filled",
+    children: "Filled Button",
   },
 };
 
 export const Outlined: Story = {
   args: {
-    variant: 'outlined',
-    children: 'Outlined Button',
+    variant: "outlined",
+    children: "Outlined Button",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    variant: "ghost",
+    children: "Ghost Button",
   },
 };
 
 export const Text: Story = {
   args: {
-    variant: 'text',
-    children: 'Text Button',
+    variant: "text",
+    children: "Text Button",
   },
 };
 
-export const Danger: Story = {
+export const ErrorSeverity: Story = {
   args: {
-    variant: 'danger',
-    children: 'Danger Button',
+    severity: "error",
+    children: "Error Button",
   },
 };
 
 export const Loading: Story = {
   args: {
-    variant: 'primary',
+    severity: "info",
     loading: true,
-    children: 'Loading Button',
+    children: "Loading Button",
   },
 };
 
 export const Disabled: Story = {
   args: {
-    variant: 'primary',
+    severity: "success",
     disabled: true,
-    children: 'Disabled Button',
+    children: "Disabled Button",
   },
 };
