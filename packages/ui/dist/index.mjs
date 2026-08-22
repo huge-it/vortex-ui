@@ -353,8 +353,129 @@ var DataTable = React4.forwardRef(
 );
 DataTable.displayName = "DataTable";
 
+// src/components/Accordion/Accordion.tsx
+import * as React5 from "react";
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary, {
+  accordionSummaryClasses
+} from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Typography2 from "@mui/material/Typography";
+import { Box as Box2, Stack } from "@mui/material";
+import { jsx as jsx6, jsxs as jsxs4 } from "react/jsx-runtime";
+var Accordion = styled((props) => /* @__PURE__ */ jsx6(MuiAccordion, { disableGutters: true, elevation: 0, ...props }))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:first-of-type)": {
+    borderTop: 0
+  },
+  "&:first-of-type": {
+    borderTopLeftRadius: "6px",
+    borderTopRightRadius: "6px"
+  },
+  "&:last-of-type": {
+    borderBottomLeftRadius: "6px",
+    borderBottomRightRadius: "6px"
+  },
+  "&:not(:last-child)": {
+    borderBottom: 0
+  },
+  "&::before": {
+    display: "block !important",
+    position: "absolute",
+    top: 0,
+    left: "16px",
+    right: "16px",
+    height: "1px",
+    backgroundColor: theme.palette.divider,
+    opacity: "1 !important"
+  },
+  "&:first-of-type::before": {
+    display: "none !important"
+  }
+}));
+var AccordionSummary = styled((props) => /* @__PURE__ */ jsx6(
+  MuiAccordionSummary,
+  {
+    expandIcon: /* @__PURE__ */ jsx6(ArrowForwardIosSharpIcon, { sx: { fontSize: "0.9rem" } }),
+    ...props
+  }
+))(({ theme }) => ({
+  [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
+    transform: "rotate(90deg)"
+  },
+  ...theme.applyStyles("dark", {})
+}));
+var AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2)
+}));
+var AccordionPanel = ({
+  title,
+  count,
+  items = [],
+  children,
+  expanded,
+  onChange
+}) => {
+  return /* @__PURE__ */ jsxs4(Accordion, { expanded, onChange, children: [
+    /* @__PURE__ */ jsx6(AccordionSummary, { children: /* @__PURE__ */ jsxs4(
+      Typography2,
+      {
+        component: "span",
+        fontWeight: 600,
+        fontSize: "14px",
+        color: "text.primary",
+        children: [
+          "test test",
+          title,
+          " ",
+          count !== void 0 && `(${count})`
+        ]
+      }
+    ) }),
+    /* @__PURE__ */ jsx6(AccordionDetails, { children: children ? children : /* @__PURE__ */ jsx6(Stack, { spacing: 0.5, children: items.map((term, idx) => {
+      if (!term || typeof term === "string" && term.trim() === "")
+        return null;
+      return /* @__PURE__ */ jsxs4(Box2, { sx: { display: "flex", gap: 1 }, children: [
+        /* @__PURE__ */ jsxs4(Typography2, { fontSize: "13px", color: "text.primary", children: [
+          idx + 1,
+          "."
+        ] }),
+        /* @__PURE__ */ jsx6(Typography2, { fontSize: "13px", color: "text.secondary", children: term })
+      ] }, idx);
+    }) }) })
+  ] });
+};
+function CustomAccordion({
+  data,
+  singleOpen = false,
+  ...singleProps
+}) {
+  const [expandedIndex, setExpandedIndex] = React5.useState(
+    singleOpen ? 0 : false
+  );
+  const handleChange = (panelIndex) => (event, newExpanded) => {
+    if (singleOpen) {
+      setExpandedIndex(newExpanded ? panelIndex : false);
+    }
+  };
+  if (data && Array.isArray(data)) {
+    return /* @__PURE__ */ jsx6(Box2, { children: data.map((item, index) => /* @__PURE__ */ jsx6(
+      AccordionPanel,
+      {
+        ...item,
+        expanded: singleOpen ? expandedIndex === index : void 0,
+        onChange: singleOpen ? handleChange(index) : void 0
+      },
+      index
+    )) });
+  }
+  return /* @__PURE__ */ jsx6(AccordionPanel, { ...singleProps });
+}
+
 // src/providers/VortexUIProvider.tsx
-import { createContext, useContext, useState, useMemo, useEffect } from "react";
+import { createContext, useContext, useState as useState2, useMemo, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -1347,13 +1468,13 @@ var colors = {
       paper: "#ffffff"
     },
     dark: {
-      default: "#0f172a",
+      default: "#1c263c",
       paper: "#1e293b"
     }
   },
   text: {
     light: {
-      primary: "#0f172a",
+      primary: "#1c263c",
       secondary: "#475569",
       disabled: "#94a3b8"
     },
@@ -1503,7 +1624,7 @@ var getTheme = (mode) => createTheme({
 });
 
 // src/providers/VortexUIProvider.tsx
-import { Fragment, jsx as jsx6, jsxs as jsxs4 } from "react/jsx-runtime";
+import { Fragment, jsx as jsx7, jsxs as jsxs5 } from "react/jsx-runtime";
 var ColorModeContext = createContext({
   toggleColorMode: () => {
   },
@@ -1516,7 +1637,7 @@ var cache = createCache({
 });
 function VortexUIProvider({ children, disableCustomCache = false, initialMode = "light" }) {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = useState(initialMode);
+  const [mode, setMode] = useState2(initialMode);
   useEffect(() => {
     const hasCookie = document.cookie.includes("vortex-ui-theme-mode=");
     if (!hasCookie && prefersDarkMode) {
@@ -1539,16 +1660,17 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
     [mode]
   );
   const theme = useMemo(() => getTheme(mode), [mode]);
-  const content = /* @__PURE__ */ jsx6(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ jsxs4(ThemeProvider, { theme, children: [
-    /* @__PURE__ */ jsx6(CssBaseline, {}),
+  const content = /* @__PURE__ */ jsx7(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ jsxs5(ThemeProvider, { theme, children: [
+    /* @__PURE__ */ jsx7(CssBaseline, {}),
     children
   ] }) });
   if (disableCustomCache) {
-    return /* @__PURE__ */ jsx6(Fragment, { children: content });
+    return /* @__PURE__ */ jsx7(Fragment, { children: content });
   }
-  return /* @__PURE__ */ jsx6(CacheProvider, { value: cache, children: content });
+  return /* @__PURE__ */ jsx7(CacheProvider, { value: cache, children: content });
 }
 export {
+  CustomAccordion as Accordion,
   Button,
   ColorModeContext,
   DataTable,

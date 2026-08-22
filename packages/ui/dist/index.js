@@ -31,6 +31,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var index_exports = {};
 __export(index_exports, {
+  Accordion: () => CustomAccordion,
   Button: () => Button,
   ColorModeContext: () => ColorModeContext,
   DataTable: () => DataTable,
@@ -379,9 +380,128 @@ var DataTable = import_react4.default.forwardRef(
 );
 DataTable.displayName = "DataTable";
 
+// src/components/Accordion/Accordion.tsx
+var React5 = __toESM(require("react"));
+var import_styles = require("@mui/material/styles");
+var import_ArrowForwardIosSharp = __toESM(require("@mui/icons-material/ArrowForwardIosSharp"));
+var import_Accordion = __toESM(require("@mui/material/Accordion"));
+var import_AccordionSummary = __toESM(require("@mui/material/AccordionSummary"));
+var import_AccordionDetails = __toESM(require("@mui/material/AccordionDetails"));
+var import_Typography = __toESM(require("@mui/material/Typography"));
+var import_material6 = require("@mui/material");
+var import_jsx_runtime6 = require("react/jsx-runtime");
+var Accordion = (0, import_styles.styled)((props) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_Accordion.default, { disableGutters: true, elevation: 0, ...props }))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:first-of-type)": {
+    borderTop: 0
+  },
+  "&:first-of-type": {
+    borderTopLeftRadius: "6px",
+    borderTopRightRadius: "6px"
+  },
+  "&:last-of-type": {
+    borderBottomLeftRadius: "6px",
+    borderBottomRightRadius: "6px"
+  },
+  "&:not(:last-child)": {
+    borderBottom: 0
+  },
+  "&::before": {
+    display: "block !important",
+    position: "absolute",
+    top: 0,
+    left: "16px",
+    right: "16px",
+    height: "1px",
+    backgroundColor: theme.palette.divider,
+    opacity: "1 !important"
+  },
+  "&:first-of-type::before": {
+    display: "none !important"
+  }
+}));
+var AccordionSummary = (0, import_styles.styled)((props) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+  import_AccordionSummary.default,
+  {
+    expandIcon: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_ArrowForwardIosSharp.default, { sx: { fontSize: "0.9rem" } }),
+    ...props
+  }
+))(({ theme }) => ({
+  [`& .${import_AccordionSummary.accordionSummaryClasses.expandIconWrapper}.${import_AccordionSummary.accordionSummaryClasses.expanded}`]: {
+    transform: "rotate(90deg)"
+  },
+  ...theme.applyStyles("dark", {})
+}));
+var AccordionDetails = (0, import_styles.styled)(import_AccordionDetails.default)(({ theme }) => ({
+  padding: theme.spacing(2)
+}));
+var AccordionPanel = ({
+  title,
+  count,
+  items = [],
+  children,
+  expanded,
+  onChange
+}) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(Accordion, { expanded, onChange, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(AccordionSummary, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+      import_Typography.default,
+      {
+        component: "span",
+        fontWeight: 600,
+        fontSize: "14px",
+        color: "text.primary",
+        children: [
+          "test test",
+          title,
+          " ",
+          count !== void 0 && `(${count})`
+        ]
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(AccordionDetails, { children: children ? children : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_material6.Stack, { spacing: 0.5, children: items.map((term, idx) => {
+      if (!term || typeof term === "string" && term.trim() === "")
+        return null;
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_material6.Box, { sx: { display: "flex", gap: 1 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_Typography.default, { fontSize: "13px", color: "text.primary", children: [
+          idx + 1,
+          "."
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_Typography.default, { fontSize: "13px", color: "text.secondary", children: term })
+      ] }, idx);
+    }) }) })
+  ] });
+};
+function CustomAccordion({
+  data,
+  singleOpen = false,
+  ...singleProps
+}) {
+  const [expandedIndex, setExpandedIndex] = React5.useState(
+    singleOpen ? 0 : false
+  );
+  const handleChange = (panelIndex) => (event, newExpanded) => {
+    if (singleOpen) {
+      setExpandedIndex(newExpanded ? panelIndex : false);
+    }
+  };
+  if (data && Array.isArray(data)) {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_material6.Box, { children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      AccordionPanel,
+      {
+        ...item,
+        expanded: singleOpen ? expandedIndex === index : void 0,
+        onChange: singleOpen ? handleChange(index) : void 0
+      },
+      index
+    )) });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(AccordionPanel, { ...singleProps });
+}
+
 // src/providers/VortexUIProvider.tsx
 var import_react5 = require("react");
-var import_styles = require("@mui/material/styles");
+var import_styles2 = require("@mui/material/styles");
 var import_CssBaseline = __toESM(require("@mui/material/CssBaseline"));
 var import_useMediaQuery = __toESM(require("@mui/material/useMediaQuery"));
 var import_react6 = require("@emotion/react");
@@ -1243,7 +1363,7 @@ var createCache = function createCache2(options) {
 };
 
 // src/theme/theme.ts
-var import_material6 = require("@mui/material");
+var import_material7 = require("@mui/material");
 
 // src/theme/palette.ts
 var colors = {
@@ -1373,13 +1493,13 @@ var colors = {
       paper: "#ffffff"
     },
     dark: {
-      default: "#0f172a",
+      default: "#1c263c",
       paper: "#1e293b"
     }
   },
   text: {
     light: {
-      primary: "#0f172a",
+      primary: "#1c263c",
       secondary: "#475569",
       disabled: "#94a3b8"
     },
@@ -1519,7 +1639,7 @@ var components = {
 };
 
 // src/theme/theme.ts
-var getTheme = (mode) => (0, import_material6.createTheme)({
+var getTheme = (mode) => (0, import_material7.createTheme)({
   palette: getPalette(mode),
   typography,
   components,
@@ -1529,7 +1649,7 @@ var getTheme = (mode) => (0, import_material6.createTheme)({
 });
 
 // src/providers/VortexUIProvider.tsx
-var import_jsx_runtime6 = require("react/jsx-runtime");
+var import_jsx_runtime7 = require("react/jsx-runtime");
 var ColorModeContext = (0, import_react5.createContext)({
   toggleColorMode: () => {
   },
@@ -1565,17 +1685,18 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
     [mode]
   );
   const theme = (0, import_react5.useMemo)(() => getTheme(mode), [mode]);
-  const content = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_styles.ThemeProvider, { theme, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_CssBaseline.default, {}),
+  const content = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_styles2.ThemeProvider, { theme, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_CssBaseline.default, {}),
     children
   ] }) });
   if (disableCustomCache) {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children: content });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_jsx_runtime7.Fragment, { children: content });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react6.CacheProvider, { value: cache, children: content });
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_react6.CacheProvider, { value: cache, children: content });
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Accordion,
   Button,
   ColorModeContext,
   DataTable,

@@ -130,7 +130,7 @@ export function TableOfContents() {
   const activePoint = points.find((p) => p.id === activeId);
 
   const drawPaths = () => {
-    const paths = [];
+    const paths: React.ReactNode[] = [];
     if (points.length === 0) return paths;
 
     // 1. Draw continuous main line

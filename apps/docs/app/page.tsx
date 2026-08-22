@@ -1,17 +1,9 @@
 "use client";
 
-import React from "react";
-import {
-  Typography,
-  Box,
-  Divider,
-  Stack,
-  Alert,
-  AlertTitle,
-} from "@mui/material";
-import { ComponentCode } from "../components/docs/ComponentCode";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { Button } from "vortex-ui";
+import { ComponentCode } from "../components/docs/ComponentCode";
 
 export default function Page() {
   return (

@@ -1,2 +1,3 @@
-// TODO: Implement Accordion component.
-
+export { default } from "./Accordion";
+export * from "./Accordion";
+export * from "./Accordion.types";

@@ -1,32 +1,37 @@
-import React$1 from 'react';
+import * as React$1 from 'react';
+import React__default from 'react';
 import * as _mui_material from '@mui/material';
 import { ButtonProps as ButtonProps$1, TextFieldProps, SelectProps as SelectProps$1, DialogProps, PaletteMode } from '@mui/material';
 
+type ButtonSize = "lg" | "md" | "sm";
+type ButtonVariant = "filled" | "outlined" | "ghost" | "text";
+type ButtonSeverity = "primary" | "error" | "success" | "info" | "warning";
+type ButtonIconPosition = "start" | "end";
 interface ButtonProps extends Omit<ButtonProps$1, "variant" | "color" | "size"> {
     /**
      * The size of the button.
      * @default 'md'
      */
-    size?: "lg" | "md" | "sm";
+    size?: ButtonSize;
     /**
      * The design variant of the button.
      * @default 'filled'
      */
-    variant?: "filled" | "outlined" | "ghost" | "text";
+    variant?: ButtonVariant;
     /**
      * The color severity of the button.
      * @default 'primary'
      */
-    severity?: "primary" | "error" | "success" | "info" | "warning";
+    severity?: ButtonSeverity;
     /**
      * Optional icon to display.
      */
-    icon?: React$1.ReactNode;
+    icon?: React__default.ReactNode;
     /**
      * Position of the icon relative to the text.
      * @default 'left'
      */
-    iconPosition?: "start" | "end";
+    iconPosition?: ButtonIconPosition;
     /**
      * If true, styles the button as an icon-only square button.
      * @default false
@@ -44,7 +49,7 @@ interface ButtonProps extends Omit<ButtonProps$1, "variant" | "color" | "size"> 
     /**
      * The element component or string tag to render (e.g. 'a', Link).
      */
-    component?: React$1.ElementType;
+    component?: React__default.ElementType;
     /**
      * URL for link buttons.
      */
@@ -56,10 +61,10 @@ interface ButtonProps extends Omit<ButtonProps$1, "variant" | "color" | "size"> 
     /**
      * Button content
      */
-    children?: React$1.ReactNode;
+    children?: React__default.ReactNode;
 }
 
-declare const Button: ({ size, variant, severity, icon, iconPosition, iconOnly, loading, loadingText, disabled, children, sx, ...rest }: ButtonProps) => React$1.JSX.Element;
+declare const Button: ({ size, variant, severity, icon, iconPosition, iconOnly, loading, loadingText, disabled, children, sx, ...rest }: ButtonProps) => React__default.JSX.Element;
 
 type InputProps = Omit<TextFieldProps, 'variant'> & {
     /**
@@ -69,7 +74,7 @@ type InputProps = Omit<TextFieldProps, 'variant'> & {
     variant?: 'outlined' | 'filled' | 'standard';
 };
 
-declare const Input: React$1.ForwardRefExoticComponent<Omit<InputProps, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const Input: React__default.ForwardRefExoticComponent<Omit<InputProps, "ref"> & React__default.RefAttributes<HTMLDivElement>>;
 
 interface SelectOption {
     label: string;
@@ -94,7 +99,7 @@ interface SelectProps extends Omit<SelectProps$1, 'variant'> {
     error?: boolean;
 }
 
-declare const Select: React$1.ForwardRefExoticComponent<Omit<SelectProps, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const Select: React__default.ForwardRefExoticComponent<Omit<SelectProps, "ref"> & React__default.RefAttributes<HTMLDivElement>>;
 
 interface ModalProps extends Omit<DialogProps, 'open'> {
     /**
@@ -119,7 +124,7 @@ interface ModalProps extends Omit<DialogProps, 'open'> {
     children?: React.ReactNode;
 }
 
-declare const Modal: React$1.ForwardRefExoticComponent<Omit<ModalProps, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const Modal: React__default.ForwardRefExoticComponent<Omit<ModalProps, "ref"> & React__default.RefAttributes<HTMLDivElement>>;
 
 interface DataTableColumn<T = any> {
     /**
@@ -133,7 +138,7 @@ interface DataTableColumn<T = any> {
     /**
      * Optional custom render function for cells in this column
      */
-    render?: (row: T) => React$1.ReactNode;
+    render?: (row: T) => React__default.ReactNode;
     /**
      * Alignment of column content
      */
@@ -160,9 +165,25 @@ interface DataTableProps {
     emptyMessage?: string;
 }
 
-declare const DataTable: React$1.ForwardRefExoticComponent<DataTableProps & React$1.RefAttributes<HTMLDivElement>>;
+declare const DataTable: React__default.ForwardRefExoticComponent<DataTableProps & React__default.RefAttributes<HTMLDivElement>>;
 
-declare const ColorModeContext: React$1.Context<{
+interface AccordionPanelProps {
+    title?: React__default.ReactNode;
+    count?: number;
+    items?: React__default.ReactNode[];
+    children?: React__default.ReactNode;
+    expanded?: boolean;
+    onChange?: (event: React__default.SyntheticEvent, expanded: boolean) => void;
+}
+interface CustomAccordionProps extends AccordionPanelProps {
+    data?: AccordionPanelProps[];
+    singleOpen?: boolean;
+}
+type AccordionProps = CustomAccordionProps;
+
+declare function CustomAccordion({ data, singleOpen, ...singleProps }: CustomAccordionProps): React$1.JSX.Element;
+
+declare const ColorModeContext: React__default.Context<{
     toggleColorMode: () => void;
     mode: PaletteMode;
 }>;
@@ -171,12 +192,12 @@ declare const useColorMode: () => {
     mode: PaletteMode;
 };
 interface VortexUIProviderProps {
-    children: React$1.ReactNode;
+    children: React__default.ReactNode;
     disableCustomCache?: boolean;
     initialMode?: PaletteMode;
 }
-declare function VortexUIProvider({ children, disableCustomCache, initialMode }: VortexUIProviderProps): React$1.JSX.Element;
+declare function VortexUIProvider({ children, disableCustomCache, initialMode }: VortexUIProviderProps): React__default.JSX.Element;
 
 declare const getTheme: (mode: PaletteMode) => _mui_material.Theme;
 
-export { Button, type ButtonProps, ColorModeContext, DataTable, type DataTableColumn, type DataTableProps, Input, type InputProps, Modal, type ModalProps, Select, type SelectOption, type SelectProps, VortexUIProvider, useColorMode, getTheme as vortexTheme };
+export { CustomAccordion as Accordion, type AccordionPanelProps, type AccordionProps, Button, type ButtonIconPosition, type ButtonProps, type ButtonSeverity, type ButtonSize, type ButtonVariant, ColorModeContext, type CustomAccordionProps, DataTable, type DataTableColumn, type DataTableProps, Input, type InputProps, Modal, type ModalProps, Select, type SelectOption, type SelectProps, VortexUIProvider, useColorMode, getTheme as vortexTheme };

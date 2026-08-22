@@ -5,5 +5,7 @@ export * from './components/Input';
 export * from './components/Select';
 export * from './components/Modal';
 export * from './components/DataTable';
+export { default as Accordion } from './components/Accordion';
+export * from './components/Accordion';
 export * from './providers/VortexUIProvider';
 export { getTheme as vortexTheme } from './theme/theme';

@@ -1,15 +1,14 @@
-import React from "react";
+import { Box, PaletteMode } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { Box, Typography } from "@mui/material";
-import { VortexUIProvider } from "vortex-ui";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { cookies } from "next/headers";
-import { PaletteMode } from "@mui/material";
+import React from "react";
+import { VortexUIProvider } from "vortex-ui";
+import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
 import { Sidebar } from "../components/layout/Sidebar";
 import { TableOfContents } from "../components/layout/TableOfContents";
-import { Footer } from "../components/layout/Footer";
 import "./globals.css";
 
 const inter = Inter({

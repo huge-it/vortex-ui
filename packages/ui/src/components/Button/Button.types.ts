@@ -1,6 +1,11 @@
 import { ButtonProps as MuiButtonProps } from "@mui/material";
 import React from "react";
 
+export type ButtonSize = "lg" | "md" | "sm";
+export type ButtonVariant = "filled" | "outlined" | "ghost" | "text";
+export type ButtonSeverity = "primary" | "error" | "success" | "info" | "warning";
+export type ButtonIconPosition = "start" | "end";
+
 export interface ButtonProps extends Omit<
   MuiButtonProps,
   "variant" | "color" | "size"
@@ -9,17 +14,17 @@ export interface ButtonProps extends Omit<
    * The size of the button.
    * @default 'md'
    */
-  size?: "lg" | "md" | "sm";
+  size?: ButtonSize;
   /**
    * The design variant of the button.
    * @default 'filled'
    */
-  variant?: "filled" | "outlined" | "ghost" | "text";
+  variant?: ButtonVariant;
   /**
    * The color severity of the button.
    * @default 'primary'
    */
-  severity?: "primary" | "error" | "success" | "info" | "warning";
+  severity?: ButtonSeverity;
   /**
    * Optional icon to display.
    */
@@ -28,7 +33,7 @@ export interface ButtonProps extends Omit<
    * Position of the icon relative to the text.
    * @default 'left'
    */
-  iconPosition?: "start" | "end";
+  iconPosition?: ButtonIconPosition;
   /**
    * If true, styles the button as an icon-only square button.
    * @default false
