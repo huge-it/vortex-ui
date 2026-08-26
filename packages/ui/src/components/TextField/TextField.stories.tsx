@@ -1,25 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from './Input';
+import { TextField } from './TextField';
 
-const meta: Meta<typeof Input> = {
-  title: 'Components/Input',
-  component: Input,
+const meta: Meta<typeof TextField> = {
+  title: 'Components/TextField',
+  component: TextField,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['outlined', 'filled', 'standard'],
-    },
     label: { control: 'text' },
     placeholder: { control: 'text' },
-    error: { control: 'boolean' },
+    error: { control: 'text' },
     disabled: { control: 'boolean' },
-    helperText: { control: 'text' },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {
   args: {
@@ -28,20 +23,11 @@ export const Default: Story = {
   },
 };
 
-export const Filled: Story = {
-  args: {
-    variant: 'filled',
-    label: 'Email',
-    placeholder: 'Enter your email',
-  },
-};
-
 export const Error: Story = {
   args: {
     label: 'Password',
     placeholder: 'Enter your password',
-    error: true,
-    helperText: 'Password must be at least 8 characters.',
+    error: 'Password must be at least 8 characters long.',
   },
 };
 

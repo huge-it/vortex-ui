@@ -2,22 +2,15 @@
 
 import React from "react";
 import { Typography, Box, Divider, Stack } from "@mui/material";
-import { Input } from "vortex-ui";
-import { ComponentPreview } from "../../../components/docs/ComponentPreview";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
-import { ComponentStates } from "../../../components/docs/ComponentStates";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
+import { TextField } from "vortex-ui";
+import { ComponentPreview } from "@comp/docs/ComponentPreview";
+import { ComponentCode } from "@comp/docs/ComponentCode";
+import { ComponentStates } from "@comp/docs/ComponentStates";
+import { ComponentProps } from "@comp/docs/ComponentProps";
+import { ComponentHeader } from "@comp/docs/ComponentHeader";
+import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
 
 const inputPropsList = [
-  {
-    name: "variant",
-    type: "'outlined' | 'filled' | 'standard'",
-    default: "'outlined'",
-    description: "The visual style of the text field.",
-  },
   {
     name: "label",
     type: "string",
@@ -56,12 +49,16 @@ const inputPropsList = [
   },
 ];
 
-export default function InputDocs() {
+export default function TextFieldDocs() {
   return (
     <Box>
       <ComponentHeader
-        title="Input"
-        description={<>A text field component for form inputs, wrapping MUI&apos;s TextField.</>}
+        title="TextField"
+        description={
+          <>
+            A custom TextField component for forms with built-in error styling.
+          </>
+        }
       />
 
       <Typography
@@ -73,55 +70,34 @@ export default function InputDocs() {
       </Typography>
       <ComponentPreview>
         <Stack spacing={2} sx={{ width: "100%", maxWidth: "400px" }}>
-          <Input label="Name" placeholder="Enter your full name" />
+          <TextField
+            label="Name"
+            placeholder="Enter your full name"
+            value={""}
+            onChange={(e) => console.info(e.target.value)}
+            disabled={false}
+          />
         </Stack>
       </ComponentPreview>
-
-      <ComponentVariants
-        variants={[
-          {
-            name: "Outlined",
-            element: (
-              <Input
-                label="Outlined"
-                placeholder="Outlined field"
-                sx={{ width: "150px" }}
-              />
-            ),
-          },
-          {
-            name: "Filled",
-            element: (
-              <Input
-                variant="filled"
-                label="Filled"
-                placeholder="Filled field"
-                sx={{ width: "150px" }}
-              />
-            ),
-          },
-          {
-            name: "Standard",
-            element: (
-              <Input
-                variant="standard"
-                label="Standard"
-                placeholder="Standard field"
-                sx={{ width: "150px" }}
-              />
-            ),
-          },
-        ]}
-      />
 
       <ComponentStates
         states={[
           {
-            name: "Default",
+            name: "Hover",
             element: (
-              <Input
-                label="Default"
-                placeholder="Type here"
+              <TextField
+                label="Hover"
+                placeholder="Hover over me"
+                sx={{ width: "150px" }}
+              />
+            ),
+          },
+          {
+            name: "Typed",
+            element: (
+              <TextField
+                label="Typed"
+                value="User typed text"
                 sx={{ width: "150px" }}
               />
             ),
@@ -129,7 +105,7 @@ export default function InputDocs() {
           {
             name: "Disabled",
             element: (
-              <Input
+              <TextField
                 label="Disabled"
                 disabled
                 placeholder="Locked field"
@@ -138,12 +114,22 @@ export default function InputDocs() {
             ),
           },
           {
+            name: "Active",
+            element: (
+              <TextField
+                label="Active"
+                autoFocus
+                placeholder="Focused field"
+                sx={{ width: "150px" }}
+              />
+            ),
+          },
+          {
             name: "Error",
             element: (
-              <Input
+              <TextField
                 label="Error"
-                error
-                helperText="Invalid input."
+                error="Invalid input."
                 placeholder="Wrong value"
                 sx={{ width: "150px" }}
               />
@@ -160,21 +146,20 @@ export default function InputDocs() {
         Usage
       </Typography>
       <ComponentCode
-        code={`import { Input } from "vortex-ui";
+        code={`import { TextField } from "vortex-ui";
 
 function FormExample() {
   return (
     <Stack spacing={3}>
-      <Input
+      <TextField
         label="Email Address"
         placeholder="you@company.com"
         type="email"
       />
-      <Input
+      <TextField
         label="Password"
         type="password"
-        error={true}
-        helperText="Password must be at least 8 characters long."
+        error="Password must be at least 8 characters long."
       />
     </Stack>
   );

@@ -156,6 +156,10 @@ const colors = {
       disabled: "#64748b",
     },
   },
+  divider: {
+    light: "#e2e8f0",
+    dark: "#334155",
+  },
 };
 
 export const getPalette = (mode: PaletteMode): PaletteOptions => ({
@@ -168,4 +172,5 @@ export const getPalette = (mode: PaletteMode): PaletteOptions => ({
   info: colors.info[mode],
   background: colors.background[mode],
   text: colors.text[mode],
+  divider: colors.divider[mode],
 });

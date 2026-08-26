@@ -1,2 +1,2 @@
-// TODO: Implement NumberField component.
-
+export * from './NumberField';
+export * from './NumberField.types';

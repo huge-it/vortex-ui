@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "VortexUI - Material UI Component System",
+  title: "VortexUI - Huge IT's Component System",
   description:
     "Enterprise React component library built on top of Material UI.",
 };

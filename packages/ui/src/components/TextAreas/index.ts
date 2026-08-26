@@ -1,2 +1,1 @@
-// TODO: Implement TextAreas component.
-
+export * from "./Textarea";

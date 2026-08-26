@@ -1,25 +1,57 @@
-import { SelectProps as MuiSelectProps } from '@mui/material';
+import React from "react";
+import { SearchableSelectProps } from "./SearchableSelect";
 
-export interface SelectOption {
+export interface OptionItem {
   label: string;
-  value: string | number;
+  color: string;
 }
 
-export interface SelectProps extends Omit<MuiSelectProps, 'variant'> {
-  /**
-   * Label for the select field
-   */
+export interface IconSelectOption {
+  value: string | number;
   label?: string;
-  /**
-   * Supporting descriptive text below the select field
-   */
-  helperText?: string;
-  /**
-   * Predefined options to render. Alternatively, pass MenuItem children directly.
-   */
-  options?: SelectOption[];
-  /**
-   * Display input in error state
-   */
-  error?: boolean;
+  icon?: React.ReactNode;
+  img?: string;
 }
+
+export interface IconSelectProps {
+  value?: string | number | null;
+  onChange?: (val: string | number) => void;
+  options: IconSelectOption[];
+  disabled?: boolean;
+  label?: string;
+  placeholder?: string;
+  fullWidth?: boolean;
+  size?: "small" | "medium";
+  bgColor?: string;
+  error?: boolean | string;
+  helperText?: React.ReactNode;
+  name?: string;
+  id?: string;
+  sx?: any;
+}
+
+export interface DefaultSelectProps {
+  value?: string | number;
+  recordId?: string | number;
+  onUpdate?: (
+    recordId: string | number,
+    value: string | number,
+  ) => Promise<void> | void;
+  options?: Record<number | string, OptionItem>;
+  disabled?: boolean;
+  label?: string;
+  placeholder?: string;
+  fullWidth?: boolean;
+  size?: "small" | "medium";
+  bgColor?: string;
+  error?: boolean | string;
+  helperText?: React.ReactNode;
+  name?: string;
+  id?: string;
+  sx?: any;
+}
+
+export type SelectProps =
+  | (DefaultSelectProps & { variant?: "default" })
+  | (Omit<SearchableSelectProps, "variant"> & { variant: "searchable" })
+  | (IconSelectProps & { variant: "icon" });

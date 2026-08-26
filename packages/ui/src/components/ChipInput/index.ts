@@ -1,2 +1,2 @@
-// TODO: Implement ChipInput component.
-
+export * from './ChipInput';
+export * from './ChipInput.types';

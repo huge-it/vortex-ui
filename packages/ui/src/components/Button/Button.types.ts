@@ -31,7 +31,7 @@ export interface ButtonProps extends Omit<
   icon?: React.ReactNode;
   /**
    * Position of the icon relative to the text.
-   * @default 'left'
+   * @default 'start'
    */
   iconPosition?: ButtonIconPosition;
   /**
@@ -64,4 +64,12 @@ export interface ButtonProps extends Omit<
    * Button content
    */
   children?: React.ReactNode;
+}
+
+export interface IconButtonProps
+  extends Omit<ButtonProps, "children" | "iconPosition" | "iconOnly"> {
+  /**
+   * The icon to display.
+   */
+  icon: React.ReactNode;
 }

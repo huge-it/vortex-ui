@@ -6,16 +6,592 @@ ClassNameGenerator.configure(
   (componentName) => componentName.replace("Mui", "VortexUI")
 );
 
+// src/components/Accordion/Accordion.tsx
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary, {
+  accordionSummaryClasses
+} from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { Box, Stack } from "@mui/material";
+import { jsx, jsxs } from "react/jsx-runtime";
+var Accordion = styled((props) => /* @__PURE__ */ jsx(MuiAccordion, { disableGutters: true, elevation: 0, ...props }))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:first-of-type)": {
+    borderTop: 0
+  },
+  "&:first-of-type": {
+    borderTopLeftRadius: "6px",
+    borderTopRightRadius: "6px"
+  },
+  "&:last-of-type": {
+    borderBottomLeftRadius: "6px",
+    borderBottomRightRadius: "6px"
+  },
+  "&:not(:last-child)": {
+    borderBottom: 0
+  },
+  "&::before": {
+    display: "block !important",
+    position: "absolute",
+    top: 0,
+    left: "16px",
+    right: "16px",
+    height: "1px",
+    backgroundColor: theme.palette.divider,
+    opacity: "1 !important"
+  },
+  "&:first-of-type::before": {
+    display: "none !important"
+  }
+}));
+var AccordionSummary = styled((props) => /* @__PURE__ */ jsx(
+  MuiAccordionSummary,
+  {
+    expandIcon: /* @__PURE__ */ jsx(ArrowForwardIosSharpIcon, { sx: { fontSize: "0.9rem" } }),
+    ...props
+  }
+))(({ theme }) => ({
+  [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
+    transform: "rotate(90deg)"
+  },
+  ...theme.applyStyles("dark", {})
+}));
+var AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2)
+}));
+var AccordionPanel = ({
+  title,
+  count,
+  items = [],
+  children,
+  expanded,
+  onChange
+}) => {
+  return /* @__PURE__ */ jsxs(Accordion, { expanded, onChange, children: [
+    /* @__PURE__ */ jsx(AccordionSummary, { children: /* @__PURE__ */ jsxs(
+      Typography,
+      {
+        component: "span",
+        fontWeight: 600,
+        fontSize: "14px",
+        color: "text.primary",
+        children: [
+          title,
+          " ",
+          count !== void 0 && `(${count})`
+        ]
+      }
+    ) }),
+    /* @__PURE__ */ jsx(AccordionDetails, { children: children ? children : /* @__PURE__ */ jsx(Stack, { spacing: 0.5, children: items.map((term, idx) => {
+      if (!term || typeof term === "string" && term.trim() === "")
+        return null;
+      return /* @__PURE__ */ jsxs(Box, { sx: { display: "flex", gap: 1 }, children: [
+        /* @__PURE__ */ jsxs(Typography, { fontSize: "13px", color: "text.primary", children: [
+          idx + 1,
+          "."
+        ] }),
+        /* @__PURE__ */ jsx(Typography, { fontSize: "13px", color: "text.secondary", children: term })
+      ] }, idx);
+    }) }) })
+  ] });
+};
+function CustomAccordion({
+  data,
+  singleOpen = false,
+  ...singleProps
+}) {
+  const [expandedIndex, setExpandedIndex] = React.useState(
+    singleOpen ? 0 : false
+  );
+  const handleChange = (panelIndex) => (event, newExpanded) => {
+    if (singleOpen) {
+      setExpandedIndex(newExpanded ? panelIndex : false);
+    }
+  };
+  if (data && Array.isArray(data)) {
+    return /* @__PURE__ */ jsx(Box, { children: data.map((item, index) => /* @__PURE__ */ jsx(
+      AccordionPanel,
+      {
+        ...item,
+        expanded: singleOpen ? expandedIndex === index : void 0,
+        onChange: singleOpen ? handleChange(index) : void 0
+      },
+      index
+    )) });
+  }
+  return /* @__PURE__ */ jsx(AccordionPanel, { ...singleProps });
+}
+
+// src/components/AutoPopulate/AutoPopulate.tsx
+import {
+  Children,
+  useCallback,
+  useRef,
+  useState as useState2,
+  useEffect
+} from "react";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import {
+  Box as Box3,
+  ClickAwayListener,
+  Paper,
+  Popper,
+  Typography as Typography3
+} from "@mui/material";
+
+// src/components/TextField/TextField.tsx
+import { InfoOutlined } from "@mui/icons-material";
+import Box2 from "@mui/material/Box";
+import MuiTextField from "@mui/material/TextField";
+import Typography2 from "@mui/material/Typography";
+import { styled as styled2 } from "@mui/material/styles";
+import React2 from "react";
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+var StyledTextField = styled2(
+  React2.forwardRef((props, ref) => {
+    const { hasLabel, bgColor, variant = "filled", ...rest } = props;
+    return /* @__PURE__ */ jsx2(
+      MuiTextField,
+      {
+        ref,
+        variant,
+        ...rest,
+        InputProps: {
+          disableUnderline: true,
+          ...rest.InputProps,
+          sx: {
+            overflow: "hidden",
+            borderRadius: "10px",
+            backgroundColor: "background.paper",
+            border: (theme) => `1px solid ${theme.palette.divider}`,
+            height: "46px",
+            transition: (theme) => theme.transitions.create([
+              "border-color",
+              "background-color",
+              "box-shadow"
+            ]),
+            "&:hover": { backgroundColor: bgColor || "background.default" },
+            "&:before, &:after": { display: "none" },
+            "&.Mui-focused": {
+              backgroundColor: bgColor || "background.paper",
+              borderColor: (theme) => theme.palette.primary.main
+            },
+            "&.Mui-error": {
+              borderColor: (theme) => theme.palette.error.main,
+              backgroundColor: bgColor || "background.paper"
+            },
+            ...rest.InputProps?.sx || {}
+          }
+        }
+      }
+    );
+  }),
+  {
+    shouldForwardProp: (prop) => prop !== "hasLabel" && prop !== "bgColor"
+  }
+)(({ theme, bgColor, hasLabel }) => {
+  return {
+    "& .VortexUIInputLabel-root.VortexUIInputLabel-filled": {
+      transform: `translate(12px, 14px) scale(1)`,
+      fontSize: "14px",
+      fontWeight: 400,
+      "&.VortexUIInputLabel-shrink": {
+        transform: "translate(10px, 8px) scale(0.75)",
+        lineHeight: 1
+      },
+      "&.Mui-error": {
+        color: theme.palette.error.main
+      }
+    },
+    "& .VortexUIFilledInput-input": {
+      padding: "0 10px",
+      fontSize: "14px",
+      fontWeight: 400,
+      height: "100%",
+      boxSizing: "border-box",
+      display: "flex",
+      alignItems: "center"
+    },
+    "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input": {
+      padding: `24px 10px 0 10px`
+    },
+    "& label.Mui-focused": {
+      color: theme.palette.text.primary
+    },
+    "& .VortexUIFormHelperText-root": {
+      display: "none"
+    }
+  };
+});
+var TextField = React2.forwardRef(
+  ({ error, sx, bgColor = "#fff", ...props }, ref) => {
+    return /* @__PURE__ */ jsxs2(Box2, { sx: { width: props.fullWidth ? "100%" : "auto", ...sx }, children: [
+      /* @__PURE__ */ jsx2(
+        StyledTextField,
+        {
+          ref,
+          error: !!error,
+          hasLabel: !!props.label,
+          bgColor,
+          ...props
+        }
+      ),
+      error && typeof error === "string" && /* @__PURE__ */ jsxs2(
+        Box2,
+        {
+          sx: {
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            mt: "8px",
+            ml: 0.5
+          },
+          children: [
+            /* @__PURE__ */ jsx2(
+              InfoOutlined,
+              {
+                sx: { width: 14, height: 14, color: "error.main", flexShrink: 0 }
+              }
+            ),
+            /* @__PURE__ */ jsx2(
+              Typography2,
+              {
+                sx: {
+                  fontSize: "12px",
+                  color: "error.main",
+                  lineHeight: 1.4,
+                  fontWeight: 400
+                },
+                children: error
+              }
+            )
+          ]
+        }
+      )
+    ] });
+  }
+);
+TextField.displayName = "TextField";
+
+// src/components/AutoPopulate/AutoPopulate.tsx
+import { jsx as jsx3, jsxs as jsxs3 } from "react/jsx-runtime";
+var scrollbarStyles = `
+  .custom-select-menu::-webkit-scrollbar {
+    width: 5px;
+  }
+  .custom-select-menu::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+  }
+  .custom-select-menu::-webkit-scrollbar-thumb {
+    background: #D9D9D9;
+    border-radius: 35px;
+    max-height: 54px;
+    min-height: 54px;
+  }
+  .custom-select-menu::-webkit-scrollbar-thumb:hover {
+    background: #BDBDBD;
+  }
+`;
+var getFocusable = () => Array.from(
+  document.querySelectorAll(
+    'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
+  )
+).filter((el) => el.offsetParent !== null);
+var AutoPopulate = ({
+  children,
+  bgColor,
+  label,
+  onChange,
+  value,
+  ...props
+}) => {
+  const [inputValue, setInputValue] = useState2("");
+  const [displayValue, setDisplayValue] = useState2("");
+  const [open, setOpen] = useState2(false);
+  const [focusedIndex, setFocusedIndex] = useState2(-1);
+  const anchorRef = useRef(null);
+  const menuItemRefs = useRef([]);
+  const wrapperRef = useRef(null);
+  const hasInteractedRef = useRef(false);
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const styleTag = document.getElementById("custom-select-scrollbar");
+      if (!styleTag) {
+        const s = document.createElement("style");
+        s.id = "custom-select-scrollbar";
+        s.textContent = scrollbarStyles;
+        document.head.appendChild(s);
+      }
+    }
+  }, []);
+  const childArray = Children.toArray(children).filter(
+    Boolean
+  );
+  const labelMap = {};
+  childArray.forEach((child) => {
+    if (child.props?.value !== void 0) {
+      labelMap[child.props.value] = {
+        label: child.props?.children?.toString() || "",
+        subtitle: child.props?.subtitle || ""
+      };
+    }
+  });
+  const filteredChildren = inputValue ? childArray.filter((child) => {
+    const text = child.props?.children?.toString()?.toLowerCase() || "";
+    const sub = child.props?.subtitle?.toLowerCase() || "";
+    const q = inputValue.toLowerCase();
+    return text.includes(q) || sub.includes(q);
+  }) : childArray;
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    setDisplayValue(e.target.value);
+    setOpen(true);
+    setFocusedIndex(-1);
+    hasInteractedRef.current = true;
+  };
+  const handleInputFocus = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setFocusedIndex(-1);
+    if (inputValue === "" && hasInteractedRef.current) {
+      setDisplayValue("");
+      if (value !== void 0 && value !== "" && onChange) {
+        onChange({ target: { value: "" } });
+      }
+    } else if (value !== void 0 && labelMap[value]) {
+      setDisplayValue(labelMap[value].label);
+    } else {
+      setDisplayValue("");
+    }
+    setInputValue("");
+    hasInteractedRef.current = false;
+  };
+  const handleSelect = (child) => {
+    const selectedValue = child.props?.value;
+    const selectedLabel = child.props?.children?.toString() || "";
+    setDisplayValue(selectedLabel);
+    setInputValue("");
+    setOpen(false);
+    setFocusedIndex(-1);
+    hasInteractedRef.current = false;
+    if (onChange) onChange({ target: { value: selectedValue } });
+    setTimeout(() => {
+      const focusable = getFocusable();
+      const current = anchorRef.current?.querySelector("input");
+      const idx = focusable.findIndex((el) => el === current);
+      if (idx !== -1 && focusable[idx + 1])
+        focusable[idx + 1].focus();
+    }, 0);
+  };
+  const focusItem = (index) => {
+    setFocusedIndex(index);
+    menuItemRefs.current[index]?.focus();
+  };
+  const handleInputKeyDown = useCallback(
+    (e) => {
+      if (!open) {
+        if (e.key === "ArrowDown" || e.key === "Enter") setOpen(true);
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (filteredChildren.length > 0) focusItem(0);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (filteredChildren.length > 0) focusItem(filteredChildren.length - 1);
+      } else if (e.key === "Escape") {
+        handleClose();
+      }
+    },
+    [open, filteredChildren]
+  );
+  const handleItemKeyDown = useCallback(
+    (e, index, child) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        focusItem((index + 1) % filteredChildren.length);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (index === 0) {
+          setFocusedIndex(-1);
+          anchorRef.current?.querySelector("input")?.focus();
+        } else {
+          focusItem(index - 1);
+        }
+      } else if (e.key === "Tab") {
+        e.preventDefault();
+        const next2 = index + 1;
+        if (next2 < filteredChildren.length) {
+          focusItem(next2);
+        } else {
+          setFocusedIndex(-1);
+          anchorRef.current?.querySelector("input")?.focus();
+        }
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleSelect(child);
+      } else if (e.key === "Escape") {
+        handleClose();
+      }
+    },
+    [filteredChildren, onChange]
+  );
+  const shownValue = open ? inputValue !== "" ? inputValue : displayValue : displayValue;
+  return /* @__PURE__ */ jsx3(ClickAwayListener, { onClickAway: handleClose, children: /* @__PURE__ */ jsxs3(Box3, { ref: wrapperRef, sx: { display: "contents" }, children: [
+    /* @__PURE__ */ jsxs3(
+      Box3,
+      {
+        ref: anchorRef,
+        sx: { position: "relative", display: "inline-flex", width: "100%" },
+        children: [
+          /* @__PURE__ */ jsx3(
+            TextField,
+            {
+              bgColor,
+              label,
+              value: shownValue,
+              onChange: handleInputChange,
+              onFocus: handleInputFocus,
+              onKeyDown: handleInputKeyDown,
+              autoComplete: "off",
+              fullWidth: true,
+              ...props
+            }
+          ),
+          /* @__PURE__ */ jsx3(
+            Box3,
+            {
+              onClick: (e) => {
+                e.stopPropagation();
+                setOpen((prev2) => !prev2);
+              },
+              sx: {
+                position: "absolute",
+                right: 8,
+                top: "50%",
+                transform: open ? "translateY(-50%) rotate(180deg)" : "translateY(-50%) rotate(0deg)",
+                transition: "transform 0.2s",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                color: "rgba(0,0,0,0.54)"
+              },
+              children: /* @__PURE__ */ jsx3(KeyboardArrowDown, {})
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx3(
+      Popper,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        placement: "bottom-start",
+        style: {
+          zIndex: 1300,
+          width: anchorRef.current?.offsetWidth
+        },
+        children: /* @__PURE__ */ jsx3(
+          Paper,
+          {
+            elevation: 0,
+            sx: {
+              mt: 0.5,
+              borderRadius: "10px",
+              border: "1px solid #D6DEEA",
+              maxHeight: 258,
+              overflowY: "auto",
+              bgcolor: "#FFFFFF",
+              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)"
+            },
+            className: "custom-select-menu",
+            children: filteredChildren.length > 0 ? filteredChildren.map((child, index) => {
+              const primaryLabel = child.props?.children?.toString() || "";
+              const subtitle = child.props?.subtitle || "";
+              const isFocused = focusedIndex === index;
+              return /* @__PURE__ */ jsxs3(
+                Box3,
+                {
+                  ref: (el) => {
+                    menuItemRefs.current[index] = el;
+                  },
+                  tabIndex: isFocused ? 0 : -1,
+                  role: "option",
+                  "aria-selected": value === child.props?.value,
+                  onClick: () => handleSelect(child),
+                  onKeyDown: (e) => handleItemKeyDown(e, index, child),
+                  sx: {
+                    px: 1.8,
+                    py: 1,
+                    cursor: "pointer",
+                    outline: "none",
+                    pt: index === 0 ? 1.2 : 1,
+                    pb: index === filteredChildren.length - 1 ? 1.2 : 1,
+                    backgroundColor: value === child.props?.value ? "rgba(25, 118, 210, 0.06)" : "transparent",
+                    "&:hover": {
+                      backgroundColor: "rgba(25, 118, 210, 0.06)"
+                    },
+                    "&:focus": {
+                      backgroundColor: "rgba(25, 118, 210, 0.08)"
+                    }
+                  },
+                  children: [
+                    /* @__PURE__ */ jsx3(
+                      Typography3,
+                      {
+                        sx: {
+                          fontSize: "14px",
+                          fontWeight: 500,
+                          color: "#313952",
+                          lineHeight: 1.5
+                        },
+                        children: primaryLabel
+                      }
+                    ),
+                    subtitle && /* @__PURE__ */ jsx3(
+                      Typography3,
+                      {
+                        sx: {
+                          fontSize: "11px",
+                          fontWeight: 400,
+                          color: "#6F778F",
+                          lineHeight: 1.5,
+                          mt: 0.2
+                        },
+                        children: subtitle
+                      }
+                    )
+                  ]
+                },
+                child.key ?? index
+              );
+            }) : /* @__PURE__ */ jsx3(Box3, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }, children: "No results found" })
+          }
+        )
+      }
+    )
+  ] }) });
+};
+
+// src/components/AutoPopulate/AutoPopulateItem.tsx
+var AutoPopulateItem = () => null;
+
 // src/components/Button/Button.tsx
 import {
-  Button as MuiButton,
-  CircularProgress,
-  useTheme,
   buttonClasses,
-  svgIconClasses,
-  circularProgressClasses
+  CircularProgress,
+  circularProgressClasses,
+  Button as MuiButton,
+  useTheme
 } from "@mui/material";
-import { jsx } from "react/jsx-runtime";
+import { Star } from "@mui/icons-material";
+import { jsx as jsx4 } from "react/jsx-runtime";
 var SIZE_MAP = {
   lg: {
     height: 40,
@@ -43,25 +619,10 @@ var SIZE_MAP = {
   }
 };
 var ICON_ONLY_SIZE_MAP = {
-  lg: { box: 36, iconSize: 20, borderRadius: "10px" },
-  md: { box: 32, iconSize: 18, borderRadius: "9px" },
-  sm: { box: 28, iconSize: 16, borderRadius: "8px" }
+  lg: { box: 36, iconSize: 22, borderRadius: "10px" },
+  md: { box: 32, iconSize: 20, borderRadius: "9px" },
+  sm: { box: 28, iconSize: 18, borderRadius: "8px" }
 };
-function DefaultCircleIcon({ size }) {
-  return /* @__PURE__ */ jsx(
-    "svg",
-    {
-      width: size,
-      height: size,
-      viewBox: "0 0 24 24",
-      fill: "none",
-      xmlns: "http://www.w3.org/2000/svg",
-      "aria-hidden": "true",
-      style: { display: "block", flexShrink: 0 },
-      children: /* @__PURE__ */ jsx("circle", { cx: "12", cy: "12", r: "9", stroke: "currentColor", strokeWidth: "2" })
-    }
-  );
-}
 var Button = ({
   size = "md",
   variant = "filled",
@@ -149,15 +710,15 @@ var Button = ({
       borderRadius: iconBorderRadius
     } = ICON_ONLY_SIZE_MAP[size] ?? ICON_ONLY_SIZE_MAP.md;
     const iconOnlyVariantSx = variant === "text" ? { ...textSx, px: 0 } : variantSx;
-    const spinner2 = /* @__PURE__ */ jsx(
+    const spinner2 = /* @__PURE__ */ jsx4(
       CircularProgress,
       {
         size: ionSize - 2,
         thickness: 5,
-        sx: { color: spinnerColor }
+        sx: { color: spinnerColor, display: "block" }
       }
     );
-    return /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsx4(
       MuiButton,
       {
         disableElevation: true,
@@ -168,28 +729,32 @@ var Button = ({
           height: box,
           padding: 0,
           borderRadius: iconBorderRadius,
-          [`& .${svgIconClasses.root}`]: { fontSize: ionSize },
+          [`& svg:not(.${circularProgressClasses.svg})`]: {
+            fontSize: ionSize,
+            width: ionSize,
+            height: ionSize
+          },
           ...iconOnlyVariantSx,
           ...sx
         },
         ...rest,
-        children: loading ? spinner2 : icon ?? /* @__PURE__ */ jsx(DefaultCircleIcon, { size: ionSize })
+        children: loading ? spinner2 : icon ?? /* @__PURE__ */ jsx4(Star, { sx: { fontSize: ionSize } })
       }
     );
   }
-  const spinner = /* @__PURE__ */ jsx(
+  const spinner = /* @__PURE__ */ jsx4(
     CircularProgress,
     {
       size: iconSize - 2,
       thickness: 5,
-      sx: { color: spinnerColor }
+      sx: { color: spinnerColor, display: "block" }
     }
   );
-  const content = loading ? loadingText ? /* @__PURE__ */ jsx("span", { style: { textTransform: "capitalize" }, children: loadingText }) : children : children;
+  const content = loading ? loadingText ? /* @__PURE__ */ jsx4("span", { style: { textTransform: "capitalize" }, children: loadingText }) : children : children;
   const activeIconPosition = icon ? iconPosition : loading ? "start" : null;
   const startIcon = activeIconPosition === "start" ? loading ? spinner : icon : null;
   const endIcon = activeIconPosition === "end" ? loading ? spinner : icon : null;
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsx4(
     MuiButton,
     {
       variant: variant === "filled" ? "contained" : variant === "outlined" ? "outlined" : "text",
@@ -215,6 +780,9 @@ var Button = ({
         [`& .${buttonClasses.startIcon}`]: {
           marginRight: 0,
           marginLeft: "-4px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           [`& svg:not(.${circularProgressClasses.svg})`]: {
             fontSize: iconSize,
             width: iconSize,
@@ -224,6 +792,9 @@ var Button = ({
         [`& .${buttonClasses.endIcon}`]: {
           marginLeft: 0,
           marginRight: "-4px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           [`& svg:not(.${circularProgressClasses.svg})`]: {
             fontSize: iconSize,
             width: iconSize,
@@ -240,60 +811,1314 @@ var Button = ({
   );
 };
 
-// src/components/Input/Input.tsx
-import React from "react";
-import { TextField } from "@mui/material";
-import { jsx as jsx2 } from "react/jsx-runtime";
-var Input = React.forwardRef(
-  ({ variant = "outlined", fullWidth = true, ...props }, ref) => {
-    return /* @__PURE__ */ jsx2(
-      TextField,
-      {
-        ref,
-        variant,
-        fullWidth,
-        ...props
-      }
-    );
-  }
-);
-Input.displayName = "Input";
+// src/components/ButtonGroup/ButtonGroup.tsx
+import { useState as useState5, useRef as useRef4, useLayoutEffect as useLayoutEffect2 } from "react";
+import {
+  Box as Box7,
+  Tooltip,
+  Typography as Typography7
+} from "@mui/material";
 
 // src/components/Select/Select.tsx
-import React2 from "react";
-import { FormControl, InputLabel, Select as MuiSelect, MenuItem, FormHelperText } from "@mui/material";
-import { jsx as jsx3, jsxs } from "react/jsx-runtime";
-var Select = React2.forwardRef(
-  ({ label, helperText, options = [], error, fullWidth = true, children, ...props }, ref) => {
-    const labelId = `vortexui-select-label-${React2.useId()}`;
-    return /* @__PURE__ */ jsxs(FormControl, { ref, fullWidth, error, variant: "outlined", children: [
-      label && /* @__PURE__ */ jsx3(InputLabel, { id: labelId, children: label }),
-      /* @__PURE__ */ jsx3(
-        MuiSelect,
-        {
-          labelId,
-          label,
-          ...props,
-          children: options.length > 0 ? options.map((opt) => /* @__PURE__ */ jsx3(MenuItem, { value: opt.value, children: opt.label }, opt.value)) : children
+import React6 from "react";
+import { Box as Box6, Typography as Typography6, MenuItem as MenuItem2 } from "@mui/material";
+import {
+  useEffect as useEffect2,
+  useState as useState4
+} from "react";
+
+// src/components/Select/SearchableSelect.tsx
+import { useState as useState3, useRef as useRef2, useCallback as useCallback2, Children as Children2 } from "react";
+import {
+  Box as Box4,
+  Paper as Paper2,
+  ClickAwayListener as ClickAwayListener2,
+  Popper as Popper2,
+  Typography as Typography4
+} from "@mui/material";
+import KeyboardArrowDown2 from "@mui/icons-material/KeyboardArrowDown";
+import { jsx as jsx5, jsxs as jsxs4 } from "react/jsx-runtime";
+var SEARCH_THRESHOLD = 2;
+var scrollbarStyles2 = `
+  .custom-select-menu::-webkit-scrollbar {
+    width: 5px;
+  }
+  .custom-select-menu::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+  }
+  .custom-select-menu::-webkit-scrollbar-thumb {
+    background: #D9D9D9;
+    border-radius: 35px;
+    max-height: 54px;
+    min-height: 54px;
+  }
+  .custom-select-menu::-webkit-scrollbar-thumb:hover {
+    background: #BDBDBD;
+  }
+`;
+if (typeof document !== "undefined") {
+  const styleTag = document.getElementById("custom-select-scrollbar");
+  if (!styleTag) {
+    const s = document.createElement("style");
+    s.id = "custom-select-scrollbar";
+    s.textContent = scrollbarStyles2;
+    document.head.appendChild(s);
+  }
+}
+var getFocusable2 = () => Array.from(
+  document.querySelectorAll(
+    'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
+  )
+).filter((el) => el.offsetParent !== null);
+var SearchableSelect = ({
+  children,
+  bgColor,
+  label,
+  onChange,
+  value,
+  disabled,
+  ...props
+}) => {
+  const [inputValue, setInputValue] = useState3("");
+  const [displayValue, setDisplayValue] = useState3("");
+  const [open, setOpen] = useState3(false);
+  const [focusedIndex, setFocusedIndex] = useState3(-1);
+  const anchorRef = useRef2(null);
+  const menuItemRefs = useRef2([]);
+  const wrapperRef = useRef2(null);
+  const childArray = Children2.toArray(children).filter(Boolean);
+  const showSearch = childArray.length > SEARCH_THRESHOLD;
+  const labelMap = {};
+  childArray.forEach((child) => {
+    if (child.props?.value !== void 0) {
+      labelMap[child.props.value] = {
+        label: child.props?.children?.toString() || "",
+        subtitle: child.props?.subtitle || "",
+        icon: child.props?.icon || null
+      };
+    }
+  });
+  const filteredChildren = showSearch && inputValue ? childArray.filter((child) => {
+    const text = child.props?.children?.toString()?.toLowerCase() || "";
+    const sub = child.props?.subtitle?.toLowerCase() || "";
+    const q = inputValue.toLowerCase();
+    return text.includes(q) || sub.includes(q);
+  }) : childArray;
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    setDisplayValue(e.target.value);
+    setOpen(true);
+    setFocusedIndex(-1);
+  };
+  const handleInputFocus = () => {
+    if (!disabled) setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setFocusedIndex(-1);
+    if (value !== void 0 && labelMap[value]) {
+      setDisplayValue(labelMap[value].label);
+      setInputValue("");
+    } else {
+      setInputValue("");
+    }
+  };
+  const handleSelect = (child) => {
+    const selectedValue = child.props?.value;
+    const selectedLabel = child.props?.children?.toString() || "";
+    setDisplayValue(selectedLabel);
+    setInputValue("");
+    setOpen(false);
+    setFocusedIndex(-1);
+    if (onChange && selectedValue !== void 0) onChange({ target: { value: selectedValue } });
+    setTimeout(() => {
+      const focusable = getFocusable2();
+      const current = anchorRef.current?.querySelector("input");
+      const idx = focusable.findIndex((el) => el === current);
+      if (idx !== -1 && focusable[idx + 1]) focusable[idx + 1].focus();
+    }, 0);
+  };
+  const focusItem = (index) => {
+    setFocusedIndex(index);
+    menuItemRefs.current[index]?.focus();
+  };
+  const handleInputKeyDown = useCallback2(
+    (e) => {
+      if (!open) {
+        if (e.key === "ArrowDown" || e.key === "Enter") setOpen(true);
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (filteredChildren.length > 0) focusItem(0);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (filteredChildren.length > 0) focusItem(filteredChildren.length - 1);
+      } else if (e.key === "Escape") {
+        handleClose();
+      }
+    },
+    [open, filteredChildren]
+  );
+  const handleItemKeyDown = useCallback2(
+    (e, index, child) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        focusItem((index + 1) % filteredChildren.length);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (index === 0) {
+          setFocusedIndex(-1);
+          anchorRef.current?.querySelector("input")?.focus();
+        } else {
+          focusItem(index - 1);
         }
-      ),
-      helperText && /* @__PURE__ */ jsx3(FormHelperText, { children: helperText })
-    ] });
+      } else if (e.key === "Tab") {
+        e.preventDefault();
+        const next2 = index + 1;
+        if (next2 < filteredChildren.length) {
+          focusItem(next2);
+        } else {
+          setFocusedIndex(-1);
+          anchorRef.current?.querySelector("input")?.focus();
+        }
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleSelect(child);
+      } else if (e.key === "Escape") {
+        handleClose();
+      }
+    },
+    [filteredChildren, onChange]
+  );
+  const shownValue = open ? inputValue !== "" ? inputValue : displayValue : displayValue;
+  const selectedIcon = value !== void 0 && labelMap[value]?.icon ? labelMap[value].icon : null;
+  const hasIcon = !!selectedIcon && !open;
+  return /* @__PURE__ */ jsx5(ClickAwayListener2, { onClickAway: handleClose, children: /* @__PURE__ */ jsxs4(Box4, { ref: wrapperRef, sx: { display: "contents" }, children: [
+    /* @__PURE__ */ jsxs4(
+      Box4,
+      {
+        ref: anchorRef,
+        sx: { position: "relative", display: "inline-flex", width: "100%" },
+        children: [
+          hasIcon && /* @__PURE__ */ jsx5(
+            Box4,
+            {
+              sx: {
+                position: "absolute",
+                left: 10,
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 1,
+                display: "flex",
+                alignItems: "center",
+                pointerEvents: "none",
+                mt: label ? "6px" : 0
+              },
+              children: selectedIcon
+            }
+          ),
+          /* @__PURE__ */ jsx5(
+            TextField,
+            {
+              fullWidth: true,
+              size: "small",
+              label,
+              value: shownValue,
+              onChange: handleInputChange,
+              onFocus: handleInputFocus,
+              onKeyDown: handleInputKeyDown,
+              autoComplete: "off",
+              disabled,
+              bgColor,
+              ...props,
+              InputProps: {
+                sx: {
+                  ...hasIcon && {
+                    "& .VortexUIFilledInput-input": {
+                      paddingLeft: "32px !important"
+                    }
+                  }
+                }
+              }
+            }
+          ),
+          /* @__PURE__ */ jsx5(
+            Box4,
+            {
+              onClick: (e) => {
+                if (disabled) return;
+                e.stopPropagation();
+                setOpen((prev2) => !prev2);
+              },
+              sx: {
+                position: "absolute",
+                right: 8,
+                top: "50%",
+                transform: open ? "translateY(-50%) rotate(180deg)" : "translateY(-50%) rotate(0deg)",
+                transition: "transform 0.2s",
+                cursor: disabled ? "default" : "pointer",
+                display: "flex",
+                alignItems: "center",
+                color: "rgba(0,0,0,0.54)"
+              },
+              children: /* @__PURE__ */ jsx5(KeyboardArrowDown2, {})
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx5(
+      Popper2,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        placement: "bottom-start",
+        style: {
+          zIndex: 1300,
+          width: anchorRef.current?.offsetWidth
+        },
+        children: /* @__PURE__ */ jsx5(
+          Paper2,
+          {
+            elevation: 0,
+            sx: {
+              mt: 0.5,
+              borderRadius: "10px",
+              border: "1px solid #D6DEEA",
+              maxHeight: 258,
+              overflowY: "auto",
+              bgcolor: "#FFFFFF",
+              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)"
+            },
+            className: "custom-select-menu",
+            children: filteredChildren.length > 0 ? filteredChildren.map((child, index) => {
+              const primaryLabel = child.props?.children?.toString() || "";
+              const subtitle = child.props?.subtitle || "";
+              const icon = child.props?.icon || null;
+              const isFocused = focusedIndex === index;
+              const isSelected = value === child.props?.value;
+              return /* @__PURE__ */ jsxs4(
+                Box4,
+                {
+                  ref: (el) => {
+                    if (el) menuItemRefs.current[index] = el;
+                  },
+                  tabIndex: isFocused ? 0 : -1,
+                  role: "option",
+                  "aria-selected": isSelected,
+                  onClick: () => handleSelect(child),
+                  onKeyDown: (e) => handleItemKeyDown(e, index, child),
+                  sx: {
+                    px: 1.5,
+                    py: 0.75,
+                    cursor: "pointer",
+                    outline: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    backgroundColor: isSelected ? "rgba(25, 118, 210, 0.06)" : "transparent",
+                    "&:hover": {
+                      backgroundColor: "rgba(25, 118, 210, 0.06)"
+                    },
+                    "&:focus": {
+                      backgroundColor: "rgba(25, 118, 210, 0.08)"
+                    }
+                  },
+                  children: [
+                    icon && /* @__PURE__ */ jsx5(
+                      Box4,
+                      {
+                        sx: {
+                          display: "flex",
+                          alignItems: "center",
+                          flexShrink: 0,
+                          width: 24,
+                          justifyContent: "center"
+                        },
+                        children: icon
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs4(
+                      Box4,
+                      {
+                        sx: {
+                          display: "flex",
+                          flexDirection: "column",
+                          minWidth: 0
+                        },
+                        children: [
+                          /* @__PURE__ */ jsx5(
+                            Typography4,
+                            {
+                              sx: {
+                                fontSize: "14px",
+                                fontWeight: 500,
+                                color: "#313952",
+                                lineHeight: 1.5,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                              },
+                              children: primaryLabel
+                            }
+                          ),
+                          subtitle && /* @__PURE__ */ jsx5(
+                            Typography4,
+                            {
+                              sx: {
+                                fontSize: "11px",
+                                fontWeight: 400,
+                                color: "#6F778F",
+                                lineHeight: 1.5,
+                                mt: 0.2
+                              },
+                              children: subtitle
+                            }
+                          )
+                        ]
+                      }
+                    )
+                  ]
+                },
+                child.key ?? index
+              );
+            }) : /* @__PURE__ */ jsx5(Box4, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }, children: "No results found" })
+          }
+        )
+      }
+    )
+  ] }) });
+};
+
+// src/components/Select/IconSelect.tsx
+import { useId } from "react";
+import {
+  Box as Box5,
+  MenuItem,
+  Typography as Typography5
+} from "@mui/material";
+import KeyboardArrowDown3 from "@mui/icons-material/KeyboardArrowDown";
+import { jsx as jsx6, jsxs as jsxs5 } from "react/jsx-runtime";
+var IconSelect = ({
+  value,
+  onChange,
+  options = [],
+  disabled = false,
+  label,
+  placeholder,
+  fullWidth = false,
+  size = "small",
+  bgColor = "#FFFFFF",
+  error,
+  helperText,
+  name,
+  id,
+  sx,
+  ...rest
+}) => {
+  const generatedId = useId();
+  const selectId = id || generatedId;
+  const labelId = `${selectId}-label`;
+  const handleChange = (e) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
+  const selectedOption = options.find((opt) => String(opt.value) === String(value));
+  const selectNode = /* @__PURE__ */ jsx6(
+    TextField,
+    {
+      select: true,
+      id: selectId,
+      label,
+      name,
+      value: value ?? "",
+      onChange: handleChange,
+      disabled,
+      error,
+      helperText,
+      fullWidth,
+      size,
+      bgColor,
+      SelectProps: {
+        displayEmpty: true,
+        IconComponent: KeyboardArrowDown3,
+        renderValue: (selected) => {
+          if (!selectedOption || selectedOption.value === "") {
+            if (placeholder) {
+              return /* @__PURE__ */ jsx6(
+                Typography5,
+                {
+                  component: "span",
+                  sx: { fontSize: 13, color: "#9CA3AF" },
+                  children: placeholder
+                }
+              );
+            }
+            return null;
+          }
+          return /* @__PURE__ */ jsxs5(Box5, { sx: { display: "flex", alignItems: "center", gap: 1 }, children: [
+            (selectedOption.icon || selectedOption.img) && /* @__PURE__ */ jsx6(
+              Box5,
+              {
+                sx: {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 18,
+                  height: 18,
+                  flexShrink: 0,
+                  borderRadius: selectedOption.img ? "50%" : 0,
+                  overflow: selectedOption.img ? "hidden" : "visible"
+                },
+                children: selectedOption.img ? /* @__PURE__ */ jsx6(Box5, { component: "img", src: selectedOption.img, alt: "", sx: { width: "100%", height: "100%", objectFit: "cover" } }) : selectedOption.icon
+              }
+            ),
+            selectedOption.label && /* @__PURE__ */ jsx6(
+              Typography5,
+              {
+                component: "span",
+                sx: {
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "#1F2937",
+                  lineHeight: 1
+                },
+                children: selectedOption.label
+              }
+            )
+          ] });
+        },
+        MenuProps: {
+          PaperProps: {
+            sx: {
+              mt: 0.5,
+              borderRadius: "8px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
+              border: "1px solid #E5E7EB",
+              "& .MuiList-root": { py: 1 }
+            }
+          }
+        }
+      },
+      sx: {
+        "& .MuiSelect-select": {
+          display: "flex",
+          alignItems: "center",
+          py: 0,
+          pl: 1.5,
+          pr: 4,
+          height: "100%",
+          boxSizing: "border-box"
+        },
+        ...!label ? sx : {}
+      },
+      ...rest,
+      children: options.map((opt) => /* @__PURE__ */ jsxs5(
+        MenuItem,
+        {
+          value: opt.value,
+          sx: {
+            display: "flex",
+            alignItems: "center",
+            gap: 1.2,
+            px: 1.8,
+            py: 1,
+            fontSize: 13,
+            color: "#374151",
+            "&:hover": { bgcolor: "#F0F5FF" },
+            "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
+            "&.Mui-selected:hover": { bgcolor: "#F0F5FF" }
+          },
+          children: [
+            (opt.icon || opt.img) && /* @__PURE__ */ jsx6(
+              Box5,
+              {
+                sx: {
+                  display: "flex",
+                  alignItems: "center",
+                  width: 18,
+                  height: 18,
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  borderRadius: opt.img ? "50%" : 0,
+                  overflow: opt.img ? "hidden" : "visible"
+                },
+                children: opt.img ? /* @__PURE__ */ jsx6(Box5, { component: "img", src: opt.img, alt: "", sx: { width: "100%", height: "100%", objectFit: "cover" } }) : opt.icon
+              }
+            ),
+            opt.label && /* @__PURE__ */ jsx6(Typography5, { component: "span", sx: { fontSize: 13 }, children: opt.label })
+          ]
+        },
+        opt.value
+      ))
+    }
+  );
+  return selectNode;
+};
+
+// src/components/Select/Select.tsx
+import { ExpandMore } from "@mui/icons-material";
+import { jsx as jsx7, jsxs as jsxs6 } from "react/jsx-runtime";
+var OPTIONS = {
+  1: { label: "Low", value: 1, color: "#4772FF" },
+  2: { label: "Medium", value: 2, color: "#FF8447" },
+  3: { label: "High", value: 3, color: "#FF4750" }
+};
+var DefaultSelect = ({
+  value,
+  recordId,
+  onUpdate,
+  options = OPTIONS,
+  disabled = false,
+  label,
+  placeholder,
+  fullWidth = false,
+  size = "small",
+  bgColor = "#FFFFFF",
+  error,
+  helperText,
+  name,
+  id,
+  sx
+}) => {
+  const generatedId = React6.useId();
+  const selectId = id || generatedId;
+  const labelId = `${selectId}-label`;
+  const [current, setCurrent] = useState4(value || 2);
+  const [loading, setLoading] = useState4(false);
+  useEffect2(() => {
+    setCurrent(value || 2);
+  }, [value]);
+  const handleChange = async (e) => {
+    const value2 = e.target.value;
+    if (value2 === current) return;
+    setLoading(true);
+    try {
+      if (onUpdate && recordId !== void 0) {
+        await onUpdate(recordId, value2);
+      }
+      setCurrent(value2);
+    } catch (err) {
+      console.error("Value update failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const selectedOption = options[current] || Object.values(options)[0] || OPTIONS[2];
+  const selectNode = /* @__PURE__ */ jsx7(
+    TextField,
+    {
+      select: true,
+      id: selectId,
+      label,
+      name,
+      value: current ?? "",
+      onChange: handleChange,
+      disabled: disabled || loading,
+      error,
+      helperText,
+      fullWidth,
+      size,
+      bgColor,
+      SelectProps: {
+        displayEmpty: true,
+        IconComponent: ExpandMore,
+        renderValue: (selected) => {
+          const cfg = options[selected] || selectedOption;
+          if (!cfg) {
+            if (placeholder) {
+              return /* @__PURE__ */ jsx7(
+                Typography6,
+                {
+                  component: "span",
+                  sx: { fontSize: 13, color: "#9CA3AF" },
+                  children: placeholder
+                }
+              );
+            }
+            return null;
+          }
+          return /* @__PURE__ */ jsxs6(Box6, { sx: { display: "flex", alignItems: "center", gap: 1 }, children: [
+            loading ? /* @__PURE__ */ jsx7(
+              Box6,
+              {
+                sx: {
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  border: `2px solid ${cfg.color}`,
+                  borderTopColor: "transparent",
+                  animation: "spin 0.6s linear infinite",
+                  flexShrink: 0,
+                  "@keyframes spin": { to: { transform: "rotate(360deg)" } }
+                }
+              }
+            ) : /* @__PURE__ */ jsx7(
+              Box6,
+              {
+                sx: {
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  bgcolor: cfg.color,
+                  flexShrink: 0
+                }
+              }
+            ),
+            /* @__PURE__ */ jsx7(
+              Typography6,
+              {
+                component: "span",
+                sx: {
+                  fontSize: 13,
+                  fontWeight: 400,
+                  color: "#1F2937",
+                  lineHeight: 1
+                },
+                children: cfg.label
+              }
+            )
+          ] });
+        },
+        MenuProps: {
+          PaperProps: {
+            sx: {
+              mt: 0.5,
+              borderRadius: "8px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
+              border: "1px solid #E5E7EB",
+              "& .MuiList-root": { py: 1 }
+            }
+          }
+        }
+      },
+      sx: {
+        "& .MuiSelect-select": {
+          display: "flex",
+          alignItems: "center",
+          py: 0,
+          pl: 1.5,
+          pr: 4,
+          height: "100%",
+          boxSizing: "border-box"
+        },
+        ...!label ? sx : {}
+      },
+      children: Object.entries(options).map(([key, opt]) => {
+        const val = isNaN(Number(key)) ? key : Number(key);
+        return /* @__PURE__ */ jsxs6(
+          MenuItem2,
+          {
+            value: val,
+            sx: {
+              display: "flex",
+              alignItems: "center",
+              gap: 1.2,
+              px: 1.8,
+              py: 1,
+              fontSize: 13,
+              color: "#374151",
+              "&:hover": { bgcolor: "#F0F5FF" },
+              "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
+              "&.Mui-selected:hover": { bgcolor: "#F0F5FF" }
+            },
+            children: [
+              /* @__PURE__ */ jsx7(
+                Box6,
+                {
+                  sx: {
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    bgcolor: opt.color,
+                    flexShrink: 0
+                  }
+                }
+              ),
+              /* @__PURE__ */ jsx7(Typography6, { component: "span", sx: { fontSize: 13 }, children: opt.label })
+            ]
+          },
+          key
+        );
+      })
+    }
+  );
+  return selectNode;
+};
+var Select = (props) => {
+  if (props.variant === "searchable") {
+    const { variant, ...rest } = props;
+    return /* @__PURE__ */ jsx7(SearchableSelect, { ...rest });
+  }
+  if (props.variant === "icon") {
+    const { variant, ...rest } = props;
+    return /* @__PURE__ */ jsx7(IconSelect, { ...rest });
+  }
+  return /* @__PURE__ */ jsx7(DefaultSelect, { ...props });
+};
+
+// src/components/ButtonGroup/ButtonGroup.tsx
+import { jsx as jsx8, jsxs as jsxs7 } from "react/jsx-runtime";
+var DefaultIcons = {
+  video: (color) => /* @__PURE__ */ jsx8("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", children: /* @__PURE__ */ jsx8(
+    "path",
+    {
+      d: "M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z",
+      stroke: color,
+      strokeWidth: "1.8",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }
+  ) }),
+  location: (color) => /* @__PURE__ */ jsx8("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", children: /* @__PURE__ */ jsx8(
+    "path",
+    {
+      d: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5z",
+      fill: color
+    }
+  ) }),
+  phone: (color) => /* @__PURE__ */ jsx8("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", children: /* @__PURE__ */ jsx8(
+    "path",
+    {
+      d: "M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.56 21 3 13.44 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z",
+      fill: color
+    }
+  ) }),
+  whatsapp: (color) => /* @__PURE__ */ jsx8("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: color, children: /* @__PURE__ */ jsx8("path", { d: "M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.8L2.05 22l5.44-1.43a9.84 9.84 0 004.55 1.13c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.52 13.49c-.23.64-1.36 1.22-1.87 1.28-.48.06-1.08.08-1.74-.11-.4-.12-.91-.28-1.56-.55-2.73-1.18-4.5-3.94-4.64-4.12-.13-.18-1.1-1.47-1.1-2.8 0-1.33.7-1.98.95-2.25.23-.26.5-.33.67-.33.17 0 .33 0 .48.01.15.01.36-.06.56.43.2.49.69 1.68.75 1.8.06.12.1.26.02.41-.08.15-.12.25-.24.38-.12.13-.25.29-.36.39-.12.11-.24.22-.1.44.14.22.62.97 1.32 1.57.9.79 1.67 1.04 1.9 1.16.23.12.36.1.5-.06.13-.17.57-.67.72-.9.15-.23.3-.19.5-.11.2.08 1.26.59 1.48.7.22.11.36.17.41.26.05.09.05.53-.18 1.17z" }) }),
+  email: (color) => /* @__PURE__ */ jsxs7("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", children: [
+    /* @__PURE__ */ jsx8(
+      "path",
+      {
+        d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z",
+        stroke: color,
+        strokeWidth: "1.8",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }
+    ),
+    /* @__PURE__ */ jsx8(
+      "polyline",
+      {
+        points: "22,6 12,13 2,6",
+        stroke: color,
+        strokeWidth: "1.8",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }
+    )
+  ] })
+};
+var ACTIVE_COLOR = "#4772FF";
+var DynamicFields = ({
+  method,
+  values,
+  onChange,
+  disabled,
+  bgColor
+}) => {
+  if (!method) return null;
+  const handlePhoneChange = (fieldName, rawValue, maxLength) => {
+    let digitsOnly = rawValue.replace(/\D/g, "");
+    if (maxLength) digitsOnly = digitsOnly.slice(0, maxLength);
+    onChange(fieldName, digitsOnly);
+  };
+  return /* @__PURE__ */ jsx8(
+    Box7,
+    {
+      sx: {
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 1.5,
+        mt: 1.5,
+        animation: "cmsIn 0.22s ease",
+        "@keyframes cmsIn": {
+          from: { opacity: 0, transform: "translateY(-4px)" },
+          to: { opacity: 1, transform: "translateY(0)" }
+        }
+      },
+      children: method.fields.map((field) => /* @__PURE__ */ jsx8(Box7, { sx: { flex: "1 1 160px", minWidth: 140 }, children: field.type === "select" ? /* @__PURE__ */ jsx8(
+        Select,
+        {
+          variant: "icon",
+          label: field.label,
+          placeholder: field.label,
+          value: values?.[field.name] || "",
+          onChange: (val) => onChange(field.name, String(val)),
+          disabled,
+          options: field.options || [],
+          fullWidth: true,
+          size: "small",
+          bgColor
+        }
+      ) : field.type === "phone" ? /* @__PURE__ */ jsx8(
+        TextField,
+        {
+          fullWidth: true,
+          size: "small",
+          label: field.label,
+          value: values?.[field.name] || "",
+          onChange: (e) => handlePhoneChange(field.name, e.target.value, field.maxLength),
+          onKeyDown: (e) => {
+            const allowedKeys = [
+              "Backspace",
+              "Delete",
+              "ArrowLeft",
+              "ArrowRight",
+              "Tab",
+              "Home",
+              "End"
+            ];
+            if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey)
+              return;
+            if (!/^[0-9]$/.test(e.key)) {
+              e.preventDefault();
+            }
+          },
+          onPaste: (e) => {
+            const pasted = e.clipboardData.getData("text");
+            if (/\D/.test(pasted)) {
+              e.preventDefault();
+              handlePhoneChange(
+                field.name,
+                (values?.[field.name] || "") + pasted,
+                field.maxLength
+              );
+            }
+          },
+          disabled,
+          inputProps: {
+            inputMode: "numeric",
+            pattern: "[0-9]*",
+            maxLength: field.maxLength || void 0
+          },
+          sx: {
+            "& .VortexUIOutlinedInput-root": {
+              fontSize: 13,
+              bgcolor: bgColor || "#fff",
+              borderRadius: "8px",
+              "& fieldset": { borderColor: "#E5E7EB" },
+              "&.Mui-focused fieldset": { borderColor: ACTIVE_COLOR }
+            }
+          }
+        }
+      ) : /* @__PURE__ */ jsx8(
+        TextField,
+        {
+          fullWidth: true,
+          size: "small",
+          label: field.label,
+          value: values?.[field.name] || "",
+          onChange: (e) => onChange(field.name, e.target.value),
+          disabled,
+          sx: {
+            "& .VortexUIOutlinedInput-root": {
+              fontSize: 13,
+              bgcolor: bgColor || "#fff",
+              borderRadius: "8px",
+              "& fieldset": { borderColor: "#E5E7EB" },
+              "&.Mui-focused fieldset": { borderColor: ACTIVE_COLOR }
+            }
+          }
+        }
+      ) }, field.name))
+    }
+  );
+};
+var SIZE_HEIGHTS = {
+  sm: 32,
+  md: 36,
+  lg: 40
+};
+var ButtonGroup = ({
+  value,
+  onChange,
+  disabled = false,
+  bgColor = "#FFFFFF",
+  variant = "icon",
+  size = "lg",
+  buttonHeight: buttonHeightProp,
+  buttonWidth: buttonWidthProp,
+  methods: methodsProp,
+  fullWidth = false
+}) => {
+  const methods = methodsProp || [];
+  const showIcon = variant === "icon" || variant === "both";
+  const showText = variant === "text" || variant === "both";
+  const buttonWidth = buttonWidthProp ?? void 0;
+  const buttonHeight = buttonHeightProp ?? SIZE_HEIGHTS[size] ?? 40;
+  const activeKey = value?.type || null;
+  const activeIdx = methods.findIndex((m) => m.key === activeKey);
+  const activeMethod = activeIdx !== -1 ? methods[activeIdx] : null;
+  const [hoveredIdx, setHoveredIdx] = useState5(null);
+  const buttonRefs = useRef4([]);
+  const [pillStyle, setPillStyle] = useState5({ left: 0, width: 0 });
+  useLayoutEffect2(() => {
+    if (activeIdx !== -1 && buttonRefs.current[activeIdx]) {
+      const el = buttonRefs.current[activeIdx];
+      if (el) {
+        setPillStyle({ left: el.offsetLeft, width: el.offsetWidth });
+      }
+    }
+  }, [activeIdx, buttonWidth, variant]);
+  const handleSelect = (key) => {
+    if (disabled) return;
+    if (onChange) {
+      onChange(
+        activeKey === key ? { type: null, fields: {} } : { type: key, fields: {} }
+      );
+    }
+  };
+  const handleFieldChange = (fieldName, fieldVal) => {
+    if (onChange) {
+      onChange({
+        type: activeKey,
+        fields: { ...value?.fields || {}, [fieldName]: fieldVal }
+      });
+    }
+  };
+  const resolveIcon = (m, color) => {
+    if (!showIcon) return null;
+    if (m.icon) return typeof m.icon === "function" ? m.icon(color) : m.icon;
+    if (DefaultIcons[m.key]) return DefaultIcons[m.key](color);
+    return null;
+  };
+  return /* @__PURE__ */ jsxs7(Box7, { children: [
+    /* @__PURE__ */ jsxs7(
+      Box7,
+      {
+        sx: {
+          position: "relative",
+          display: "inline-flex",
+          height: buttonHeight,
+          borderRadius: "10px",
+          bgcolor: "#F3F4F6",
+          // Segmented control background
+          p: "4px",
+          // Inner padding
+          width: fullWidth ? "100%" : buttonWidth ? methods.length * buttonWidth + (methods.length - 1) + 8 : "max-content",
+          userSelect: "none"
+        },
+        children: [
+          activeMethod && pillStyle.width > 0 && /* @__PURE__ */ jsx8(
+            Box7,
+            {
+              sx: {
+                position: "absolute",
+                top: "4px",
+                height: "calc(100% - 8px)",
+                left: pillStyle.left,
+                width: pillStyle.width,
+                bgcolor: ACTIVE_COLOR,
+                borderRadius: "6px",
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1)",
+                zIndex: 0,
+                pointerEvents: "none",
+                transition: "left 0.28s cubic-bezier(0.4,0,0.2,1), width 0.28s cubic-bezier(0.4,0,0.2,1)"
+              }
+            }
+          ),
+          methods.map((m, i) => {
+            const isActive = activeKey === m.key;
+            const isHovered = hoveredIdx === i;
+            const iconColor = isActive ? "#fff" : isHovered ? ACTIVE_COLOR : "#9CA3AF";
+            const textColor = isActive ? "#fff" : isHovered ? ACTIVE_COLOR : "#6B7280";
+            const iconNode = resolveIcon(m, iconColor);
+            const button = /* @__PURE__ */ jsxs7(
+              Box7,
+              {
+                ref: (el) => {
+                  buttonRefs.current[i] = el;
+                },
+                onClick: () => handleSelect(m.key),
+                onMouseEnter: () => setHoveredIdx(i),
+                onMouseLeave: () => setHoveredIdx(null),
+                sx: {
+                  position: "relative",
+                  zIndex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: showIcon && showText ? "8px" : 0,
+                  flex: fullWidth ? 1 : void 0,
+                  width: fullWidth ? "auto" : buttonWidth || "auto",
+                  minWidth: buttonWidth ? void 0 : variant === "icon" ? 48 : 80,
+                  px: showText ? 3 : 2,
+                  height: "100%",
+                  borderRadius: "6px",
+                  cursor: disabled ? "not-allowed" : "pointer",
+                  opacity: disabled ? 0.5 : 1,
+                  bgcolor: !isActive && isHovered ? "rgba(0,0,0,0.04)" : "transparent",
+                  transition: "background-color 0.15s ease",
+                  whiteSpace: "nowrap"
+                },
+                children: [
+                  iconNode && /* @__PURE__ */ jsx8(
+                    Box7,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                        transition: "transform 0.15s ease",
+                        transform: isActive ? "scale(1.08)" : "scale(1)"
+                      },
+                      children: iconNode
+                    }
+                  ),
+                  showText && /* @__PURE__ */ jsx8(
+                    Typography7,
+                    {
+                      component: "span",
+                      sx: {
+                        fontSize: 13,
+                        fontWeight: isActive ? 500 : 400,
+                        color: textColor,
+                        lineHeight: 1,
+                        transition: "color 0.15s ease"
+                      },
+                      children: m.label
+                    }
+                  )
+                ]
+              },
+              m.key
+            );
+            return variant === "icon" ? /* @__PURE__ */ jsx8(Tooltip, { title: m.label, placement: "top", arrow: true, children: button }, m.key) : button;
+          })
+        ]
+      }
+    ),
+    activeMethod && /* @__PURE__ */ jsx8(
+      DynamicFields,
+      {
+        method: activeMethod,
+        values: value?.fields,
+        onChange: handleFieldChange,
+        disabled,
+        bgColor
+      }
+    )
+  ] });
+};
+
+// src/components/ChipInput/ChipInput.tsx
+import { useState as useState6 } from "react";
+import Box8 from "@mui/material/Box";
+import Typography8 from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import { jsx as jsx9, jsxs as jsxs8 } from "react/jsx-runtime";
+var Chip = ({
+  label,
+  onDelete,
+  disabled
+}) => /* @__PURE__ */ jsxs8(
+  Box8,
+  {
+    sx: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 0.5,
+      bgcolor: "#E8EDFF",
+      border: "1px solid #D4DEFF",
+      color: "#313952",
+      fontSize: "13px",
+      fontWeight: 400,
+      px: 1.2,
+      py: 0.5,
+      borderRadius: "10px",
+      userSelect: "none"
+    },
+    children: [
+      label,
+      !disabled && /* @__PURE__ */ jsx9(
+        IconButton,
+        {
+          onClick: onDelete,
+          size: "small",
+          sx: {
+            p: "2px",
+            ml: 0.3
+          },
+          children: /* @__PURE__ */ jsx9(
+            "svg",
+            {
+              width: "8",
+              height: "8",
+              viewBox: "0 0 14 14",
+              fill: "none",
+              xmlns: "http://www.w3.org/2000/svg",
+              children: /* @__PURE__ */ jsx9(
+                "path",
+                {
+                  d: "M13 1L1 13M1 1L13 13",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                }
+              )
+            }
+          )
+        }
+      )
+    ]
   }
 );
-Select.displayName = "Select";
+var ChipInput = ({
+  label,
+  chips = [],
+  onChipsChange,
+  bgColor,
+  disabled = false,
+  error = false,
+  helperText,
+  fullWidth = false,
+  sx
+}) => {
+  const [inputValue, setInputValue] = useState6("");
+  const [duplicateError, setDuplicateError] = useState6(false);
+  const handleAdd = () => {
+    const trimmed = inputValue.trim();
+    if (!trimmed) return;
+    const isDuplicate = chips.some(
+      (c) => c.toLowerCase() === trimmed.toLowerCase()
+    );
+    if (isDuplicate) {
+      setDuplicateError(true);
+      return;
+    }
+    onChipsChange?.([...chips, trimmed]);
+    setInputValue("");
+    setDuplicateError(false);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAdd();
+    }
+  };
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+    if (duplicateError) setDuplicateError(false);
+  };
+  const handleDelete = (chip) => {
+    onChipsChange?.(chips.filter((c) => c !== chip));
+    if (duplicateError) setDuplicateError(false);
+  };
+  const showError = error || duplicateError;
+  const displayHelperText = duplicateError ? "This entry already exists" : helperText;
+  const passErrorToTextField = showError ? displayHelperText || true : false;
+  return /* @__PURE__ */ jsxs8(Box8, { sx: { width: fullWidth ? "100%" : void 0, ...sx }, children: [
+    /* @__PURE__ */ jsx9(
+      TextField,
+      {
+        fullWidth,
+        label,
+        value: inputValue,
+        onChange: handleChange,
+        onKeyDown: handleKeyDown,
+        disabled,
+        error: passErrorToTextField,
+        bgColor,
+        inputProps: { "aria-label": label },
+        InputProps: {
+          endAdornment: /* @__PURE__ */ jsx9(InputAdornment, { position: "end", children: /* @__PURE__ */ jsx9(
+            IconButton,
+            {
+              onClick: handleAdd,
+              size: "small",
+              disabled: disabled || !inputValue.trim(),
+              sx: {
+                mr: -0.5,
+                color: "#6B7280",
+                "&:hover": {
+                  color: "#374151",
+                  backgroundColor: "transparent"
+                }
+              },
+              children: /* @__PURE__ */ jsx9("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", children: /* @__PURE__ */ jsx9(
+                "path",
+                {
+                  d: "M12 5V19M5 12H19",
+                  stroke: "currentColor",
+                  strokeWidth: "2.5",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                }
+              ) })
+            }
+          ) })
+        }
+      }
+    ),
+    displayHelperText && !showError && /* @__PURE__ */ jsx9(
+      Typography8,
+      {
+        sx: {
+          fontSize: "11px",
+          mt: 0.5,
+          fontWeight: 500,
+          mx: "1px",
+          color: "text.secondary"
+        },
+        children: displayHelperText
+      }
+    ),
+    chips.length > 0 && /* @__PURE__ */ jsx9(Box8, { sx: { display: "flex", gap: 1, flexWrap: "wrap", mt: 1 }, children: chips.map((chip) => /* @__PURE__ */ jsx9(
+      Chip,
+      {
+        label: chip,
+        onDelete: () => handleDelete(chip),
+        disabled
+      },
+      chip
+    )) })
+  ] });
+};
+
+// src/components/DataTable/DataTable.tsx
+import React9 from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper as Paper3,
+  CircularProgress as CircularProgress2,
+  Typography as Typography9
+} from "@mui/material";
+import { jsx as jsx10, jsxs as jsxs9 } from "react/jsx-runtime";
+var DataTable = React9.forwardRef(
+  ({ columns, data, isLoading = false, emptyMessage = "No data available" }, ref) => {
+    return /* @__PURE__ */ jsx10(TableContainer, { ref, component: Paper3, variant: "outlined", sx: { overflow: "hidden" }, children: /* @__PURE__ */ jsxs9(Table, { children: [
+      /* @__PURE__ */ jsx10(TableHead, { children: /* @__PURE__ */ jsx10(TableRow, { sx: { backgroundColor: "background.default" }, children: columns.map((col) => /* @__PURE__ */ jsx10(TableCell, { align: col.align || "left", sx: { fontWeight: 600 }, children: col.header }, col.key)) }) }),
+      /* @__PURE__ */ jsx10(TableBody, { children: isLoading ? /* @__PURE__ */ jsx10(TableRow, { children: /* @__PURE__ */ jsx10(TableCell, { colSpan: columns.length, align: "center", sx: { py: 6 }, children: /* @__PURE__ */ jsx10(CircularProgress2, { size: 32 }) }) }) : data.length === 0 ? /* @__PURE__ */ jsx10(TableRow, { children: /* @__PURE__ */ jsx10(TableCell, { colSpan: columns.length, align: "center", sx: { py: 6 }, children: /* @__PURE__ */ jsx10(Typography9, { variant: "body2", color: "text.secondary", children: emptyMessage }) }) }) : data.map((row, idx) => /* @__PURE__ */ jsx10(TableRow, { hover: true, sx: { transition: "background-color 0.2s" }, children: columns.map((col) => {
+        const val = row[col.key];
+        return /* @__PURE__ */ jsx10(TableCell, { align: col.align || "left", children: col.render ? col.render(row) : val }, col.key);
+      }) }, row.id || idx)) })
+    ] }) });
+  }
+);
+DataTable.displayName = "DataTable";
 
 // src/components/Modal/Modal.tsx
-import React3 from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Box } from "@mui/material";
-import { jsx as jsx4, jsxs as jsxs2 } from "react/jsx-runtime";
-var CloseIcon = () => /* @__PURE__ */ jsxs2("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-  /* @__PURE__ */ jsx4("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
-  /* @__PURE__ */ jsx4("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
+import React10 from "react";
+import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton as IconButton2, Box as Box9 } from "@mui/material";
+import { jsx as jsx11, jsxs as jsxs10 } from "react/jsx-runtime";
+var CloseIcon = () => /* @__PURE__ */ jsxs10("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+  /* @__PURE__ */ jsx11("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
+  /* @__PURE__ */ jsx11("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
 ] });
-var Modal = React3.forwardRef(
+var Modal = React10.forwardRef(
   ({ open, title, onClose, actions, children, fullWidth = true, maxWidth = "sm", ...props }, ref) => {
-    return /* @__PURE__ */ jsxs2(
+    return /* @__PURE__ */ jsxs10(
       Dialog,
       {
         ref,
@@ -303,22 +2128,22 @@ var Modal = React3.forwardRef(
         maxWidth,
         ...props,
         children: [
-          /* @__PURE__ */ jsxs2(Box, { display: "flex", alignItems: "center", justifyContent: "space-between", pr: 1, children: [
-            title && /* @__PURE__ */ jsx4(DialogTitle, { sx: { m: 0, p: 2, flexGrow: 1 }, children: title }),
-            onClose && /* @__PURE__ */ jsx4(
-              IconButton,
+          /* @__PURE__ */ jsxs10(Box9, { display: "flex", alignItems: "center", justifyContent: "space-between", pr: 1, children: [
+            title && /* @__PURE__ */ jsx11(DialogTitle, { sx: { m: 0, p: 2, flexGrow: 1 }, children: title }),
+            onClose && /* @__PURE__ */ jsx11(
+              IconButton2,
               {
                 "aria-label": "close",
                 onClick: onClose,
                 sx: {
                   color: (theme) => theme.palette.grey[500]
                 },
-                children: /* @__PURE__ */ jsx4(CloseIcon, {})
+                children: /* @__PURE__ */ jsx11(CloseIcon, {})
               }
             )
           ] }),
-          /* @__PURE__ */ jsx4(DialogContent, { sx: { p: 3, pt: title ? 1 : 3 }, children }),
-          actions && /* @__PURE__ */ jsx4(DialogActions, { sx: { p: 2 }, children: actions })
+          /* @__PURE__ */ jsx11(DialogContent, { sx: { p: 3, pt: title ? 1 : 3 }, children }),
+          actions && /* @__PURE__ */ jsx11(DialogActions, { sx: { p: 2 }, children: actions })
         ]
       }
     );
@@ -326,156 +2151,523 @@ var Modal = React3.forwardRef(
 );
 Modal.displayName = "Modal";
 
-// src/components/DataTable/DataTable.tsx
-import React4 from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  CircularProgress as CircularProgress2,
-  Typography
-} from "@mui/material";
-import { jsx as jsx5, jsxs as jsxs3 } from "react/jsx-runtime";
-var DataTable = React4.forwardRef(
-  ({ columns, data, isLoading = false, emptyMessage = "No data available" }, ref) => {
-    return /* @__PURE__ */ jsx5(TableContainer, { ref, component: Paper, variant: "outlined", sx: { overflow: "hidden" }, children: /* @__PURE__ */ jsxs3(Table, { children: [
-      /* @__PURE__ */ jsx5(TableHead, { children: /* @__PURE__ */ jsx5(TableRow, { sx: { backgroundColor: "background.default" }, children: columns.map((col) => /* @__PURE__ */ jsx5(TableCell, { align: col.align || "left", sx: { fontWeight: 600 }, children: col.header }, col.key)) }) }),
-      /* @__PURE__ */ jsx5(TableBody, { children: isLoading ? /* @__PURE__ */ jsx5(TableRow, { children: /* @__PURE__ */ jsx5(TableCell, { colSpan: columns.length, align: "center", sx: { py: 6 }, children: /* @__PURE__ */ jsx5(CircularProgress2, { size: 32 }) }) }) : data.length === 0 ? /* @__PURE__ */ jsx5(TableRow, { children: /* @__PURE__ */ jsx5(TableCell, { colSpan: columns.length, align: "center", sx: { py: 6 }, children: /* @__PURE__ */ jsx5(Typography, { variant: "body2", color: "text.secondary", children: emptyMessage }) }) }) : data.map((row, idx) => /* @__PURE__ */ jsx5(TableRow, { hover: true, sx: { transition: "background-color 0.2s" }, children: columns.map((col) => {
-        const val = row[col.key];
-        return /* @__PURE__ */ jsx5(TableCell, { align: col.align || "left", children: col.render ? col.render(row) : val }, col.key);
-      }) }, row.id || idx)) })
-    ] }) });
-  }
-);
-DataTable.displayName = "DataTable";
-
-// src/components/Accordion/Accordion.tsx
-import * as React5 from "react";
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary, {
-  accordionSummaryClasses
-} from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography2 from "@mui/material/Typography";
-import { Box as Box2, Stack } from "@mui/material";
-import { jsx as jsx6, jsxs as jsxs4 } from "react/jsx-runtime";
-var Accordion = styled((props) => /* @__PURE__ */ jsx6(MuiAccordion, { disableGutters: true, elevation: 0, ...props }))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:first-of-type)": {
-    borderTop: 0
-  },
-  "&:first-of-type": {
-    borderTopLeftRadius: "6px",
-    borderTopRightRadius: "6px"
-  },
-  "&:last-of-type": {
-    borderBottomLeftRadius: "6px",
-    borderBottomRightRadius: "6px"
-  },
-  "&:not(:last-child)": {
-    borderBottom: 0
-  },
-  "&::before": {
-    display: "block !important",
-    position: "absolute",
-    top: 0,
-    left: "16px",
-    right: "16px",
-    height: "1px",
-    backgroundColor: theme.palette.divider,
-    opacity: "1 !important"
-  },
-  "&:first-of-type::before": {
-    display: "none !important"
-  }
-}));
-var AccordionSummary = styled((props) => /* @__PURE__ */ jsx6(
-  MuiAccordionSummary,
-  {
-    expandIcon: /* @__PURE__ */ jsx6(ArrowForwardIosSharpIcon, { sx: { fontSize: "0.9rem" } }),
+// src/components/NumberField/NumberField.tsx
+import { Divider, InputAdornment as InputAdornment2 } from "@mui/material";
+import Box10 from "@mui/material/Box";
+import IconButton3 from "@mui/material/IconButton";
+import { styled as styled3 } from "@mui/material/styles";
+import TextField2 from "@mui/material/TextField";
+import { useEffect as useEffect3, useRef as useRef5, useState as useState7 } from "react";
+import { ExpandLess, ExpandMore as ExpandMore2 } from "@mui/icons-material";
+import { jsx as jsx12, jsxs as jsxs11 } from "react/jsx-runtime";
+var StyledTextField2 = styled3(
+  ({
+    bgColor = "transparent",
+    hasLabel,
+    hasValue,
+    showButton,
+    InputProps,
     ...props
-  }
-))(({ theme }) => ({
-  [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
-    transform: "rotate(90deg)"
+  }) => /* @__PURE__ */ jsx12(
+    TextField2,
+    {
+      variant: "filled",
+      fullWidth: true,
+      InputProps: {
+        disableUnderline: true,
+        ...InputProps,
+        sx: {
+          overflow: "visible",
+          borderRadius: showButton ? "10px 0 0 10px !important" : "10px !important",
+          backgroundColor: bgColor,
+          border: (theme) => `1px solid ${theme.palette.divider}`,
+          borderRight: showButton ? "none" : (theme) => `1px solid ${theme.palette.divider}`,
+          height: "46px",
+          transition: (theme) => theme.transitions.create([
+            "border-color",
+            "background-color",
+            "box-shadow"
+          ]),
+          "&:hover": { backgroundColor: bgColor },
+          "&:before, &:after": { display: "none" },
+          "&.Mui-focused": {
+            backgroundColor: bgColor,
+            borderColor: (theme) => theme.palette.primary.main
+          },
+          ...InputProps?.sx || {}
+        }
+      },
+      ...props
+    }
+  )
+)(({ theme, bgColor, hasLabel, hasValue, showButton }) => ({
+  "& .VortexUIInputLabel-root": {
+    transform: "translate(10px, 13px) scale(1)",
+    fontSize: "13px",
+    color: theme.palette.text.primary,
+    fontWeight: 400,
+    transition: "transform 0.2s ease",
+    "&.VortexUIInputLabel-shrink": {
+      transform: "translate(10px, 6px) scale(0.75)",
+      lineHeight: 1
+    }
   },
-  ...theme.applyStyles("dark", {})
+  "& .VortexUIFilledInput-input": {
+    padding: "0 8px",
+    fontSize: "14px",
+    color: theme.palette.text.primary,
+    fontWeight: 400,
+    backgroundColor: "transparent",
+    height: "100%",
+    boxSizing: "border-box",
+    display: "flex",
+    alignItems: "center"
+  },
+  "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input": {
+    padding: "24px 10px 0 10px"
+  },
+  "& label.Mui-focused": {
+    color: theme.palette.text.secondary
+  }
 }));
-var AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2)
+var ArrowContainer = styled3(Box10, {
+  shouldForwardProp: (prop) => prop !== "bgColor"
+})(({ theme, bgColor = "transparent" }) => ({
+  display: "flex",
+  flexDirection: "column",
+  border: `1px solid ${theme.palette.divider}`,
+  borderLeft: `1px solid ${theme.palette.divider}`,
+  borderRadius: "0 10px 10px 0",
+  overflow: "hidden",
+  backgroundColor: bgColor,
+  width: "32px",
+  height: "46px",
+  transition: "border-color 300ms ease"
 }));
-var AccordionPanel = ({
-  title,
-  count,
-  items = [],
-  children,
-  expanded,
-  onChange
-}) => {
-  return /* @__PURE__ */ jsxs4(Accordion, { expanded, onChange, children: [
-    /* @__PURE__ */ jsx6(AccordionSummary, { children: /* @__PURE__ */ jsxs4(
-      Typography2,
-      {
-        component: "span",
-        fontWeight: 600,
-        fontSize: "14px",
-        color: "text.primary",
-        children: [
-          "test test",
-          title,
-          " ",
-          count !== void 0 && `(${count})`
-        ]
-      }
-    ) }),
-    /* @__PURE__ */ jsx6(AccordionDetails, { children: children ? children : /* @__PURE__ */ jsx6(Stack, { spacing: 0.5, children: items.map((term, idx) => {
-      if (!term || typeof term === "string" && term.trim() === "")
-        return null;
-      return /* @__PURE__ */ jsxs4(Box2, { sx: { display: "flex", gap: 1 }, children: [
-        /* @__PURE__ */ jsxs4(Typography2, { fontSize: "13px", color: "text.primary", children: [
-          idx + 1,
-          "."
-        ] }),
-        /* @__PURE__ */ jsx6(Typography2, { fontSize: "13px", color: "text.secondary", children: term })
-      ] }, idx);
-    }) }) })
-  ] });
-};
-function CustomAccordion({
-  data,
-  singleOpen = false,
-  ...singleProps
+var ArrowButton = styled3(IconButton3)(({ theme }) => ({
+  borderRadius: 0,
+  padding: "2px",
+  height: "50%",
+  width: "100%",
+  color: theme.palette.text.primary,
+  backgroundColor: "transparent",
+  transition: "background-color 100ms ease",
+  "&:hover": {
+    backgroundColor: "transparent"
+  },
+  "&:active": {
+    backgroundColor: theme.palette.divider
+  },
+  "&.Mui-disabled": {
+    opacity: 0.4
+  },
+  "& .VortexUISvgIcon-root": {
+    fontSize: "16px"
+  }
+}));
+function NumberField({
+  label = "Number Field",
+  value: externalValue,
+  onChange,
+  onBlur,
+  disabled = false,
+  bgColor = "transparent",
+  showButton = true,
+  allowDecimal = false,
+  allowNegative = false,
+  min = allowNegative ? -Infinity : 0,
+  max = Infinity,
+  step = 1,
+  decimalPlaces = 2,
+  sx,
+  prefix: prefix2,
+  unit,
+  ...props
 }) {
-  const [expandedIndex, setExpandedIndex] = React5.useState(
-    singleOpen ? 0 : false
+  const [internalValue, setInternalValue] = useState7(
+    externalValue !== void 0 ? String(externalValue) : ""
   );
-  const handleChange = (panelIndex) => (event, newExpanded) => {
-    if (singleOpen) {
-      setExpandedIndex(newExpanded ? panelIndex : false);
+  const value = externalValue !== void 0 ? String(externalValue) : internalValue;
+  const isIntermediate = ["", "-", ".", "-."].includes(value);
+  const numericValue = isIntermediate ? 0 : parseFloat(value);
+  const valueRef = useRef5(numericValue);
+  valueRef.current = numericValue;
+  const setValue = (val) => {
+    setInternalValue(val);
+    onChange?.({ target: { value: val } });
+  };
+  const clamp = (num) => {
+    let n = num;
+    if (n < min) n = min;
+    if (n > max) n = max;
+    return n;
+  };
+  const roundStep = (num) => {
+    if (!allowDecimal) return Math.round(num);
+    const factor = Math.pow(10, decimalPlaces);
+    return Math.round(num * factor) / factor;
+  };
+  const getPattern = () => {
+    if (allowNegative && allowDecimal) return /^-?\d*\.?\d*$/;
+    if (allowNegative && !allowDecimal) return /^-?\d*$/;
+    if (!allowNegative && allowDecimal) return /^\d*\.?\d*$/;
+    return /^\d*$/;
+  };
+  const intermediateStates = allowNegative ? allowDecimal ? ["-", ".", "-."] : ["-"] : allowDecimal ? ["."] : [];
+  const handleChange = (e) => {
+    const raw = e.target.value;
+    if (raw === "") {
+      setValue("");
+      return;
+    }
+    if (!getPattern().test(raw)) return;
+    if (intermediateStates.includes(raw)) {
+      setValue(raw);
+      return;
+    }
+    const parsed = parseFloat(raw);
+    if (isNaN(parsed)) return;
+    setValue(raw);
+  };
+  const handleBlur = (e) => {
+    if (isIntermediate) {
+      setValue("");
+      onBlur?.(e);
+      return;
+    }
+    let parsed = parseFloat(value);
+    if (isNaN(parsed)) parsed = 0;
+    parsed = clamp(parsed);
+    setValue(allowDecimal ? String(parsed) : String(Math.round(parsed)));
+    onBlur?.(e);
+  };
+  const increment = () => {
+    const next2 = clamp(roundStep(valueRef.current + step));
+    setValue(String(next2));
+  };
+  const decrement = () => {
+    const next2 = clamp(roundStep(valueRef.current - step));
+    setValue(String(next2));
+  };
+  const repeatTimeoutRef = useRef5(null);
+  const repeatIntervalRef = useRef5(null);
+  const stopRepeat = () => {
+    if (repeatTimeoutRef.current) {
+      clearTimeout(repeatTimeoutRef.current);
+      repeatTimeoutRef.current = null;
+    }
+    if (repeatIntervalRef.current) {
+      clearInterval(repeatIntervalRef.current);
+      repeatIntervalRef.current = null;
     }
   };
-  if (data && Array.isArray(data)) {
-    return /* @__PURE__ */ jsx6(Box2, { children: data.map((item, index) => /* @__PURE__ */ jsx6(
-      AccordionPanel,
-      {
-        ...item,
-        expanded: singleOpen ? expandedIndex === index : void 0,
-        onChange: singleOpen ? handleChange(index) : void 0
+  const startRepeat = (action) => {
+    action();
+    repeatTimeoutRef.current = setTimeout(() => {
+      repeatIntervalRef.current = setInterval(action, 100);
+    }, 400);
+  };
+  useEffect3(() => stopRepeat, []);
+  const canIncrement = !disabled && numericValue < max;
+  const canDecrement = !disabled && numericValue > min;
+  return /* @__PURE__ */ jsxs11(
+    Box10,
+    {
+      display: "flex",
+      alignItems: "stretch",
+      width: "fit-content",
+      sx: {
+        width: 1,
+        "&:focus-within .arrow-container": {
+          borderTopColor: (theme) => theme.palette.primary.main,
+          borderRightColor: (theme) => theme.palette.primary.main,
+          borderBottomColor: (theme) => theme.palette.primary.main
+        },
+        ...sx
       },
-      index
-    )) });
-  }
-  return /* @__PURE__ */ jsx6(AccordionPanel, { ...singleProps });
+      children: [
+        /* @__PURE__ */ jsx12(
+          StyledTextField2,
+          {
+            label,
+            value,
+            onChange: handleChange,
+            onBlur: handleBlur,
+            hasLabel: !!label,
+            hasValue: value !== "",
+            disabled,
+            bgColor,
+            showButton,
+            inputProps: {
+              inputMode: allowDecimal ? "decimal" : "numeric",
+              pattern: allowNegative ? allowDecimal ? "-?[0-9]*\\.?[0-9]*" : "-?[0-9]*" : allowDecimal ? "[0-9]*\\.?[0-9]*" : "[0-9]*",
+              min,
+              max
+            },
+            InputProps: {
+              ...prefix2 && {
+                startAdornment: /* @__PURE__ */ jsx12(InputAdornment2, { position: "start", children: prefix2 })
+              },
+              ...unit && {
+                endAdornment: /* @__PURE__ */ jsx12(InputAdornment2, { position: "end", sx: { mr: 1, ml: 0 }, children: unit })
+              }
+            },
+            ...props
+          }
+        ),
+        showButton && /* @__PURE__ */ jsxs11(ArrowContainer, { className: "arrow-container", bgColor, children: [
+          /* @__PURE__ */ jsx12(
+            ArrowButton,
+            {
+              onMouseDown: (e) => {
+                e.preventDefault();
+                if (canIncrement) startRepeat(increment);
+              },
+              onMouseUp: stopRepeat,
+              onMouseLeave: stopRepeat,
+              onTouchStart: (e) => {
+                e.preventDefault();
+                if (canIncrement) startRepeat(increment);
+              },
+              onTouchEnd: stopRepeat,
+              disableRipple: true,
+              size: "small",
+              disabled: !canIncrement,
+              children: /* @__PURE__ */ jsx12(ExpandLess, { color: "secondary" })
+            }
+          ),
+          /* @__PURE__ */ jsx12(Divider, { orientation: "horizontal", flexItem: true, sx: { marginX: "4px" } }),
+          /* @__PURE__ */ jsx12(
+            ArrowButton,
+            {
+              onMouseDown: (e) => {
+                e.preventDefault();
+                if (canDecrement) startRepeat(decrement);
+              },
+              onMouseUp: stopRepeat,
+              onMouseLeave: stopRepeat,
+              onTouchStart: (e) => {
+                e.preventDefault();
+                if (canDecrement) startRepeat(decrement);
+              },
+              onTouchEnd: stopRepeat,
+              disableRipple: true,
+              size: "small",
+              disabled: !canDecrement,
+              children: /* @__PURE__ */ jsx12(ExpandMore2, { color: "secondary" })
+            }
+          )
+        ] })
+      ]
+    }
+  );
 }
 
+// src/components/TextAreas/Textarea.tsx
+import React11, { useRef as useRef6, useLayoutEffect as useLayoutEffect3 } from "react";
+import Box11 from "@mui/material/Box";
+import { styled as styled4 } from "@mui/material/styles";
+import Typography10 from "@mui/material/Typography";
+import { jsx as jsx13, jsxs as jsxs12 } from "react/jsx-runtime";
+var Wrapper = styled4(Box11, {
+  shouldForwardProp: (p) => p !== "bgColor" && p !== "isError" && p !== "isDisabled"
+})(
+  ({ theme, bgColor = "#FAFBFF", isError, isDisabled }) => ({
+    width: "100%",
+    borderRadius: "10px",
+    backgroundColor: isDisabled ? theme.palette.action.disabledBackground : bgColor,
+    border: `1px solid ${isError ? theme.palette.error.main : "#D8D9DC"}`,
+    padding: "8px 12px",
+    boxSizing: "border-box",
+    cursor: isDisabled ? "not-allowed" : "text",
+    transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
+    "&:focus-within": {
+      backgroundColor: "#fff",
+      borderColor: isError ? theme.palette.error.main : theme.palette.primary.main
+    },
+    "&:hover:not(:focus-within)": {
+      backgroundColor: isDisabled ? void 0 : "#fff"
+    }
+  })
+);
+var StyledTextarea = styled4("textarea", {
+  shouldForwardProp: (p) => p !== "isExpandable"
+})(({ theme, isExpandable }) => ({
+  width: "100%",
+  border: "none",
+  outline: "none",
+  resize: isExpandable ? "vertical" : "none",
+  overflow: isExpandable ? "hidden" : void 0,
+  backgroundColor: "transparent",
+  fontSize: "14px",
+  color: theme.palette.text.primary,
+  fontFamily: theme.typography.fontFamily,
+  lineHeight: isExpandable ? "21px" : 1.5,
+  padding: 0,
+  marginTop: "2px",
+  display: "block",
+  boxSizing: "border-box",
+  "&::placeholder": {
+    color: theme.palette.text.disabled
+  },
+  "&:disabled": {
+    cursor: "not-allowed",
+    color: theme.palette.text.disabled,
+    resize: "none"
+  }
+}));
+var Textarea = React11.forwardRef(
+  ({
+    variant = "default",
+    label,
+    value,
+    onChange,
+    maxLength,
+    rows = 3,
+    minRows,
+    bgColor = "#FAFBFF",
+    error,
+    disabled,
+    placeholder,
+    fullWidth,
+    inputProps,
+    ...rest
+  }, ref) => {
+    const isExpandable = variant === "expandable";
+    const isMinLength = variant === "minLength";
+    const internalRef = useRef6(null);
+    const textareaRef = ref || internalRef;
+    const [internalValue, setInternalValue] = React11.useState(
+      rest.defaultValue !== void 0 ? String(rest.defaultValue) : ""
+    );
+    const currentValue = value !== void 0 ? String(value) : internalValue;
+    const charCount = currentValue.length;
+    const showCounter = isMinLength || maxLength != null;
+    const minLengthError = isMinLength && charCount > 0 && maxLength != null && charCount < maxLength;
+    const resolvedError = isMinLength ? minLengthError || error : error;
+    const resolvedLabel = isMinLength ? `${label} (Min ${maxLength} chars)` : label;
+    const resolvedRows = isMinLength && rows === 3 ? 4 : rows;
+    const effectiveMinRows = minRows ?? resolvedRows;
+    const LINE_HEIGHT = 21;
+    const resize = (el) => {
+      if (!el) return;
+      const minH = LINE_HEIGHT * effectiveMinRows;
+      el.style.height = "0px";
+      el.style.height = `${Math.max(el.scrollHeight, minH)}px`;
+    };
+    useLayoutEffect3(() => {
+      if (isExpandable) {
+        resize(textareaRef.current);
+      }
+    }, [currentValue, effectiveMinRows, isExpandable]);
+    const handleChange = (e) => {
+      if (value === void 0) {
+        setInternalValue(e.target.value);
+      }
+      if (isExpandable) {
+        resize(e.target);
+      }
+      onChange?.(e);
+    };
+    const counterText = isMinLength ? `${charCount}/${maxLength}` : `${charCount}/${maxLength}`;
+    return /* @__PURE__ */ jsxs12(Box11, { sx: { width: fullWidth ? "100%" : void 0 }, children: [
+      /* @__PURE__ */ jsxs12(
+        Wrapper,
+        {
+          bgColor,
+          isError: !!resolvedError,
+          isDisabled: !!disabled,
+          children: [
+            (resolvedLabel || showCounter) && /* @__PURE__ */ jsxs12(
+              Box11,
+              {
+                sx: {
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                },
+                children: [
+                  resolvedLabel && /* @__PURE__ */ jsx13(
+                    Typography10,
+                    {
+                      component: "span",
+                      sx: {
+                        fontSize: "11px",
+                        color: resolvedError ? "error.main" : "text.secondary",
+                        fontWeight: 400,
+                        lineHeight: 1,
+                        userSelect: "none"
+                      },
+                      children: resolvedLabel
+                    }
+                  ),
+                  showCounter && /* @__PURE__ */ jsx13(
+                    Typography10,
+                    {
+                      component: "span",
+                      sx: {
+                        fontSize: "12px",
+                        color: resolvedError ? "error.main" : "text.secondary",
+                        lineHeight: 1,
+                        ml: "auto",
+                        userSelect: "none",
+                        fontWeight: 400
+                      },
+                      children: counterText
+                    }
+                  )
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsx13(
+              StyledTextarea,
+              {
+                ref: textareaRef,
+                isExpandable,
+                value: currentValue,
+                onChange: handleChange,
+                rows: isExpandable ? effectiveMinRows : resolvedRows,
+                maxLength: isMinLength ? void 0 : maxLength,
+                disabled,
+                placeholder,
+                ...inputProps,
+                ...rest
+              }
+            )
+          ]
+        }
+      ),
+      resolvedError && typeof resolvedError === "string" && /* @__PURE__ */ jsx13(
+        Typography10,
+        {
+          sx: {
+            fontSize: "12px",
+            mt: 0.5,
+            mx: "14px",
+            color: "error.main"
+          },
+          children: resolvedError
+        }
+      ),
+      isMinLength && minLengthError && /* @__PURE__ */ jsx13(
+        Typography10,
+        {
+          sx: {
+            fontSize: "12px",
+            mt: 0.5,
+            mx: "14px",
+            color: "error.main"
+          },
+          children: `Minimum ${maxLength} characters required.`
+        }
+      )
+    ] });
+  }
+);
+Textarea.displayName = "Textarea";
+
 // src/providers/VortexUIProvider.tsx
-import { createContext, useContext, useState as useState2, useMemo, useEffect } from "react";
+import { createContext, useContext, useState as useState8, useMemo, useEffect as useEffect4 } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -1483,6 +3675,10 @@ var colors = {
       secondary: "#cbd5e1",
       disabled: "#64748b"
     }
+  },
+  divider: {
+    light: "#e2e8f0",
+    dark: "#334155"
   }
 };
 var getPalette = (mode) => ({
@@ -1494,7 +3690,8 @@ var getPalette = (mode) => ({
   success: colors.success[mode],
   info: colors.info[mode],
   background: colors.background[mode],
-  text: colors.text[mode]
+  text: colors.text[mode],
+  divider: colors.divider[mode]
 });
 
 // src/theme/typography.ts
@@ -1624,7 +3821,7 @@ var getTheme = (mode) => createTheme({
 });
 
 // src/providers/VortexUIProvider.tsx
-import { Fragment, jsx as jsx7, jsxs as jsxs5 } from "react/jsx-runtime";
+import { Fragment, jsx as jsx14, jsxs as jsxs13 } from "react/jsx-runtime";
 var ColorModeContext = createContext({
   toggleColorMode: () => {
   },
@@ -1637,8 +3834,8 @@ var cache = createCache({
 });
 function VortexUIProvider({ children, disableCustomCache = false, initialMode = "light" }) {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = useState2(initialMode);
-  useEffect(() => {
+  const [mode, setMode] = useState8(initialMode);
+  useEffect4(() => {
     const hasCookie = document.cookie.includes("vortex-ui-theme-mode=");
     if (!hasCookie && prefersDarkMode) {
       setMode("dark");
@@ -1660,23 +3857,30 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
     [mode]
   );
   const theme = useMemo(() => getTheme(mode), [mode]);
-  const content = /* @__PURE__ */ jsx7(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ jsxs5(ThemeProvider, { theme, children: [
-    /* @__PURE__ */ jsx7(CssBaseline, {}),
+  const content = /* @__PURE__ */ jsx14(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ jsxs13(ThemeProvider, { theme, children: [
+    /* @__PURE__ */ jsx14(CssBaseline, {}),
     children
   ] }) });
   if (disableCustomCache) {
-    return /* @__PURE__ */ jsx7(Fragment, { children: content });
+    return /* @__PURE__ */ jsx14(Fragment, { children: content });
   }
-  return /* @__PURE__ */ jsx7(CacheProvider, { value: cache, children: content });
+  return /* @__PURE__ */ jsx14(CacheProvider, { value: cache, children: content });
 }
 export {
   CustomAccordion as Accordion,
+  AutoPopulate,
+  AutoPopulateItem,
   Button,
+  ButtonGroup,
+  ChipInput,
   ColorModeContext,
   DataTable,
-  Input,
+  DefaultSelect,
   Modal,
+  NumberField,
   Select,
+  TextField,
+  Textarea,
   VortexUIProvider,
   useColorMode,
   getTheme as vortexTheme

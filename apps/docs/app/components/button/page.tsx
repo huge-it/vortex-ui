@@ -1,13 +1,13 @@
 "use client";
 
 import { Box, Divider, Typography } from "@mui/material";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
-import { ComponentPreview } from "../../../components/docs/ComponentPreview";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
-import { ComponentStates } from "../../../components/docs/ComponentStates";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
+import { ComponentCode } from "@comp/docs/ComponentCode";
+import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
+import { ComponentPreview } from "@comp/docs/ComponentPreview";
+import { ComponentHeader } from "@comp/docs/ComponentHeader";
+import { ComponentProps } from "@comp/docs/ComponentProps";
+import { ComponentStates } from "@comp/docs/ComponentStates";
+import { ComponentVariants } from "@comp/docs/ComponentVariants";
 import { Star } from "@mui/icons-material";
 import { Button } from "vortex-ui";
 
@@ -73,7 +73,12 @@ export default function ButtonDocs() {
     <Box>
       <ComponentHeader
         title="Button"
-        description={<>A wrapper component around Material UI&apos;s Button, styled with the VortexUI design language.</>}
+        description={
+          <>
+            A wrapper component around Material UI&apos;s Button, styled with
+            the VortexUI design language.
+          </>
+        }
       />
 
       <Typography
@@ -116,6 +121,14 @@ export default function ButtonDocs() {
             element: <Button variant="ghost">Ghost</Button>,
           },
           { name: "Text", element: <Button variant="text">Text</Button> },
+          {
+            name: "Icon Button",
+            element: (
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                <Button size={"sm"} variant="filled" iconOnly icon={<Star />} />
+              </Box>
+            ),
+          },
         ]}
       />
 
@@ -166,7 +179,13 @@ export default function ButtonDocs() {
                 <Button icon={<Star />} iconPosition="end">
                   End Icon
                 </Button>
-                <Button icon={<Star />} iconOnly aria-label="Star" />
+                <Button
+                  icon={<Star />}
+                  size="lg"
+                  variant="filled"
+                  iconOnly
+                  aria-label="Star"
+                />
               </Box>
             ),
           },

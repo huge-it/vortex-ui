@@ -1,17 +1,184 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { ComponentHeader } from '../../../components/docs/ComponentHeader';
+"use client";
+
+import React, { useState } from "react";
+import { Typography, Box, Divider, Stack } from "@mui/material";
+import { AutoPopulate, AutoPopulateItem } from "vortex-ui";
+import { ComponentPreview } from "../../../components/docs/ComponentPreview";
+import { ComponentCode } from "../../../components/docs/ComponentCode";
+import { ComponentStates } from "../../../components/docs/ComponentStates";
+import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "../../../components/docs/ComponentHeader";
+import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
+
+const autoPopulatePropsList = [
+  {
+    name: "label",
+    type: "string",
+    default: "undefined",
+    description: "The label content shown above or inside the field.",
+  },
+  {
+    name: "value",
+    type: "string",
+    default: "undefined",
+    description: "The selected value of the component.",
+  },
+  {
+    name: "onChange",
+    type: "(event: { target: { value: string } }) => void",
+    default: "undefined",
+    description: "Callback fired when the value changes.",
+  },
+  {
+    name: "bgColor",
+    type: "string",
+    default: "undefined",
+    description: "Background color of the input field.",
+  },
+  {
+    name: "error",
+    type: "boolean | string",
+    default: "false",
+    description:
+      "Toggles the error state display styling or shows an error message.",
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    default: "false",
+    description: "Disables editing inside the input field.",
+  },
+  {
+    name: "children",
+    type: "React.ReactNode",
+    default: "undefined",
+    description: "Options to render inside the dropdown, typically MenuItems.",
+  },
+];
+
+function AutoPopulatePreview() {
+  const [value, setValue] = useState("");
+  return (
+    <AutoPopulate
+      label="Opportunity Name / Title *"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      bgColor="#ffffff"
+    >
+      <AutoPopulateItem value="samanta" subtitle="ABC Pvt Ltd">
+        Samanta
+      </AutoPopulateItem>
+      <AutoPopulateItem value="samuel" subtitle="TK Solutions">
+        Samuel
+      </AutoPopulateItem>
+      <AutoPopulateItem value="john" subtitle="Doe Enterprises">
+        John
+      </AutoPopulateItem>
+    </AutoPopulate>
+  );
+}
 
 export default function AutoPopulateDocs() {
   return (
     <Box>
       <ComponentHeader
         title="AutoPopulate"
-        description={<>Documentation for AutoPopulate is coming soon.</>}
+        description={
+          <>
+            A specialized select component with autocomplete and filtering
+            capabilities for choosing items from a list with rich metadata.
+          </>
+        }
       />
-      <Typography variant="body1" sx={{ mt: 4 }}>
-        This component is currently being migrated to Vortex UI.
+
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+      >
+        Preview
       </Typography>
+      <ComponentPreview>
+        <Stack spacing={2} sx={{ width: "100%", maxWidth: "400px" }}>
+          <AutoPopulatePreview />
+        </Stack>
+      </ComponentPreview>
+
+      <ComponentStates
+        states={[
+          {
+            name: "Hover",
+            element: <AutoPopulate label="Hover" value="" />,
+          },
+          {
+            name: "Selected",
+            element: (
+              <AutoPopulate label="Selected" value="samanta">
+                <AutoPopulateItem value="samanta" subtitle="ABC Pvt Ltd">
+                  Samanta
+                </AutoPopulateItem>
+                <AutoPopulateItem value="george" subtitle="DAV Pvt Ltd">
+                  George
+                </AutoPopulateItem>
+              </AutoPopulate>
+            ),
+          },
+          {
+            name: "Disabled",
+            element: <AutoPopulate label="Disabled" disabled value="" />,
+          },
+          {
+            name: "Error",
+            element: (
+              <AutoPopulate
+                label="Error"
+                error="Selection required."
+                value=""
+              />
+            ),
+          },
+        ]}
+      />
+
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+      >
+        Usage
+      </Typography>
+      <ComponentCode
+        code={`import { useState } from "react";
+import { AutoPopulate, AutoPopulateItem } from "vortex-ui";
+
+function FormExample() {
+  const [value, setValue] = useState("");
+  return (
+    <AutoPopulate
+      label="Opportunity Name / Title *"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      bgColor="#ffffff"
+    >
+      <AutoPopulateItem value="samanta" subtitle="ABC Pvt Ltd">
+        Samanta
+      </AutoPopulateItem>
+      <AutoPopulateItem value="samuel" subtitle="TK Solutions">
+        Samuel
+      </AutoPopulateItem>
+      <AutoPopulateItem value="john" subtitle="Doe Enterprises">
+        John
+      </AutoPopulateItem>
+    </AutoPopulate>
+  );
+}`}
+      />
+
+      <ComponentProps propsList={autoPopulatePropsList} />
+
+      <Divider sx={{ my: 4 }} />
+
+      <ComponentInstallation />
     </Box>
   );
 }

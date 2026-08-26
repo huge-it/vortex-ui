@@ -1,67 +1,124 @@
 "use client";
 
-import React from "react";
-import { Typography, Box, Divider, Stack } from "@mui/material";
+import React, { useState } from "react";
+import { Typography, Box, Divider, Stack, MenuItem } from "@mui/material";
+import { Videocam, CalendarMonth, Phone, Email } from "@mui/icons-material";
 import { Select } from "vortex-ui";
-import { ComponentPreview } from "../../../components/docs/ComponentPreview";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
-import { ComponentStates } from "../../../components/docs/ComponentStates";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
+import { ComponentPreview } from "@comp/docs/ComponentPreview";
+import { ComponentCode } from "@comp/docs/ComponentCode";
+import { ComponentVariants } from "@comp/docs/ComponentVariants";
+import { ComponentStates } from "@comp/docs/ComponentStates";
+import { ComponentProps } from "@comp/docs/ComponentProps";
+import { ComponentHeader } from "@comp/docs/ComponentHeader";
+import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
 
 const selectPropsList = [
+  {
+    name: "variant",
+    type: '"default" | "searchable" | "icon"',
+    default: '"default"',
+    description:
+      "The visual style and behavior variant of the Select component.",
+  },
+  {
+    name: "value",
+    type: "string | number | null",
+    default: "undefined",
+    description: "The currently selected key or value.",
+  },
+  {
+    name: "onChange / onUpdate",
+    type: "function",
+    default: "undefined",
+    description: "Callback fired when a selection is made or updated.",
+  },
+  {
+    name: "options",
+    type: "IconSelectOption[] | Record<string, OptionItem>",
+    default: "undefined",
+    description:
+      "Options array (for icon variant: { value, label, icon }[]) or record map (for default variant).",
+  },
   {
     name: "label",
     type: "string",
     default: "undefined",
-    description: "The heading label text shown above the select box.",
+    description:
+      "Floating label text shown on the field (searchable/icon variants).",
   },
   {
-    name: "helperText",
+    name: "placeholder",
     type: "string",
     default: "undefined",
-    description: "Supporting description text shown below the select.",
+    description: "Placeholder text displayed when no option is selected.",
   },
   {
-    name: "options",
-    type: "SelectOption[]",
-    default: "[]",
-    description: "Array of option objects containing value and label fields.",
+    name: "size",
+    type: '"small" | "medium"',
+    default: '"small"',
+    description: "Height size of the select component.",
   },
   {
-    name: "error",
-    type: "boolean",
-    default: "false",
-    description: "Toggles error state styling.",
+    name: "bgColor",
+    type: "string",
+    default: '"#FFFFFF"',
+    description: "Background color of the input trigger.",
   },
   {
     name: "disabled",
     type: "boolean",
     default: "false",
-    description: "Disables select dropdown interaction.",
-  },
-  {
-    name: "fullWidth",
-    type: "boolean",
-    default: "true",
-    description: "Expands the form control to occupy full container width.",
+    description: "Disables interaction with the select component.",
   },
 ];
 
-const mockOptions = [
-  { label: "Development", value: "dev" },
-  { label: "Staging", value: "staging" },
-  { label: "Production", value: "prod" },
+const OPTIONS = {
+  1: { label: "Low", value: 1, color: "#4772FF" },
+  2: { label: "Medium", value: 2, color: "#FF8447" },
+  3: { label: "High", value: 3, color: "#FF4750" },
+};
+
+const ICON_OPTIONS = [
+  {
+    value: "video",
+    label: "Video Call",
+    icon: <Videocam fontSize="small" sx={{ color: "#4772FF" }} />,
+  },
+  {
+    value: "calendar",
+    label: "Schedule",
+    icon: <CalendarMonth fontSize="small" sx={{ color: "#10B981" }} />,
+  },
+  {
+    value: "phone",
+    label: "Phone Call",
+    icon: <Phone fontSize="small" sx={{ color: "#F59E0B" }} />,
+  },
+  {
+    value: "user",
+    label: "John Doe",
+    img: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+  },
 ];
 
 export default function SelectDocs() {
+  const [value, setValue] = useState<number>(2);
+  const [iconVal, setIconVal] = useState<string | number>("video");
+
+  const [varIconVal, setVarIconVal] = useState<string | number>("video");
+  const [varDefaultVal, setVarDefaultVal] = useState<number>(1);
+  const [varSearchVal, setVarSearchVal] = useState<number>(1);
+
   return (
     <Box>
       <ComponentHeader
         title="Select"
-        description={<>A dropdown selection component, wrapping MUI&apos;s Select.</>}
+        description={
+          <>
+            A versatile select component supporting default indicators,
+            searchable auto-filtering, and icon-labeled options.
+          </>
+        }
       />
 
       <Typography
@@ -72,26 +129,93 @@ export default function SelectDocs() {
         Preview
       </Typography>
       <ComponentPreview>
-        <Stack spacing={2} sx={{ width: "100%", maxWidth: "300px" }}>
-          <Select
-            label="Environment"
-            options={mockOptions}
-            defaultValue="dev"
-          />
+        <Stack
+          spacing={3}
+          sx={{ width: "100%", maxWidth: "340px", alignItems: "center" }}
+        >
+          <Box sx={{ width: "100%" }}>
+            <Typography
+              variant="caption"
+              sx={{ color: "text.secondary", mb: 0.5, display: "block" }}
+            >
+              Icon Variant with Label
+            </Typography>
+            <Select
+              variant="icon"
+              label="Contact Method"
+              value={iconVal}
+              onChange={(val) => setIconVal(val)}
+              options={ICON_OPTIONS}
+              fullWidth
+            />
+          </Box>
+
+          <Box sx={{ width: "100%" }}>
+            <Typography
+              variant="caption"
+              sx={{ color: "text.secondary", mb: 0.5, display: "block" }}
+            >
+              Default Variant
+            </Typography>
+            <Select
+              value={value}
+              recordId="demo-1"
+              options={OPTIONS}
+              onUpdate={async (_id, val) => {
+                setValue(Number(val));
+              }}
+            />
+          </Box>
         </Stack>
       </ComponentPreview>
 
       <ComponentVariants
         variants={[
           {
-            name: "Standard Options",
+            name: "Icon Variant",
             element: (
-              <Select
-                label="Env"
-                options={mockOptions}
-                defaultValue="dev"
-                sx={{ width: "150px" }}
-              />
+              <Box sx={{ width: 220 }}>
+                <Select
+                  variant="icon"
+                  value={varIconVal}
+                  onChange={(val) => setVarIconVal(val)}
+                  options={ICON_OPTIONS}
+                  fullWidth
+                />
+              </Box>
+            ),
+          },
+          {
+            name: "Default",
+            element: (
+              <Box sx={{ width: 220 }}>
+                <Select
+                  value={varDefaultVal}
+                  options={OPTIONS}
+                  onUpdate={async (_id, val) => {
+                    setVarDefaultVal(Number(val));
+                  }}
+                  fullWidth
+                />
+              </Box>
+            ),
+          },
+          {
+            name: "Searchable",
+            element: (
+              <Box sx={{ width: 220 }}>
+                <Select
+                  variant="searchable"
+                  label="Search Options"
+                  value={varSearchVal}
+                  onChange={(e: { target: { value: string | number } }) => setVarSearchVal(Number(e.target.value))}
+                  fullWidth
+                >
+                  <MenuItem value={1}>Low</MenuItem>
+                  <MenuItem value={2}>Medium</MenuItem>
+                  <MenuItem value={3}>High</MenuItem>
+                </Select>
+              </Box>
             ),
           },
         ]}
@@ -102,34 +226,44 @@ export default function SelectDocs() {
           {
             name: "Default",
             element: (
-              <Select
-                label="Default"
-                options={mockOptions}
-                sx={{ width: "150px" }}
-              />
+              <Box sx={{ width: 220 }}>
+                <Select
+                  variant="icon"
+                  value="video"
+                  onChange={() => {}}
+                  options={ICON_OPTIONS}
+                  fullWidth
+                />
+              </Box>
             ),
           },
           {
             name: "Disabled",
             element: (
-              <Select
-                label="Disabled"
-                disabled
-                options={mockOptions}
-                sx={{ width: "150px" }}
-              />
+              <Box sx={{ width: 220 }}>
+                <Select
+                  variant="icon"
+                  value="video"
+                  disabled
+                  options={ICON_OPTIONS}
+                  fullWidth
+                />
+              </Box>
             ),
           },
           {
             name: "Error",
             element: (
-              <Select
-                label="Error"
-                error
-                helperText="Selection required."
-                options={mockOptions}
-                sx={{ width: "150px" }}
-              />
+              <Box sx={{ width: 220 }}>
+                <Select
+                  variant="icon"
+                  value="video"
+                  error
+                  helperText="Required field"
+                  options={ICON_OPTIONS}
+                  fullWidth
+                />
+              </Box>
             ),
           },
         ]}
@@ -143,21 +277,39 @@ export default function SelectDocs() {
         Usage
       </Typography>
       <ComponentCode
-        code={`import { Select } from "vortex-ui";
+        code={`import { useState } from "react";
+import { Select } from "vortex-ui";
+import { Videocam, CalendarMonth } from "@mui/icons-material";
 
-const options = [
-  { label: 'Development', value: 'dev' },
-  { label: 'Staging', value: 'staging' },
-  { label: 'Production', value: 'prod' },
+const OPTIONS = [
+  {
+    value: "video",
+    label: "Video Call",
+    icon: <Videocam fontSize="small" />,
+  },
+  {
+    value: "calendar",
+    label: "Schedule",
+    icon: <CalendarMonth fontSize="small" />,
+  },
+  {
+    value: "user",
+    label: "John Doe",
+    img: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+  },
 ];
 
-function FormExample() {
+function Example() {
+  const [value, setValue] = useState("video");
+
   return (
     <Select
-      label="Choose Environment"
-      options={options}
-      defaultValue="dev"
-      onChange={(e) => console.log(e.target.value)}
+      variant="icon"
+      label="Platform"
+      value={value}
+      onChange={(val) => setValue(String(val))}
+      options={OPTIONS}
+      fullWidth
     />
   );
 }`}

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
@@ -80,7 +81,6 @@ const AccordionPanel = ({
           fontSize="14px"
           color="text.primary"
         >
-          test test
           {title} {count !== undefined && `(${count})`}
         </Typography>
       </AccordionSummary>

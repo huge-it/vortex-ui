@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Box,
   List,
@@ -27,7 +26,6 @@ export const componentCategories: SidebarCategory[] = [
     title: "🖱️ Buttons & Actions",
     items: [
       { name: "Button", href: "/components/button" },
-      { name: "IconButton", href: "/components/icon-button" },
       { name: "Button Group", href: "/components/button-group" },
       { name: "Link", href: "/components/link" },
     ],

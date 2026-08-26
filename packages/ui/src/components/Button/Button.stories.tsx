@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
+import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -23,6 +25,13 @@ const meta: Meta<typeof Button> = {
     },
     disabled: {
       control: "boolean",
+    },
+    iconOnly: {
+      control: "boolean",
+    },
+    iconPosition: {
+      control: "select",
+      options: ["start", "end"],
     },
   },
 };
@@ -78,5 +87,28 @@ export const Disabled: Story = {
     severity: "success",
     disabled: true,
     children: "Disabled Button",
+  },
+};
+
+export const WithStartIcon: Story = {
+  args: {
+    icon: <SearchIcon />,
+    children: "Search",
+  },
+};
+
+export const WithEndIcon: Story = {
+  args: {
+    icon: <SearchIcon />,
+    iconPosition: "end",
+    children: "Search",
+  },
+};
+
+export const IconOnly: Story = {
+  args: {
+    iconOnly: true,
+    icon: <AddIcon />,
+    "aria-label": "add",
   },
 };

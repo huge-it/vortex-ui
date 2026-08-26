@@ -1,13 +1,12 @@
-import React from "react";
 import {
-  Button as MuiButton,
-  CircularProgress,
-  useTheme,
   buttonClasses,
-  svgIconClasses,
+  CircularProgress,
   circularProgressClasses,
+  Button as MuiButton,
+  useTheme,
 } from "@mui/material";
-import { ButtonProps } from "./Button.types";
+import { ButtonProps, IconButtonProps } from "./Button.types";
+import { Star } from "@mui/icons-material";
 
 const SIZE_MAP = {
   lg: {
@@ -37,9 +36,9 @@ const SIZE_MAP = {
 };
 
 const ICON_ONLY_SIZE_MAP = {
-  lg: { box: 36, iconSize: 20, borderRadius: "10px" },
-  md: { box: 32, iconSize: 18, borderRadius: "9px" },
-  sm: { box: 28, iconSize: 16, borderRadius: "8px" },
+  lg: { box: 36, iconSize: 22, borderRadius: "10px" },
+  md: { box: 32, iconSize: 20, borderRadius: "9px" },
+  sm: { box: 28, iconSize: 18, borderRadius: "8px" },
 };
 
 function DefaultCircleIcon({ size }: { size: number }) {
@@ -177,7 +176,7 @@ export const Button = ({
       <CircularProgress
         size={ionSize - 2}
         thickness={5}
-        sx={{ color: spinnerColor }}
+        sx={{ color: spinnerColor, display: "block" }}
       />
     );
 
@@ -191,13 +190,17 @@ export const Button = ({
           height: box,
           padding: 0,
           borderRadius: iconBorderRadius,
-          [`& .${svgIconClasses.root}`]: { fontSize: ionSize },
+          [`& svg:not(.${circularProgressClasses.svg})`]: {
+            fontSize: ionSize,
+            width: ionSize,
+            height: ionSize,
+          },
           ...iconOnlyVariantSx,
           ...sx,
         }}
         {...rest}
       >
-        {loading ? spinner : (icon ?? <DefaultCircleIcon size={ionSize} />)}
+        {loading ? spinner : (icon ?? <Star sx={{ fontSize: ionSize }} />)}
       </MuiButton>
     );
   }
@@ -209,7 +212,7 @@ export const Button = ({
     <CircularProgress
       size={iconSize - 2}
       thickness={5}
-      sx={{ color: spinnerColor }}
+      sx={{ color: spinnerColor, display: "block" }}
     />
   );
 
@@ -262,6 +265,9 @@ export const Button = ({
         [`& .${buttonClasses.startIcon}`]: {
           marginRight: 0,
           marginLeft: "-4px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           [`& svg:not(.${circularProgressClasses.svg})`]: {
             fontSize: iconSize,
             width: iconSize,
@@ -271,6 +277,9 @@ export const Button = ({
         [`& .${buttonClasses.endIcon}`]: {
           marginLeft: 0,
           marginRight: "-4px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           [`& svg:not(.${circularProgressClasses.svg})`]: {
             fontSize: iconSize,
             width: iconSize,
@@ -290,4 +299,8 @@ export const Button = ({
       {content}
     </MuiButton>
   );
+};
+
+export const IconButton = (props: IconButtonProps) => {
+  return <Button iconOnly {...props} />;
 };
