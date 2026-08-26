@@ -2,6 +2,16 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.3] - 2026-08-26
+
+### Added
+- Added new components to the library: `AutoPopulate`, `ButtonGroup`, `ChipInput`, `IconButton`, `NumberField`, and `TextAreas`.
+
+### Changed
+- Improved the `ButtonGroup` component UI by making button widths dynamic (`auto` instead of fixed `80px`), increasing horizontal padding, and increasing gap spacing between icons and text to prevent label congestion.
+
+---
+
 ## [0.1.2] - 2026-08-22
 
 ### Fixed
