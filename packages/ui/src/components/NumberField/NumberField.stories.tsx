@@ -35,7 +35,7 @@ export const Default: Story = {
 export const WithDecimals: Story = {
   args: {
     label: 'Price',
-    allowDecimal: true,
+    allowDecimal: false,
     decimalPlaces: 2,
     step: 0.5,
     prefix: '$',

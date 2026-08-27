@@ -20,9 +20,10 @@ interface PropDefinition {
 
 interface ComponentPropsProps {
   propsList: PropDefinition[];
+  title?: string;
 }
 
-export function ComponentProps({ propsList }: ComponentPropsProps) {
+export function ComponentProps({ propsList, title = "Props / API" }: ComponentPropsProps) {
   return (
     <Box display="flex" flexDirection="column" gap={2} mb={4}>
       <Typography
@@ -30,7 +31,7 @@ export function ComponentProps({ propsList }: ComponentPropsProps) {
         color="text.secondary"
         sx={{ fontWeight: 600, fontSize: "1.25rem" }}
       >
-        Props / API
+        {title}
       </Typography>
       <TableContainer
         component={Paper}

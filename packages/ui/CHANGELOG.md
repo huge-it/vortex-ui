@@ -2,6 +2,19 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.4] - 2026-08-27
+
+### Added
+- Added the `Tooltip` component to the library with support for custom `bgColor` and `textColor`.
+- Added a massive suite of new components to the library: `Accordion`, `Backdrop`, `Badge`, `Card`, `CheckboxGroup`, `Grid`, `Link`, `Progress`, `RadioGroup`, `Sheet`, `Skeleton`, `Slider`, and `ToggleSwitch`.
+
+### Fixed
+- Fixed `Backdrop` component typing issues for Storybook compatibility.
+- Added a circular track/trailer to the `Backdrop` component's spinner to make the loading path visible.
+- Resolved various TypeScript and component type errors across the newly migrated components (including `Link`).
+
+---
+
 ## [0.1.3] - 2026-08-26
 
 ### Added

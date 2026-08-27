@@ -1,2 +1,3 @@
-// TODO: Implement Backdrop component.
+export * from "./Backdrop";
+export * from "./Backdrop.types";
 

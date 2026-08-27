@@ -26,8 +26,8 @@ const ChipInputWithState = (args: any) => {
 export const Default: Story = {
   render: (args) => <ChipInputWithState {...args} />,
   args: {
-    label: 'Skills',
-    chips: ['React', 'TypeScript'],
+    label: "test",
+    chips: ["React", "TypeScript", "TypeScript", "TypeScript", "TypeScript"],
     helperText: 'Type and press enter',
   },
 };

@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 interface ComponentVariantsProps {
   title?: string;
   description?: string;
+  direction?: "row" | "column";
   variants: {
     name: string;
     element: React.ReactNode;
@@ -13,6 +14,7 @@ interface ComponentVariantsProps {
 export function ComponentVariants({
   title = "Variants",
   description,
+  direction = "row",
   variants,
 }: ComponentVariantsProps) {
   return (
@@ -37,8 +39,9 @@ export function ComponentVariants({
         display="flex"
         gap={3}
         p={2}
-        flexWrap="wrap"
-        alignItems="center"
+        flexDirection={direction}
+        flexWrap={direction === "row" ? "wrap" : "nowrap"}
+        alignItems={direction === "row" ? "center" : "stretch"}
         sx={{
           border: "1px solid",
           borderColor: "divider",
@@ -61,6 +64,7 @@ export function ComponentVariants({
                 alignItems: "center",
                 justifyContent: "center",
                 minWidth: "120px",
+                width: direction === "column" ? "100%" : "auto",
               }}
             >
               {v.element}

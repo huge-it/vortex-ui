@@ -1,2 +1,3 @@
-// TODO: Implement Grid component.
 
+export * from "./Grid";
+export * from "./Grid.types";

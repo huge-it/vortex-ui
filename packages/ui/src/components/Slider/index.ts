@@ -1,2 +1,3 @@
-// TODO: Implement Slider component.
-
+export * from "./Slider";
+export * from "./RangeSlider";
+export * from "./Slider.types";

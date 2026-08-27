@@ -45,13 +45,15 @@ export function ComponentStates({
       >
         {states.map((s) => (
           <Box key={s.name} display="flex" gap={1} flexDirection="column">
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ fontWeight: 500 }}
-            >
-              {s.name}
-            </Typography>
+            {s.name && (
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ fontWeight: 500 }}
+              >
+                {s.name}
+              </Typography>
+            )}
             <Box display="flex" alignItems="center" justifyContent="center">
               {s.element}
             </Box>
