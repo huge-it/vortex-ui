@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { SxProps, Theme } from "@mui/system";
+import { SxProps, Theme } from "@mui/material";
 
 export interface ProgressProps {
   /** The target percentage (0 to 100). */
