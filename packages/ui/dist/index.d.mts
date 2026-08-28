@@ -2,8 +2,10 @@ import * as React$1 from 'react';
 import React__default, { ReactNode } from 'react';
 import { TextFieldProps as TextFieldProps$1 } from '@mui/material/TextField';
 import * as _mui_material from '@mui/material';
-import { ButtonProps as ButtonProps$1, DialogProps, PaletteMode } from '@mui/material';
+import { ButtonProps as ButtonProps$1, DialogProps, SxProps as SxProps$1, Theme as Theme$1, TypographyProps, CardProps as CardProps$1, BoxProps, Grid2Props, SkeletonProps as SkeletonProps$1, PaletteMode } from '@mui/material';
 import { SxProps, Theme } from '@mui/material/styles';
+import { SxProps as SxProps$2, Theme as Theme$2 } from '@mui/system';
+import { TooltipProps as TooltipProps$1 } from '@mui/material/Tooltip';
 
 interface AccordionPanelProps {
     title?: React__default.ReactNode;
@@ -370,6 +372,284 @@ interface TextareaProps extends React__default.TextareaHTMLAttributes<HTMLTextAr
 
 declare const Textarea: React__default.ForwardRefExoticComponent<TextareaProps & React__default.RefAttributes<HTMLTextAreaElement>>;
 
+interface LinkProps {
+    href?: string;
+    children?: ReactNode;
+    variant?: "primary" | "secondary" | "neutral" | "success" | "danger";
+    size?: "sm" | "md" | "lg";
+    underline?: "none" | "hover" | "always";
+    startIcon?: ReactNode;
+    endIcon?: ReactNode;
+    disabled?: boolean;
+    sx?: SxProps$1<Theme$1>;
+    [key: string]: any;
+}
+
+/**
+ * Link Component
+ * @param {string} href - Link destination.
+ * @param {ReactNode} children - Link text.
+ * @param {string} variant - "primary" | "secondary" | "neutral" | "success" | "danger"
+ * @param {string} size - "sm" | "md" | "lg"
+ * @param {string} underline - "none" | "hover" | "always"
+ * @param {ReactNode} startIcon - Icon component to display before text.
+ * @param {ReactNode} endIcon - Icon component to display after text.
+ * @param {boolean} disabled - Disables the link.
+ */
+declare const Link: ({ href, children, variant, size, underline, startIcon, endIcon, disabled, sx, ...props }: LinkProps) => React__default.JSX.Element;
+
+interface CheckboxOption {
+    label: ReactNode;
+    value: string;
+    color?: string;
+}
+interface CheckboxGroupProps {
+    value?: string[];
+    onChange?: (value: string[]) => void;
+    options?: (CheckboxOption | string)[];
+    orientation?: "horizontal" | "vertical";
+    variant?: "sm" | "md" | "lg";
+    disabled?: boolean;
+    color?: string;
+    borderColor?: string;
+    label?: string;
+    sx?: SxProps$1<Theme$1>;
+    children?: ReactNode;
+}
+interface CheckboxProps {
+    value: string;
+    label?: ReactNode;
+    disabled?: boolean;
+    color?: string;
+    borderColor?: string;
+    variant?: "sm" | "md" | "lg";
+    sx?: SxProps$1<Theme$1>;
+}
+
+declare const Checkbox: ({ value, label, disabled, color, borderColor, variant, sx, }: CheckboxProps) => React__default.JSX.Element;
+declare const CheckboxGroup: ({ value, onChange, options, orientation, variant, disabled, color, borderColor, label, sx, children, }: CheckboxGroupProps) => React__default.JSX.Element;
+
+interface RadioOption {
+    label: ReactNode;
+    value: string;
+    color?: string;
+}
+interface RadioGroupProps {
+    value?: string;
+    onChange?: (value: string) => void;
+    options?: (RadioOption | string)[];
+    orientation?: "horizontal" | "vertical";
+    variant?: "sm" | "md" | "lg";
+    disabled?: boolean;
+    color?: string;
+    unselectedColor?: string;
+    label?: string;
+    sx?: SxProps$1<Theme$1>;
+    children?: ReactNode;
+}
+interface RadioProps {
+    value: string;
+    label?: ReactNode;
+    disabled?: boolean;
+    color?: string;
+    unselectedColor?: string;
+    variant?: "sm" | "md" | "lg";
+    sx?: SxProps$1<Theme$1>;
+}
+
+declare const Radio: ({ value, label, disabled, color, unselectedColor, variant, sx, }: RadioProps) => React__default.JSX.Element;
+declare const RadioGroup: ({ value, onChange, options, orientation, variant, disabled, color, unselectedColor, label, sx, children, }: RadioGroupProps) => React__default.JSX.Element;
+
+interface ToggleSwitchProps {
+    label?: ReactNode;
+    checked?: boolean;
+    defaultChecked?: boolean;
+    onChange?: (checked: boolean) => void;
+    disabled?: boolean;
+    variant?: "sm" | "md" | "lg";
+    color?: string;
+    unselectedColor?: string;
+    labelProps?: TypographyProps;
+}
+
+declare const ToggleSwitch: ({ label, checked, defaultChecked, onChange, disabled, variant, color, unselectedColor, labelProps, }: ToggleSwitchProps) => React__default.JSX.Element;
+
+interface CardProps extends Omit<CardProps$1, "variant"> {
+    variant?: "none" | "sm" | "md" | "lg" | "xl";
+    fullWidth?: boolean;
+}
+
+declare const Card: ({ variant, fullWidth, children, sx, ...rest }: CardProps) => React__default.JSX.Element;
+
+interface SheetProps extends Omit<BoxProps, "variant"> {
+    variant?: "none" | "sm" | "md" | "lg" | "xl";
+    fullHeight?: boolean;
+}
+
+declare const Sheet: ({ variant, fullHeight, children, sx, ...rest }: SheetProps) => React__default.JSX.Element;
+
+type CustomGridSpacing = "none" | "xs" | "sm" | "md" | "lg" | "xl";
+interface GridProps extends Omit<Grid2Props, "spacing"> {
+    spacing?: CustomGridSpacing | Grid2Props["spacing"];
+}
+
+declare const Grid: React__default.ForwardRefExoticComponent<Omit<GridProps, "ref"> & React__default.RefAttributes<HTMLDivElement>>;
+
+interface CountBadgeProps {
+    /** The count to display. If null or undefined, the badge will not render. */
+    count?: React.ReactNode;
+    /** The maximum number to display. If count is a number and exceeds maxCount, it renders as {maxCount}+ */
+    maxCount?: number;
+    /** Whether the badge is in an active state. */
+    active?: boolean;
+    /** Background color when active. */
+    activeBg?: string;
+    /** Text color when active. */
+    activeColor?: string;
+    /** Background color when inactive. */
+    inactiveBg?: string;
+    /** Text color when inactive. */
+    inactiveColor?: string;
+    /** Font size of the count. */
+    fontSize?: number | string;
+    /** Font weight of the count. */
+    fontWeight?: number | string;
+    /** The minimum width and height of the badge. */
+    size?: number | string;
+    /** Additional custom styles. */
+    sx?: SxProps$1<Theme$1>;
+}
+
+declare const CountBadge: ({ count, maxCount, active, activeBg, activeColor, inactiveBg, inactiveColor, fontSize, fontWeight, size, sx, }: CountBadgeProps) => React__default.JSX.Element | null;
+
+interface BaseSliderProps {
+    label?: React.ReactNode;
+    min?: number;
+    max?: number;
+    step?: number;
+    disabled?: boolean;
+    trackColor?: string;
+    railColor?: string;
+    showMinMaxLabels?: boolean;
+    sx?: SxProps$1<Theme$1>;
+}
+interface SliderProps extends BaseSliderProps {
+    value: number;
+    onChange: (value: number) => void;
+    valueSuffix?: string;
+}
+interface RangeSliderProps extends BaseSliderProps {
+    value: number[];
+    onChange: (value: number[]) => void;
+    minDistance?: number;
+    showRangeText?: boolean;
+}
+
+declare const Slider: ({ label, value, onChange, min, max, step, disabled, trackColor, railColor, showMinMaxLabels, valueSuffix, sx, }: SliderProps) => React__default.JSX.Element;
+
+declare const RangeSlider: ({ label, value, onChange, min, max, step, minDistance, disabled, trackColor, railColor, showMinMaxLabels, showRangeText, sx, }: RangeSliderProps) => React__default.JSX.Element;
+
+interface ProgressProps {
+    /** The target percentage (0 to 100). */
+    value?: number;
+    /** Whether to display the percentage value. */
+    showValue?: boolean;
+    /** "right" | "top" | "inside" */
+    valuePosition?: "right" | "top" | "inside";
+    /** Height of the progress bar in px. */
+    height?: number;
+    /** Border radius of the bar. */
+    borderRadius?: number | string;
+    /** Background color of the track. */
+    bgColor?: string;
+    /** Optional function to determine color based on value: (val) => string */
+    getColor?: (val: number) => string;
+    /** Animation duration in seconds. */
+    animationDuration?: number;
+    /** "default" | "stepper" */
+    variant?: "default" | "stepper";
+    /** Number of steps when variant is "stepper". */
+    steps?: number;
+    /** If > 0, animates the progress bar visually in discrete jumps. */
+    stepJump?: number;
+    sx?: SxProps$2<Theme$2>;
+}
+declare const Progress: React__default.FC<ProgressProps>;
+
+interface SkeletonProps extends Omit<SkeletonProps$1, 'variant'> {
+    /**
+     * The type of content that will be rendered.
+     */
+    variant?: "text" | "circular" | "rectangular" | "rounded" | "card" | "list-item" | "table-row" | "profile" | "cascading";
+    /**
+     * For complex variants like card and profile, determines the layout orientation.
+     */
+    orientation?: "horizontal" | "vertical";
+    /**
+     * Number of lines to render for the text variant.
+     */
+    lines?: number;
+    /**
+     * Number of rows to render for the table-row variant.
+     */
+    rows?: number;
+    /**
+     * Number of columns to render for each row in the table-row variant.
+     */
+    cols?: number;
+    /**
+     * Applies border radius to the skeleton. Can be a boolean, string (e.g. "sm", "md", "lg"), or number.
+     */
+    rounded?: boolean | "sm" | "md" | "lg" | number | string;
+}
+
+declare const Skeleton: React__default.FC<SkeletonProps>;
+
+interface BackdropProps {
+    /**
+     * If true, the backdrop is open and visible.
+     */
+    open: boolean;
+    /**
+     * Callback fired when the backdrop is clicked.
+     */
+    onClick?: React__default.MouseEventHandler<HTMLDivElement>;
+    /**
+     * The z-index of the backdrop.
+     */
+    zIndex?: number;
+    /**
+     * The color of the loading spinner.
+     */
+    color?: string;
+    /**
+     * If true, the backdrop will be absolute positioned and rendered inline instead of using a portal.
+     * Useful for showing a loading state inside a specific container (which must have position relative).
+     */
+    absolute?: boolean;
+    /**
+     * The size of the loading spinner in pixels.
+     */
+    size?: number;
+}
+
+declare const Backdrop: React__default.FC<BackdropProps>;
+
+interface TooltipProps extends Omit<TooltipProps$1, "componentsProps" | "slotProps"> {
+    /**
+     * The background color of the tooltip and its arrow.
+     * @default "#fff"
+     */
+    bgColor?: string;
+    /**
+     * The text color of the tooltip.
+     * @default "#1F2937"
+     */
+    textColor?: string;
+}
+
+declare const Tooltip: React__default.FC<TooltipProps>;
+
 declare const ColorModeContext: React__default.Context<{
     toggleColorMode: () => void;
     mode: PaletteMode;
@@ -387,4 +667,4 @@ declare function VortexUIProvider({ children, disableCustomCache, initialMode }:
 
 declare const getTheme: (mode: PaletteMode) => _mui_material.Theme;
 
-export { CustomAccordion as Accordion, type AccordionPanelProps, type AccordionProps, AutoPopulate, AutoPopulateItem, type AutoPopulateItemProps, type AutoPopulateProps, Button, ButtonGroup, type ButtonGroupMethod, type ButtonGroupMethodField, type ButtonGroupProps, type ButtonGroupValue, type ButtonIconPosition, type ButtonProps, type ButtonSeverity, type ButtonSize, type ButtonVariant, ChipInput, type ChipInputProps, ColorModeContext, type CustomAccordionProps, DataTable, type DataTableColumn, type DataTableProps, DefaultSelect, type DefaultSelectProps, type IconButtonProps, type IconSelectOption, type IconSelectProps, Modal, type ModalProps, NumberField, type NumberFieldProps, type OptionItem, Select, type SelectProps, TextField, type TextFieldProps, Textarea, VortexUIProvider, useColorMode, getTheme as vortexTheme };
+export { CustomAccordion as Accordion, type AccordionPanelProps, type AccordionProps, AutoPopulate, AutoPopulateItem, type AutoPopulateItemProps, type AutoPopulateProps, Backdrop, type BackdropProps, type BaseSliderProps, Button, ButtonGroup, type ButtonGroupMethod, type ButtonGroupMethodField, type ButtonGroupProps, type ButtonGroupValue, type ButtonIconPosition, type ButtonProps, type ButtonSeverity, type ButtonSize, type ButtonVariant, Card, type CardProps, Checkbox, CheckboxGroup, type CheckboxGroupProps, type CheckboxOption, type CheckboxProps, ChipInput, type ChipInputProps, ColorModeContext, CountBadge, type CountBadgeProps, type CustomAccordionProps, type CustomGridSpacing, DataTable, type DataTableColumn, type DataTableProps, DefaultSelect, type DefaultSelectProps, Grid, type GridProps, type IconButtonProps, type IconSelectOption, type IconSelectProps, Link, type LinkProps, Modal, type ModalProps, NumberField, type NumberFieldProps, type OptionItem, Progress, type ProgressProps, Radio, RadioGroup, type RadioGroupProps, type RadioOption, type RadioProps, RangeSlider, type RangeSliderProps, Select, type SelectProps, Sheet, type SheetProps, Skeleton, type SkeletonProps, Slider, type SliderProps, TextField, type TextFieldProps, Textarea, ToggleSwitch, type ToggleSwitchProps, Tooltip, type TooltipProps, VortexUIProvider, useColorMode, getTheme as vortexTheme };
