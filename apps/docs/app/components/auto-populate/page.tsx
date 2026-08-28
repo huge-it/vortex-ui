@@ -3,12 +3,12 @@
 import React, { useState } from "react";
 import { Typography, Box, Divider, Stack } from "@mui/material";
 import { AutoPopulate, AutoPopulateItem } from "vortex-ui";
-import { ComponentPreview } from "../../../components/docs/ComponentPreview";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentStates } from "../../../components/docs/ComponentStates";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
+import { ComponentPreview } from "@docs/ComponentPreview";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentStates } from "@docs/ComponentStates";
+import { ComponentProps } from "@docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentInstallation } from "@docs/ComponentInstallation";
 
 const autoPopulatePropsList = [
   {
@@ -140,14 +140,8 @@ export default function AutoPopulateDocs() {
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { useState } from "react";
 import { AutoPopulate, AutoPopulateItem } from "vortex-ui";
 

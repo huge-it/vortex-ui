@@ -80,7 +80,7 @@ export const componentCategories: SidebarCategory[] = [
   {
     title: "💬 Modals, Drawers & Feedback",
     items: [
-      { name: "Dialog", href: "/components/modal" },
+      { name: "Dialog", href: "/components/dialog" },
       { name: "Drawer", href: "/components/drawer" },
       { name: "Tooltip", href: "/components/tooltip" },
       { name: "Snackbar / Toast", href: "/components/snackbar" },

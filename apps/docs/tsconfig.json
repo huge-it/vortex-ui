@@ -10,6 +10,7 @@
     "paths": {
       "@/*": ["./*"],
       "@comp/*": ["./components/*"],
+      "@docs/*": ["./components/docs/*"],
       "vortex-ui": ["../../packages/ui/src/index.ts"],
       "vortex-ui/*": ["../../packages/ui/src/*"]
     }

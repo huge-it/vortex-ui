@@ -1,2 +1,2 @@
-// TODO: Implement History component.
-
+export * from './History';
+export * from './History.types';

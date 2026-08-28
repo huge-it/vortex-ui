@@ -28,9 +28,9 @@ export function TableOfContents() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const elements = Array.from(
+      const elements = (Array.from(
         document.querySelectorAll("main h2, main h3, main h4, main h5"),
-      ) as HTMLElement[];
+      ) as HTMLElement[]).filter((el) => !el.closest(".toc-ignore"));
 
       const newHeadings: HeadingData[] = elements.map((elem, index) => {
         if (!elem.id) {

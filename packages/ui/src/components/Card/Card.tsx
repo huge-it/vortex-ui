@@ -24,8 +24,9 @@ export const Card = ({
       elevation={0}
       sx={{
         ...(fullWidth && { width: "100%" }),
-        bgcolor: "#FFFFFF",
-        border: "1px solid #CDCDCD",
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
         borderRadius: "10px",
         boxShadow: shadow,
         p: 2,

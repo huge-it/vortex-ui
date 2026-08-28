@@ -2,9 +2,9 @@
 
 import React from "react";
 import { Box, Typography, Stack, Divider } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentProps } from "@docs/ComponentProps";
 import { Skeleton } from "vortex-ui";
 
 const skeletonPropsList = [
@@ -101,16 +101,12 @@ export default function SkeletonDocs() {
             Rectangular (Box) Variant
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Used to represent images, containers, or other rectangular elements. Use the <code>rounded</code> prop to easily apply rounded corners.
+            Used to represent images, containers, or other rectangular elements.
+            Use the <code>rounded</code> prop to easily apply rounded corners.
           </Typography>
           <Stack spacing={2}>
             <Skeleton variant="rectangular" width={210} height={118} />
-            <Skeleton
-              variant="rectangular"
-              width={210}
-              height={118}
-              rounded
-            />
+            <Skeleton variant="rectangular" width={210} height={118} rounded />
           </Stack>
         </Box>
 
@@ -203,14 +199,8 @@ export default function SkeletonDocs() {
         </Box>
       </Stack>
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { Skeleton } from "vortex-ui";
 import { Stack, Box } from "@mui/material";
 

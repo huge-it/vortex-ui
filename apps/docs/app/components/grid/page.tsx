@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentProps } from "@docs/ComponentProps";
 import { Grid } from "vortex-ui";
 
 const gridPropsList = [
@@ -16,7 +16,13 @@ const gridPropsList = [
   },
 ];
 
-const Item = ({ children, bgcolor = "#e0e0e0" }: { children: React.ReactNode; bgcolor?: string }) => (
+const Item = ({
+  children,
+  bgcolor = "#e0e0e0",
+}: {
+  children: React.ReactNode;
+  bgcolor?: string;
+}) => (
   <Box
     sx={{
       bgcolor,
@@ -141,14 +147,8 @@ export default function GridDocs() {
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { Grid } from "vortex-ui";
 import { Box } from "@mui/material";
 

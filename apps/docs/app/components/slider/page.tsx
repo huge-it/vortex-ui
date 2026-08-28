@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentProps } from "@docs/ComponentProps";
 import { Slider, RangeSlider } from "vortex-ui";
 
 const sliderPropsList = [
@@ -42,7 +42,8 @@ const sliderPropsList = [
     name: "step",
     type: "number",
     default: "1",
-    description: "The granularity with which the slider can step through values.",
+    description:
+      "The granularity with which the slider can step through values.",
   },
   {
     name: "disabled",
@@ -72,12 +73,18 @@ const sliderPropsList = [
     name: "valueSuffix",
     type: "string",
     default: '""',
-    description: "A string appended to the current value displayed below the slider.",
+    description:
+      "A string appended to the current value displayed below the slider.",
   },
 ];
 
 const rangeSliderPropsList = [
-  ...sliderPropsList.filter((prop) => prop.name !== "value" && prop.name !== "onChange" && prop.name !== "valueSuffix"),
+  ...sliderPropsList.filter(
+    (prop) =>
+      prop.name !== "value" &&
+      prop.name !== "onChange" &&
+      prop.name !== "valueSuffix",
+  ),
   {
     name: "value",
     type: "number[]",
@@ -202,7 +209,10 @@ function Example() {
         <ComponentProps propsList={sliderPropsList} title="Slider Props" />
       </Box>
       <Box mt={6}>
-        <ComponentProps propsList={rangeSliderPropsList} title="RangeSlider Props" />
+        <ComponentProps
+          propsList={rangeSliderPropsList}
+          title="RangeSlider Props"
+        />
       </Box>
     </Box>
   );

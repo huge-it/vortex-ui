@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentProps } from "@docs/ComponentProps";
 import { Progress } from "vortex-ui";
 
 const progressPropsList = [
@@ -72,7 +72,8 @@ const progressPropsList = [
     name: "stepJump",
     type: "number",
     default: "0",
-    description: "If > 0, animates the progress bar visually in discrete jumps.",
+    description:
+      "If > 0, animates the progress bar visually in discrete jumps.",
   },
 ];
 
@@ -115,7 +116,12 @@ export default function ProgressDocs() {
             name: "Inside Label",
             element: (
               <Box sx={{ width: "100%", maxWidth: 500 }}>
-                <Progress value={progress} showValue valuePosition="inside" height={16} />
+                <Progress
+                  value={progress}
+                  showValue
+                  valuePosition="inside"
+                  height={16}
+                />
               </Box>
             ),
           },
@@ -123,7 +129,13 @@ export default function ProgressDocs() {
             name: "Stepper",
             element: (
               <Box sx={{ width: "100%", maxWidth: 500 }}>
-                <Progress value={progress} variant="stepper" steps={5} showValue valuePosition="top" />
+                <Progress
+                  value={progress}
+                  variant="stepper"
+                  steps={5}
+                  showValue
+                  valuePosition="top"
+                />
               </Box>
             ),
           },
@@ -131,7 +143,12 @@ export default function ProgressDocs() {
             name: "Discrete Jump",
             element: (
               <Box sx={{ width: "100%", maxWidth: 500 }}>
-                <Progress value={progress} stepJump={20} showValue valuePosition="right" />
+                <Progress
+                  value={progress}
+                  stepJump={20}
+                  showValue
+                  valuePosition="right"
+                />
               </Box>
             ),
           },

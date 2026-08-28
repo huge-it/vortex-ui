@@ -1,13 +1,16 @@
 import { PaletteMode, PaletteOptions } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface PaletteColor {
     hover?: string;
+    lightHover?: string;
     disabled?: string;
     disabledBackground?: string;
   }
   interface SimplePaletteColorOptions {
     hover?: string;
+    lightHover?: string;
     disabled?: string;
     disabledBackground?: string;
   }
@@ -17,6 +20,7 @@ const colors = {
   primary: {
     light: {
       main: "#4772FF",
+      lightHover: alpha("#4772FF", 0.08),
       light: "#7496FF",
       dark: "#2F50C2",
       contrastText: "#FFFFFF",
@@ -26,6 +30,7 @@ const colors = {
     },
     dark: {
       main: "#4772FF",
+      lightHover: alpha("#4772FF", 0.08),
       light: "#688CFF",
       dark: "#3352CC",
       contrastText: "#FFFFFF",
@@ -37,6 +42,7 @@ const colors = {
   secondary: {
     light: {
       main: "#0088ab",
+      lightHover: alpha("#0088ab", 0.08),
       light: "#22d3ee",
       dark: "#00647D",
       contrastText: "#ffffff",
@@ -46,6 +52,7 @@ const colors = {
     },
     dark: {
       main: "#0088ab",
+      lightHover: alpha("#0088ab", 0.08),
       light: "#33A1C2",
       dark: "#00556B",
       contrastText: "#ffffff",
@@ -57,6 +64,7 @@ const colors = {
   error: {
     light: {
       main: "#FF4747",
+      lightHover: alpha("#FF4747", 0.08),
       light: "#FF7373",
       dark: "#E63A3A",
       contrastText: "#FFFFFF",
@@ -66,6 +74,7 @@ const colors = {
     },
     dark: {
       main: "#FF4747",
+      lightHover: alpha("#FF4747", 0.08),
       light: "#FF6666",
       dark: "#CC3939",
       contrastText: "#FFFFFF",
@@ -77,6 +86,7 @@ const colors = {
   warning: {
     light: {
       main: "#FFA347",
+      lightHover: alpha("#FFA347", 0.08),
       light: "#FFBC70",
       dark: "#E68F3F",
       contrastText: "#1A1A1A",
@@ -86,6 +96,7 @@ const colors = {
     },
     dark: {
       main: "#FFA347",
+      lightHover: alpha("#FFA347", 0.08),
       light: "#FFB366",
       dark: "#CC8239",
       contrastText: "#1A1A1A",
@@ -97,6 +108,7 @@ const colors = {
   success: {
     light: {
       main: "#47FFA3",
+      lightHover: alpha("#47FFA3", 0.08),
       light: "#70FFB8",
       dark: "#3FE691",
       contrastText: "#06351D",
@@ -106,6 +118,7 @@ const colors = {
     },
     dark: {
       main: "#47FFA3",
+      lightHover: alpha("#47FFA3", 0.08),
       light: "#66FFB3",
       dark: "#39CC82",
       contrastText: "#06351D",
@@ -117,6 +130,7 @@ const colors = {
   info: {
     light: {
       main: "#47C2FF",
+      lightHover: alpha("#47C2FF", 0.08),
       light: "#70CEFF",
       dark: "#3FADE6",
       contrastText: "#06283A",
@@ -126,6 +140,7 @@ const colors = {
     },
     dark: {
       main: "#47C2FF",
+      lightHover: alpha("#47C2FF", 0.08),
       light: "#66CBFF",
       dark: "#399BCC",
       contrastText: "#06283A",

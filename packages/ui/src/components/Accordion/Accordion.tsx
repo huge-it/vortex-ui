@@ -12,7 +12,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { Box, Stack } from "@mui/material";
-import { AccordionPanelProps, CustomAccordionProps } from "./Accordion.types";
+import { AccordionPanelProps, AccordionProps } from "./Accordion.types";
 
 const Accordion = styled((props: MuiAccordionProps) => (
   <MuiAccordion disableGutters elevation={0} {...props} />
@@ -114,7 +114,7 @@ export default function CustomAccordion({
   data,
   singleOpen = false,
   ...singleProps
-}: CustomAccordionProps) {
+}: AccordionProps) {
   const [expandedIndex, setExpandedIndex] = React.useState<number | false>(
     singleOpen ? 0 : false,
   );

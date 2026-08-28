@@ -9,9 +9,7 @@ export interface AccordionPanelProps {
   onChange?: (event: React.SyntheticEvent, expanded: boolean) => void;
 }
 
-export interface CustomAccordionProps extends AccordionPanelProps {
+export interface AccordionProps extends AccordionPanelProps {
   data?: AccordionPanelProps[];
   singleOpen?: boolean;
 }
-
-export type AccordionProps = CustomAccordionProps;

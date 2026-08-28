@@ -1,2 +1,1 @@
-// TODO: Implement Avatar component.
-
+export * from "./Avatar";

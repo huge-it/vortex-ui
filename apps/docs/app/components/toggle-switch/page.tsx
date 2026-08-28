@@ -164,14 +164,8 @@ export default function ToggleSwitchDocs() {
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { useState } from "react";
 import { Box } from "@mui/material";
 import { ToggleSwitch } from "vortex-ui";

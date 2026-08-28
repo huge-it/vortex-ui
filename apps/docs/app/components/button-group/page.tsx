@@ -75,7 +75,16 @@ const DEFAULT_METHODS: ButtonGroupMethod[] = [
           {
             value: "other",
             label: "Other Person",
-            icon: <Image src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="Other" width={18} height={18} style={{ borderRadius: "50%" }} unoptimized />,
+            icon: (
+              <Image
+                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                alt="Other"
+                width={18}
+                height={18}
+                style={{ borderRadius: "50%" }}
+                unoptimized
+              />
+            ),
           },
         ],
       },
@@ -282,14 +291,8 @@ export default function ButtonGroupDocs() {
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { useState } from "react";
 import { ButtonGroup, ButtonGroupMethod } from "vortex-ui";
 

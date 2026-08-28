@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 
 interface ComponentVariantsProps {
   title?: string;
@@ -36,6 +36,7 @@ export function ComponentVariants({
         </Typography>
       )}
       <Box
+        className="toc-ignore"
         display="flex"
         gap={3}
         p={2}
@@ -49,27 +50,35 @@ export function ComponentVariants({
           backgroundColor: "background.paper",
         }}
       >
-        {variants.map((v) => (
-          <Box key={v.name} display="flex" flexDirection="column" gap={1}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ fontWeight: 500 }}
-            >
-              {v.name}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "120px",
-                width: direction === "column" ? "100%" : "auto",
-              }}
-            >
-              {v.element}
+        {variants.map((v, index) => (
+          <React.Fragment key={v.name}>
+            {index > 0 && (
+              <Divider 
+                orientation={direction === "column" ? "horizontal" : "vertical"} 
+                flexItem 
+              />
+            )}
+            <Box display="flex" flexDirection="column" gap={1}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ fontWeight: 500 }}
+              >
+                {v.name}
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minWidth: "120px",
+                  width: direction === "column" ? "100%" : "auto",
+                }}
+              >
+                {v.element}
+              </Box>
             </Box>
-          </Box>
+          </React.Fragment>
         ))}
       </Box>
     </Box>

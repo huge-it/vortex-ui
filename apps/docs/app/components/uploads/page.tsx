@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { ComponentHeader } from '../../../components/docs/ComponentHeader';
+import React from "react";
+import { Box, Typography } from "@mui/material";
+import { ComponentHeader } from "@docs/ComponentHeader";
 
 export default function UploadsDocs() {
   return (

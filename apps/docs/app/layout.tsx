@@ -5,10 +5,10 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import React from "react";
 import { VortexUIProvider } from "vortex-ui";
-import { Footer } from "../components/layout/Footer";
-import { Header } from "../components/layout/Header";
-import { Sidebar } from "../components/layout/Sidebar";
-import { TableOfContents } from "../components/layout/TableOfContents";
+import { Footer } from "@comp/layout/Footer";
+import { Header } from "@comp/layout/Header";
+import { Sidebar } from "@comp/layout/Sidebar";
+import { TableOfContents } from "@comp/layout/TableOfContents";
 import "./globals.css";
 
 const inter = Inter({

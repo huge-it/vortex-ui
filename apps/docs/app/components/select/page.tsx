@@ -208,7 +208,9 @@ export default function SelectDocs() {
                   variant="searchable"
                   label="Search Options"
                   value={varSearchVal}
-                  onChange={(e: { target: { value: string | number } }) => setVarSearchVal(Number(e.target.value))}
+                  onChange={(e: { target: { value: string | number } }) =>
+                    setVarSearchVal(Number(e.target.value))
+                  }
                   fullWidth
                 >
                   <MenuItem value={1}>Low</MenuItem>
@@ -269,14 +271,8 @@ export default function SelectDocs() {
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { useState } from "react";
 import { Select } from "vortex-ui";
 import { Videocam, CalendarMonth } from "@mui/icons-material";

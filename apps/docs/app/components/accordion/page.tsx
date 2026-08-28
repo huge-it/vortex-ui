@@ -1,12 +1,12 @@
 "use client";
 
 import { Box, Divider, Typography } from "@mui/material";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentInstallation } from "../../../components/docs/ComponentInstallation";
-import { ComponentPreview } from "../../../components/docs/ComponentPreview";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
-import { ComponentStates } from "../../../components/docs/ComponentStates";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentInstallation } from "@docs/ComponentInstallation";
+import { ComponentPreview } from "@docs/ComponentPreview";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentProps } from "@docs/ComponentProps";
+import { ComponentStates } from "@docs/ComponentStates";
 import { Accordion } from "vortex-ui";
 
 const accordionPropsList = [
@@ -101,7 +101,8 @@ export default function AccordionDocs() {
       <ComponentStates
         display="grid"
         containerSx={{
-          gridTemplateColumns: "1fr",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: 4,
           width: "100%",
         }}
 
@@ -174,14 +175,8 @@ export default function AccordionDocs() {
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { Accordion } from "vortex-ui";
 
 function Example() {

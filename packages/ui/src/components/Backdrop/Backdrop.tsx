@@ -15,7 +15,8 @@ export const Backdrop: React.FC<BackdropProps> = ({
   const ringThickness = Math.max(2, Math.round(size * 0.11));
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {

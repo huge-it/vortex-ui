@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import MuiTooltip from "@mui/material/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 import { TooltipProps } from "./Tooltip.types";
 
-export const Tooltip: React.FC<TooltipProps> = ({
+const CustomTooltip: React.FC<TooltipProps> = ({
   title,
   children,
   placement = "top",
@@ -13,7 +13,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   ...props
 }) => {
   return (
-    <MuiTooltip
+    <Tooltip
       title={title}
       placement={placement}
       arrow
@@ -25,16 +25,20 @@ export const Tooltip: React.FC<TooltipProps> = ({
             borderRadius: "6px",
             color: textColor,
             boxShadow:
-              "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)", // Added subtle shadow for white tooltip
-            "& .MuiTooltip-arrow": {
-              color: bgColor,
-            },
+              "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)",
+          },
+        },
+        arrow: {
+          sx: {
+            color: bgColor,
           },
         },
       }}
       {...props}
     >
       {children}
-    </MuiTooltip>
+    </Tooltip>
   );
 };
+
+export { CustomTooltip as Tooltip };

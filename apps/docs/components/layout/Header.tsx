@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { LightbulbCircle } from "@mui/icons-material";
 import {
   AppBar,
@@ -9,11 +10,29 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { usePathname } from "next/navigation";
 import { useColorMode } from "vortex-ui";
 import { Search } from "./Search";
 
+const NAV_LINKS = [
+  { label: "Home", href: "/", matchPrefix: null },
+  {
+    label: "Components",
+    href: "/components/button",
+    matchPrefix: "/components",
+  },
+  { label: "Changelog", href: "/changelog", matchPrefix: "/changelog" },
+];
+
 export function Header() {
   const { mode, toggleColorMode } = useColorMode();
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <AppBar
@@ -47,23 +66,32 @@ export function Header() {
           >
             VortexUI
           </Typography>
-          <Box display="flex" gap={2}>
-            <Link
-              href="/"
-              color="inherit"
-              underline="none"
-              sx={{ fontWeight: 500, fontSize: "0.875rem" }}
-            >
-              Home
-            </Link>
-            <Link
-              href="/components/button"
-              color="inherit"
-              underline="none"
-              sx={{ fontWeight: 500, fontSize: "0.875rem" }}
-            >
-              Components
-            </Link>
+          <Box display="flex" gap={3} ml={4}>
+            {NAV_LINKS.map((item) => {
+              const isActive = mounted
+                ? item.matchPrefix
+                  ? pathname?.startsWith(item.matchPrefix)
+                  : pathname === item.href
+                : false;
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  color={isActive ? "primary" : "inherit"}
+                  underline="none"
+                  sx={{
+                    fontWeight: isActive ? 700 : 500,
+                    fontSize: "0.875rem",
+                    transition: "color 0.2s ease",
+                    opacity: isActive ? 1 : 0.8,
+                    "&:hover": { opacity: 1, color: "primary.main" },
+                  }}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </Box>
         </Box>
         <Box display="flex" alignItems="center" gap={2}>

@@ -2,9 +2,9 @@
 
 import React from "react";
 import { Box, Typography, Stack } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentProps } from "@docs/ComponentProps";
 import { Backdrop } from "vortex-ui";
 
 const backdropPropsList = [
@@ -188,14 +188,8 @@ export default function BackdropDocs() {
         </Box>
       </Stack>
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 6, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { Backdrop } from "vortex-ui";
 import { Button } from "@mui/material";
 import { useState } from "react";

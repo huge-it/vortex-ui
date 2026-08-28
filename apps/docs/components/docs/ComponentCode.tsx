@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 
 interface ComponentCodeProps {
   code: string;
+  title?: string;
 }
 
 const CopyIcon = () => (
@@ -38,7 +39,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-export function ComponentCode({ code }: ComponentCodeProps) {
+export function ComponentCode({ title, code }: ComponentCodeProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -48,40 +49,52 @@ export function ComponentCode({ code }: ComponentCodeProps) {
   };
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        backgroundColor: "background.paper",
-        color: "text.primary",
-        p: 2.5,
-        borderRadius: "12px",
-        fontFamily: 'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
-        fontSize: "0.875rem",
-        overflowX: "auto",
-        whiteSpace: "pre",
-        mb: 4,
-        border: "1px solid",
-        borderColor: "divider",
-      }}
-    >
-      <Tooltip title={copied ? "Copied!" : "Copy Code"} placement="top">
-        <IconButton
-          onClick={handleCopy}
-          sx={{
-            position: "absolute",
-            top: 8,
-            right: 8,
-            color: "text.secondary",
-            "&:hover": {
-              color: "text.primary",
-              backgroundColor: "action.hover",
-            },
-          }}
+    <>
+      {title && (
+        <Typography
+          variant="h5"
+          color="text.secondary"
+          sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
         >
-          {copied ? <CheckIcon /> : <CopyIcon />}
-        </IconButton>
-      </Tooltip>
-      <code style={{ fontFamily: "inherit" }}>{code}</code>
-    </Box>
+          {title}
+        </Typography>
+      )}
+      <Box
+        sx={{
+          position: "relative",
+          backgroundColor: "background.paper",
+          color: "text.primary",
+          p: 2.5,
+          borderRadius: "12px",
+          fontFamily:
+            'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
+          fontSize: "0.875rem",
+          overflowX: "auto",
+          whiteSpace: "pre",
+          mb: 4,
+          border: "1px solid",
+          borderColor: "divider",
+        }}
+      >
+        <Tooltip title={copied ? "Copied!" : "Copy Code"} placement="top">
+          <IconButton
+            onClick={handleCopy}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              color: "text.secondary",
+              "&:hover": {
+                color: "text.primary",
+                backgroundColor: "action.hover",
+              },
+            }}
+          >
+            {copied ? <CheckIcon /> : <CopyIcon />}
+          </IconButton>
+        </Tooltip>
+        <code style={{ fontFamily: "inherit" }}>{code}</code>
+      </Box>
+    </>
   );
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentVariants } from "../../../components/docs/ComponentVariants";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentProps } from "@docs/ComponentProps";
 import { CountBadge } from "vortex-ui";
 
 const badgePropsList = [

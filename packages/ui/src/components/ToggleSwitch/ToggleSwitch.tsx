@@ -34,8 +34,8 @@ export const ToggleSwitch = ({
   onChange,
   disabled = false,
   variant = "md",
-  color = "#4772FF",
-  unselectedColor = "#C5C9D6",
+  color = "primary.main",
+  unselectedColor = "action.disabledBackground",
   labelProps = {},
 }: ToggleSwitchProps) => {
   const isControlled = checked !== undefined;
@@ -100,7 +100,7 @@ export const ToggleSwitch = ({
             width: thumbSize,
             height: thumbSize,
             borderRadius: "50%",
-            bgcolor: "#FFFFFF",
+            bgcolor: "common.white",
             boxShadow: "0px 1px 3px rgba(0,0,0,0.25)",
             transition: "transform 0.25s ease",
           }}
@@ -113,7 +113,7 @@ export const ToggleSwitch = ({
           variant="body2"
           fontWeight={400}
           fontSize={fontSize}
-          color="#1F2A40"
+          color="text.primary"
           {...labelProps}
         >
           {label}

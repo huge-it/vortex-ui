@@ -64,7 +64,8 @@ export default function LinkDocs() {
         title="Link"
         description={
           <>
-            A customizable link component built on top of Next.js Link and Material UI.
+            A customizable link component built on top of Next.js Link and
+            Material UI.
           </>
         }
       />
@@ -78,11 +79,21 @@ export default function LinkDocs() {
       </Typography>
       <ComponentPreview>
         <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
-          <Link href="#" variant="primary">Primary Link</Link>
-          <Link href="#" variant="secondary">Secondary Link</Link>
-          <Link href="#" variant="neutral">Neutral Link</Link>
-          <Link href="#" variant="success">Success Link</Link>
-          <Link href="#" variant="danger">Danger Link</Link>
+          <Link href="#" variant="primary">
+            Primary Link
+          </Link>
+          <Link href="#" variant="secondary">
+            Secondary Link
+          </Link>
+          <Link href="#" variant="neutral">
+            Neutral Link
+          </Link>
+          <Link href="#" variant="success">
+            Success Link
+          </Link>
+          <Link href="#" variant="danger">
+            Danger Link
+          </Link>
         </Box>
       </ComponentPreview>
 
@@ -92,28 +103,47 @@ export default function LinkDocs() {
         variants={[
           {
             name: "Hover (Default)",
-            element: <Link href="#" underline="hover">Hover Underline</Link>,
+            element: (
+              <Link href="#" underline="hover">
+                Hover Underline
+              </Link>
+            ),
           },
           {
             name: "Always",
-            element: <Link href="#" underline="always">Always Underline</Link>,
+            element: (
+              <Link href="#" underline="always">
+                Always Underline
+              </Link>
+            ),
           },
           {
             name: "None",
-            element: <Link href="#" underline="none">No Underline</Link>,
+            element: (
+              <Link href="#" underline="none">
+                No Underline
+              </Link>
+            ),
           },
         ]}
       />
 
       <ComponentStates
+        containerSx={{ justifyContent: "start", alignItems: "start" }}
         states={[
           {
             name: "Sizes",
             element: (
               <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
-                <Link href="#" size="sm">Small Link</Link>
-                <Link href="#" size="md">Medium Link</Link>
-                <Link href="#" size="lg">Large Link</Link>
+                <Link href="#" size="sm">
+                  Small Link
+                </Link>
+                <Link href="#" size="md">
+                  Medium Link
+                </Link>
+                <Link href="#" size="lg">
+                  Large Link
+                </Link>
               </Box>
             ),
           },
@@ -121,28 +151,28 @@ export default function LinkDocs() {
             name: "With Icons",
             element: (
               <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
-                <Link href="#" startIcon={<Add />}>Add New</Link>
-                <Link href="#" endIcon={<ArrowForward />}>Learn More</Link>
+                <Link href="#" startIcon={<Add />}>
+                  Add New
+                </Link>
+                <Link href="#" endIcon={<ArrowForward />}>
+                  Learn More
+                </Link>
               </Box>
             ),
           },
           {
             name: "Disabled",
             element: (
-              <Link href="#" disabled>Disabled Link</Link>
+              <Link href="#" disabled>
+                Disabled Link
+              </Link>
             ),
           },
         ]}
       />
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { Link } from "vortex-ui";
 import { ArrowForward } from "@mui/icons-material";
 

@@ -1,2 +1,2 @@
-// TODO: Implement Stepper component.
-
+export * from "./Stepper";
+export * from "./Stepper.types";

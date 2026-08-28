@@ -3,7 +3,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { Button } from "vortex-ui";
-import { ComponentCode } from "../components/docs/ComponentCode";
+import { ComponentCode } from "@comp/docs/ComponentCode";
 
 export default function Page() {
   return (

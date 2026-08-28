@@ -4,6 +4,7 @@ import {
   circularProgressClasses,
   Button as MuiButton,
   useTheme,
+  alpha,
 } from "@mui/material";
 import { ButtonProps, IconButtonProps } from "./Button.types";
 import { Star } from "@mui/icons-material";
@@ -85,7 +86,7 @@ export const Button = ({
     main: paletteColor.main,
     hover: paletteColor.hover || paletteColor.dark,
     light: paletteColor.disabledBackground || theme.palette.action.hover,
-    lightHover: paletteColor.disabled || theme.palette.action.selected,
+    lightHover: paletteColor.lightHover || alpha(paletteColor.main, 0.08),
     disabledMain:
       paletteColor.disabled || theme.palette.action.disabledBackground,
     disabledLight: "transparent",
@@ -108,7 +109,7 @@ export const Button = ({
   };
 
   const outlinedSx = {
-    bgcolor: colors.light,
+    bgcolor: "transparent",
     color: colors.main,
     border: `1.5px solid ${colors.main}`,
     "&:hover": {

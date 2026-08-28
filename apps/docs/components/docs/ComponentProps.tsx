@@ -1,14 +1,13 @@
-import React from "react";
 import {
+  Box,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Typography,
-  Box,
 } from "@mui/material";
 
 interface PropDefinition {
@@ -23,7 +22,10 @@ interface ComponentPropsProps {
   title?: string;
 }
 
-export function ComponentProps({ propsList, title = "Props / API" }: ComponentPropsProps) {
+export function ComponentProps({
+  propsList,
+  title = "Props / API",
+}: ComponentPropsProps) {
   return (
     <Box display="flex" flexDirection="column" gap={2} mb={4}>
       <Typography
@@ -39,7 +41,8 @@ export function ComponentProps({ propsList, title = "Props / API" }: ComponentPr
         sx={{
           borderRadius: "8px",
           overflow: "hidden",
-          border: "1px solid #e2e8f0",
+          border: "1px solid",
+          borderColor: "divider",
         }}
       >
         <Table>

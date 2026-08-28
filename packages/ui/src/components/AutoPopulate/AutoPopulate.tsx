@@ -18,25 +18,6 @@ import {
 import { TextField } from "../TextField";
 import { AutoPopulateProps } from "./AutoPopulate.types";
 
-const scrollbarStyles = `
-  .custom-select-menu::-webkit-scrollbar {
-    width: 5px;
-  }
-  .custom-select-menu::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 6px 0;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
-    border-radius: 35px;
-    max-height: 54px;
-    min-height: 54px;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb:hover {
-    background: #BDBDBD;
-  }
-`;
-
 /* ─── Helper ─── */
 const getFocusable = () =>
   Array.from(
@@ -61,18 +42,6 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
   const menuItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const hasInteractedRef = useRef(false);
-
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      const styleTag = document.getElementById("custom-select-scrollbar");
-      if (!styleTag) {
-        const s = document.createElement("style");
-        s.id = "custom-select-scrollbar";
-        s.textContent = scrollbarStyles;
-        document.head.appendChild(s);
-      }
-    }
-  }, []);
 
   const childArray = Children.toArray(children).filter(
     Boolean,
@@ -249,7 +218,7 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              color: "rgba(0,0,0,0.54)",
+              color: "action.active",
             }}
           >
             <KeyboardArrowDown />
@@ -270,11 +239,27 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
             sx={{
               mt: 0.5,
               borderRadius: "10px",
-              border: "1px solid #D6DEEA",
+              border: "1px solid",
+              borderColor: "divider",
               maxHeight: 258,
               overflowY: "auto",
-              bgcolor: "#FFFFFF",
-              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)",
+              bgcolor: "background.paper",
+              boxShadow: 3,
+              "&::-webkit-scrollbar": {
+                width: "5px",
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+                my: 0.75,
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "divider",
+                borderRadius: "35px",
+                minHeight: "54px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "action.active",
+              },
             }}
             className="custom-select-menu"
           >
@@ -304,13 +289,13 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
                       pb: index === filteredChildren.length - 1 ? 1.2 : 1,
                       backgroundColor:
                         value === child.props?.value
-                          ? "rgba(25, 118, 210, 0.06)"
+                          ? "action.selected"
                           : "transparent",
                       "&:hover": {
-                        backgroundColor: "rgba(25, 118, 210, 0.06)",
+                        backgroundColor: "action.hover",
                       },
                       "&:focus": {
-                        backgroundColor: "rgba(25, 118, 210, 0.08)",
+                        backgroundColor: "action.focus",
                       },
                     }}
                   >
@@ -318,7 +303,7 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
                       sx={{
                         fontSize: "14px",
                         fontWeight: 500,
-                        color: "#313952",
+                        color: "text.primary",
                         lineHeight: 1.5,
                       }}
                     >
@@ -330,7 +315,7 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
                         sx={{
                           fontSize: "11px",
                           fontWeight: 400,
-                          color: "#6F778F",
+                          color: "text.secondary",
                           lineHeight: 1.5,
                           mt: 0.2,
                         }}
@@ -342,7 +327,7 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
                 );
               })
             ) : (
-              <Box sx={{ px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }}>
+              <Box sx={{ px: 2, py: 1.5, fontSize: "13px", color: "text.disabled" }}>
                 No results found
               </Box>
             )}

@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
-import { Box, Typography, Stack, Button } from "@mui/material";
-import { ComponentHeader } from "../../../components/docs/ComponentHeader";
-import { ComponentCode } from "../../../components/docs/ComponentCode";
-import { ComponentProps } from "../../../components/docs/ComponentProps";
+import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentHeader } from "@docs/ComponentHeader";
+import { ComponentProps } from "@docs/ComponentProps";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { Tooltip } from "vortex-ui";
 
 const tooltipPropsList = [
@@ -12,7 +11,8 @@ const tooltipPropsList = [
     name: "title",
     type: "ReactNode",
     default: "-",
-    description: "Tooltip title. Zero-length titles string are never displayed.",
+    description:
+      "Tooltip title. Zero-length titles string are never displayed.",
   },
   {
     name: "children",
@@ -22,7 +22,7 @@ const tooltipPropsList = [
   },
   {
     name: "placement",
-    type: 'string',
+    type: "string",
     default: '"top"',
     description: "Tooltip placement (e.g., 'top', 'bottom', 'left', 'right').",
   },
@@ -45,12 +45,17 @@ export default function TooltipDocs() {
     <Box>
       <ComponentHeader
         title="Tooltip"
-        description={<>Tooltips display informative text when users hover over, focus on, or tap an element.</>}
+        description={
+          <>
+            Tooltips display informative text when users hover over, focus on,
+            or tap an element.
+          </>
+        }
       />
 
       <Stack spacing={6} sx={{ mt: 4 }}>
         <Box>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" color="text.primary" gutterBottom>
             Basic Tooltip
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -75,7 +80,7 @@ export default function TooltipDocs() {
         </Box>
 
         <Box>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" color="text.primary" gutterBottom>
             Custom Colors
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -123,14 +128,8 @@ export default function TooltipDocs() {
         </Box>
       </Stack>
 
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 6, fontSize: "1.25rem" }}
-      >
-        Usage
-      </Typography>
       <ComponentCode
+        title="Usage"
         code={`import { Tooltip } from "vortex-ui";
 import { Button } from "@mui/material";
 

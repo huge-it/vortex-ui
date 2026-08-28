@@ -1,2 +1,1 @@
-// TODO: Implement Breadcrumbs component.
-
+export * from "./Breadcrumbs";
