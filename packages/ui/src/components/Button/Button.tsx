@@ -42,22 +42,6 @@ const ICON_ONLY_SIZE_MAP = {
   sm: { box: 28, iconSize: 18, borderRadius: "8px" },
 };
 
-function DefaultCircleIcon({ size }: { size: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      style={{ display: "block", flexShrink: 0 }}
-    >
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
 export const Button = ({
   size = "md",
   variant = "filled",

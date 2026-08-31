@@ -8,8 +8,8 @@ const CustomTooltip: React.FC<TooltipProps> = ({
   title,
   children,
   placement = "top",
-  bgColor = "#fff",
-  textColor = "#1F2937",
+  bgColor = "background.paper",
+  textColor = "text.primary",
   ...props
 }) => {
   return (

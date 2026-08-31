@@ -21,6 +21,7 @@ const NAV_LINKS = [
     href: "/components/button",
     matchPrefix: "/components",
   },
+  { label: "Examples", href: "/examples/project/create", matchPrefix: "/examples" },
   { label: "Changelog", href: "/changelog", matchPrefix: "/changelog" },
 ];
 

@@ -80,7 +80,7 @@ export default function Page() {
             letterSpacing: "-0.02em",
           }}
         >
-          Vortex UI setup for Next.js
+          VortexUI setup for Next.js
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
           This guide walks you through creating a brand new Next.js application
@@ -125,7 +125,7 @@ export default function Page() {
           color="text.secondary"
           sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
         >
-          2. Install Vortex UI via GitHub
+          2. Install VortexUI via GitHub
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
           Since the package is not published to <code>npmjs.com</code>, you can

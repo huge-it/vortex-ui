@@ -6,6 +6,42 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.6",
+    date: "August 31, 2026",
+    changes: [
+      {
+        type: "feat",
+        description:
+          "Added comprehensive application examples demonstrating how to use components in real-world scenarios.",
+      },
+      {
+        type: "feat",
+        description:
+          "Refactored Date/Time pickers into standalone components: DatePicker, DateRangePicker, DateTimePicker, and TimePicker.",
+      },
+      {
+        type: "feat",
+        description:
+          "Updated Uploads components, adding DragDropUpload and UploadButton functionalities.",
+      },
+      {
+        type: "changed",
+        description:
+          "Refactored generic input documentation into specific TextField documentation.",
+      },
+      {
+        type: "changed",
+        description:
+          "Updated layout components (Header, Footer, Sidebar) and global styles.",
+      },
+      {
+        type: "changed",
+        description:
+          "Improvements and fixes across various UI components including Button, CheckboxGroup, RadioGroup, Select, Stepper, and Snackbar.",
+      },
+    ],
+  },
+  {
     version: "v0.1.5",
     date: "August 28, 2026",
     changes: [
@@ -201,7 +237,7 @@ export default function ChangelogPage() {
             Changelog
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            All notable changes to Vortex UI will be documented here.
+            All notable changes to VortexUI will be documented here.
           </Typography>
         </Box>
         <Button variant="outlined" component={Link} href="/">

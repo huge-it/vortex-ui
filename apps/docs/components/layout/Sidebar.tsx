@@ -33,7 +33,7 @@ export const componentCategories: SidebarCategory[] = [
   {
     title: "⌨️ Inputs & Text Fields",
     items: [
-      { name: "TextField", href: "/components/input" },
+      { name: "TextField", href: "/components/textfield" },
       { name: "NumberField", href: "/components/number-field" },
       { name: "ChipInputField", href: "/components/chip-input" },
       { name: "Text Areas", href: "/components/text-areas" },
@@ -53,7 +53,10 @@ export const componentCategories: SidebarCategory[] = [
   {
     title: "📅 Pickers & Uploads",
     items: [
-      { name: "Date & Time Pickers", href: "/components/date-time-pickers" },
+      { name: "Date Picker", href: "/components/date-picker" },
+      { name: "Time Picker", href: "/components/time-picker" },
+      { name: "DateTime Picker", href: "/components/date-time-picker" },
+      { name: "DateRange Picker", href: "/components/date-range-picker" },
       { name: "Uploads", href: "/components/uploads" },
     ],
   },
@@ -98,8 +101,28 @@ export const componentCategories: SidebarCategory[] = [
   },
 ];
 
+export const exampleCategories: SidebarCategory[] = [
+  {
+    title: "📝 Project",
+    items: [
+      { name: "Create Project", href: "/examples/project/create" },
+      { name: "Project Details", href: "/examples/project/view" },
+      { name: "Project List", href: "/examples/project/list" },
+    ]
+  },
+  {
+    title: "👤 User Profile",
+    items: [
+      { name: "Create Profile", href: "/examples/user-profile/create" },
+      { name: "View Profile", href: "/examples/user-profile/view" },
+      { name: "Profile List", href: "/examples/user-profile/list" },
+    ]
+  }
+];
+
 export function Sidebar() {
   const pathname = usePathname();
+  const categories = pathname?.startsWith("/examples") ? exampleCategories : componentCategories;
 
   return (
     <Box
@@ -123,7 +146,7 @@ export function Sidebar() {
         },
       }}
     >
-      {componentCategories?.map((category) => (
+      {categories?.map((category) => (
         <Box key={category.title} sx={{ mb: 3 }}>
           <Typography
             variant="subtitle2"

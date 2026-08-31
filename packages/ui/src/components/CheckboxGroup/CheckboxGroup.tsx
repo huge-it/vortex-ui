@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
   Checkbox as MuiCheckbox,
   FormControl,
@@ -7,6 +7,8 @@ import {
   FormGroup,
   FormLabel,
   Box,
+  formControlLabelClasses,
+  formLabelClasses,
 } from "@mui/material";
 import { CheckboxGroupProps, CheckboxProps } from "./CheckboxGroup.types";
 
@@ -51,8 +53,8 @@ const CheckboxGroupContext = createContext<
 >(undefined);
 
 const StyledCheckbox = ({
-  borderColor = "#D3D6E2",
-  checkedColor = "#4772FF",
+  borderColor = "divider",
+  checkedColor = "primary.main",
   variant = "md",
   ...props
 }: any) => {
@@ -71,7 +73,8 @@ const StyledCheckbox = ({
         <Box
           sx={{
             ...boxBase,
-            border: `1px solid ${borderColor}`,
+            border: 1,
+            borderColor: borderColor,
             backgroundColor: "transparent",
           }}
         />
@@ -80,8 +83,10 @@ const StyledCheckbox = ({
         <Box
           sx={{
             ...boxBase,
-            border: `1px solid ${checkedColor}`,
+            border: 1,
+            borderColor: checkedColor,
             backgroundColor: checkedColor,
+            color: "primary.contrastText",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -96,7 +101,7 @@ const StyledCheckbox = ({
           >
             <path
               d="M1 3.5L4 6.5L10 1"
-              stroke="#fff"
+              stroke="currentColor"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -108,7 +113,8 @@ const StyledCheckbox = ({
         <Box
           sx={{
             ...boxBase,
-            border: `1px solid ${checkedColor}`,
+            border: 1,
+            borderColor: checkedColor,
             backgroundColor: checkedColor,
             display: "flex",
             alignItems: "center",
@@ -119,7 +125,7 @@ const StyledCheckbox = ({
             sx={{
               width: `${v.iconSize}px`,
               height: "1.8px",
-              backgroundColor: "#fff",
+              backgroundColor: "primary.contrastText",
               borderRadius: "2px",
             }}
           />
@@ -149,7 +155,7 @@ export const Checkbox = ({
   const isDisabled = disabled || context.disabled;
   const activeVariant = variant || context.variant;
   const activeBorderColor = borderColor || context.borderColor;
-  const activeColor = color || context.color || "#4772FF";
+  const activeColor = color || context.color || "primary.main";
 
   const { fontSize, fontWeight } = VARIANTS[activeVariant] ?? VARIANTS.md;
 
@@ -169,43 +175,57 @@ export const Checkbox = ({
       }
       label={label}
       disabled={isDisabled}
-      sx={{
-        m: 0,
-        gap: 1,
-        "& .MuiFormControlLabel-label": {
-          fontSize,
-          fontWeight,
-          color: isDisabled ? "#9CA3AF" : "#313952",
-        },
-        ...sx,
-      }}
+      sx={[
+        (theme) => ({
+          m: 0,
+          gap: 1,
+          [`& .${formControlLabelClasses.label}`]: {
+            fontSize,
+            fontWeight,
+            color: isDisabled
+              ? theme.palette.text.disabled
+              : theme.palette.text.primary,
+          },
+        }),
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     />
   );
 };
 
 export const CheckboxGroup = ({
-  value = [],
+  value,
+  defaultValue = [],
   onChange,
   options = [],
   orientation = "horizontal",
   variant = "md",
   disabled = false,
   color,
-  borderColor = "#D3D6E2",
+  borderColor = "divider",
   label,
   sx = {},
   children,
 }: CheckboxGroupProps) => {
+  const [internalValue, setInternalValue] = useState<string[]>(defaultValue);
+  const isControlled = value !== undefined;
+  const currentValue = isControlled ? value : internalValue;
+
   const handleChange = (optionValue: string, checked: boolean) => {
-    if (!onChange) return;
     const next = checked
-      ? [...value, optionValue]
-      : value.filter((v) => v !== optionValue);
-    onChange(next);
+      ? [...currentValue, optionValue]
+      : currentValue.filter((v) => v !== optionValue);
+
+    if (!isControlled) {
+      setInternalValue(next);
+    }
+    if (onChange) {
+      onChange(next);
+    }
   };
 
   const contextValue: CheckboxGroupContextValue = {
-    value,
+    value: currentValue,
     onChange: handleChange,
     disabled,
     variant,
@@ -218,19 +238,22 @@ export const CheckboxGroup = ({
       <FormControl disabled={disabled}>
         {label && (
           <FormLabel
-            sx={{
+            sx={(theme) => ({
               fontSize: "13px",
               fontWeight: 400,
-              color: "#313952",
+              color: theme.palette.text.primary,
               mb: 1,
-              "&.Mui-focused": { color: "#313952" },
-              "&.Mui-disabled": { color: "#313952" },
-            }}
+              [`&.${formLabelClasses.focused}`]: { color: theme.palette.text.primary },
+              [`&.${formLabelClasses.disabled}`]: { color: theme.palette.text.primary },
+            })}
           >
             {label}
           </FormLabel>
         )}
-        <FormGroup row={orientation === "horizontal"} sx={{ gap: 1.5, ...sx }}>
+        <FormGroup
+          row={orientation === "horizontal"}
+          sx={[{ gap: 1.5 }, ...(Array.isArray(sx) ? sx : [sx])]}
+        >
           {options.length > 0
             ? options.map((opt, i) => {
                 const optObj =

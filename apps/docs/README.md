@@ -1,6 +1,6 @@
 # Vortex Docs App
 
-This is a [Next.js](https://nextjs.org/) project that serves as the documentation and showcase application for the Vortex UI library.
+This is a [Next.js](https://nextjs.org/) project that serves as the documentation and showcase application for the VortexUI library.
 
 ## Important Dependencies
 
@@ -8,7 +8,7 @@ This is a [Next.js](https://nextjs.org/) project that serves as the documentatio
 - **React:** 19.2.8
 - **Material UI (@mui/material):** ^6.0.0
 - **Serwist:** ^9.5.12 (For PWA and service worker support)
-- **Vortex UI:** Workspace linked package
+- **VortexUI:** Workspace linked package
 
 ## Prerequisites
 

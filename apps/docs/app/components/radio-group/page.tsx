@@ -112,7 +112,7 @@ export default function RadioGroupDocs() {
           {
             name: "Small",
             element: (
-              <RadioGroup variant="sm" value="sm1">
+              <RadioGroup variant="sm" defaultValue="sm1">
                 <Radio value="sm1" label="Small Radio" />
               </RadioGroup>
             ),
@@ -120,7 +120,7 @@ export default function RadioGroupDocs() {
           {
             name: "Medium",
             element: (
-              <RadioGroup variant="md" value="md1">
+              <RadioGroup variant="md" defaultValue="md1">
                 <Radio value="md1" label="Medium Radio" />
               </RadioGroup>
             ),
@@ -128,7 +128,7 @@ export default function RadioGroupDocs() {
           {
             name: "Large",
             element: (
-              <RadioGroup variant="lg" value="lg1">
+              <RadioGroup variant="lg" defaultValue="lg1">
                 <Radio value="lg1" label="Large Radio" />
               </RadioGroup>
             ),
@@ -141,7 +141,7 @@ export default function RadioGroupDocs() {
           {
             name: "Custom Colors",
             element: (
-              <RadioGroup label="Select Priority" value="Medium">
+              <RadioGroup label="Select Priority" defaultValue="Medium">
                 <Radio value="Low" label="Low" color="#4772FF" />
                 <Radio value="Medium" label="Medium" color="#F8BB13" />
                 <Radio value="High" label="High" color="#FF4750" />
@@ -155,12 +155,12 @@ export default function RadioGroupDocs() {
                 <RadioGroup
                   label="Horizontal"
                   orientation="horizontal"
-                  value="1"
+                  defaultValue="1"
                 >
                   <Radio value="1" label="Opt 1" />
                   <Radio value="2" label="Opt 2" />
                 </RadioGroup>
-                <RadioGroup label="Vertical" orientation="vertical" value="2">
+                <RadioGroup label="Vertical" orientation="vertical" defaultValue="2">
                   <Radio value="1" label="Opt 1" />
                   <Radio value="2" label="Opt 2" />
                 </RadioGroup>
@@ -173,7 +173,7 @@ export default function RadioGroupDocs() {
               <RadioGroup
                 disabled
                 label="Disabled Group"
-                value="enterprise_plus"
+                defaultValue="enterprise_plus"
               >
                 <Radio value="enterprise_plus" label="Enterprise Plus" />
                 <Radio value="enterprise_premium" label="Enterprise Premium" />

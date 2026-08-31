@@ -47,7 +47,7 @@ export default function GridDocs() {
         description={
           <>
             The Grid component is a layout system that wraps MUI`&apos;`s Grid2
-            and provides a custom scale specifically tuned for Vortex UI.
+            and provides a custom scale specifically tuned for VortexUI.
           </>
         }
       />

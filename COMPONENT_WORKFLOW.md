@@ -1,6 +1,6 @@
-# Vortex UI Component Workflow
+# VortexUI Component Workflow
 
-This guide explains how to create and use components in the Vortex UI monorepo.
+This guide explains how to create and use components in the VortexUI monorepo.
 
 ## The Golden Rule
 

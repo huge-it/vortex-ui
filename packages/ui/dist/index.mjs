@@ -4212,8 +4212,7 @@ import {
   Children,
   useCallback,
   useRef,
-  useState as useState2,
-  useEffect
+  useState as useState2
 } from "react";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
@@ -4257,11 +4256,11 @@ var StyledTextField = styled2(
             ]),
             "&:hover": { backgroundColor: bgColor || "background.default" },
             "&:before, &:after": { display: "none" },
-            "&.Mui-focused": {
+            "&.VortexUI-focused": {
               backgroundColor: bgColor || "background.paper",
               borderColor: (theme) => theme.palette.primary.main
             },
-            "&.Mui-error": {
+            "&.VortexUI-error": {
               borderColor: (theme) => theme.palette.error.main,
               backgroundColor: bgColor || "background.paper"
             },
@@ -4281,10 +4280,10 @@ var StyledTextField = styled2(
       fontSize: "14px",
       fontWeight: 400,
       "&.VortexUIInputLabel-shrink": {
-        transform: "translate(10px, 8px) scale(0.75)",
+        transform: "translate(10px, 10px) scale(0.75)",
         lineHeight: 1
       },
-      "&.Mui-error": {
+      "&.VortexUI-error": {
         color: theme.palette.error.main
       }
     },
@@ -4298,9 +4297,9 @@ var StyledTextField = styled2(
       alignItems: "center"
     },
     "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input": {
-      padding: `24px 10px 0 10px`
+      padding: `24px 10px 10px 10px`
     },
-    "& label.Mui-focused": {
+    "& label.VortexUI-focused": {
       color: theme.palette.text.primary
     },
     "& .VortexUIFormHelperText-root": {
@@ -4360,24 +4359,6 @@ TextField.displayName = "TextField";
 
 // src/components/AutoPopulate/AutoPopulate.tsx
 import { jsx as jsx3, jsxs as jsxs3 } from "react/jsx-runtime";
-var scrollbarStyles = `
-  .custom-select-menu::-webkit-scrollbar {
-    width: 5px;
-  }
-  .custom-select-menu::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 6px 0;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
-    border-radius: 35px;
-    max-height: 54px;
-    min-height: 54px;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb:hover {
-    background: #BDBDBD;
-  }
-`;
 var getFocusable = () => Array.from(
   document.querySelectorAll(
     'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
@@ -4399,17 +4380,6 @@ var AutoPopulate = ({
   const menuItemRefs = useRef([]);
   const wrapperRef = useRef(null);
   const hasInteractedRef = useRef(false);
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      const styleTag = document.getElementById("custom-select-scrollbar");
-      if (!styleTag) {
-        const s = document.createElement("style");
-        s.id = "custom-select-scrollbar";
-        s.textContent = scrollbarStyles;
-        document.head.appendChild(s);
-      }
-    }
-  }, []);
   const childArray = Children.toArray(children).filter(
     Boolean
   );
@@ -4560,7 +4530,7 @@ var AutoPopulate = ({
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                color: "rgba(0,0,0,0.54)"
+                color: "action.active"
               },
               children: /* @__PURE__ */ jsx3(KeyboardArrowDown, {})
             }
@@ -4585,11 +4555,27 @@ var AutoPopulate = ({
             sx: {
               mt: 0.5,
               borderRadius: "10px",
-              border: "1px solid #D6DEEA",
+              border: "1px solid",
+              borderColor: "divider",
               maxHeight: 258,
               overflowY: "auto",
-              bgcolor: "#FFFFFF",
-              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)"
+              bgcolor: "background.paper",
+              boxShadow: 3,
+              "&::-webkit-scrollbar": {
+                width: "5px"
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+                my: 0.75
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "divider",
+                borderRadius: "35px",
+                minHeight: "54px"
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "action.active"
+              }
             },
             className: "custom-select-menu",
             children: filteredChildren.length > 0 ? filteredChildren.map((child, index) => {
@@ -4614,12 +4600,12 @@ var AutoPopulate = ({
                     outline: "none",
                     pt: index === 0 ? 1.2 : 1,
                     pb: index === filteredChildren.length - 1 ? 1.2 : 1,
-                    backgroundColor: value === child.props?.value ? "rgba(25, 118, 210, 0.06)" : "transparent",
+                    backgroundColor: value === child.props?.value ? "action.selected" : "transparent",
                     "&:hover": {
-                      backgroundColor: "rgba(25, 118, 210, 0.06)"
+                      backgroundColor: "action.hover"
                     },
                     "&:focus": {
-                      backgroundColor: "rgba(25, 118, 210, 0.08)"
+                      backgroundColor: "action.focus"
                     }
                   },
                   children: [
@@ -4629,7 +4615,7 @@ var AutoPopulate = ({
                         sx: {
                           fontSize: "14px",
                           fontWeight: 500,
-                          color: "#313952",
+                          color: "text.primary",
                           lineHeight: 1.5
                         },
                         children: primaryLabel
@@ -4641,7 +4627,7 @@ var AutoPopulate = ({
                         sx: {
                           fontSize: "11px",
                           fontWeight: 400,
-                          color: "#6F778F",
+                          color: "text.secondary",
                           lineHeight: 1.5,
                           mt: 0.2
                         },
@@ -4652,7 +4638,7 @@ var AutoPopulate = ({
                 },
                 child.key ?? index
               );
-            }) : /* @__PURE__ */ jsx3(Box3, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }, children: "No results found" })
+            }) : /* @__PURE__ */ jsx3(Box3, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "text.disabled" }, children: "No results found" })
           }
         )
       }
@@ -4669,7 +4655,8 @@ import {
   CircularProgress,
   circularProgressClasses,
   Button as MuiButton,
-  useTheme
+  useTheme,
+  alpha
 } from "@mui/material";
 import { Star } from "@mui/icons-material";
 import { jsx as jsx4 } from "react/jsx-runtime";
@@ -4726,7 +4713,7 @@ var Button = ({
     main: paletteColor.main,
     hover: paletteColor.hover || paletteColor.dark,
     light: paletteColor.disabledBackground || theme.palette.action.hover,
-    lightHover: paletteColor.disabled || theme.palette.action.selected,
+    lightHover: paletteColor.lightHover || alpha(paletteColor.main, 0.08),
     disabledMain: paletteColor.disabled || theme.palette.action.disabledBackground,
     disabledLight: "transparent",
     disabledText: paletteColor.disabled || theme.palette.action.disabled,
@@ -4743,7 +4730,7 @@ var Button = ({
     }
   };
   const outlinedSx = {
-    bgcolor: colors2.light,
+    bgcolor: "transparent",
     color: colors2.main,
     border: `1.5px solid ${colors2.main}`,
     "&:hover": {
@@ -4920,33 +4907,6 @@ import {
 import KeyboardArrowDown2 from "@mui/icons-material/KeyboardArrowDown";
 import { jsx as jsx5, jsxs as jsxs4 } from "react/jsx-runtime";
 var SEARCH_THRESHOLD = 2;
-var scrollbarStyles2 = `
-  .custom-select-menu::-webkit-scrollbar {
-    width: 5px;
-  }
-  .custom-select-menu::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 6px 0;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
-    border-radius: 35px;
-    max-height: 54px;
-    min-height: 54px;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb:hover {
-    background: #BDBDBD;
-  }
-`;
-if (typeof document !== "undefined") {
-  const styleTag = document.getElementById("custom-select-scrollbar");
-  if (!styleTag) {
-    const s = document.createElement("style");
-    s.id = "custom-select-scrollbar";
-    s.textContent = scrollbarStyles2;
-    document.head.appendChild(s);
-  }
-}
 var getFocusable2 = () => Array.from(
   document.querySelectorAll(
     'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
@@ -5142,7 +5102,7 @@ var SearchableSelect = ({
                 cursor: disabled ? "default" : "pointer",
                 display: "flex",
                 alignItems: "center",
-                color: "rgba(0,0,0,0.54)"
+                color: "text.secondary"
               },
               children: /* @__PURE__ */ jsx5(KeyboardArrowDown2, {})
             }
@@ -5167,13 +5127,23 @@ var SearchableSelect = ({
             sx: {
               mt: 0.5,
               borderRadius: "10px",
-              border: "1px solid #D6DEEA",
+              border: 1,
+              borderColor: "divider",
               maxHeight: 258,
               overflowY: "auto",
-              bgcolor: "#FFFFFF",
-              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)"
+              bgcolor: "background.paper",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
+              "&::-webkit-scrollbar": { width: "5px" },
+              "&::-webkit-scrollbar-track": { background: "transparent", margin: "6px 0" },
+              "&::-webkit-scrollbar-thumb": {
+                background: (theme) => theme.palette.divider,
+                borderRadius: "35px",
+                minHeight: "54px"
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                background: (theme) => theme.palette.text.disabled
+              }
             },
-            className: "custom-select-menu",
             children: filteredChildren.length > 0 ? filteredChildren.map((child, index) => {
               const primaryLabel = child.props?.children?.toString() || "";
               const subtitle = child.props?.subtitle || "";
@@ -5199,12 +5169,12 @@ var SearchableSelect = ({
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
-                    backgroundColor: isSelected ? "rgba(25, 118, 210, 0.06)" : "transparent",
+                    backgroundColor: isSelected ? "primary.lightHover" : "transparent",
                     "&:hover": {
-                      backgroundColor: "rgba(25, 118, 210, 0.06)"
+                      backgroundColor: "primary.lightHover"
                     },
                     "&:focus": {
-                      backgroundColor: "rgba(25, 118, 210, 0.08)"
+                      backgroundColor: "primary.lightHover"
                     }
                   },
                   children: [
@@ -5236,7 +5206,7 @@ var SearchableSelect = ({
                               sx: {
                                 fontSize: "14px",
                                 fontWeight: 500,
-                                color: "#313952",
+                                color: "text.primary",
                                 lineHeight: 1.5,
                                 whiteSpace: "nowrap",
                                 overflow: "hidden",
@@ -5251,7 +5221,7 @@ var SearchableSelect = ({
                               sx: {
                                 fontSize: "11px",
                                 fontWeight: 400,
-                                color: "#6F778F",
+                                color: "text.secondary",
                                 lineHeight: 1.5,
                                 mt: 0.2
                               },
@@ -5265,7 +5235,7 @@ var SearchableSelect = ({
                 },
                 child.key ?? index
               );
-            }) : /* @__PURE__ */ jsx5(Box4, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }, children: "No results found" })
+            }) : /* @__PURE__ */ jsx5(Box4, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "text.disabled" }, children: "No results found" })
           }
         )
       }
@@ -5333,7 +5303,7 @@ var IconSelect = ({
                 Typography5,
                 {
                   component: "span",
-                  sx: { fontSize: 13, color: "#9CA3AF" },
+                  sx: { fontSize: 13, color: "text.disabled" },
                   children: placeholder
                 }
               );
@@ -5363,8 +5333,8 @@ var IconSelect = ({
                 component: "span",
                 sx: {
                   fontSize: 13,
-                  fontWeight: 500,
-                  color: "#1F2937",
+                  fontWeight: 400,
+                  color: "text.primary",
                   lineHeight: 1
                 },
                 children: selectedOption.label
@@ -5378,7 +5348,9 @@ var IconSelect = ({
               mt: 0.5,
               borderRadius: "8px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
-              border: "1px solid #E5E7EB",
+              border: 1,
+              borderColor: "divider",
+              maxHeight: 250,
               "& .MuiList-root": { py: 1 }
             }
           }
@@ -5408,10 +5380,10 @@ var IconSelect = ({
             px: 1.8,
             py: 1,
             fontSize: 13,
-            color: "#374151",
-            "&:hover": { bgcolor: "#F0F5FF" },
-            "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
-            "&.Mui-selected:hover": { bgcolor: "#F0F5FF" }
+            color: "text.primary",
+            "&:hover": { bgcolor: "primary.lightHover" },
+            "&.Mui-selected": { bgcolor: "background.default", fontWeight: 500 },
+            "&.Mui-selected:hover": { bgcolor: "primary.lightHover" }
           },
           children: [
             (opt.icon || opt.img) && /* @__PURE__ */ jsx6(
@@ -5444,11 +5416,11 @@ var IconSelect = ({
 import { ExpandMore } from "@mui/icons-material";
 import { jsx as jsx7, jsxs as jsxs6 } from "react/jsx-runtime";
 var OPTIONS = {
-  1: { label: "Low", value: 1, color: "#4772FF" },
-  2: { label: "Medium", value: 2, color: "#FF8447" },
-  3: { label: "High", value: 3, color: "#FF4750" }
+  1: { label: "Low", value: 1, color: "info.main" },
+  2: { label: "Medium", value: 2, color: "warning.main" },
+  3: { label: "High", value: 3, color: "error.main" }
 };
-var DefaultSelect = ({
+var BaseSelect = ({
   value,
   recordId,
   onUpdate,
@@ -5463,7 +5435,8 @@ var DefaultSelect = ({
   helperText,
   name,
   id,
-  sx
+  sx,
+  dropdownHeight = 130
 }) => {
   const generatedId = React6.useId();
   const selectId = id || generatedId;
@@ -5515,7 +5488,7 @@ var DefaultSelect = ({
                 Typography6,
                 {
                   component: "span",
-                  sx: { fontSize: 13, color: "#9CA3AF" },
+                  sx: { fontSize: 13, color: "text.disabled" },
                   children: placeholder
                 }
               );
@@ -5530,7 +5503,9 @@ var DefaultSelect = ({
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  border: `2px solid ${cfg.color}`,
+                  border: 2,
+                  borderStyle: "solid",
+                  borderColor: cfg.color,
                   borderTopColor: "transparent",
                   animation: "spin 0.6s linear infinite",
                   flexShrink: 0,
@@ -5556,7 +5531,7 @@ var DefaultSelect = ({
                 sx: {
                   fontSize: 13,
                   fontWeight: 400,
-                  color: "#1F2937",
+                  color: "text.primary",
                   lineHeight: 1
                 },
                 children: cfg.label
@@ -5570,7 +5545,9 @@ var DefaultSelect = ({
               mt: 0.5,
               borderRadius: "8px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
-              border: "1px solid #E5E7EB",
+              border: 1,
+              borderColor: "divider",
+              maxHeight: dropdownHeight,
               "& .MuiList-root": { py: 1 }
             }
           }
@@ -5601,10 +5578,10 @@ var DefaultSelect = ({
               px: 1.8,
               py: 1,
               fontSize: 13,
-              color: "#374151",
-              "&:hover": { bgcolor: "#F0F5FF" },
-              "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
-              "&.Mui-selected:hover": { bgcolor: "#F0F5FF" }
+              color: "text.primary",
+              "&:hover": { bgcolor: "primary.lightHover" },
+              "&.Mui-selected": { bgcolor: "background.default", fontWeight: 500 },
+              "&.Mui-selected:hover": { bgcolor: "primary.lightHover" }
             },
             children: [
               /* @__PURE__ */ jsx7(
@@ -5638,7 +5615,7 @@ var Select = (props) => {
     const { variant, ...rest } = props;
     return /* @__PURE__ */ jsx7(IconSelect, { ...rest });
   }
-  return /* @__PURE__ */ jsx7(DefaultSelect, { ...props });
+  return /* @__PURE__ */ jsx7(BaseSelect, { ...props });
 };
 
 // src/components/ButtonGroup/ButtonGroup.tsx
@@ -5988,6 +5965,7 @@ var ButtonGroup = ({
 
 // src/components/ChipInput/ChipInput.tsx
 import { useState as useState6 } from "react";
+import { alpha as alpha2 } from "@mui/material/styles";
 import Box8 from "@mui/material/Box";
 import Typography8 from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -6000,20 +5978,20 @@ var Chip = ({
 }) => /* @__PURE__ */ jsxs8(
   Box8,
   {
-    sx: {
+    sx: (theme) => ({
       display: "inline-flex",
       alignItems: "center",
       gap: 0.5,
-      bgcolor: "#E8EDFF",
-      border: "1px solid #D4DEFF",
-      color: "#313952",
+      bgcolor: alpha2(theme.palette.primary.main, 0.1),
+      border: `1px solid ${alpha2(theme.palette.primary.main, 0.2)}`,
+      color: theme.palette.text.primary,
       fontSize: "13px",
       fontWeight: 400,
       px: 1.2,
       py: 0.5,
       borderRadius: "10px",
       userSelect: "none"
-    },
+    }),
     children: [
       label,
       !disabled && /* @__PURE__ */ jsx9(
@@ -6189,58 +6167,811 @@ var DataTable = React9.forwardRef(
 );
 DataTable.displayName = "DataTable";
 
-// src/components/Modal/Modal.tsx
-import React10 from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton as IconButton2, Box as Box9 } from "@mui/material";
+// src/components/Drawer/Drawer.tsx
+import { useEffect as useEffect3, useState as useState7 } from "react";
+import {
+  Drawer as MuiDrawer,
+  Box as Box10,
+  Typography as Typography10,
+  IconButton as IconButton2,
+  Divider,
+  Stack as Stack2
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
+// src/components/Dialog/Dialog.tsx
+import * as React10 from "react";
+import {
+  Box as Box9,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Dialog as MuiDialog
+} from "@mui/material";
 import { jsx as jsx11, jsxs as jsxs10 } from "react/jsx-runtime";
-var CloseIcon = () => /* @__PURE__ */ jsxs10("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-  /* @__PURE__ */ jsx11("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
-  /* @__PURE__ */ jsx11("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
-] });
-var Modal = React10.forwardRef(
-  ({ open, title, onClose, actions, children, fullWidth = true, maxWidth = "sm", ...props }, ref) => {
+var Dialog = React10.forwardRef(
+  ({
+    open,
+    onClose,
+    onSubmit,
+    title,
+    notes,
+    closeText = "Cancel",
+    actionText = "Submit",
+    variant = "default",
+    maxWidth = "sm",
+    children,
+    ...props
+  }, ref) => {
+    const handleSubmit = () => {
+      if (onSubmit) onSubmit();
+      if (onClose) onClose();
+    };
+    const titleColor = {
+      error: "error.main",
+      success: "success.main",
+      info: "info.main",
+      default: "text.primary"
+    }[variant] || "text.primary";
+    const buttonSeverity = variant === "default" ? "primary" : variant;
     return /* @__PURE__ */ jsxs10(
-      Dialog,
+      MuiDialog,
       {
         ref,
         open,
         onClose,
-        fullWidth,
         maxWidth,
+        fullWidth: true,
+        slotProps: {
+          backdrop: {
+            sx: {
+              backdropFilter: "blur(3px)",
+              backgroundColor: "rgba(0, 0, 0, 0.3)"
+            }
+          }
+        },
+        PaperProps: {
+          sx: {
+            borderRadius: "10px"
+          }
+        },
         ...props,
         children: [
-          /* @__PURE__ */ jsxs10(Box9, { display: "flex", alignItems: "center", justifyContent: "space-between", pr: 1, children: [
-            title && /* @__PURE__ */ jsx11(DialogTitle, { sx: { m: 0, p: 2, flexGrow: 1 }, children: title }),
-            onClose && /* @__PURE__ */ jsx11(
-              IconButton2,
+          title && /* @__PURE__ */ jsx11(
+            DialogTitle,
+            {
+              sx: {
+                color: titleColor,
+                fontSize: 18,
+                fontWeight: 600,
+                px: 3,
+                pt: 3,
+                pb: 1.5
+              },
+              children: title
+            }
+          ),
+          /* @__PURE__ */ jsxs10(
+            DialogContent,
+            {
+              sx: { px: 3, pt: children || !title ? 3 : 1, pb: children ? 2 : 1 },
+              children: [
+                notes && /* @__PURE__ */ jsx11(
+                  DialogContentText,
+                  {
+                    sx: { color: "text.secondary", fontWeight: 400, pb: children ? 2 : 0 },
+                    children: notes
+                  }
+                ),
+                children
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsx11(DialogActions, { sx: { px: 3, pb: 3 }, children: /* @__PURE__ */ jsxs10(Box9, { sx: { display: "flex", gap: 2 }, children: [
+            /* @__PURE__ */ jsx11(
+              Button,
               {
-                "aria-label": "close",
+                size: "lg",
+                variant: "outlined",
+                severity: buttonSeverity,
                 onClick: onClose,
-                sx: {
-                  color: (theme) => theme.palette.grey[500]
-                },
-                children: /* @__PURE__ */ jsx11(CloseIcon, {})
+                children: closeText
+              }
+            ),
+            /* @__PURE__ */ jsx11(
+              Button,
+              {
+                size: "lg",
+                variant: "filled",
+                severity: buttonSeverity,
+                onClick: handleSubmit,
+                children: actionText
               }
             )
-          ] }),
-          /* @__PURE__ */ jsx11(DialogContent, { sx: { p: 3, pt: title ? 1 : 3 }, children }),
-          actions && /* @__PURE__ */ jsx11(DialogActions, { sx: { p: 2 }, children: actions })
+          ] }) })
         ]
       }
     );
   }
 );
-Modal.displayName = "Modal";
+Dialog.displayName = "Dialog";
+
+// src/components/Drawer/Drawer.tsx
+import { Fragment, jsx as jsx12, jsxs as jsxs11 } from "react/jsx-runtime";
+var Drawer = ({
+  open,
+  onClose,
+  title,
+  anchor = "right",
+  width = 600,
+  children,
+  onSubmit,
+  actionText = "Submit",
+  closeText = "Cancel",
+  showFooter = true,
+  requireConfirmOnClose = true,
+  type = "",
+  subtitle,
+  showHeaderActions = true
+}) => {
+  const isView = type.trim().toLowerCase() === "view";
+  const effectiveRequireConfirm = isView ? false : requireConfirmOnClose;
+  const effectiveOnSubmit = isView ? void 0 : onSubmit;
+  const hasHeaderActions = showHeaderActions;
+  const hasFooterActions = !hasHeaderActions && showFooter;
+  const showCloseIcon = !hasHeaderActions && !hasFooterActions;
+  const [confirmOpen, setConfirmOpen] = useState7(false);
+  useEffect3(() => {
+    if (!open) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+      if (e.ctrlKey && e.key === "Enter") {
+        if (effectiveOnSubmit) handleSubmit();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose, effectiveOnSubmit, effectiveRequireConfirm]);
+  const handleSubmit = () => {
+    if (effectiveOnSubmit) effectiveOnSubmit();
+    onClose();
+  };
+  const handleClose = (event, reason) => {
+    if (effectiveRequireConfirm) {
+      setConfirmOpen(true);
+      return;
+    }
+    if (onClose) onClose(event, reason);
+  };
+  const handleConfirmDiscard = () => {
+    setConfirmOpen(false);
+    if (onClose) onClose();
+  };
+  return /* @__PURE__ */ jsxs11(Fragment, { children: [
+    /* @__PURE__ */ jsxs11(
+      MuiDrawer,
+      {
+        anchor,
+        open,
+        onClose: handleClose,
+        sx: { zIndex: 1300, "& .MuiDrawer-paper": { zIndex: 1300 } },
+        ModalProps: {
+          BackdropProps: {
+            sx: {
+              backdropFilter: "blur(3px)",
+              backgroundColor: "rgba(0, 0, 0, 0.3)"
+            }
+          }
+        },
+        PaperProps: {
+          sx: {
+            width: anchor === "top" || anchor === "bottom" ? "100%" : { xs: "100%", sm: width },
+            borderRadius: anchor === "top" ? "0 0 16px 16px" : anchor === "bottom" ? "16px 16px 0 0" : anchor === "left" ? "0 16px 16px 0" : "16px 0 0 16px",
+            m: 0,
+            backgroundColor: "background.paper",
+            backgroundImage: "none"
+          }
+        },
+        children: [
+          /* @__PURE__ */ jsxs11(
+            Box10,
+            {
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                px: 2.5,
+                py: 2
+              },
+              children: [
+                /* @__PURE__ */ jsx12(Box10, { sx: { display: "flex", flexDirection: "column", gap: 0.5 }, children: /* @__PURE__ */ jsx12(Box10, { sx: { display: "flex", alignItems: "center", gap: 2 }, children: /* @__PURE__ */ jsxs11(Stack2, { children: [
+                  /* @__PURE__ */ jsx12(
+                    Typography10,
+                    {
+                      variant: "h6",
+                      color: "text.primary",
+                      sx: { fontWeight: 500, fontSize: "1.1rem", lineHeight: 1.2 },
+                      children: type ? `${type} ${title}` : title
+                    }
+                  ),
+                  subtitle && /* @__PURE__ */ jsx12(Typography10, { variant: "caption", color: "text.secondary", children: subtitle })
+                ] }) }) }),
+                /* @__PURE__ */ jsxs11(
+                  Box10,
+                  {
+                    sx: {
+                      display: "flex",
+                      gap: 1.5,
+                      mt: hasHeaderActions && !isView ? 0 : -0.5
+                    },
+                    children: [
+                      hasHeaderActions && !isView && /* @__PURE__ */ jsxs11(Fragment, { children: [
+                        /* @__PURE__ */ jsx12(Button, { onClick: handleClose, variant: "outlined", size: "sm", children: closeText }),
+                        effectiveOnSubmit && /* @__PURE__ */ jsx12(Button, { onClick: handleSubmit, variant: "filled", size: "sm", children: actionText })
+                      ] }),
+                      (hasHeaderActions && isView || showCloseIcon) && /* @__PURE__ */ jsx12(
+                        IconButton2,
+                        {
+                          onClick: handleClose,
+                          sx: {
+                            backgroundColor: "action.hover",
+                            "&:hover": { backgroundColor: "action.selected" }
+                          },
+                          size: "small",
+                          children: /* @__PURE__ */ jsx12(CloseIcon, { fontSize: "small", sx: { color: "text.primary" } })
+                        }
+                      )
+                    ]
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsx12(
+            Box10,
+            {
+              sx: {
+                backgroundColor: "action.hover",
+                px: 3,
+                py: 0.8,
+                textAlign: "right"
+              },
+              children: /* @__PURE__ */ jsxs11(
+                Typography10,
+                {
+                  sx: { fontSize: "12px", color: "text.secondary", fontWeight: 400 },
+                  children: [
+                    "Press ",
+                    /* @__PURE__ */ jsx12("b", { children: "ESC" }),
+                    " - Close",
+                    effectiveOnSubmit && /* @__PURE__ */ jsxs11(Fragment, { children: [
+                      ", ",
+                      /* @__PURE__ */ jsx12("b", { children: "Ctrl + Enter" }),
+                      " - ",
+                      actionText
+                    ] })
+                  ]
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ jsx12(
+            Box10,
+            {
+              sx: {
+                p: 2.5,
+                overflowY: "auto",
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2.5,
+                "&::-webkit-scrollbar": { width: 6 },
+                "&::-webkit-scrollbar-track": { background: "transparent" },
+                "&::-webkit-scrollbar-thumb": {
+                  bgcolor: "divider",
+                  borderRadius: 10
+                }
+              },
+              children
+            }
+          ),
+          hasFooterActions && /* @__PURE__ */ jsxs11(Box10, { children: [
+            /* @__PURE__ */ jsx12(Divider, {}),
+            /* @__PURE__ */ jsxs11(
+              Box10,
+              {
+                sx: {
+                  display: "flex",
+                  gap: 2,
+                  p: 2.5,
+                  justifyContent: "flex-end"
+                },
+                children: [
+                  /* @__PURE__ */ jsx12(Button, { variant: "outlined", onClick: handleClose, size: "md", children: isView ? "Close" : closeText }),
+                  effectiveOnSubmit && /* @__PURE__ */ jsx12(Button, { variant: "filled", onClick: handleSubmit, size: "md", children: actionText })
+                ]
+              }
+            )
+          ] })
+        ]
+      }
+    ),
+    requireConfirmOnClose && /* @__PURE__ */ jsx12(
+      Dialog,
+      {
+        open: confirmOpen,
+        title: "Discard changes?",
+        notes: "Are you sure you want to close this? Any unsaved changes will be lost.",
+        onClose: () => setConfirmOpen(false),
+        onSubmit: handleConfirmDiscard,
+        actionText: "Discard",
+        closeText: "Cancel",
+        variant: "error",
+        maxWidth: "xs"
+      }
+    )
+  ] });
+};
+
+// src/components/History/History.tsx
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
+import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
+import { Box as Box11, Typography as Typography11, alpha as alpha3, useTheme as useTheme2 } from "@mui/material";
+import { jsx as jsx13, jsxs as jsxs12 } from "react/jsx-runtime";
+var CalIcon = () => /* @__PURE__ */ jsx13(CalendarTodayIcon, { sx: { fontSize: 13 } });
+var ClkIcon = () => /* @__PURE__ */ jsx13(AccessTimeIcon, { sx: { fontSize: 13 } });
+var useHistoryIconCfg = () => {
+  const theme = useTheme2();
+  return {
+    win: {
+      bg: alpha3(theme.palette.success.main, 0.15),
+      icon: /* @__PURE__ */ jsx13(EmojiEventsOutlinedIcon, { sx: { fontSize: 18, color: "success.main" } })
+    },
+    proposal: {
+      bg: alpha3(theme.palette.info.main, 0.12),
+      icon: /* @__PURE__ */ jsx13(DescriptionOutlinedIcon, { sx: { fontSize: 18, color: "info.main" } })
+    },
+    meeting: {
+      bg: alpha3(theme.palette.warning.main, 0.15),
+      icon: /* @__PURE__ */ jsx13(VideocamOutlinedIcon, { sx: { fontSize: 18, color: "warning.main" } })
+    },
+    edit: {
+      bg: theme.palette.action.selected,
+      icon: /* @__PURE__ */ jsx13(EditOutlinedIcon, { sx: { fontSize: 18, color: "text.secondary" } })
+    },
+    created: {
+      bg: theme.palette.action.selected,
+      icon: /* @__PURE__ */ jsx13(AddCircleOutlineIcon, { sx: { fontSize: 18, color: "text.secondary" } })
+    }
+  };
+};
+var HistoryItem = ({
+  item,
+  isLast,
+  lineVariant = "solid"
+}) => {
+  const cfgs = useHistoryIconCfg();
+  const cfg = item.icon ? { bg: item.iconBg || cfgs.edit.bg, icon: item.icon } : cfgs[item.type] || cfgs.edit;
+  return /* @__PURE__ */ jsxs12(Box11, { sx: { display: "flex", gap: 0, position: "relative" }, children: [
+    /* @__PURE__ */ jsxs12(
+      Box11,
+      {
+        sx: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: 40,
+          flexShrink: 0
+        },
+        children: [
+          /* @__PURE__ */ jsx13(
+            Box11,
+            {
+              sx: {
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                bgcolor: cfg.bg,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
+                flexShrink: 0
+              },
+              children: cfg.icon
+            }
+          ),
+          !isLast && lineVariant !== "none" && /* @__PURE__ */ jsx13(
+            Box11,
+            {
+              sx: {
+                position: "absolute",
+                top: 34,
+                bottom: 0,
+                left: 19,
+                borderLeft: `2px ${lineVariant}`,
+                borderColor: "divider",
+                zIndex: 0
+              }
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxs12(
+      Box11,
+      {
+        sx: {
+          pb: isLast ? 0 : 3,
+          pt: 0.5,
+          pl: 1.5,
+          flex: 1
+        },
+        children: [
+          /* @__PURE__ */ jsxs12(
+            Box11,
+            {
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexWrap: "wrap",
+                mb: 0.4
+              },
+              children: [
+                /* @__PURE__ */ jsx13(Typography11, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.title }),
+                item.tag && /* @__PURE__ */ jsxs12(
+                  Box11,
+                  {
+                    sx: {
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      border: item.tagType === "phone" ? "none" : "1px solid",
+                      borderColor: "divider",
+                      px: item.tagType === "phone" ? 0 : 0.75,
+                      borderRadius: item.tagType === "phone" ? 0 : "8px"
+                    },
+                    children: [
+                      item.tagType !== "phone" && /* @__PURE__ */ jsx13(
+                        Box11,
+                        {
+                          sx: {
+                            width: 7,
+                            height: 7,
+                            borderRadius: "50%",
+                            bgcolor: "info.main"
+                          }
+                        }
+                      ),
+                      /* @__PURE__ */ jsx13(Typography11, { fontSize: 12, fontWeight: 500, color: "text.secondary", children: item.tag })
+                    ]
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs12(Box11, { sx: { display: "flex", gap: 1, flexWrap: "wrap", mb: 0.5 }, children: [
+            item.amount && /* @__PURE__ */ jsx13(Typography11, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.amount }),
+            /* @__PURE__ */ jsxs12(
+              Box11,
+              {
+                sx: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  flexWrap: "wrap"
+                },
+                children: [
+                  item.date && /* @__PURE__ */ jsxs12(
+                    Box11,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ jsx13(CalIcon, {}),
+                        /* @__PURE__ */ jsx13(
+                          Typography11,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.date
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  item.time && /* @__PURE__ */ jsxs12(
+                    Box11,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ jsx13(ClkIcon, {}),
+                        /* @__PURE__ */ jsx13(
+                          Typography11,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.time
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  item.createdBy && /* @__PURE__ */ jsxs12(Typography11, { fontSize: 12, color: "text.secondary", fontWeight: 400, children: [
+                    "Created by",
+                    " ",
+                    /* @__PURE__ */ jsx13(Box11, { component: "span", fontWeight: 500, color: "text.primary", children: item.createdBy })
+                  ] })
+                ]
+              }
+            )
+          ] }),
+          item.notes && /* @__PURE__ */ jsxs12(Typography11, { fontSize: 13, color: "text.secondary", fontWeight: 400, children: [
+            "Notes: ",
+            item.notes
+          ] })
+        ]
+      }
+    )
+  ] });
+};
+var HorizontalHistoryItem = ({
+  item,
+  isLast,
+  lineVariant = "solid"
+}) => {
+  const cfgs = useHistoryIconCfg();
+  const cfg = item.icon ? { bg: item.iconBg || cfgs.edit.bg, icon: item.icon } : cfgs[item.type] || cfgs.edit;
+  return /* @__PURE__ */ jsxs12(
+    Box11,
+    {
+      sx: {
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        minWidth: 280,
+        flexShrink: 0
+      },
+      children: [
+        /* @__PURE__ */ jsxs12(Box11, { sx: { display: "flex", alignItems: "center", mb: 1.5 }, children: [
+          /* @__PURE__ */ jsx13(
+            Box11,
+            {
+              sx: {
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                bgcolor: cfg.bg,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
+                flexShrink: 0
+              },
+              children: cfg.icon
+            }
+          ),
+          !isLast && lineVariant !== "none" && /* @__PURE__ */ jsx13(
+            Box11,
+            {
+              sx: {
+                flex: 1,
+                height: "0px",
+                borderTop: `2px ${lineVariant}`,
+                borderColor: "divider",
+                mx: 1.5
+              }
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs12(Box11, { sx: { pr: 2 }, children: [
+          /* @__PURE__ */ jsxs12(
+            Box11,
+            {
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexWrap: "wrap",
+                mb: 0.4
+              },
+              children: [
+                /* @__PURE__ */ jsx13(Typography11, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.title }),
+                item.tag && /* @__PURE__ */ jsxs12(
+                  Box11,
+                  {
+                    sx: {
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      border: item.tagType === "phone" ? "none" : "1px solid",
+                      borderColor: "divider",
+                      px: item.tagType === "phone" ? 0 : 0.75,
+                      borderRadius: item.tagType === "phone" ? 0 : "8px"
+                    },
+                    children: [
+                      item.tagType !== "phone" && /* @__PURE__ */ jsx13(
+                        Box11,
+                        {
+                          sx: {
+                            width: 7,
+                            height: 7,
+                            borderRadius: "50%",
+                            bgcolor: "info.main"
+                          }
+                        }
+                      ),
+                      /* @__PURE__ */ jsx13(Typography11, { fontSize: 12, fontWeight: 500, color: "text.secondary", children: item.tag })
+                    ]
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs12(Box11, { sx: { display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }, children: [
+            item.amount && /* @__PURE__ */ jsx13(Typography11, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.amount }),
+            /* @__PURE__ */ jsxs12(
+              Box11,
+              {
+                sx: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  flexWrap: "wrap"
+                },
+                children: [
+                  item.date && /* @__PURE__ */ jsxs12(
+                    Box11,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ jsx13(CalIcon, {}),
+                        /* @__PURE__ */ jsx13(
+                          Typography11,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.date
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  item.time && /* @__PURE__ */ jsxs12(
+                    Box11,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ jsx13(ClkIcon, {}),
+                        /* @__PURE__ */ jsx13(
+                          Typography11,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.time
+                          }
+                        )
+                      ]
+                    }
+                  )
+                ]
+              }
+            )
+          ] }),
+          item.createdBy && /* @__PURE__ */ jsxs12(
+            Typography11,
+            {
+              fontSize: 12,
+              color: "text.secondary",
+              fontWeight: 400,
+              mb: 0.5,
+              children: [
+                "Created by",
+                " ",
+                /* @__PURE__ */ jsx13(Box11, { component: "span", fontWeight: 500, color: "text.primary", children: item.createdBy })
+              ]
+            }
+          ),
+          item.notes && /* @__PURE__ */ jsxs12(
+            Typography11,
+            {
+              fontSize: 13,
+              color: "text.secondary",
+              fontWeight: 400,
+              sx: { mt: 0.5 },
+              children: [
+                "Notes: ",
+                item.notes
+              ]
+            }
+          )
+        ] })
+      ]
+    }
+  );
+};
+var History = ({
+  data = [],
+  isHorizontal = false,
+  lineVariant = "solid"
+}) => {
+  if (isHorizontal) {
+    return /* @__PURE__ */ jsx13(Box11, { sx: { display: "flex", overflowX: "auto", pb: 2, pt: 1 }, children: data.map((item, index) => /* @__PURE__ */ jsx13(
+      HorizontalHistoryItem,
+      {
+        item,
+        isLast: index === data.length - 1,
+        lineVariant
+      },
+      item.id
+    )) });
+  }
+  return /* @__PURE__ */ jsx13(Box11, { sx: { pt: 1 }, children: data.map((item, index) => /* @__PURE__ */ jsx13(
+    HistoryItem,
+    {
+      item,
+      isLast: index === data.length - 1,
+      lineVariant
+    },
+    item.id
+  )) });
+};
 
 // src/components/NumberField/NumberField.tsx
-import { Divider, InputAdornment as InputAdornment2 } from "@mui/material";
-import Box10 from "@mui/material/Box";
+import { Divider as Divider2, InputAdornment as InputAdornment2 } from "@mui/material";
+import Box12 from "@mui/material/Box";
 import IconButton3 from "@mui/material/IconButton";
 import { styled as styled3 } from "@mui/material/styles";
 import TextField2 from "@mui/material/TextField";
-import { useEffect as useEffect3, useRef as useRef5, useState as useState7 } from "react";
+import { useEffect as useEffect4, useRef as useRef5, useState as useState8 } from "react";
 import { ExpandLess, ExpandMore as ExpandMore2 } from "@mui/icons-material";
-import { jsx as jsx12, jsxs as jsxs11 } from "react/jsx-runtime";
+import { jsx as jsx14, jsxs as jsxs13 } from "react/jsx-runtime";
 var StyledTextField2 = styled3(
   ({
     bgColor = "transparent",
@@ -6249,7 +6980,7 @@ var StyledTextField2 = styled3(
     showButton,
     InputProps,
     ...props
-  }) => /* @__PURE__ */ jsx12(
+  }) => /* @__PURE__ */ jsx14(
     TextField2,
     {
       variant: "filled",
@@ -6305,13 +7036,13 @@ var StyledTextField2 = styled3(
     alignItems: "center"
   },
   "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input": {
-    padding: "24px 10px 0 10px"
+    padding: "24px 10px 10px 10px"
   },
   "& label.Mui-focused": {
     color: theme.palette.text.secondary
   }
 }));
-var ArrowContainer = styled3(Box10, {
+var ArrowContainer = styled3(Box12, {
   shouldForwardProp: (prop) => prop !== "bgColor"
 })(({ theme, bgColor = "transparent" }) => ({
   display: "flex",
@@ -6365,7 +7096,7 @@ function NumberField({
   unit,
   ...props
 }) {
-  const [internalValue, setInternalValue] = useState7(
+  const [internalValue, setInternalValue] = useState8(
     externalValue !== void 0 ? String(externalValue) : ""
   );
   const value = externalValue !== void 0 ? String(externalValue) : internalValue;
@@ -6448,11 +7179,11 @@ function NumberField({
       repeatIntervalRef.current = setInterval(action, 100);
     }, 400);
   };
-  useEffect3(() => stopRepeat, []);
+  useEffect4(() => stopRepeat, []);
   const canIncrement = !disabled && numericValue < max;
   const canDecrement = !disabled && numericValue > min;
-  return /* @__PURE__ */ jsxs11(
-    Box10,
+  return /* @__PURE__ */ jsxs13(
+    Box12,
     {
       display: "flex",
       alignItems: "stretch",
@@ -6467,7 +7198,7 @@ function NumberField({
         ...sx
       },
       children: [
-        /* @__PURE__ */ jsx12(
+        /* @__PURE__ */ jsx14(
           StyledTextField2,
           {
             label,
@@ -6487,17 +7218,17 @@ function NumberField({
             },
             InputProps: {
               ...prefix2 && {
-                startAdornment: /* @__PURE__ */ jsx12(InputAdornment2, { position: "start", children: prefix2 })
+                startAdornment: /* @__PURE__ */ jsx14(InputAdornment2, { position: "start", children: prefix2 })
               },
               ...unit && {
-                endAdornment: /* @__PURE__ */ jsx12(InputAdornment2, { position: "end", sx: { mr: 1, ml: 0 }, children: unit })
+                endAdornment: /* @__PURE__ */ jsx14(InputAdornment2, { position: "end", sx: { mr: 1, ml: 0 }, children: unit })
               }
             },
             ...props
           }
         ),
-        showButton && /* @__PURE__ */ jsxs11(ArrowContainer, { className: "arrow-container", bgColor, children: [
-          /* @__PURE__ */ jsx12(
+        showButton && /* @__PURE__ */ jsxs13(ArrowContainer, { className: "arrow-container", bgColor, children: [
+          /* @__PURE__ */ jsx14(
             ArrowButton,
             {
               onMouseDown: (e) => {
@@ -6514,11 +7245,11 @@ function NumberField({
               disableRipple: true,
               size: "small",
               disabled: !canIncrement,
-              children: /* @__PURE__ */ jsx12(ExpandLess, { color: "secondary" })
+              children: /* @__PURE__ */ jsx14(ExpandLess, { color: "secondary" })
             }
           ),
-          /* @__PURE__ */ jsx12(Divider, { orientation: "horizontal", flexItem: true, sx: { marginX: "4px" } }),
-          /* @__PURE__ */ jsx12(
+          /* @__PURE__ */ jsx14(Divider2, { orientation: "horizontal", flexItem: true, sx: { marginX: "4px" } }),
+          /* @__PURE__ */ jsx14(
             ArrowButton,
             {
               onMouseDown: (e) => {
@@ -6535,7 +7266,7 @@ function NumberField({
               disableRipple: true,
               size: "small",
               disabled: !canDecrement,
-              children: /* @__PURE__ */ jsx12(ExpandMore2, { color: "secondary" })
+              children: /* @__PURE__ */ jsx14(ExpandMore2, { color: "secondary" })
             }
           )
         ] })
@@ -6544,32 +7275,1581 @@ function NumberField({
   );
 }
 
+// src/components/DateTimePickers/DatePicker/DatePicker.tsx
+import React13, { useState as useState10, useRef as useRef7, useEffect as useEffect6 } from "react";
+import Popover from "@mui/material/Popover";
+import InputAdornment3 from "@mui/material/InputAdornment";
+import { CalendarMonthOutlined } from "@mui/icons-material";
+import dayjs2 from "dayjs";
+
+// src/components/DateTimePickers/Shared/Calendar.tsx
+import { useState as useState9, useRef as useRef6, useEffect as useEffect5 } from "react";
+import Box13 from "@mui/material/Box";
+import { KeyboardArrowDown as KeyboardArrowDown4, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import dayjs from "dayjs";
+import { jsx as jsx15, jsxs as jsxs14 } from "react/jsx-runtime";
+function DropdownSelect({ value, options, onChange }) {
+  const [open, setOpen] = useState9(false);
+  const ref = useRef6(null);
+  useEffect5(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    if (open) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+  const selectedLabel = options.find((o) => o.val === value)?.label || "";
+  return /* @__PURE__ */ jsxs14(Box13, { ref, sx: { position: "relative", display: "inline-block" }, children: [
+    /* @__PURE__ */ jsxs14(
+      Box13,
+      {
+        component: "button",
+        type: "button",
+        onClick: (e) => {
+          e.stopPropagation();
+          setOpen((prev2) => !prev2);
+        },
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          height: "32px",
+          px: "10px",
+          borderRadius: "5px",
+          border: "1px solid",
+          borderColor: "divider",
+          backgroundColor: "background.default",
+          fontSize: "13px",
+          fontWeight: 500,
+          color: "text.primary",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+          minWidth: "60px",
+          "&:hover": {
+            backgroundColor: "action.hover"
+          }
+        },
+        children: [
+          selectedLabel,
+          /* @__PURE__ */ jsx15(KeyboardArrowDown4, { sx: { width: 16, height: 16, color: "text.secondary" } })
+        ]
+      }
+    ),
+    open && /* @__PURE__ */ jsx15(
+      Box13,
+      {
+        sx: {
+          position: "absolute",
+          top: "36px",
+          left: 0,
+          zIndex: 99999,
+          background: (theme) => theme.palette.background.paper,
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: "8px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+          maxHeight: "180px",
+          overflowY: "auto",
+          minWidth: "90px"
+        },
+        children: options.map((opt) => /* @__PURE__ */ jsx15(
+          Box13,
+          {
+            onMouseDown: (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onChange(opt.val);
+              setOpen(false);
+            },
+            sx: {
+              px: 1.75,
+              py: 1,
+              fontSize: "13px",
+              cursor: "pointer",
+              color: opt.val === value ? "primary.main" : "text.primary",
+              backgroundColor: opt.val === value ? "primary.disabledBackground" : "transparent",
+              fontWeight: opt.val === value ? 600 : 400,
+              "&:hover": {
+                backgroundColor: opt.val === value ? "primary.disabledBackground" : "action.hover"
+              }
+            },
+            children: opt.label
+          },
+          opt.val
+        ))
+      }
+    )
+  ] });
+}
+function NavArrow({ direction, onClick, disabled }) {
+  return /* @__PURE__ */ jsx15(
+    Box13,
+    {
+      onClick: !disabled ? onClick : void 0,
+      sx: {
+        width: 32,
+        height: 32,
+        borderRadius: "8px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: disabled ? "not-allowed" : "pointer",
+        color: disabled ? "text.disabled" : "text.secondary",
+        "&:hover": !disabled ? { backgroundColor: "action.hover" } : {},
+        flexShrink: 0
+      },
+      children: direction === "left" ? /* @__PURE__ */ jsx15(ChevronLeft, { sx: { width: 20, height: 20 } }) : /* @__PURE__ */ jsx15(ChevronRight, { sx: { width: 20, height: 20 } })
+    }
+  );
+}
+var DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+var MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+function Calendar({
+  month,
+  selectedDate,
+  onDayClick,
+  minDate,
+  maxDate,
+  onPrev,
+  onNext,
+  onMonthChange,
+  onYearChange
+}) {
+  const firstDay = month.startOf("month");
+  const daysInMonth = month.daysInMonth();
+  const startOffset = firstDay.day();
+  const cells = [];
+  for (let i = 0; i < startOffset; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(month.date(d));
+  while (cells.length % 7 !== 0) cells.push(null);
+  const currentYear = dayjs().year();
+  const yearOptions = Array.from({ length: 21 }, (_, i) => ({
+    label: String(currentYear - 10 + i),
+    val: currentYear - 10 + i
+  }));
+  const monthOptions = MONTHS.map((m, i) => ({ label: m, val: i }));
+  const disablePrev = minDate && month.isSame(minDate.startOf("month"), "month");
+  const disableNext = maxDate && month.isSame(maxDate.startOf("month"), "month");
+  return /* @__PURE__ */ jsxs14(Box13, { sx: { width: "270px", pb: 1.5 }, children: [
+    /* @__PURE__ */ jsxs14(Box13, { sx: { display: "flex", alignItems: "center", gap: 1.25, px: 1.5, py: 1.5 }, children: [
+      /* @__PURE__ */ jsx15(DropdownSelect, { value: month.month(), onChange: onMonthChange, options: monthOptions }),
+      /* @__PURE__ */ jsx15(DropdownSelect, { value: month.year(), onChange: onYearChange, options: yearOptions }),
+      /* @__PURE__ */ jsxs14(Box13, { sx: { display: "flex", alignItems: "center", ml: 0.5 }, children: [
+        /* @__PURE__ */ jsx15(NavArrow, { direction: "left", onClick: onPrev, disabled: !!disablePrev }),
+        /* @__PURE__ */ jsx15(NavArrow, { direction: "right", onClick: onNext, disabled: !!disableNext })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx15(Box13, { sx: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 1.5, mb: 0.5 }, children: DAYS.map((d) => /* @__PURE__ */ jsx15(Box13, { sx: { textAlign: "center", fontSize: "12px", color: "text.secondary", fontWeight: 400, py: 0.5 }, children: d }, d)) }),
+    /* @__PURE__ */ jsx15(Box13, { sx: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 1.5 }, children: cells.map((day, idx) => {
+      if (!day) return /* @__PURE__ */ jsx15(Box13, {}, `empty-${idx}`);
+      const isToday = day.isSame(dayjs(), "day");
+      const isSelected = selectedDate && day.isSame(selectedDate, "day");
+      const isDisabled = minDate && day.isBefore(minDate, "day") || maxDate && day.isAfter(maxDate, "day");
+      return /* @__PURE__ */ jsx15(
+        Box13,
+        {
+          onClick: () => !isDisabled && onDayClick(day),
+          sx: {
+            height: "36px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: isDisabled ? "not-allowed" : "pointer"
+          },
+          children: /* @__PURE__ */ jsx15(
+            Box13,
+            {
+              sx: {
+                width: "32px",
+                height: "32px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "13px",
+                fontWeight: isSelected ? 600 : 400,
+                backgroundColor: isSelected ? "primary.main" : "transparent",
+                color: isDisabled ? "text.disabled" : isSelected ? "primary.contrastText" : isToday ? "primary.main" : "text.primary",
+                border: isToday && !isSelected ? "1px solid" : "none",
+                borderColor: isToday && !isSelected ? "primary.main" : "transparent",
+                "&:hover": !isDisabled && !isSelected ? { backgroundColor: "action.hover" } : {}
+              },
+              children: day.date()
+            }
+          )
+        },
+        day.format("YYYY-MM-DD")
+      );
+    }) })
+  ] });
+}
+
+// src/components/DateTimePickers/DatePicker/DatePicker.tsx
+import { Fragment as Fragment2, jsx as jsx16, jsxs as jsxs15 } from "react/jsx-runtime";
+var DatePicker = React13.forwardRef(({
+  label = "Date",
+  value,
+  onChange,
+  minDate,
+  maxDate,
+  bgColor = "background.paper",
+  error,
+  disabled = false,
+  format = "DD/MM/YYYY",
+  ...rest
+}, ref) => {
+  const initial = value ? dayjs2(value) : null;
+  const [open, setOpen] = useState10(false);
+  const [viewMonth, setViewMonth] = useState10(() => (initial || dayjs2()).startOf("month"));
+  const [selectedDate, setSelectedDate] = useState10(initial ? initial.startOf("day") : null);
+  const anchorRef = useRef7(null);
+  useEffect6(() => {
+    const next2 = value ? dayjs2(value) : null;
+    setSelectedDate(next2 ? next2.startOf("day") : null);
+    if (next2) setViewMonth(next2.startOf("month"));
+  }, [value]);
+  const handleDayClick = (day) => {
+    setSelectedDate(day);
+    onChange?.(day.format("YYYY-MM-DD"));
+    setOpen(false);
+  };
+  const handleOpen = (e) => {
+    if (disabled) return;
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (selectedDate) setViewMonth(selectedDate.startOf("month"));
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const prevMonth = () => setViewMonth((m) => m.subtract(1, "month"));
+  const nextMonth = () => setViewMonth((m) => m.add(1, "month"));
+  const handleMonthChange = (m) => setViewMonth((prev2) => prev2.month(m));
+  const handleYearChange = (y) => setViewMonth((prev2) => prev2.year(y));
+  const minDayjs = minDate ? dayjs2(minDate) : null;
+  const maxDayjs = maxDate ? dayjs2(maxDate) : null;
+  const displayValue = selectedDate ? selectedDate.format(format) : "";
+  return /* @__PURE__ */ jsxs15(Fragment2, { children: [
+    /* @__PURE__ */ jsx16(
+      TextField,
+      {
+        ...rest,
+        ref: (node2) => {
+          if (typeof ref === "function") ref(node2);
+          else if (ref) ref.current = node2;
+          anchorRef.current = node2;
+        },
+        label,
+        variant: "filled",
+        bgColor,
+        fullWidth: true,
+        value: displayValue,
+        error,
+        disabled,
+        onClick: handleOpen,
+        InputProps: {
+          readOnly: true,
+          placeholder: format,
+          endAdornment: /* @__PURE__ */ jsx16(InputAdornment3, { position: "end", sx: { mt: 0 }, children: /* @__PURE__ */ jsx16(
+            CalendarMonthOutlined,
+            {
+              sx: { width: 20, height: 20, cursor: disabled ? "not-allowed" : "pointer", mr: 0, color: "text.secondary" },
+              onClick: (e) => {
+                e.stopPropagation();
+                handleOpen();
+              }
+            }
+          ) })
+        },
+        InputLabelProps: { shrink: !!displayValue },
+        sx: { "& .VortexUIFilledInput-input": { cursor: disabled ? "not-allowed" : "pointer" }, ...rest.sx }
+      }
+    ),
+    /* @__PURE__ */ jsx16(
+      Popover,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        onClose: handleClose,
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+        style: { zIndex: 1300 },
+        PaperProps: {
+          elevation: 0,
+          sx: {
+            mt: "8px",
+            borderRadius: "10px",
+            border: "1px solid",
+            borderColor: "divider",
+            backgroundColor: "background.paper",
+            boxShadow: "0px 2px 8px 0px rgba(0,0,0,0.10)",
+            overflow: "hidden",
+            userSelect: "none",
+            display: "flex"
+          }
+        },
+        children: /* @__PURE__ */ jsx16(
+          Calendar,
+          {
+            month: viewMonth,
+            selectedDate,
+            onDayClick: handleDayClick,
+            minDate: minDayjs,
+            maxDate: maxDayjs,
+            onPrev: prevMonth,
+            onNext: nextMonth,
+            onMonthChange: handleMonthChange,
+            onYearChange: handleYearChange
+          }
+        )
+      }
+    )
+  ] });
+});
+DatePicker.displayName = "DatePicker";
+
+// src/components/DateTimePickers/TimePicker/TimePicker.tsx
+import React14, { useState as useState11, useRef as useRef8, useEffect as useEffect7, useCallback as useCallback4 } from "react";
+import Box14 from "@mui/material/Box";
+import Popover2 from "@mui/material/Popover";
+import InputAdornment4 from "@mui/material/InputAdornment";
+import { AccessTimeOutlined } from "@mui/icons-material";
+import { jsx as jsx17, jsxs as jsxs16 } from "react/jsx-runtime";
+var ITEM_HEIGHT = 36;
+var VISIBLE_COUNT = 5;
+var COLUMN_WIDTH = 50;
+var HOURS_12 = Array.from({ length: 12 }, (_, i) => String(i + 1));
+var HOURS_24 = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+var MINUTES = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0"));
+var PERIODS = ["AM", "PM"];
+function parseTime(value, format) {
+  if (!value) return { hour: null, min: null, period: null };
+  if (format === "24h") {
+    const match2 = value.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match2) return { hour: null, min: null, period: null };
+    return { hour: match2[1].padStart(2, "0"), min: match2[2], period: null };
+  } else {
+    const match2 = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match2) return { hour: null, min: null, period: null };
+    return {
+      hour: match2[1],
+      min: match2[2],
+      period: match2[3].toUpperCase()
+    };
+  }
+}
+function ScrollColumn({ items, value, onChange }) {
+  const listRef = useRef8(null);
+  const isInitialMount = useRef8(true);
+  const [scrollTop, setScrollTop] = useState11(0);
+  useEffect7(() => {
+    const idx = value ? items.indexOf(value) : -1;
+    if (listRef.current && idx !== -1) {
+      isInitialMount.current = true;
+      listRef.current.scrollTop = idx * ITEM_HEIGHT;
+      setScrollTop(idx * ITEM_HEIGHT);
+    }
+  }, [value, items]);
+  const handleScroll = useCallback4((e) => {
+    setScrollTop(e.target.scrollTop);
+  }, []);
+  const handleClick = useCallback4(
+    (item) => {
+      const idx = items.indexOf(item);
+      isInitialMount.current = true;
+      listRef.current?.scrollTo({ top: idx * ITEM_HEIGHT, behavior: "smooth" });
+      if (item !== value) onChange(item);
+    },
+    [items, value, onChange]
+  );
+  const totalContentHeight = items.length * ITEM_HEIGHT + ITEM_HEIGHT * (VISIBLE_COUNT - 1);
+  const viewportHeight = ITEM_HEIGHT * VISIBLE_COUNT;
+  const thumbHeight = Math.max(viewportHeight / totalContentHeight * viewportHeight, 20);
+  const maxScroll = totalContentHeight - viewportHeight;
+  const thumbTravel = viewportHeight - thumbHeight;
+  const thumbTop = maxScroll > 0 ? scrollTop / maxScroll * thumbTravel : 0;
+  return /* @__PURE__ */ jsxs16(Box14, { sx: { position: "relative", width: "100%", height: ITEM_HEIGHT * VISIBLE_COUNT, overflow: "hidden" }, children: [
+    /* @__PURE__ */ jsxs16(
+      "div",
+      {
+        ref: listRef,
+        onScroll: handleScroll,
+        style: {
+          height: "100%",
+          overflowY: "scroll",
+          scrollSnapType: "y mandatory",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none"
+        },
+        children: [
+          /* @__PURE__ */ jsx17("style", { children: `div::-webkit-scrollbar { display: none; }` }),
+          /* @__PURE__ */ jsx17("div", { style: { height: ITEM_HEIGHT * 2 } }),
+          items.map((item) => /* @__PURE__ */ jsx17(
+            "div",
+            {
+              onClick: () => handleClick(item),
+              style: {
+                height: 37.5,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "13px",
+                fontWeight: 400,
+                color: item === value ? "var(--mui-palette-primary-contrastText, #fff)" : "var(--mui-palette-text-primary)",
+                backgroundColor: item === value ? "var(--mui-palette-primary-main)" : "transparent",
+                borderRadius: "8px",
+                margin: "0 6px",
+                scrollSnapAlign: "start",
+                cursor: "pointer",
+                userSelect: "none"
+              },
+              children: item
+            },
+            item
+          ))
+        ]
+      }
+    ),
+    maxScroll > 0 && /* @__PURE__ */ jsx17(
+      Box14,
+      {
+        sx: {
+          position: "absolute",
+          right: "-1px",
+          top: `${thumbTop}px`,
+          width: "4px",
+          height: `${thumbHeight}px`,
+          borderRadius: "29px",
+          backgroundColor: "action.disabled",
+          pointerEvents: "none"
+        }
+      }
+    )
+  ] });
+}
+var Divider3 = () => /* @__PURE__ */ jsx17(Box14, { sx: { width: "1px", alignSelf: "stretch", bgcolor: "divider", flexShrink: 0 } });
+function TimePickerPanel({
+  hour,
+  min,
+  period,
+  onHourChange,
+  onMinChange,
+  onPeriodChange,
+  format = "12h",
+  onOk,
+  onReset
+}) {
+  const is24h = format === "24h";
+  const hoursList = is24h ? HOURS_24 : HOURS_12;
+  const colWidth = is24h ? 75 : COLUMN_WIDTH;
+  const isOkDisabled = is24h ? !hour || !min : !hour || !min || !period;
+  return /* @__PURE__ */ jsxs16(
+    Box14,
+    {
+      sx: {
+        borderRadius: "12px",
+        border: "1px solid",
+        borderColor: "divider",
+        bgcolor: "background.paper",
+        p: "6px",
+        width: "160px"
+      },
+      children: [
+        /* @__PURE__ */ jsxs16(Box14, { sx: { display: "flex", mt: 1 }, children: [
+          /* @__PURE__ */ jsxs16(Box14, { sx: { width: colWidth }, children: [
+            /* @__PURE__ */ jsx17(Box14, { sx: { textAlign: "center", fontSize: "14px", fontWeight: 400, color: "text.secondary" }, children: "HH" }),
+            /* @__PURE__ */ jsx17(ScrollColumn, { items: hoursList, value: hour, onChange: onHourChange })
+          ] }),
+          /* @__PURE__ */ jsx17(Divider3, {}),
+          /* @__PURE__ */ jsxs16(Box14, { sx: { width: colWidth }, children: [
+            /* @__PURE__ */ jsx17(Box14, { sx: { textAlign: "center", fontSize: "14px", fontWeight: 400, color: "text.secondary" }, children: "MM" }),
+            /* @__PURE__ */ jsx17(ScrollColumn, { items: MINUTES, value: min, onChange: onMinChange })
+          ] }),
+          !is24h && /* @__PURE__ */ jsx17(Divider3, {}),
+          !is24h && /* @__PURE__ */ jsx17(Box14, { sx: { width: COLUMN_WIDTH }, children: /* @__PURE__ */ jsx17(Box14, { sx: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", gap: "10px", mt: 3 }, children: PERIODS.map((p) => /* @__PURE__ */ jsx17(
+            Box14,
+            {
+              onClick: () => onPeriodChange(p),
+              sx: {
+                height: 32,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "13px",
+                fontWeight: 400,
+                color: p === period ? "primary.contrastText" : "text.primary",
+                backgroundColor: p === period ? "primary.main" : "transparent",
+                borderRadius: "8px",
+                mx: "6px",
+                cursor: "pointer",
+                width: "calc(100% - 12px)",
+                userSelect: "none"
+              },
+              children: p
+            },
+            p
+          )) }) })
+        ] }),
+        /* @__PURE__ */ jsxs16(Box14, { sx: { display: "flex", justifyContent: "space-between", px: 1, pt: 1, borderTop: "1px solid", borderColor: "divider", m: 1, mb: 0.5 }, children: [
+          /* @__PURE__ */ jsx17(Box14, { onClick: onReset, sx: { color: "text.secondary", fontSize: "13px", cursor: "pointer", "&:hover": { color: "text.primary" } }, children: "Reset" }),
+          /* @__PURE__ */ jsx17(
+            Box14,
+            {
+              onClick: isOkDisabled ? void 0 : onOk,
+              sx: {
+                color: isOkDisabled ? "text.disabled" : "primary.main",
+                fontSize: "13px",
+                fontWeight: 600,
+                cursor: isOkDisabled ? "not-allowed" : "pointer",
+                "&:hover": isOkDisabled ? {} : { color: "primary.dark" }
+              },
+              children: "OK"
+            }
+          )
+        ] })
+      ]
+    }
+  );
+}
+var TimePicker = React14.forwardRef(({
+  label = "Time",
+  value = "",
+  onChange,
+  bgColor = "background.paper",
+  disabled = false,
+  format = "12h",
+  error,
+  ...props
+}, ref) => {
+  const [open, setOpen] = useState11(false);
+  const anchorRef = useRef8(null);
+  const is24h = format === "24h";
+  const { hour, min, period } = parseTime(value, format);
+  const handleOpen = (e) => {
+    if (!disabled) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      setOpen((o) => !o);
+    }
+  };
+  const handleHourChange = useCallback4(
+    (h) => {
+      if (format === "24h") {
+        onChange?.(`${h}:${min ?? "00"}`);
+      } else {
+        onChange?.(`${h}:${min ?? "00"} ${period ?? "AM"}`);
+      }
+    },
+    [min, period, onChange, format]
+  );
+  const handleMinChange = useCallback4(
+    (m) => {
+      if (format === "24h") {
+        onChange?.(`${hour ?? "00"}:${m}`);
+      } else {
+        onChange?.(`${hour ?? "1"}:${m} ${period ?? "AM"}`);
+      }
+    },
+    [hour, period, onChange, format]
+  );
+  const handlePeriodChange = useCallback4(
+    (p) => {
+      if (format !== "24h") {
+        onChange?.(`${hour ?? "1"}:${min ?? "00"} ${p}`);
+      }
+    },
+    [hour, min, onChange, format]
+  );
+  return /* @__PURE__ */ jsxs16(Box14, { sx: { position: "relative" }, children: [
+    /* @__PURE__ */ jsx17(
+      TextField,
+      {
+        ...props,
+        ref: (node2) => {
+          if (typeof ref === "function") ref(node2);
+          else if (ref) ref.current = node2;
+          anchorRef.current = node2;
+        },
+        label,
+        variant: "filled",
+        bgColor,
+        fullWidth: true,
+        disabled,
+        value,
+        error,
+        onClick: handleOpen,
+        InputProps: {
+          readOnly: true,
+          placeholder: is24h ? "HH:MM" : "HH:MM AM/PM",
+          endAdornment: /* @__PURE__ */ jsx17(InputAdornment4, { position: "end", children: /* @__PURE__ */ jsx17(
+            AccessTimeOutlined,
+            {
+              sx: { width: 20, height: 20, cursor: disabled ? "not-allowed" : "pointer", mr: 0, color: "text.secondary" },
+              onClick: (e) => {
+                e.stopPropagation();
+                handleOpen();
+              }
+            }
+          ) })
+        },
+        sx: { "& .VortexUIFilledInput-input": { cursor: disabled ? "not-allowed" : "pointer" }, ...props.sx }
+      }
+    ),
+    /* @__PURE__ */ jsx17(
+      Popover2,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        onClose: () => setOpen(false),
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+        style: { zIndex: 1300 },
+        PaperProps: {
+          elevation: 0,
+          sx: {
+            mt: "8px",
+            borderRadius: "12px",
+            boxShadow: "0px 10px 40px rgba(0,0,0,0.08)"
+          }
+        },
+        children: /* @__PURE__ */ jsx17(
+          TimePickerPanel,
+          {
+            hour,
+            min,
+            period,
+            format,
+            onHourChange: handleHourChange,
+            onMinChange: handleMinChange,
+            onPeriodChange: handlePeriodChange,
+            onOk: () => setOpen(false),
+            onReset: () => {
+              onChange?.("");
+              setOpen(false);
+            }
+          }
+        )
+      }
+    )
+  ] });
+});
+TimePicker.displayName = "TimePicker";
+
+// src/components/DateTimePickers/DateTimePicker/DateTimePicker.tsx
+import React15, { useState as useState12, useRef as useRef9, useEffect as useEffect8 } from "react";
+import Box15 from "@mui/material/Box";
+import Popover3 from "@mui/material/Popover";
+import InputAdornment5 from "@mui/material/InputAdornment";
+import { CalendarMonthOutlined as CalendarMonthOutlined2 } from "@mui/icons-material";
+import dayjs3 from "dayjs";
+import { Fragment as Fragment3, jsx as jsx18, jsxs as jsxs17 } from "react/jsx-runtime";
+var HOUR_OPTIONS = Array.from({ length: 12 }, (_, i) => ({ label: String(i + 1), value: i + 1 }));
+var MINUTE_OPTIONS = Array.from({ length: 12 }, (_, i) => ({ label: String(i * 5).padStart(2, "0"), value: i * 5 }));
+var MERIDIEM_OPTIONS = [{ label: "AM", value: "AM" }, { label: "PM", value: "PM" }];
+function TimeColumn({ label, items, selected, onSelect }) {
+  const listRef = useRef9(null);
+  const [scrollTop, setScrollTop] = useState12(0);
+  const [maxScroll, setMaxScroll] = useState12(0);
+  const [clientHeight, setClientHeight] = useState12(0);
+  useEffect8(() => {
+    if (!listRef.current) return;
+    const selectedEl = listRef.current.querySelector('[data-selected="true"]');
+    if (selectedEl) {
+      listRef.current.scrollTop = selectedEl.offsetTop - listRef.current.clientHeight / 2 + selectedEl.clientHeight / 2;
+    }
+    const el = listRef.current;
+    setMaxScroll(el.scrollHeight - el.clientHeight);
+    setClientHeight(el.clientHeight);
+    setScrollTop(el.scrollTop);
+  }, [items]);
+  const handleScroll = (e) => {
+    setScrollTop(e.target.scrollTop);
+  };
+  const thumbHeight = maxScroll > 0 ? Math.max(clientHeight / (clientHeight + maxScroll) * clientHeight, 40) : 0;
+  const thumbTravel = clientHeight - thumbHeight;
+  const thumbTop = maxScroll > 0 ? scrollTop / maxScroll * thumbTravel : 0;
+  const showThumb = maxScroll > 0;
+  return /* @__PURE__ */ jsxs17(Box15, { sx: { width: "50px", display: "flex", flexDirection: "column", alignItems: "center" }, children: [
+    /* @__PURE__ */ jsx18(Box15, { sx: { flex: 1 }, children: /* @__PURE__ */ jsx18(Box15, { sx: { textAlign: "center", fontSize: "14px", fontWeight: 400, color: "text.secondary", mb: 1 }, children: label }) }),
+    /* @__PURE__ */ jsxs17(Box15, { sx: { position: "relative", width: "100%" }, children: [
+      /* @__PURE__ */ jsx18(
+        Box15,
+        {
+          ref: listRef,
+          onScroll: handleScroll,
+          sx: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "5px",
+            overflowY: "auto",
+            maxHeight: "260px",
+            pb: "10px",
+            width: "100%",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": { display: "none" }
+          },
+          children: items.map((item) => {
+            const isSelected = selected === item.value;
+            return /* @__PURE__ */ jsx18(
+              Box15,
+              {
+                "data-selected": isSelected,
+                onClick: () => onSelect(item.value),
+                sx: {
+                  width: "32px",
+                  height: "32px",
+                  flexShrink: 0,
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "13px",
+                  fontWeight: isSelected ? 600 : 400,
+                  cursor: "pointer",
+                  backgroundColor: isSelected ? "primary.main" : "transparent",
+                  color: isSelected ? "primary.contrastText" : "text.primary",
+                  "&:hover": !isSelected ? { backgroundColor: "action.hover" } : {}
+                },
+                children: item.label
+              },
+              item.value
+            );
+          })
+        }
+      ),
+      showThumb && /* @__PURE__ */ jsx18(
+        Box15,
+        {
+          sx: {
+            position: "absolute",
+            right: "-1px",
+            top: `${thumbTop}px`,
+            width: "4px",
+            height: `60px`,
+            borderRadius: "2px",
+            backgroundColor: "action.disabled",
+            pointerEvents: "none"
+          }
+        }
+      )
+    ] })
+  ] });
+}
+function TimeSelector({ hour, minute, meridiem, onHourChange, onMinuteChange, onMeridiemChange }) {
+  return /* @__PURE__ */ jsxs17(Box15, { sx: { display: "flex", borderLeft: "1px solid", borderColor: "divider", pt: "8px" }, children: [
+    /* @__PURE__ */ jsx18(TimeColumn, { label: "HH", items: HOUR_OPTIONS, selected: hour, onSelect: onHourChange }),
+    /* @__PURE__ */ jsx18(Box15, { sx: { width: "1px", backgroundColor: "divider", mb: 1.5 } }),
+    /* @__PURE__ */ jsx18(TimeColumn, { label: "MM", items: MINUTE_OPTIONS, selected: minute, onSelect: onMinuteChange }),
+    /* @__PURE__ */ jsx18(Box15, { sx: { width: "1px", backgroundColor: "divider", mb: 1.5 } }),
+    /* @__PURE__ */ jsx18(TimeColumn, { items: MERIDIEM_OPTIONS, selected: meridiem, onSelect: onMeridiemChange })
+  ] });
+}
+var DateTimePicker = React15.forwardRef(({
+  label = "Date & Time",
+  value,
+  onChange,
+  minDate,
+  maxDate,
+  bgColor = "background.paper",
+  error,
+  disabled = false,
+  format = "DD/MM/YYYY",
+  ...rest
+}, ref) => {
+  const initial = value ? dayjs3(value) : null;
+  const [open, setOpen] = useState12(false);
+  const [viewMonth, setViewMonth] = useState12(() => (initial || dayjs3()).startOf("month"));
+  const [selectedDate, setSelectedDate] = useState12(initial ? initial.startOf("day") : null);
+  const [selectedHour, setSelectedHour] = useState12(initial ? Number(initial.format("h")) : null);
+  const [selectedMinute, setSelectedMinute] = useState12(initial ? initial.minute() - initial.minute() % 5 : null);
+  const [selectedMeridiem, setSelectedMeridiem] = useState12(initial ? initial.format("A") : null);
+  const anchorRef = useRef9(null);
+  useEffect8(() => {
+    const next2 = value ? dayjs3(value) : null;
+    setSelectedDate(next2 ? next2.startOf("day") : null);
+    setSelectedHour(next2 ? Number(next2.format("h")) : null);
+    setSelectedMinute(next2 ? next2.minute() - next2.minute() % 5 : null);
+    setSelectedMeridiem(next2 ? next2.format("A") : null);
+    if (next2) setViewMonth(next2.startOf("month"));
+  }, [value]);
+  const commitIfComplete = (date, hour, minute, meridiem) => {
+    if (date && hour != null && minute != null && meridiem && onChange) {
+      let h = hour % 12;
+      if (meridiem === "PM") h += 12;
+      const final = date.hour(h).minute(minute).second(0);
+      onChange(final.format("YYYY-MM-DDTHH:mm:ss"));
+      setOpen(false);
+    }
+  };
+  const handleDayClick = (day) => {
+    setSelectedDate(day);
+    commitIfComplete(day, selectedHour, selectedMinute, selectedMeridiem);
+  };
+  const handleHourChange = (h) => {
+    setSelectedHour(h);
+    commitIfComplete(selectedDate, h, selectedMinute, selectedMeridiem);
+  };
+  const handleMinuteChange = (m) => {
+    setSelectedMinute(m);
+    commitIfComplete(selectedDate, selectedHour, m, selectedMeridiem);
+  };
+  const handleMeridiemChange = (mer) => {
+    setSelectedMeridiem(mer);
+    commitIfComplete(selectedDate, selectedHour, selectedMinute, mer);
+  };
+  const handleOpen = (e) => {
+    if (disabled) return;
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (selectedDate) setViewMonth(selectedDate.startOf("month"));
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const prevMonth = () => setViewMonth((m) => m.subtract(1, "month"));
+  const nextMonth = () => setViewMonth((m) => m.add(1, "month"));
+  const handleMonthChange = (m) => setViewMonth((prev2) => prev2.month(m));
+  const handleYearChange = (y) => setViewMonth((prev2) => prev2.year(y));
+  const minDayjs = minDate ? dayjs3(minDate) : null;
+  const maxDayjs = maxDate ? dayjs3(maxDate) : null;
+  const displayValue = (() => {
+    if (!selectedDate) return "";
+    if (selectedHour != null && selectedMinute != null && selectedMeridiem) {
+      let h = selectedHour % 12;
+      if (selectedMeridiem === "PM") h += 12;
+      return selectedDate.hour(h).minute(selectedMinute).format("DD/MM/YYYY hh:mm A");
+    }
+    return `${selectedDate.format("DD/MM/YYYY")} ...`;
+  })();
+  return /* @__PURE__ */ jsxs17(Fragment3, { children: [
+    /* @__PURE__ */ jsx18(
+      TextField,
+      {
+        ...rest,
+        ref: (node2) => {
+          if (typeof ref === "function") ref(node2);
+          else if (ref) ref.current = node2;
+          anchorRef.current = node2;
+        },
+        label,
+        variant: "filled",
+        bgColor,
+        fullWidth: true,
+        value: displayValue,
+        error,
+        disabled,
+        onClick: handleOpen,
+        InputProps: {
+          readOnly: true,
+          placeholder: `${format} HH:MM AM/PM`,
+          endAdornment: /* @__PURE__ */ jsx18(InputAdornment5, { position: "end", sx: { mt: 0 }, children: /* @__PURE__ */ jsx18(
+            CalendarMonthOutlined2,
+            {
+              sx: { width: 20, height: 20, cursor: disabled ? "not-allowed" : "pointer", mr: 0, color: "text.secondary" },
+              onClick: (e) => {
+                e.stopPropagation();
+                handleOpen();
+              }
+            }
+          ) })
+        },
+        InputLabelProps: { shrink: !!displayValue },
+        sx: { "& .VortexUIFilledInput-input": { cursor: disabled ? "not-allowed" : "pointer" }, ...rest.sx }
+      }
+    ),
+    /* @__PURE__ */ jsxs17(
+      Popover3,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        onClose: handleClose,
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+        style: { zIndex: 1300 },
+        PaperProps: {
+          elevation: 0,
+          sx: {
+            mt: "8px",
+            borderRadius: "10px",
+            border: "1px solid",
+            borderColor: "divider",
+            backgroundColor: "background.paper",
+            boxShadow: "0px 2px 8px 0px rgba(0,0,0,0.10)",
+            overflow: "hidden",
+            userSelect: "none",
+            display: "flex"
+          }
+        },
+        children: [
+          /* @__PURE__ */ jsx18(
+            Calendar,
+            {
+              month: viewMonth,
+              selectedDate,
+              onDayClick: handleDayClick,
+              minDate: minDayjs,
+              maxDate: maxDayjs,
+              onPrev: prevMonth,
+              onNext: nextMonth,
+              onMonthChange: handleMonthChange,
+              onYearChange: handleYearChange
+            }
+          ),
+          /* @__PURE__ */ jsx18(
+            TimeSelector,
+            {
+              hour: selectedHour,
+              minute: selectedMinute,
+              meridiem: selectedMeridiem,
+              onHourChange: handleHourChange,
+              onMinuteChange: handleMinuteChange,
+              onMeridiemChange: handleMeridiemChange
+            }
+          )
+        ]
+      }
+    )
+  ] });
+});
+DateTimePicker.displayName = "DateTimePicker";
+
+// src/components/DateTimePickers/DateRangePicker/DateRangePicker.tsx
+import React16, { useState as useState13, useRef as useRef10 } from "react";
+import Box16 from "@mui/material/Box";
+import Popover4 from "@mui/material/Popover";
+import InputAdornment6 from "@mui/material/InputAdornment";
+import { CalendarMonthOutlined as CalendarMonthOutlined3, Refresh } from "@mui/icons-material";
+import dayjs4 from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+import { Fragment as Fragment4, jsx as jsx19, jsxs as jsxs18 } from "react/jsx-runtime";
+dayjs4.extend(isBetween);
+var QUICK_OPTIONS = [
+  {
+    label: "Today",
+    getRange: () => {
+      const today = dayjs4().format("YYYY-MM-DD");
+      return { startDate: today, endDate: today };
+    }
+  },
+  {
+    label: "Last 30 Days",
+    getRange: () => ({
+      startDate: dayjs4().subtract(29, "day").format("YYYY-MM-DD"),
+      endDate: dayjs4().format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "This Week",
+    getRange: () => ({
+      startDate: dayjs4().startOf("week").format("YYYY-MM-DD"),
+      endDate: dayjs4().endOf("week").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "Last Week",
+    getRange: () => ({
+      startDate: dayjs4().subtract(1, "week").startOf("week").format("YYYY-MM-DD"),
+      endDate: dayjs4().subtract(1, "week").endOf("week").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "This Month",
+    getRange: () => ({
+      startDate: dayjs4().startOf("month").format("YYYY-MM-DD"),
+      endDate: dayjs4().endOf("month").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "Last Month",
+    getRange: () => ({
+      startDate: dayjs4().subtract(1, "month").startOf("month").format("YYYY-MM-DD"),
+      endDate: dayjs4().subtract(1, "month").endOf("month").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "This Year",
+    getRange: () => ({
+      startDate: dayjs4().startOf("year").format("YYYY-MM-DD"),
+      endDate: dayjs4().endOf("year").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "Last Year",
+    getRange: () => ({
+      startDate: dayjs4().subtract(1, "year").startOf("year").format("YYYY-MM-DD"),
+      endDate: dayjs4().subtract(1, "year").endOf("year").format("YYYY-MM-DD")
+    })
+  }
+];
+function RangeCalendarMonth({
+  month,
+  startDate,
+  endDate,
+  hoverDate,
+  onDayClick,
+  onDayHover,
+  minDate,
+  maxDate,
+  onPrev,
+  onNext,
+  disablePrev,
+  disableNext,
+  showPrev,
+  showNext,
+  onMonthChange,
+  onYearChange,
+  showDropdowns
+}) {
+  const firstDay = month.startOf("month");
+  const daysInMonth = month.daysInMonth();
+  const startOffset = firstDay.day();
+  const cells = [];
+  for (let i = 0; i < startOffset; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(month.date(d));
+  while (cells.length % 7 !== 0) cells.push(null);
+  const rangeEnd = hoverDate && startDate && !endDate ? hoverDate.isAfter(startDate) ? hoverDate : null : endDate;
+  const currentYear = dayjs4().year();
+  const yearOptions = Array.from({ length: 21 }, (_, i) => ({
+    label: String(currentYear - 10 + i),
+    val: currentYear - 10 + i
+  }));
+  const monthOptions = MONTHS.map((m, i) => ({ label: m, val: i }));
+  return /* @__PURE__ */ jsxs18(Box16, { sx: { flex: 1, pb: 2, minWidth: "260px" }, children: [
+    /* @__PURE__ */ jsxs18(
+      Box16,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 1.5,
+          py: 1.5
+        },
+        children: [
+          showPrev ? /* @__PURE__ */ jsx19(NavArrow, { direction: "left", onClick: onPrev, disabled: disablePrev }) : /* @__PURE__ */ jsx19(Box16, { sx: { width: 32 } }),
+          showDropdowns ? /* @__PURE__ */ jsxs18(Box16, { sx: { display: "flex", alignItems: "center", gap: 0.5 }, children: [
+            /* @__PURE__ */ jsx19(
+              DropdownSelect,
+              {
+                value: month.month(),
+                onChange: onMonthChange,
+                options: monthOptions
+              }
+            ),
+            /* @__PURE__ */ jsx19(
+              DropdownSelect,
+              {
+                value: month.year(),
+                onChange: onYearChange,
+                options: yearOptions
+              }
+            )
+          ] }) : /* @__PURE__ */ jsx19(
+            Box16,
+            {
+              sx: { fontWeight: 600, fontSize: "14px", color: "text.primary" },
+              children: month.format("MMMM YYYY")
+            }
+          ),
+          showNext ? /* @__PURE__ */ jsx19(NavArrow, { direction: "right", onClick: onNext, disabled: disableNext }) : /* @__PURE__ */ jsx19(Box16, { sx: { width: 32 } })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx19(
+      Box16,
+      {
+        sx: {
+          display: "grid",
+          gridTemplateColumns: "repeat(7, 1fr)",
+          px: 1.5,
+          mb: 0.5
+        },
+        children: DAYS.map((d) => /* @__PURE__ */ jsx19(
+          Box16,
+          {
+            sx: {
+              textAlign: "center",
+              fontSize: "12px",
+              color: "text.secondary",
+              fontWeight: 500,
+              py: 0.5
+            },
+            children: d
+          },
+          d
+        ))
+      }
+    ),
+    /* @__PURE__ */ jsx19(
+      Box16,
+      {
+        sx: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 1.5 },
+        children: cells.map((day, idx) => {
+          if (!day) return /* @__PURE__ */ jsx19(Box16, {}, `empty-${idx}`);
+          const isToday = day.isSame(dayjs4(), "day");
+          const isStart = startDate && day.isSame(startDate, "day");
+          const isEnd = rangeEnd && day.isSame(rangeEnd, "day");
+          const hasRange = startDate && rangeEnd && !startDate.isSame(rangeEnd, "day");
+          const isInRange = hasRange && day.isBetween(startDate, rangeEnd, "day");
+          const isRangeBg = isInRange || hasRange && (isStart || isEnd);
+          const isDisabled = minDate && day.isBefore(minDate, "day") || maxDate && day.isAfter(maxDate, "day");
+          return /* @__PURE__ */ jsx19(
+            Box16,
+            {
+              onMouseEnter: () => !isDisabled && onDayHover(day),
+              onClick: () => !isDisabled && onDayClick(day),
+              sx: {
+                position: "relative",
+                height: "36px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: isDisabled ? "not-allowed" : "pointer",
+                backgroundColor: isRangeBg ? "primary.disabledBackground" : "transparent",
+                borderTopLeftRadius: isStart ? "10px" : 0,
+                borderBottomLeftRadius: isStart ? "10px" : 0,
+                borderTopRightRadius: isEnd ? "10px" : 0,
+                borderBottomRightRadius: isEnd ? "10px" : 0
+              },
+              children: /* @__PURE__ */ jsx19(
+                Box16,
+                {
+                  sx: {
+                    position: "relative",
+                    zIndex: 1,
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "13px",
+                    fontWeight: isStart || isEnd ? 600 : 400,
+                    backgroundColor: isStart || isEnd ? "primary.main" : "transparent",
+                    color: isDisabled ? "text.disabled" : isStart || isEnd ? "primary.contrastText" : isToday ? "primary.main" : "text.primary",
+                    border: isToday && !isStart && !isEnd ? "1px solid" : "none",
+                    borderColor: isToday && !isStart && !isEnd ? "primary.main" : "transparent",
+                    "&:hover": !isDisabled && !isStart && !isEnd ? { backgroundColor: "action.hover" } : {}
+                  },
+                  children: day.date()
+                }
+              )
+            },
+            day.format("YYYY-MM-DD")
+          );
+        })
+      }
+    )
+  ] });
+}
+function QuickSelectSidebar({ startDate, endDate, onSelect }) {
+  const activeLabel = (() => {
+    if (!startDate || !endDate) return null;
+    for (const opt of QUICK_OPTIONS) {
+      const range = opt.getRange();
+      if (range.startDate === startDate && range.endDate === endDate)
+        return opt.label;
+    }
+    return null;
+  })();
+  return /* @__PURE__ */ jsx19(
+    Box16,
+    {
+      sx: {
+        width: "160px",
+        py: 1.5,
+        display: "flex",
+        flexDirection: "column",
+        gap: 0,
+        borderRight: "1px solid",
+        borderColor: "divider"
+      },
+      children: QUICK_OPTIONS.map((opt) => {
+        const isActive = activeLabel === opt.label;
+        return /* @__PURE__ */ jsx19(
+          Box16,
+          {
+            onClick: () => onSelect(opt.getRange()),
+            sx: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              px: 1.5,
+              py: 1,
+              cursor: "pointer",
+              borderRadius: "8px",
+              whiteSpace: "nowrap",
+              mx: 1,
+              fontSize: "13px",
+              fontWeight: isActive ? 500 : 400,
+              color: isActive ? "primary.main" : "text.primary",
+              backgroundColor: isActive ? "primary.disabledBackground" : "transparent",
+              "&:hover": {
+                backgroundColor: isActive ? "primary.disabledBackground" : "action.hover"
+              }
+            },
+            children: /* @__PURE__ */ jsx19("span", { children: opt.label })
+          },
+          opt.label
+        );
+      })
+    }
+  );
+}
+var DateRangePicker = React16.forwardRef(
+  ({
+    label = "Date Range",
+    startDate,
+    endDate,
+    onChange,
+    minDate,
+    maxDate,
+    bgColor = "background.paper",
+    error,
+    disabled = false,
+    format = "DD/MM/YYYY",
+    showDropdowns = true,
+    showQuickSelect = true,
+    ...rest
+  }, ref) => {
+    const [open, setOpen] = useState13(false);
+    const [leftMonth, setLeftMonth] = useState13(
+      () => startDate ? dayjs4(startDate).startOf("month") : dayjs4().startOf("month")
+    );
+    const [hoverDate, setHoverDate] = useState13(null);
+    const [selecting, setSelecting] = useState13(false);
+    const [rangeError, setRangeError] = useState13(false);
+    const anchorRef = useRef10(null);
+    const start = startDate ? dayjs4(startDate) : null;
+    const end = endDate ? dayjs4(endDate) : null;
+    const rightMonth = leftMonth.add(1, "month");
+    const displayValue = (() => {
+      if (start && end)
+        return `${start.format(format)} - ${end.format(format)}`;
+      if (start) return `${start.format(format)} - ...`;
+      return "";
+    })();
+    const handleDayClick = (day) => {
+      if (!selecting || !start) {
+        onChange?.({ startDate: day.format("YYYY-MM-DD"), endDate: "" });
+        setSelecting(true);
+        setRangeError(false);
+      } else {
+        if (day.isBefore(start, "day")) {
+          onChange?.({
+            startDate: day.format("YYYY-MM-DD"),
+            endDate: start.format("YYYY-MM-DD")
+          });
+        } else if (day.isSame(start, "day")) {
+          onChange?.({
+            startDate: day.format("YYYY-MM-DD"),
+            endDate: day.format("YYYY-MM-DD")
+          });
+        } else {
+          onChange?.({
+            startDate: start.format("YYYY-MM-DD"),
+            endDate: day.format("YYYY-MM-DD")
+          });
+        }
+        setSelecting(false);
+        setOpen(false);
+        setHoverDate(null);
+        setRangeError(false);
+      }
+    };
+    const handleDayHover = (day) => {
+      if (selecting) setHoverDate(day);
+    };
+    const handleOpen = (e) => {
+      if (disabled) return;
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      if (startDate) setLeftMonth(dayjs4(startDate).startOf("month"));
+      setOpen(true);
+      setSelecting(!!start && !end);
+      setHoverDate(null);
+      setRangeError(false);
+    };
+    const handleClose = () => {
+      if (start && !end) setRangeError(true);
+      setOpen(false);
+      setSelecting(false);
+      setHoverDate(null);
+    };
+    const handleQuickSelect = (range) => {
+      onChange?.(range);
+      setLeftMonth(dayjs4(range.startDate).startOf("month"));
+      setSelecting(false);
+      setOpen(false);
+      setHoverDate(null);
+    };
+    const handleReset = () => {
+      onChange?.({ startDate: "", endDate: "" });
+      setSelecting(false);
+      setHoverDate(null);
+    };
+    const prevMonth = () => setLeftMonth((m) => m.subtract(1, "month"));
+    const nextMonth = () => setLeftMonth((m) => m.add(1, "month"));
+    const handleLeftMonthChange = (m) => setLeftMonth((prev2) => prev2.month(m));
+    const handleLeftYearChange = (y) => setLeftMonth((prev2) => prev2.year(y));
+    const handleRightMonthChange = (m) => setLeftMonth((prev2) => prev2.month(m).subtract(1, "month"));
+    const handleRightYearChange = (y) => setLeftMonth((prev2) => prev2.add(1, "month").year(y).subtract(1, "month"));
+    const minDayjs = minDate ? dayjs4(minDate) : null;
+    const maxDayjs = maxDate ? dayjs4(maxDate) : null;
+    return /* @__PURE__ */ jsxs18(Fragment4, { children: [
+      /* @__PURE__ */ jsx19(
+        TextField,
+        {
+          ...rest,
+          ref: (node2) => {
+            if (typeof ref === "function") ref(node2);
+            else if (ref) ref.current = node2;
+            anchorRef.current = node2;
+          },
+          label,
+          variant: "filled",
+          bgColor,
+          fullWidth: true,
+          value: displayValue,
+          onClick: handleOpen,
+          disabled,
+          InputProps: {
+            readOnly: true,
+            placeholder: `${format} - ${format}`,
+            endAdornment: /* @__PURE__ */ jsx19(InputAdornment6, { position: "end", sx: { mt: 0 }, children: /* @__PURE__ */ jsx19(
+              CalendarMonthOutlined3,
+              {
+                sx: {
+                  width: 20,
+                  height: 20,
+                  cursor: disabled ? "not-allowed" : "pointer",
+                  mr: 0,
+                  color: "text.secondary"
+                },
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleOpen();
+                }
+              }
+            ) })
+          },
+          InputLabelProps: { shrink: !!displayValue },
+          error: rangeError || !!error,
+          helperText: rangeError ? "Please select an end date to complete the range" : typeof error === "string" ? error : void 0,
+          sx: {
+            "& .VortexUIFilledInput-input": {
+              cursor: disabled ? "not-allowed" : "pointer"
+            },
+            ...rest.sx
+          }
+        }
+      ),
+      /* @__PURE__ */ jsxs18(
+        Popover4,
+        {
+          open,
+          anchorEl: anchorRef.current,
+          onClose: handleClose,
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left"
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left"
+          },
+          style: { zIndex: 1300 },
+          PaperProps: {
+            elevation: 0,
+            sx: {
+              mt: "8px",
+              borderRadius: "10px",
+              border: "1px solid",
+              borderColor: "divider",
+              backgroundColor: "background.paper",
+              boxShadow: "0px 2px 8px 0px rgba(0,0,0,0.10)",
+              overflow: "hidden",
+              userSelect: "none",
+              display: "flex"
+            }
+          },
+          children: [
+            showQuickSelect && /* @__PURE__ */ jsx19(
+              QuickSelectSidebar,
+              {
+                startDate,
+                endDate,
+                onSelect: handleQuickSelect
+              }
+            ),
+            /* @__PURE__ */ jsxs18(Box16, { sx: { display: "flex", flexDirection: "column" }, children: [
+              /* @__PURE__ */ jsxs18(Box16, { sx: { display: "flex", alignItems: "stretch" }, children: [
+                /* @__PURE__ */ jsx19(
+                  RangeCalendarMonth,
+                  {
+                    month: leftMonth,
+                    startDate: start,
+                    endDate: end,
+                    hoverDate,
+                    onDayClick: handleDayClick,
+                    onDayHover: handleDayHover,
+                    minDate: minDayjs,
+                    maxDate: maxDayjs,
+                    showPrev: true,
+                    showNext: false,
+                    onPrev: prevMonth,
+                    disablePrev: minDayjs && leftMonth.isSame(minDayjs.startOf("month"), "month"),
+                    onMonthChange: handleLeftMonthChange,
+                    onYearChange: handleLeftYearChange,
+                    showDropdowns
+                  }
+                ),
+                /* @__PURE__ */ jsx19(
+                  Box16,
+                  {
+                    sx: { width: "1px", backgroundColor: "divider", my: 2 }
+                  }
+                ),
+                /* @__PURE__ */ jsx19(
+                  RangeCalendarMonth,
+                  {
+                    month: rightMonth,
+                    startDate: start,
+                    endDate: end,
+                    hoverDate,
+                    onDayClick: handleDayClick,
+                    onDayHover: handleDayHover,
+                    minDate: minDayjs,
+                    maxDate: maxDayjs,
+                    showPrev: false,
+                    showNext: true,
+                    onNext: nextMonth,
+                    disableNext: maxDayjs && rightMonth.isSame(maxDayjs.startOf("month"), "month"),
+                    onMonthChange: handleRightMonthChange,
+                    onYearChange: handleRightYearChange,
+                    showDropdowns
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsx19(
+                Box16,
+                {
+                  sx: {
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    pb: 1.5,
+                    pt: 1,
+                    mx: 1,
+                    mr: 2.5,
+                    borderTop: "1px solid",
+                    borderColor: "divider"
+                  },
+                  children: /* @__PURE__ */ jsxs18(
+                    Box16,
+                    {
+                      onClick: handleReset,
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        cursor: "pointer",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        color: "primary.main",
+                        "&:hover": { color: "primary.dark" }
+                      },
+                      children: [
+                        /* @__PURE__ */ jsx19(Refresh, { sx: { width: 16, height: 16 } }),
+                        "Reset"
+                      ]
+                    }
+                  )
+                }
+              )
+            ] })
+          ]
+        }
+      )
+    ] });
+  }
+);
+DateRangePicker.displayName = "DateRangePicker";
+
 // src/components/TextAreas/Textarea.tsx
-import React11, { useRef as useRef6, useLayoutEffect as useLayoutEffect3 } from "react";
-import Box11 from "@mui/material/Box";
+import React17, { useRef as useRef11, useLayoutEffect as useLayoutEffect3 } from "react";
+import Box17 from "@mui/material/Box";
 import { styled as styled4 } from "@mui/material/styles";
-import Typography10 from "@mui/material/Typography";
-import { jsx as jsx13, jsxs as jsxs12 } from "react/jsx-runtime";
-var Wrapper = styled4(Box11, {
+import Typography12 from "@mui/material/Typography";
+import { jsx as jsx20, jsxs as jsxs19 } from "react/jsx-runtime";
+var Wrapper = styled4(Box17, {
   shouldForwardProp: (p) => p !== "bgColor" && p !== "isError" && p !== "isDisabled"
 })(
-  ({ theme, bgColor = "#FAFBFF", isError, isDisabled }) => ({
-    width: "100%",
-    borderRadius: "10px",
-    backgroundColor: isDisabled ? theme.palette.action.disabledBackground : bgColor,
-    border: `1px solid ${isError ? theme.palette.error.main : "#D8D9DC"}`,
-    padding: "8px 12px",
-    boxSizing: "border-box",
-    cursor: isDisabled ? "not-allowed" : "text",
-    transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
-    "&:focus-within": {
-      backgroundColor: "#fff",
-      borderColor: isError ? theme.palette.error.main : theme.palette.primary.main
-    },
-    "&:hover:not(:focus-within)": {
-      backgroundColor: isDisabled ? void 0 : "#fff"
-    }
-  })
+  ({ theme, bgColor = "background.default", isError, isDisabled }) => {
+    const resolveColor = (c) => {
+      if (c === "background.default" || c === "#FAFBFF") return theme.palette.background.default;
+      if (c === "background.paper" || c === "#fff" || c === "#FFFFFF") return theme.palette.background.paper;
+      return c;
+    };
+    return {
+      width: "100%",
+      borderRadius: "10px",
+      backgroundColor: isDisabled ? theme.palette.action.disabledBackground : resolveColor(bgColor),
+      border: "1px solid",
+      borderColor: isError ? theme.palette.error.main : theme.palette.divider,
+      padding: "8px 12px",
+      boxSizing: "border-box",
+      cursor: isDisabled ? "not-allowed" : "text",
+      transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
+      "&:focus-within": {
+        backgroundColor: theme.palette.background.paper,
+        borderColor: isError ? theme.palette.error.main : theme.palette.primary.main
+      },
+      "&:hover:not(:focus-within)": {
+        backgroundColor: isDisabled ? void 0 : theme.palette.background.paper
+      }
+    };
+  }
 );
 var StyledTextarea = styled4("textarea", {
   shouldForwardProp: (p) => p !== "isExpandable"
@@ -6597,7 +8877,7 @@ var StyledTextarea = styled4("textarea", {
     resize: "none"
   }
 }));
-var Textarea = React11.forwardRef(
+var Textarea = React17.forwardRef(
   ({
     variant = "default",
     label,
@@ -6606,7 +8886,7 @@ var Textarea = React11.forwardRef(
     maxLength,
     rows = 3,
     minRows,
-    bgColor = "#FAFBFF",
+    bgColor = "background.default",
     error,
     disabled,
     placeholder,
@@ -6616,9 +8896,9 @@ var Textarea = React11.forwardRef(
   }, ref) => {
     const isExpandable = variant === "expandable";
     const isMinLength = variant === "minLength";
-    const internalRef = useRef6(null);
+    const internalRef = useRef11(null);
     const textareaRef = ref || internalRef;
-    const [internalValue, setInternalValue] = React11.useState(
+    const [internalValue, setInternalValue] = React17.useState(
       rest.defaultValue !== void 0 ? String(rest.defaultValue) : ""
     );
     const currentValue = value !== void 0 ? String(value) : internalValue;
@@ -6651,16 +8931,16 @@ var Textarea = React11.forwardRef(
       onChange?.(e);
     };
     const counterText = isMinLength ? `${charCount}/${maxLength}` : `${charCount}/${maxLength}`;
-    return /* @__PURE__ */ jsxs12(Box11, { sx: { width: fullWidth ? "100%" : void 0 }, children: [
-      /* @__PURE__ */ jsxs12(
+    return /* @__PURE__ */ jsxs19(Box17, { sx: { width: fullWidth ? "100%" : void 0 }, children: [
+      /* @__PURE__ */ jsxs19(
         Wrapper,
         {
           bgColor,
           isError: !!resolvedError,
           isDisabled: !!disabled,
           children: [
-            (resolvedLabel || showCounter) && /* @__PURE__ */ jsxs12(
-              Box11,
+            (resolvedLabel || showCounter) && /* @__PURE__ */ jsxs19(
+              Box17,
               {
                 sx: {
                   display: "flex",
@@ -6668,8 +8948,8 @@ var Textarea = React11.forwardRef(
                   alignItems: "center"
                 },
                 children: [
-                  resolvedLabel && /* @__PURE__ */ jsx13(
-                    Typography10,
+                  resolvedLabel && /* @__PURE__ */ jsx20(
+                    Typography12,
                     {
                       component: "span",
                       sx: {
@@ -6682,8 +8962,8 @@ var Textarea = React11.forwardRef(
                       children: resolvedLabel
                     }
                   ),
-                  showCounter && /* @__PURE__ */ jsx13(
-                    Typography10,
+                  showCounter && /* @__PURE__ */ jsx20(
+                    Typography12,
                     {
                       component: "span",
                       sx: {
@@ -6700,7 +8980,7 @@ var Textarea = React11.forwardRef(
                 ]
               }
             ),
-            /* @__PURE__ */ jsx13(
+            /* @__PURE__ */ jsx20(
               StyledTextarea,
               {
                 ref: textareaRef,
@@ -6718,8 +8998,8 @@ var Textarea = React11.forwardRef(
           ]
         }
       ),
-      resolvedError && typeof resolvedError === "string" && /* @__PURE__ */ jsx13(
-        Typography10,
+      resolvedError && typeof resolvedError === "string" && /* @__PURE__ */ jsx20(
+        Typography12,
         {
           sx: {
             fontSize: "12px",
@@ -6730,8 +9010,8 @@ var Textarea = React11.forwardRef(
           children: resolvedError
         }
       ),
-      isMinLength && minLengthError && /* @__PURE__ */ jsx13(
-        Typography10,
+      isMinLength && minLengthError && /* @__PURE__ */ jsx20(
+        Typography12,
         {
           sx: {
             fontSize: "12px",
@@ -6749,8 +9029,8 @@ Textarea.displayName = "Textarea";
 
 // src/components/Link/Link.tsx
 var import_link = __toESM(require_link2());
-import { Link as MuiLink, Box as Box12 } from "@mui/material";
-import { jsx as jsx14, jsxs as jsxs13 } from "react/jsx-runtime";
+import { Link as MuiLink, Box as Box18 } from "@mui/material";
+import { jsx as jsx21, jsxs as jsxs20 } from "react/jsx-runtime";
 var Link = ({
   href = "#",
   children,
@@ -6790,7 +9070,7 @@ var Link = ({
     }
   };
   const colors2 = getThemeColors();
-  return /* @__PURE__ */ jsxs13(
+  return /* @__PURE__ */ jsxs20(
     MuiLink,
     {
       component: import_link.default,
@@ -6813,25 +9093,27 @@ var Link = ({
       },
       ...props,
       children: [
-        startIcon && /* @__PURE__ */ jsx14(Box12, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: startIcon }),
+        startIcon && /* @__PURE__ */ jsx21(Box18, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: startIcon }),
         children,
-        endIcon && /* @__PURE__ */ jsx14(Box12, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: endIcon })
+        endIcon && /* @__PURE__ */ jsx21(Box18, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: endIcon })
       ]
     }
   );
 };
 
 // src/components/CheckboxGroup/CheckboxGroup.tsx
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState as useState14 } from "react";
 import {
   Checkbox as MuiCheckbox,
   FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Box as Box13
+  Box as Box19,
+  formControlLabelClasses,
+  formLabelClasses
 } from "@mui/material";
-import { jsx as jsx15, jsxs as jsxs14 } from "react/jsx-runtime";
+import { jsx as jsx22, jsxs as jsxs21 } from "react/jsx-runtime";
 var VARIANTS = {
   sm: {
     size: 18,
@@ -6860,8 +9142,8 @@ var VARIANTS = {
 };
 var CheckboxGroupContext = createContext(void 0);
 var StyledCheckbox = ({
-  borderColor = "#D3D6E2",
-  checkedColor = "#4772FF",
+  borderColor = "divider",
+  checkedColor = "primary.main",
   variant = "md",
   ...props
 }) => {
@@ -6871,33 +9153,36 @@ var StyledCheckbox = ({
     height: `${v.size}px`,
     borderRadius: v.borderRadius
   };
-  return /* @__PURE__ */ jsx15(
+  return /* @__PURE__ */ jsx22(
     MuiCheckbox,
     {
       size: "small",
       ...props,
-      icon: /* @__PURE__ */ jsx15(
-        Box13,
+      icon: /* @__PURE__ */ jsx22(
+        Box19,
         {
           sx: {
             ...boxBase,
-            border: `1px solid ${borderColor}`,
+            border: 1,
+            borderColor,
             backgroundColor: "transparent"
           }
         }
       ),
-      checkedIcon: /* @__PURE__ */ jsx15(
-        Box13,
+      checkedIcon: /* @__PURE__ */ jsx22(
+        Box19,
         {
           sx: {
             ...boxBase,
-            border: `1px solid ${checkedColor}`,
+            border: 1,
+            borderColor: checkedColor,
             backgroundColor: checkedColor,
+            color: "primary.contrastText",
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
           },
-          children: /* @__PURE__ */ jsx15(
+          children: /* @__PURE__ */ jsx22(
             "svg",
             {
               width: v.tick,
@@ -6905,11 +9190,11 @@ var StyledCheckbox = ({
               viewBox: "0 0 11 8",
               fill: "none",
               xmlns: "http://www.w3.org/2000/svg",
-              children: /* @__PURE__ */ jsx15(
+              children: /* @__PURE__ */ jsx22(
                 "path",
                 {
                   d: "M1 3.5L4 6.5L10 1",
-                  stroke: "#fff",
+                  stroke: "currentColor",
                   strokeWidth: "1.8",
                   strokeLinecap: "round",
                   strokeLinejoin: "round"
@@ -6919,24 +9204,25 @@ var StyledCheckbox = ({
           )
         }
       ),
-      indeterminateIcon: /* @__PURE__ */ jsx15(
-        Box13,
+      indeterminateIcon: /* @__PURE__ */ jsx22(
+        Box19,
         {
           sx: {
             ...boxBase,
-            border: `1px solid ${checkedColor}`,
+            border: 1,
+            borderColor: checkedColor,
             backgroundColor: checkedColor,
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
           },
-          children: /* @__PURE__ */ jsx15(
-            Box13,
+          children: /* @__PURE__ */ jsx22(
+            Box19,
             {
               sx: {
                 width: `${v.iconSize}px`,
                 height: "1.8px",
-                backgroundColor: "#fff",
+                backgroundColor: "primary.contrastText",
                 borderRadius: "2px"
               }
             }
@@ -6964,12 +9250,12 @@ var Checkbox = ({
   const isDisabled = disabled || context.disabled;
   const activeVariant = variant || context.variant;
   const activeBorderColor = borderColor || context.borderColor;
-  const activeColor = color || context.color || "#4772FF";
+  const activeColor = color || context.color || "primary.main";
   const { fontSize, fontWeight } = VARIANTS[activeVariant] ?? VARIANTS.md;
-  return /* @__PURE__ */ jsx15(
+  return /* @__PURE__ */ jsx22(
     FormControlLabel,
     {
-      control: /* @__PURE__ */ jsx15(
+      control: /* @__PURE__ */ jsx22(
         StyledCheckbox,
         {
           checked: isChecked,
@@ -6982,85 +9268,103 @@ var Checkbox = ({
       ),
       label,
       disabled: isDisabled,
-      sx: {
-        m: 0,
-        gap: 1,
-        "& .MuiFormControlLabel-label": {
-          fontSize,
-          fontWeight,
-          color: isDisabled ? "#9CA3AF" : "#313952"
-        },
-        ...sx
-      }
+      sx: [
+        (theme) => ({
+          m: 0,
+          gap: 1,
+          [`& .${formControlLabelClasses.label}`]: {
+            fontSize,
+            fontWeight,
+            color: isDisabled ? theme.palette.text.disabled : theme.palette.text.primary
+          }
+        }),
+        ...Array.isArray(sx) ? sx : [sx]
+      ]
     }
   );
 };
 var CheckboxGroup = ({
-  value = [],
+  value,
+  defaultValue = [],
   onChange,
   options = [],
   orientation = "horizontal",
   variant = "md",
   disabled = false,
   color,
-  borderColor = "#D3D6E2",
+  borderColor = "divider",
   label,
   sx = {},
   children
 }) => {
+  const [internalValue, setInternalValue] = useState14(defaultValue);
+  const isControlled = value !== void 0;
+  const currentValue = isControlled ? value : internalValue;
   const handleChange = (optionValue, checked) => {
-    if (!onChange) return;
-    const next2 = checked ? [...value, optionValue] : value.filter((v) => v !== optionValue);
-    onChange(next2);
+    const next2 = checked ? [...currentValue, optionValue] : currentValue.filter((v) => v !== optionValue);
+    if (!isControlled) {
+      setInternalValue(next2);
+    }
+    if (onChange) {
+      onChange(next2);
+    }
   };
   const contextValue = {
-    value,
+    value: currentValue,
     onChange: handleChange,
     disabled,
     variant,
     color,
     borderColor
   };
-  return /* @__PURE__ */ jsx15(CheckboxGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ jsxs14(FormControl, { disabled, children: [
-    label && /* @__PURE__ */ jsx15(
+  return /* @__PURE__ */ jsx22(CheckboxGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ jsxs21(FormControl, { disabled, children: [
+    label && /* @__PURE__ */ jsx22(
       FormLabel,
       {
-        sx: {
+        sx: (theme) => ({
           fontSize: "13px",
           fontWeight: 400,
-          color: "#313952",
+          color: theme.palette.text.primary,
           mb: 1,
-          "&.Mui-focused": { color: "#313952" },
-          "&.Mui-disabled": { color: "#313952" }
-        },
+          [`&.${formLabelClasses.focused}`]: { color: theme.palette.text.primary },
+          [`&.${formLabelClasses.disabled}`]: { color: theme.palette.text.primary }
+        }),
         children: label
       }
     ),
-    /* @__PURE__ */ jsx15(FormGroup, { row: orientation === "horizontal", sx: { gap: 1.5, ...sx }, children: options.length > 0 ? options.map((opt, i) => {
-      const optObj = typeof opt === "string" ? { label: opt, value: opt } : opt;
-      return /* @__PURE__ */ jsx15(
-        Checkbox,
-        {
-          value: optObj.value,
-          label: optObj.label,
-          color: optObj.color
-        },
-        optObj.value ?? i
-      );
-    }) : children })
+    /* @__PURE__ */ jsx22(
+      FormGroup,
+      {
+        row: orientation === "horizontal",
+        sx: [{ gap: 1.5 }, ...Array.isArray(sx) ? sx : [sx]],
+        children: options.length > 0 ? options.map((opt, i) => {
+          const optObj = typeof opt === "string" ? { label: opt, value: opt } : opt;
+          return /* @__PURE__ */ jsx22(
+            Checkbox,
+            {
+              value: optObj.value,
+              label: optObj.label,
+              color: optObj.color
+            },
+            optObj.value ?? i
+          );
+        }) : children
+      }
+    )
   ] }) });
 };
 
 // src/components/RadioGroup/RadioGroup.tsx
-import { createContext as createContext2, useContext as useContext2 } from "react";
+import { createContext as createContext2, useContext as useContext2, useState as useState15 } from "react";
 import {
   Radio as MuiRadio,
   FormControl as FormControl2,
   FormControlLabel as FormControlLabel2,
   FormLabel as FormLabel2,
-  RadioGroup as MuiRadioGroup
+  RadioGroup as MuiRadioGroup,
+  formLabelClasses as formLabelClasses2
 } from "@mui/material";
-import { jsx as jsx16, jsxs as jsxs15 } from "react/jsx-runtime";
+import { jsx as jsx23, jsxs as jsxs22 } from "react/jsx-runtime";
 var VARIANTS2 = {
   sm: { size: 18 },
   md: { size: 20 },
@@ -7084,96 +9388,111 @@ var Radio = ({
   }
   const isDisabled = disabled || context.disabled;
   const activeVariant = variant || context.variant;
-  const activeColor = color || context.color || "#4772FF";
+  const activeColor = color || context.color || "primary.main";
   const activeUnselectedColor = unselectedColor || context.unselectedColor || activeColor;
   const { size } = VARIANTS2[activeVariant] ?? VARIANTS2.md;
-  return /* @__PURE__ */ jsx16(
+  return /* @__PURE__ */ jsx23(
     FormControlLabel2,
     {
       value,
-      control: /* @__PURE__ */ jsx16(
+      control: /* @__PURE__ */ jsx23(
         MuiRadio,
         {
           size: "small",
           disabled: isDisabled,
-          sx: {
-            p: 0,
-            width: size,
-            height: size,
-            color: activeUnselectedColor,
-            "&.Mui-checked": { color: activeColor },
-            "& svg": { width: size, height: size },
-            "&:hover": { bgcolor: "transparent" },
-            ...sx
-          },
+          sx: [
+            {
+              p: 0,
+              width: size,
+              height: size,
+              color: activeUnselectedColor,
+              "&.Mui-checked": { color: activeColor },
+              "& svg": { width: size, height: size },
+              "&:hover": { bgcolor: "transparent" }
+            },
+            ...Array.isArray(sx) ? sx : [sx]
+          ],
           disableRipple: true
         }
       ),
       label,
       disabled: isDisabled,
-      sx: {
+      sx: (theme) => ({
         m: 0,
         gap: 0.5,
-        "& .MuiFormControlLabel-label": {
+        "& .VortexUIFormControlLabel-label": {
           fontSize: "13px",
-          color: isDisabled ? "#9CA3AF" : "#313952",
+          color: isDisabled ? theme.palette.text.disabled : theme.palette.text.primary,
           fontWeight: 400
         }
-      }
+      })
     }
   );
 };
 var RadioGroup = ({
   value,
+  defaultValue,
   onChange,
   options = [],
   orientation = "horizontal",
   variant = "md",
   disabled = false,
   color,
-  unselectedColor = "#4772FF",
+  unselectedColor = "primary.main",
   label,
   sx = {},
   children
 }) => {
+  const [internalValue, setInternalValue] = useState15(
+    defaultValue
+  );
+  const isControlled = value !== void 0;
+  const currentValue = isControlled ? value : internalValue;
   const handleChange = (e) => {
+    const val = e.target.value;
+    if (!isControlled) {
+      setInternalValue(val);
+    }
     if (onChange) {
-      onChange(e.target.value);
+      onChange(val);
     }
   };
   const contextValue = {
-    value,
-    onChange: (val) => onChange?.(val),
+    value: currentValue,
+    onChange: (val) => {
+      if (!isControlled) setInternalValue(val);
+      onChange?.(val);
+    },
     disabled,
     variant,
     color,
     unselectedColor
   };
-  return /* @__PURE__ */ jsx16(RadioGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ jsxs15(FormControl2, { disabled, children: [
-    label && /* @__PURE__ */ jsx16(
+  return /* @__PURE__ */ jsx23(RadioGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ jsxs22(FormControl2, { disabled, children: [
+    label && /* @__PURE__ */ jsx23(
       FormLabel2,
       {
-        sx: {
+        sx: (theme) => ({
           fontSize: "13px",
           fontWeight: 400,
-          color: "#313952",
+          color: theme.palette.text.primary,
           mb: 1,
-          "&.Mui-focused": { color: "#313952" },
-          "&.Mui-disabled": { color: "#313952" }
-        },
+          [`&.${formLabelClasses2.focused}`]: { color: theme.palette.text.primary },
+          [`&.${formLabelClasses2.disabled}`]: { color: theme.palette.text.primary }
+        }),
         children: label
       }
     ),
-    /* @__PURE__ */ jsx16(
+    /* @__PURE__ */ jsx23(
       MuiRadioGroup,
       {
         row: orientation === "horizontal",
-        value,
+        value: currentValue ?? "",
         onChange: handleChange,
-        sx: { gap: 1.5, ...sx },
+        sx: [{ gap: 1.5 }, ...Array.isArray(sx) ? sx : [sx]],
         children: options.length > 0 ? options.map((opt, i) => {
           const optObj = typeof opt === "string" ? { label: opt, value: opt } : opt;
-          return /* @__PURE__ */ jsx16(
+          return /* @__PURE__ */ jsx23(
             Radio,
             {
               value: optObj.value,
@@ -7189,9 +9508,9 @@ var RadioGroup = ({
 };
 
 // src/components/ToggleSwitch/ToggleSwitch.tsx
-import { useState as useState8, useEffect as useEffect4 } from "react";
-import { Box as Box14, Typography as Typography11 } from "@mui/material";
-import { jsx as jsx17, jsxs as jsxs16 } from "react/jsx-runtime";
+import { useState as useState16, useEffect as useEffect10 } from "react";
+import { Box as Box20, Typography as Typography13 } from "@mui/material";
+import { jsx as jsx24, jsxs as jsxs23 } from "react/jsx-runtime";
 var TOGGLE_VARIANTS = {
   sm: {
     trackWidth: 32,
@@ -7222,15 +9541,15 @@ var ToggleSwitch = ({
   onChange,
   disabled = false,
   variant = "md",
-  color = "#4772FF",
-  unselectedColor = "#C5C9D6",
+  color = "primary.main",
+  unselectedColor = "action.disabledBackground",
   labelProps = {}
 }) => {
   const isControlled = checked !== void 0;
-  const [internalChecked, setInternalChecked] = useState8(
+  const [internalChecked, setInternalChecked] = useState16(
     isControlled ? checked : defaultChecked
   );
-  useEffect4(() => {
+  useEffect10(() => {
     if (isControlled) {
       setInternalChecked(checked);
     }
@@ -7248,8 +9567,8 @@ var ToggleSwitch = ({
       onChange(nextState);
     }
   };
-  return /* @__PURE__ */ jsxs16(
-    Box14,
+  return /* @__PURE__ */ jsxs23(
+    Box20,
     {
       sx: {
         display: "flex",
@@ -7261,8 +9580,8 @@ var ToggleSwitch = ({
       },
       onClick: handleToggle,
       children: [
-        /* @__PURE__ */ jsx17(
-          Box14,
+        /* @__PURE__ */ jsx24(
+          Box20,
           {
             sx: {
               width: trackWidth,
@@ -7273,8 +9592,8 @@ var ToggleSwitch = ({
               transition: "background-color 0.25s ease",
               flexShrink: 0
             },
-            children: /* @__PURE__ */ jsx17(
-              Box14,
+            children: /* @__PURE__ */ jsx24(
+              Box20,
               {
                 sx: {
                   position: "absolute",
@@ -7283,7 +9602,7 @@ var ToggleSwitch = ({
                   width: thumbSize,
                   height: thumbSize,
                   borderRadius: "50%",
-                  bgcolor: "#FFFFFF",
+                  bgcolor: "common.white",
                   boxShadow: "0px 1px 3px rgba(0,0,0,0.25)",
                   transition: "transform 0.25s ease"
                 }
@@ -7291,13 +9610,13 @@ var ToggleSwitch = ({
             )
           }
         ),
-        label && /* @__PURE__ */ jsx17(
-          Typography11,
+        label && /* @__PURE__ */ jsx24(
+          Typography13,
           {
             variant: "body2",
             fontWeight: 400,
             fontSize,
-            color: "#1F2A40",
+            color: "text.primary",
             ...labelProps,
             children: label
           }
@@ -7309,7 +9628,7 @@ var ToggleSwitch = ({
 
 // src/components/Card/Card.tsx
 import { Card as MuiCard } from "@mui/material";
-import { jsx as jsx18 } from "react/jsx-runtime";
+import { jsx as jsx25 } from "react/jsx-runtime";
 var SHADOWS = {
   none: "none",
   sm: "0px 2px 4px 0px rgba(0,0,0,0.075)",
@@ -7325,14 +9644,15 @@ var Card = ({
   ...rest
 }) => {
   const shadow = SHADOWS[variant] ?? SHADOWS.none;
-  return /* @__PURE__ */ jsx18(
+  return /* @__PURE__ */ jsx25(
     MuiCard,
     {
       elevation: 0,
       sx: {
         ...fullWidth && { width: "100%" },
-        bgcolor: "#FFFFFF",
-        border: "1px solid #CDCDCD",
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
         borderRadius: "10px",
         boxShadow: shadow,
         p: 2,
@@ -7345,8 +9665,8 @@ var Card = ({
 };
 
 // src/components/Sheet/Sheet.tsx
-import { Box as Box15 } from "@mui/material";
-import { jsx as jsx19 } from "react/jsx-runtime";
+import { Box as Box21 } from "@mui/material";
+import { jsx as jsx26 } from "react/jsx-runtime";
 var SHADOWS2 = {
   none: "none",
   sm: "0px 2px 4px 0px rgba(0,0,0,0.075)",
@@ -7362,12 +9682,13 @@ var Sheet = ({
   ...rest
 }) => {
   const shadow = SHADOWS2[variant] ?? SHADOWS2.none;
-  return /* @__PURE__ */ jsx19(
-    Box15,
+  return /* @__PURE__ */ jsx26(
+    Box21,
     {
       sx: {
-        bgcolor: "#FFFFFF",
-        border: "1px solid #CDCDCD",
+        bgcolor: "background.paper",
+        border: 1,
+        borderColor: "divider",
         borderRadius: "10px",
         boxShadow: shadow,
         ...fullHeight && { flex: 1 },
@@ -7382,9 +9703,9 @@ var Sheet = ({
 };
 
 // src/components/Grid/Grid.tsx
-import React15 from "react";
+import React21 from "react";
 import { Grid2 as MuiGrid } from "@mui/material";
-import { jsx as jsx20 } from "react/jsx-runtime";
+import { jsx as jsx27 } from "react/jsx-runtime";
 var CUSTOM_SPACING_MAP = {
   none: 0,
   xs: 1,
@@ -7398,17 +9719,17 @@ var CUSTOM_SPACING_MAP = {
   xl: 6
   // 48px
 };
-var Grid = React15.forwardRef(
+var Grid = React21.forwardRef(
   ({ spacing = "sm", children, ...rest }, ref) => {
     const resolvedSpacing = typeof spacing === "string" && spacing in CUSTOM_SPACING_MAP ? CUSTOM_SPACING_MAP[spacing] : spacing;
-    return /* @__PURE__ */ jsx20(MuiGrid, { ref, spacing: resolvedSpacing, ...rest, children });
+    return /* @__PURE__ */ jsx27(MuiGrid, { ref, spacing: resolvedSpacing, ...rest, children });
   }
 );
 Grid.displayName = "Grid";
 
 // src/components/Badge/CountBadge.tsx
-import { Box as Box16 } from "@mui/material";
-import { jsx as jsx21 } from "react/jsx-runtime";
+import { Box as Box22 } from "@mui/material";
+import { jsx as jsx28 } from "react/jsx-runtime";
 var CountBadge = ({
   count,
   maxCount = 9,
@@ -7424,8 +9745,8 @@ var CountBadge = ({
 }) => {
   if (count == null) return null;
   const displayCount = typeof count === "number" && maxCount != null && count > maxCount ? `${maxCount}+` : count;
-  return /* @__PURE__ */ jsx21(
-    Box16,
+  return /* @__PURE__ */ jsx28(
+    Box22,
     {
       sx: {
         bgcolor: active ? activeBg : inactiveBg,
@@ -7448,9 +9769,303 @@ var CountBadge = ({
 };
 var CountBadge_default = CountBadge;
 
+// src/components/Breadcrumbs/Breadcrumbs.tsx
+import React22 from "react";
+import { Box as Box23, Typography as Typography14 } from "@mui/material";
+import { jsx as jsx29, jsxs as jsxs24 } from "react/jsx-runtime";
+var Breadcrumbs = ({
+  items,
+  onCrumbClick,
+  separator = "\u203A",
+  maxItems,
+  sx
+}) => {
+  if (!items || items.length === 0) return null;
+  let displayItems = [];
+  if (maxItems && maxItems > 0 && items.length > maxItems) {
+    const startItems = 1;
+    const endItems = maxItems === 1 ? 0 : maxItems - 1;
+    displayItems.push({ type: "item", crumb: items[0], originalIndex: 0 });
+    displayItems.push({ type: "collapsed" });
+    for (let i = items.length - endItems; i < items.length; i++) {
+      displayItems.push({ type: "item", crumb: items[i], originalIndex: i });
+    }
+  } else {
+    displayItems = items.map((crumb, index) => ({
+      type: "item",
+      crumb,
+      originalIndex: index
+    }));
+  }
+  return /* @__PURE__ */ jsx29(Box23, { sx: { display: "flex", alignItems: "center", gap: 1, ...sx }, children: displayItems.map((item, index) => /* @__PURE__ */ jsxs24(React22.Fragment, { children: [
+    index > 0 && /* @__PURE__ */ jsx29(
+      Box23,
+      {
+        component: "span",
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          color: "text.secondary",
+          fontSize: "13px"
+        },
+        children: separator
+      }
+    ),
+    item.type === "collapsed" ? /* @__PURE__ */ jsx29(Typography14, { sx: { color: "text.secondary", fontSize: "13px", px: 0.5, letterSpacing: 1 }, children: "..." }) : /* @__PURE__ */ jsxs24(
+      Typography14,
+      {
+        onClick: () => {
+          if (item.crumb.isNavigable !== false && onCrumbClick) {
+            onCrumbClick(item.crumb, item.originalIndex);
+          }
+        },
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          gap: 0.5,
+          color: item.originalIndex === items.length - 1 ? "text.primary" : "text.secondary",
+          fontSize: "13px",
+          fontWeight: item.originalIndex === items.length - 1 ? 500 : 400,
+          cursor: item.crumb.isNavigable !== false ? "pointer" : "default",
+          "&:hover": item.crumb.isNavigable !== false ? {
+            color: "text.primary",
+            textDecoration: "underline"
+          } : {}
+        },
+        children: [
+          item.crumb.icon && /* @__PURE__ */ jsx29(
+            Box23,
+            {
+              component: "span",
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                "& > svg": { fontSize: "16px" }
+              },
+              children: item.crumb.icon
+            }
+          ),
+          item.crumb.label && /* @__PURE__ */ jsx29("span", { children: item.crumb.label })
+        ]
+      }
+    )
+  ] }, index)) });
+};
+
+// src/components/Avatar/Avatar.tsx
+import { useState as useState17, useRef as useRef12 } from "react";
+import { Box as Box24, Popover as Popover5, Stack as Stack3 } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import EditIcon from "@mui/icons-material/Edit";
+import { Fragment as Fragment5, jsx as jsx30, jsxs as jsxs25 } from "react/jsx-runtime";
+var VARIANTS3 = {
+  sm: {
+    size: 24,
+    fontSize: "11px",
+    fontWeight: 500,
+    borderRadius: "6px",
+    iconSize: 14
+  },
+  md: {
+    size: 32,
+    fontSize: "14px",
+    fontWeight: 500,
+    borderRadius: "8px",
+    iconSize: 18
+  },
+  lg: {
+    size: 56,
+    fontSize: "24px",
+    fontWeight: 400,
+    borderRadius: "12px",
+    iconSize: 24
+  }
+};
+var Avatar = ({
+  type = "letter",
+  variant = "md",
+  editable = false,
+  name,
+  onLetterChange,
+  src,
+  alt = "",
+  onImageChange,
+  bgcolor = "#E5E7F0",
+  color = "#808697",
+  sx = {}
+}) => {
+  const { size, fontSize, fontWeight, borderRadius, iconSize } = VARIANTS3[variant] ?? VARIANTS3.md;
+  const isImage = type === "image";
+  const [anchorEl, setAnchorEl] = useState17(null);
+  const [draft, setDraft] = useState17(name || "");
+  const boxRef = useRef12(null);
+  const open = Boolean(anchorEl);
+  const handleOpenPopover = () => {
+    setDraft(name || "");
+    setAnchorEl(boxRef.current);
+  };
+  const handleClosePopover = () => setAnchorEl(null);
+  const handleSaveLetter = () => {
+    const trimmed = draft.trim();
+    if (trimmed && trimmed !== name) {
+      onLetterChange?.(trimmed);
+    }
+    handleClosePopover();
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSaveLetter();
+    if (e.key === "Escape") handleClosePopover();
+  };
+  const [imgError, setImgError] = useState17(false);
+  const [preview, setPreview] = useState17(null);
+  const [hovered, setHovered] = useState17(false);
+  const inputRef = useRef12(null);
+  const activeSrc = preview ?? src;
+  const showFallback = !activeSrc || imgError;
+  const handleOpenFilePicker = () => inputRef.current?.click();
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    setImgError(false);
+    onImageChange?.(file, url);
+    e.target.value = "";
+  };
+  const handleEditClick = isImage ? handleOpenFilePicker : handleOpenPopover;
+  return /* @__PURE__ */ jsxs25(Fragment5, { children: [
+    /* @__PURE__ */ jsxs25(
+      Box24,
+      {
+        ref: boxRef,
+        sx: {
+          position: "relative",
+          width: size,
+          height: size,
+          flexShrink: 0,
+          "&:hover .avatar-overlay": editable && !isImage ? { opacity: 1 } : {},
+          ...sx
+        },
+        onMouseEnter: () => isImage && editable && setHovered(true),
+        onMouseLeave: () => isImage && editable && setHovered(false),
+        children: [
+          isImage ? /* @__PURE__ */ jsx30(
+            Box24,
+            {
+              sx: {
+                width: size,
+                height: size,
+                borderRadius,
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                bgcolor: showFallback ? bgcolor : "transparent",
+                color: showFallback ? color : "inherit"
+              },
+              children: showFallback ? /* @__PURE__ */ jsx30(PersonIcon, { sx: { fontSize: size * 0.55 } }) : /* @__PURE__ */ jsx30(
+                Box24,
+                {
+                  component: "img",
+                  src: activeSrc,
+                  alt,
+                  onError: () => setImgError(true),
+                  sx: {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block"
+                  }
+                }
+              )
+            }
+          ) : /* @__PURE__ */ jsx30(
+            Box24,
+            {
+              sx: {
+                width: size,
+                height: size,
+                borderRadius,
+                bgcolor,
+                color,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight,
+                fontSize,
+                textTransform: "uppercase",
+                userSelect: "none",
+                lineHeight: 1
+              },
+              children: name?.charAt(0) || /* @__PURE__ */ jsx30(PersonIcon, { sx: { fontSize: size * 0.55 } })
+            }
+          ),
+          editable && /* @__PURE__ */ jsx30(
+            Box24,
+            {
+              className: "avatar-overlay",
+              onClick: handleEditClick,
+              sx: {
+                position: "absolute",
+                inset: 0,
+                borderRadius,
+                bgcolor: "rgba(0, 0, 0, 0.45)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                opacity: isImage ? hovered ? 1 : 0 : 0,
+                transition: "opacity 0.18s ease"
+              },
+              children: /* @__PURE__ */ jsx30(EditIcon, { sx: { fontSize: iconSize, color: "#ffffff" } })
+            }
+          ),
+          isImage && editable && /* @__PURE__ */ jsx30(
+            "input",
+            {
+              ref: inputRef,
+              type: "file",
+              accept: "image/*",
+              style: { display: "none" },
+              onChange: handleFileChange
+            }
+          )
+        ]
+      }
+    ),
+    !isImage && /* @__PURE__ */ jsx30(
+      Popover5,
+      {
+        open,
+        anchorEl,
+        onClose: handleClosePopover,
+        anchorOrigin: { vertical: "bottom", horizontal: "left" },
+        transformOrigin: { vertical: "top", horizontal: "left" },
+        children: /* @__PURE__ */ jsxs25(Stack3, { spacing: 1.5, sx: { p: 2, width: 240 }, children: [
+          /* @__PURE__ */ jsx30(
+            TextField,
+            {
+              autoFocus: true,
+              size: "small",
+              label: "Name",
+              value: draft,
+              onChange: (e) => setDraft(e.target.value),
+              onKeyDown: handleKeyDown
+            }
+          ),
+          /* @__PURE__ */ jsxs25(Stack3, { direction: "row", spacing: 1, justifyContent: "flex-end", children: [
+            /* @__PURE__ */ jsx30(Button, { size: "sm", variant: "outlined", onClick: handleClosePopover, children: "Cancel" }),
+            /* @__PURE__ */ jsx30(Button, { size: "sm", variant: "filled", onClick: handleSaveLetter, children: "Save" })
+          ] })
+        ] })
+      }
+    )
+  ] });
+};
+
 // src/components/Slider/Slider.tsx
-import { Box as Box17, Slider as MuiSlider, Typography as Typography12 } from "@mui/material";
-import { jsx as jsx22, jsxs as jsxs17 } from "react/jsx-runtime";
+import { Box as Box25, Slider as MuiSlider, Typography as Typography15 } from "@mui/material";
+import { jsx as jsx31, jsxs as jsxs26 } from "react/jsx-runtime";
 var getSliderSx = (trackColor, railColor) => ({
   color: trackColor,
   height: 6,
@@ -7529,9 +10144,9 @@ var Slider = ({
     { value: min, label: `${min}` },
     { value: max, label: `${max}` }
   ] : void 0;
-  return /* @__PURE__ */ jsxs17(Box17, { sx: { width: "100%", ...sx }, children: [
-    label && /* @__PURE__ */ jsx22(
-      Typography12,
+  return /* @__PURE__ */ jsxs26(Box25, { sx: { width: "100%", ...sx }, children: [
+    label && /* @__PURE__ */ jsx31(
+      Typography15,
       {
         variant: "caption",
         fontSize: 13,
@@ -7542,7 +10157,7 @@ var Slider = ({
         children: label
       }
     ),
-    /* @__PURE__ */ jsx22(Box17, { sx: { px: 0.5, pb: showMinMaxLabels ? 2.5 : 0, pt: 2.5 }, children: /* @__PURE__ */ jsx22(
+    /* @__PURE__ */ jsx31(Box25, { sx: { px: 0.5, pb: showMinMaxLabels ? 2.5 : 0, pt: 2.5 }, children: /* @__PURE__ */ jsx31(
       MuiSlider,
       {
         value,
@@ -7556,8 +10171,8 @@ var Slider = ({
         sx: getSliderSx(trackColor, railColor)
       }
     ) }),
-    /* @__PURE__ */ jsxs17(
-      Typography12,
+    /* @__PURE__ */ jsxs26(
+      Typography15,
       {
         fontSize: 13,
         fontWeight: 500,
@@ -7574,68 +10189,75 @@ var Slider = ({
 };
 
 // src/components/Slider/RangeSlider.tsx
-import { Box as Box18, Slider as MuiSlider2, Typography as Typography13 } from "@mui/material";
-import { jsx as jsx23, jsxs as jsxs18 } from "react/jsx-runtime";
-var getRangeSliderSx = (trackColor, railColor) => ({
-  color: trackColor,
-  height: 6,
-  padding: "13px 0",
-  "& .MuiSlider-rail": {
-    backgroundColor: railColor,
-    opacity: 1,
+import { Box as Box26, Slider as MuiSlider2, Typography as Typography16 } from "@mui/material";
+import { jsx as jsx32, jsxs as jsxs27 } from "react/jsx-runtime";
+var getThemeColor = (theme, colorPath) => {
+  return colorPath.split(".").reduce((acc, part) => acc && acc[part], theme.palette) || colorPath;
+};
+var getRangeSliderSx = (trackColor, railColor) => (theme) => {
+  const tColor = getThemeColor(theme, trackColor);
+  const rColor = getThemeColor(theme, railColor);
+  return {
+    color: tColor,
     height: 6,
-    borderRadius: 4
-  },
-  "& .MuiSlider-track": {
-    backgroundColor: trackColor,
-    border: "none",
-    height: 6,
-    borderRadius: 4
-  },
-  "& .MuiSlider-thumb": {
-    width: 18,
-    height: 18,
-    backgroundColor: trackColor,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-    "&:hover, &.Mui-focusVisible": {
-      boxShadow: `0 0 0 8px ${trackColor}22`
+    padding: "13px 0",
+    "& .MuiSlider-rail": {
+      backgroundColor: rColor,
+      opacity: 1,
+      height: 6,
+      borderRadius: 4
     },
-    "&.Mui-active": {
-      boxShadow: `0 0 0 10px ${trackColor}33`
-    }
-  },
-  "& .MuiSlider-valueLabel": {
-    backgroundColor: "#E8EDFF",
-    color: "#1E2746",
-    fontSize: 13,
-    fontWeight: 400,
-    borderRadius: "8px",
-    padding: "5px 12px",
-    "&::before": {
-      backgroundColor: "#E8EDFF",
-      width: 8,
-      height: 8
-    }
-  },
-  "& .MuiSlider-mark": {
-    display: "none"
-  },
-  "& .MuiSlider-markLabel": {
-    fontSize: 13,
-    color: "#1E2746",
-    fontWeight: 400,
-    top: 30,
-    '&[data-index="0"]': {
-      left: "0px !important",
-      transform: "none"
+    "& .MuiSlider-track": {
+      backgroundColor: tColor,
+      border: "none",
+      height: 6,
+      borderRadius: 4
     },
-    '&[data-index="1"]': {
-      right: "0px !important",
-      left: "auto !important",
-      transform: "none"
+    "& .MuiSlider-thumb": {
+      width: 18,
+      height: 18,
+      backgroundColor: tColor,
+      boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+      "&:hover, &.Mui-focusVisible": {
+        boxShadow: `0 0 0 8px ${tColor}22`
+      },
+      "&.Mui-active": {
+        boxShadow: `0 0 0 10px ${tColor}33`
+      }
+    },
+    "& .MuiSlider-valueLabel": {
+      backgroundColor: theme.palette.primary.disabledBackground || "#E8EDFF",
+      color: theme.palette.text.primary,
+      fontSize: 13,
+      fontWeight: 400,
+      borderRadius: "8px",
+      padding: "5px 12px",
+      "&::before": {
+        backgroundColor: theme.palette.primary.disabledBackground || "#E8EDFF",
+        width: 8,
+        height: 8
+      }
+    },
+    "& .MuiSlider-mark": {
+      display: "none"
+    },
+    "& .MuiSlider-markLabel": {
+      fontSize: 13,
+      color: theme.palette.text.primary,
+      fontWeight: 400,
+      top: 30,
+      '&[data-index="0"]': {
+        left: "0px !important",
+        transform: "none"
+      },
+      '&[data-index="1"]': {
+        right: "0px !important",
+        left: "auto !important",
+        transform: "none"
+      }
     }
-  }
-});
+  };
+};
 var RangeSlider = ({
   label,
   value,
@@ -7646,8 +10268,8 @@ var RangeSlider = ({
   step = 1,
   minDistance = 0,
   disabled = false,
-  trackColor = "#4772FF",
-  railColor = "#E5EBFF",
+  trackColor = "primary.main",
+  railColor = "primary.disabledBackground",
   showMinMaxLabels = true,
   showRangeText = true,
   sx = {}
@@ -7668,21 +10290,21 @@ var RangeSlider = ({
       onChange(newValue);
     }
   };
-  return /* @__PURE__ */ jsxs18(Box18, { sx: { width: "100%", ...sx }, children: [
-    label && /* @__PURE__ */ jsx23(
-      Typography13,
+  return /* @__PURE__ */ jsxs27(Box26, { sx: { width: "100%", ...sx }, children: [
+    label && /* @__PURE__ */ jsx32(
+      Typography16,
       {
         variant: "caption",
         fontSize: 13,
         fontWeight: 400,
-        color: "#374151",
+        color: "text.secondary",
         mb: 1,
         display: "block",
         children: label
       }
     ),
-    /* @__PURE__ */ jsxs18(Box18, { sx: { px: 0.5, pb: showMinMaxLabels ? 3.5 : 0, pt: 2.5 }, children: [
-      /* @__PURE__ */ jsx23(
+    /* @__PURE__ */ jsxs27(Box26, { sx: { px: 0.5, pb: showMinMaxLabels ? 3.5 : 0, pt: 2.5 }, children: [
+      /* @__PURE__ */ jsx32(
         MuiSlider2,
         {
           value,
@@ -7697,14 +10319,14 @@ var RangeSlider = ({
           sx: getRangeSliderSx(trackColor, railColor)
         }
       ),
-      showRangeText && /* @__PURE__ */ jsxs18(
-        Typography13,
+      showRangeText && /* @__PURE__ */ jsxs27(
+        Typography16,
         {
           sx: {
             textAlign: "center",
             fontSize: 14,
             fontWeight: 500,
-            color: "#4F6FFA",
+            color: "primary.main",
             mt: showMinMaxLabels ? -4 : 1
           },
           children: [
@@ -7719,11 +10341,11 @@ var RangeSlider = ({
 };
 
 // src/components/Progress/Progress.tsx
-import { useState as useState9, useEffect as useEffect5, useRef as useRef7 } from "react";
-import { Box as Box19, Typography as Typography14 } from "@mui/material";
+import { useState as useState18, useEffect as useEffect11, useRef as useRef13 } from "react";
+import { Box as Box27, Typography as Typography17 } from "@mui/material";
 import { styled as styled5 } from "@mui/material/styles";
-import { jsx as jsx24, jsxs as jsxs19 } from "react/jsx-runtime";
-var ProgressBarContainer = styled5(Box19)(
+import { jsx as jsx33, jsxs as jsxs28 } from "react/jsx-runtime";
+var ProgressBarContainer = styled5(Box27)(
   ({ theme, bheight, bgcolor, bradius }) => ({
     width: "100%",
     backgroundColor: bgcolor || "#EEF2FF",
@@ -7733,7 +10355,7 @@ var ProgressBarContainer = styled5(Box19)(
     position: "relative"
   })
 );
-var ProgressFill = styled5(Box19)(
+var ProgressFill = styled5(Box27)(
   ({ fillcolor, duration, stepjump }) => ({
     height: "100%",
     backgroundColor: fillcolor || "#4772FF",
@@ -7757,16 +10379,16 @@ var Progress = ({
   stepJump = 0,
   ...props
 }) => {
-  const [currentValue, setCurrentValue] = useState9(0);
-  const targetRef = useRef7(0);
-  const intervalRef = useRef7(null);
-  useEffect5(() => {
+  const [currentValue, setCurrentValue] = useState18(0);
+  const targetRef = useRef13(0);
+  const intervalRef = useRef13(null);
+  useEffect11(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
   }, [stepJump, animationDuration]);
-  useEffect5(() => {
+  useEffect11(() => {
     let finalTarget = Math.min(100, Math.max(0, value));
     if (stepJump > 0) {
       finalTarget = Math.floor(finalTarget / stepJump) * stepJump;
@@ -7807,7 +10429,7 @@ var Progress = ({
       return () => clearTimeout(timer);
     }
   }, [value, stepJump, animationDuration]);
-  useEffect5(() => {
+  useEffect11(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
@@ -7820,8 +10442,8 @@ var Progress = ({
   };
   const colorValue = stepJump > 0 ? Math.floor(currentValue / stepJump) * stepJump : currentValue;
   const fillColor = getColor ? getColor(colorValue) : defaultGetColor(colorValue);
-  return /* @__PURE__ */ jsxs19(
-    Box19,
+  return /* @__PURE__ */ jsxs28(
+    Box27,
     {
       sx: [
         {
@@ -7833,8 +10455,8 @@ var Progress = ({
         ...Array.isArray(props.sx) ? props.sx : [props.sx]
       ],
       children: [
-        showValue && valuePosition === "top" && /* @__PURE__ */ jsxs19(
-          Typography14,
+        showValue && valuePosition === "top" && /* @__PURE__ */ jsxs28(
+          Typography17,
           {
             variant: "caption",
             sx: {
@@ -7849,12 +10471,12 @@ var Progress = ({
             ]
           }
         ),
-        /* @__PURE__ */ jsxs19(
-          Box19,
+        /* @__PURE__ */ jsxs28(
+          Box27,
           {
             sx: { display: "flex", alignItems: "center", gap: 2, width: "100%" },
             children: [
-              variant === "stepper" ? /* @__PURE__ */ jsx24(Box19, { sx: { display: "flex", gap: 1, width: "100%" }, children: Array.from({ length: steps }).map((_, i) => {
+              variant === "stepper" ? /* @__PURE__ */ jsx33(Box27, { sx: { display: "flex", gap: 1, width: "100%" }, children: Array.from({ length: steps }).map((_, i) => {
                 const stepPercentage = 100 / steps;
                 const stepStart = i * stepPercentage;
                 const stepEnd = (i + 1) * stepPercentage;
@@ -7864,14 +10486,14 @@ var Progress = ({
                 } else if (currentValue > stepStart) {
                   fillPercent = (currentValue - stepStart) / stepPercentage * 100;
                 }
-                return /* @__PURE__ */ jsx24(
+                return /* @__PURE__ */ jsx33(
                   ProgressBarContainer,
                   {
                     bheight: height,
                     bgcolor: bgColor,
                     bradius: borderRadius,
                     sx: { flex: 1 },
-                    children: /* @__PURE__ */ jsx24(
+                    children: /* @__PURE__ */ jsx33(
                       ProgressFill,
                       {
                         style: { width: `${fillPercent}%` },
@@ -7883,22 +10505,22 @@ var Progress = ({
                   },
                   i
                 );
-              }) }) : /* @__PURE__ */ jsxs19(
+              }) }) : /* @__PURE__ */ jsxs28(
                 ProgressBarContainer,
                 {
                   bheight: height,
                   bgcolor: bgColor,
                   bradius: borderRadius,
                   children: [
-                    /* @__PURE__ */ jsx24(
+                    /* @__PURE__ */ jsx33(
                       ProgressFill,
                       {
                         style: { width: `${currentValue}%` },
                         fillcolor: fillColor,
                         duration: animationDuration,
                         stepjump: stepJump,
-                        children: showValue && valuePosition === "inside" && currentValue >= 15 && /* @__PURE__ */ jsxs19(
-                          Typography14,
+                        children: showValue && valuePosition === "inside" && currentValue >= 15 && /* @__PURE__ */ jsxs28(
+                          Typography17,
                           {
                             variant: "caption",
                             sx: {
@@ -7918,8 +10540,8 @@ var Progress = ({
                         )
                       }
                     ),
-                    showValue && valuePosition === "inside" && currentValue < 15 && /* @__PURE__ */ jsxs19(
-                      Typography14,
+                    showValue && valuePosition === "inside" && currentValue < 15 && /* @__PURE__ */ jsxs28(
+                      Typography17,
                       {
                         variant: "caption",
                         sx: {
@@ -7940,8 +10562,8 @@ var Progress = ({
                   ]
                 }
               ),
-              showValue && valuePosition === "right" && /* @__PURE__ */ jsxs19(
-                Typography14,
+              showValue && valuePosition === "right" && /* @__PURE__ */ jsxs28(
+                Typography17,
                 {
                   variant: "caption",
                   sx: {
@@ -7965,9 +10587,385 @@ var Progress = ({
 };
 var Progress_default = Progress;
 
+// src/components/PipelineStepper/PipelineStepper.tsx
+import { Box as Box28, Typography as Typography18, useTheme as useTheme3 } from "@mui/material";
+import { jsx as jsx34, jsxs as jsxs29 } from "react/jsx-runtime";
+var PipelineStepper = ({
+  stages,
+  value,
+  onChange,
+  width = "100%",
+  height = 38
+}) => {
+  const ARROW = 12;
+  const theme = useTheme3();
+  if (!stages || stages.length === 0) return null;
+  const activeIndex = stages.findIndex((s) => s.value === value);
+  return /* @__PURE__ */ jsx34(Box28, { sx: { display: "flex", alignItems: "center", width }, children: stages.map((s, i) => {
+    const isFirst = i === 0;
+    const isDone = activeIndex !== -1 && i < activeIndex;
+    const isActive = activeIndex !== -1 ? i === activeIndex : false;
+    let bgColor;
+    let textColor;
+    if (isDone || isActive) {
+      bgColor = theme.palette.primary.main;
+      textColor = theme.palette.primary.contrastText;
+    } else {
+      bgColor = theme.palette.mode === "dark" ? theme.palette.grey[800] : "#EFEFEF";
+      textColor = theme.palette.mode === "dark" ? theme.palette.grey[400] : "#6B7280";
+    }
+    const clipPath = isFirst ? `polygon(0% 0%, calc(100% - ${ARROW}px) 0%, 100% 50%, calc(100% - ${ARROW}px) 100%, 0% 100%)` : `polygon(0% 0%, calc(100% - ${ARROW}px) 0%, 100% 50%, calc(100% - ${ARROW}px) 100%, 0% 100%, ${ARROW}px 50%)`;
+    return /* @__PURE__ */ jsx34(
+      Box28,
+      {
+        onClick: () => onChange?.(s.value),
+        sx: {
+          position: "relative",
+          flex: 1,
+          height,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: bgColor,
+          color: textColor,
+          cursor: onChange ? "pointer" : "default",
+          clipPath,
+          borderRadius: isFirst ? "8px 0 0 8px" : 0,
+          transition: "filter 0.18s",
+          pl: isFirst ? 1 : ARROW / 12 + 2,
+          pr: 2.5,
+          "&:hover": onChange ? { filter: "brightness(0.93)" } : {}
+        },
+        children: isDone ? /* @__PURE__ */ jsxs29(Box28, { sx: { display: "flex", alignItems: "center", gap: 0.6 }, children: [
+          /* @__PURE__ */ jsx34("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", children: /* @__PURE__ */ jsx34(
+            "polyline",
+            {
+              points: "2,6 5,9 10,3",
+              stroke: textColor,
+              strokeWidth: "2",
+              strokeLinecap: "round",
+              strokeLinejoin: "round"
+            }
+          ) }),
+          /* @__PURE__ */ jsx34(
+            Typography18,
+            {
+              sx: {
+                fontSize: 13,
+                fontWeight: 400,
+                whiteSpace: "nowrap",
+                userSelect: "none",
+                color: textColor
+              },
+              children: s.label
+            }
+          )
+        ] }) : /* @__PURE__ */ jsx34(
+          Typography18,
+          {
+            sx: {
+              fontSize: 13,
+              fontWeight: isActive ? 600 : 400,
+              whiteSpace: "nowrap",
+              userSelect: "none",
+              color: textColor
+            },
+            children: s.label
+          }
+        )
+      },
+      s.value
+    );
+  }) });
+};
+
+// src/components/Stepper/Stepper.tsx
+import { Box as Box29, Typography as Typography19, useTheme as useTheme4, useMediaQuery } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { jsx as jsx35, jsxs as jsxs30 } from "react/jsx-runtime";
+var sizeMap = {
+  sm: { bubble: 26, font: 11, labelFont: 12, connector: 2 },
+  md: { bubble: 32, font: 13, labelFont: 13, connector: 2 },
+  lg: { bubble: 40, font: 15, labelFont: 14, connector: 3 }
+};
+var Stepper = ({
+  steps = [],
+  value = 0,
+  onStepClick,
+  variant = "horizontal",
+  size = "md",
+  color,
+  showLabels = true,
+  connectorStyle = "solid",
+  allowJump = false
+}) => {
+  const theme = useTheme4();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const effectiveVariant = isMobile ? "horizontal" : variant;
+  const primaryColor = color || theme.palette.primary.main;
+  const { bubble, font, labelFont, connector } = sizeMap[size] || sizeMap.md;
+  const activeIndex = steps.findIndex((step, i) => {
+    if (typeof step === "object" && step !== null && "value" in step) {
+      return step.value === value;
+    }
+    return i === value;
+  });
+  const getStepState = (index) => {
+    if (index < activeIndex) return "completed";
+    if (index === activeIndex) return "active";
+    return "pending";
+  };
+  const bubbleStyles = (state) => {
+    return {
+      completed: {
+        bg: primaryColor,
+        border: primaryColor,
+        textColor: theme.palette.primary.contrastText || "#fff",
+        cursor: onStepClick ? "pointer" : "default"
+      },
+      active: {
+        bg: primaryColor,
+        border: primaryColor,
+        textColor: theme.palette.primary.contrastText || "#fff",
+        cursor: "default"
+      },
+      pending: {
+        bg: theme.palette.background.paper,
+        border: theme.palette.divider,
+        textColor: theme.palette.text.disabled,
+        cursor: allowJump && onStepClick ? "pointer" : "default"
+      }
+    }[state];
+  };
+  const connectorColor = (index) => index < activeIndex ? primaryColor : theme.palette.divider;
+  if (effectiveVariant === "horizontal") {
+    return /* @__PURE__ */ jsx35(Box29, { sx: { width: "100%", display: "flex", alignItems: "flex-start" }, children: steps.map((stepItem, i) => {
+      const label = typeof stepItem === "object" && stepItem !== null && "label" in stepItem ? stepItem.label : stepItem;
+      const description = typeof stepItem === "object" && stepItem !== null && "description" in stepItem ? stepItem.description : null;
+      const stepValue = typeof stepItem === "object" && stepItem !== null && "value" in stepItem ? stepItem.value : i;
+      const state = getStepState(i);
+      const styles = bubbleStyles(state);
+      const isLast = i === steps.length - 1;
+      return /* @__PURE__ */ jsxs30(
+        Box29,
+        {
+          sx: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            flex: isLast ? "0 0 auto" : 1,
+            minWidth: 0
+          },
+          children: [
+            /* @__PURE__ */ jsxs30(
+              Box29,
+              {
+                sx: {
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: bubble
+                },
+                children: [
+                  /* @__PURE__ */ jsx35(
+                    Box29,
+                    {
+                      onClick: () => (allowJump || state !== "pending") && onStepClick?.(stepValue),
+                      sx: {
+                        width: bubble,
+                        height: bubble,
+                        borderRadius: "50%",
+                        border: `2px solid ${styles.border}`,
+                        bgcolor: styles.bg,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                        cursor: styles.cursor,
+                        transition: "all 0.2s ease",
+                        "&:hover": (state === "completed" || allowJump && state === "pending") && onStepClick ? { opacity: 0.85 } : {}
+                      },
+                      children: state === "completed" ? /* @__PURE__ */ jsx35(CheckIcon, { sx: { fontSize: font + 2, color: theme.palette.primary.contrastText || "#fff" } }) : /* @__PURE__ */ jsx35(
+                        Typography19,
+                        {
+                          sx: {
+                            fontSize: font,
+                            fontWeight: state === "active" ? 700 : 500,
+                            color: styles.textColor,
+                            lineHeight: 1,
+                            userSelect: "none"
+                          },
+                          children: i + 1
+                        }
+                      )
+                    }
+                  ),
+                  showLabels && /* @__PURE__ */ jsxs30(Box29, { sx: { display: "flex", flexDirection: "column", alignItems: "center" }, children: [
+                    /* @__PURE__ */ jsx35(
+                      Typography19,
+                      {
+                        sx: {
+                          mt: 0.75,
+                          fontSize: isMobile ? 10 : labelFont,
+                          fontWeight: state === "active" ? 600 : 400,
+                          color: state === "active" ? primaryColor : state === "completed" ? theme.palette.text.primary : theme.palette.text.secondary,
+                          textAlign: "center",
+                          whiteSpace: "nowrap",
+                          lineHeight: 1.3,
+                          userSelect: "none",
+                          transition: "color 0.2s ease"
+                        },
+                        children: label
+                      }
+                    ),
+                    description && /* @__PURE__ */ jsx35(
+                      Typography19,
+                      {
+                        sx: {
+                          fontSize: (isMobile ? 10 : labelFont) - 1,
+                          color: theme.palette.text.secondary,
+                          textAlign: "center",
+                          mt: 0.5,
+                          whiteSpace: "nowrap"
+                        },
+                        children: description
+                      }
+                    )
+                  ] })
+                ]
+              }
+            ),
+            !isLast && /* @__PURE__ */ jsx35(
+              Box29,
+              {
+                sx: {
+                  flex: 1,
+                  height: connector,
+                  mt: `${bubble / 2 - connector / 2}px`,
+                  bgcolor: connectorStyle === "dashed" ? "transparent" : connectorColor(i),
+                  borderTop: connectorStyle === "dashed" ? `${connector}px dashed ${connectorColor(i)}` : "none",
+                  transition: "background 0.3s ease, border-color 0.3s ease"
+                }
+              }
+            )
+          ]
+        },
+        i
+      );
+    }) });
+  }
+  return /* @__PURE__ */ jsx35(Box29, { sx: { display: "flex", flexDirection: "column" }, children: steps.map((stepItem, i) => {
+    const label = typeof stepItem === "object" && stepItem !== null && "label" in stepItem ? stepItem.label : stepItem;
+    const description = typeof stepItem === "object" && stepItem !== null && "description" in stepItem ? stepItem.description : null;
+    const stepValue = typeof stepItem === "object" && stepItem !== null && "value" in stepItem ? stepItem.value : i;
+    const state = getStepState(i);
+    const styles = bubbleStyles(state);
+    const isLast = i === steps.length - 1;
+    return /* @__PURE__ */ jsxs30(Box29, { sx: { display: "flex", gap: 1.5 }, children: [
+      /* @__PURE__ */ jsxs30(
+        Box29,
+        {
+          sx: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          },
+          children: [
+            /* @__PURE__ */ jsx35(
+              Box29,
+              {
+                onClick: () => (allowJump || state !== "pending") && onStepClick?.(stepValue),
+                sx: {
+                  width: bubble,
+                  height: bubble,
+                  borderRadius: "50%",
+                  border: `2px solid ${styles.border}`,
+                  bgcolor: styles.bg,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  cursor: styles.cursor,
+                  transition: "all 0.2s ease",
+                  "&:hover": (state === "completed" || allowJump && state === "pending") && onStepClick ? { opacity: 0.85 } : {}
+                },
+                children: state === "completed" ? /* @__PURE__ */ jsx35(CheckIcon, { sx: { fontSize: font + 2, color: theme.palette.primary.contrastText || "#fff" } }) : /* @__PURE__ */ jsx35(
+                  Typography19,
+                  {
+                    sx: {
+                      fontSize: font,
+                      fontWeight: state === "active" ? 700 : 500,
+                      color: styles.textColor,
+                      lineHeight: 1,
+                      userSelect: "none"
+                    },
+                    children: i + 1
+                  }
+                )
+              }
+            ),
+            !isLast && /* @__PURE__ */ jsx35(
+              Box29,
+              {
+                sx: {
+                  width: connector,
+                  flex: 1,
+                  minHeight: 28,
+                  bgcolor: connectorStyle === "dashed" ? "transparent" : connectorColor(i),
+                  borderLeft: connectorStyle === "dashed" ? `${connector}px dashed ${connectorColor(i)}` : "none",
+                  my: 0.5,
+                  transition: "background 0.3s ease"
+                }
+              }
+            )
+          ]
+        }
+      ),
+      showLabels && /* @__PURE__ */ jsxs30(
+        Box29,
+        {
+          sx: {
+            pt: `${(bubble - labelFont * 1.4) / 2}px`,
+            pb: isLast ? 0 : 3,
+            display: "flex",
+            flexDirection: "column"
+          },
+          children: [
+            /* @__PURE__ */ jsx35(
+              Typography19,
+              {
+                sx: {
+                  fontSize: labelFont,
+                  fontWeight: state === "active" ? 600 : 400,
+                  color: state === "active" ? primaryColor : state === "completed" ? theme.palette.text.primary : theme.palette.text.secondary,
+                  lineHeight: 1.4,
+                  userSelect: "none",
+                  transition: "color 0.2s ease"
+                },
+                children: label
+              }
+            ),
+            description && /* @__PURE__ */ jsx35(
+              Typography19,
+              {
+                sx: {
+                  fontSize: labelFont - 1,
+                  color: theme.palette.text.secondary,
+                  mt: 0.25
+                },
+                children: description
+              }
+            )
+          ]
+        }
+      )
+    ] }, i);
+  }) });
+};
+
 // src/components/Skeleton/Skeleton.tsx
-import { Skeleton as MuiSkeleton, Box as Box20, Stack as Stack2 } from "@mui/material";
-import { Fragment, jsx as jsx25, jsxs as jsxs20 } from "react/jsx-runtime";
+import { Skeleton as MuiSkeleton, Box as Box30, Stack as Stack4 } from "@mui/material";
+import { Fragment as Fragment6, jsx as jsx36, jsxs as jsxs31 } from "react/jsx-runtime";
 var Skeleton = ({
   variant = "text",
   orientation,
@@ -7989,7 +10987,7 @@ var Skeleton = ({
     return void 0;
   };
   const borderRadius = getBorderRadius();
-  const BaseSkeleton = (extraSx) => /* @__PURE__ */ jsx25(
+  const BaseSkeleton = (extraSx) => /* @__PURE__ */ jsx36(
     MuiSkeleton,
     {
       variant: ["card", "list-item", "table-row", "profile"].includes(variant) ? "rectangular" : variant,
@@ -8006,8 +11004,8 @@ var Skeleton = ({
   );
   if (variant === "card") {
     const isHorizontal = orientation === "horizontal";
-    return /* @__PURE__ */ jsxs20(
-      Box20,
+    return /* @__PURE__ */ jsxs31(
+      Box30,
       {
         sx: [
           {
@@ -8021,7 +11019,7 @@ var Skeleton = ({
           ...Array.isArray(sx) ? sx : [sx]
         ],
         children: [
-          /* @__PURE__ */ jsx25(
+          /* @__PURE__ */ jsx36(
             MuiSkeleton,
             {
               variant: "rectangular",
@@ -8031,8 +11029,8 @@ var Skeleton = ({
               sx: { borderRadius: 1, flexShrink: 0 }
             }
           ),
-          /* @__PURE__ */ jsxs20(
-            Box20,
+          /* @__PURE__ */ jsxs31(
+            Box30,
             {
               sx: {
                 pt: isHorizontal ? 0 : 1.5,
@@ -8043,8 +11041,8 @@ var Skeleton = ({
                 gap: 0.5
               },
               children: [
-                /* @__PURE__ */ jsx25(MuiSkeleton, { animation, height: 24, width: "80%" }),
-                /* @__PURE__ */ jsx25(MuiSkeleton, { animation, height: 20, width: "60%" })
+                /* @__PURE__ */ jsx36(MuiSkeleton, { animation, height: 24, width: "80%" }),
+                /* @__PURE__ */ jsx36(MuiSkeleton, { animation, height: 20, width: "60%" })
               ]
             }
           )
@@ -8054,8 +11052,8 @@ var Skeleton = ({
   }
   if (variant === "profile") {
     const isVertical = orientation === "vertical";
-    return /* @__PURE__ */ jsxs20(
-      Box20,
+    return /* @__PURE__ */ jsxs31(
+      Box30,
       {
         sx: [
           {
@@ -8067,7 +11065,7 @@ var Skeleton = ({
           ...Array.isArray(sx) ? sx : [sx]
         ],
         children: [
-          /* @__PURE__ */ jsx25(
+          /* @__PURE__ */ jsx36(
             MuiSkeleton,
             {
               variant: "circular",
@@ -8077,8 +11075,8 @@ var Skeleton = ({
               sx: { flexShrink: 0 }
             }
           ),
-          /* @__PURE__ */ jsxs20(
-            Box20,
+          /* @__PURE__ */ jsxs31(
+            Box30,
             {
               sx: {
                 flex: 1,
@@ -8089,7 +11087,7 @@ var Skeleton = ({
                 width: "100%"
               },
               children: [
-                /* @__PURE__ */ jsx25(
+                /* @__PURE__ */ jsx36(
                   MuiSkeleton,
                   {
                     animation,
@@ -8097,7 +11095,7 @@ var Skeleton = ({
                     width: isVertical ? "80%" : "60%"
                   }
                 ),
-                /* @__PURE__ */ jsx25(
+                /* @__PURE__ */ jsx36(
                   MuiSkeleton,
                   {
                     animation,
@@ -8114,8 +11112,8 @@ var Skeleton = ({
   }
   if (variant === "list-item") {
     const isVertical = orientation === "vertical";
-    return /* @__PURE__ */ jsxs20(
-      Box20,
+    return /* @__PURE__ */ jsxs31(
+      Box30,
       {
         sx: [
           {
@@ -8128,7 +11126,7 @@ var Skeleton = ({
           ...Array.isArray(sx) ? sx : [sx]
         ],
         children: [
-          /* @__PURE__ */ jsx25(
+          /* @__PURE__ */ jsx36(
             MuiSkeleton,
             {
               variant: "rectangular",
@@ -8138,8 +11136,8 @@ var Skeleton = ({
               animation
             }
           ),
-          /* @__PURE__ */ jsxs20(
-            Box20,
+          /* @__PURE__ */ jsxs31(
+            Box30,
             {
               sx: {
                 flex: 1,
@@ -8149,8 +11147,8 @@ var Skeleton = ({
                 width: "100%"
               },
               children: [
-                /* @__PURE__ */ jsx25(MuiSkeleton, { animation, height: 20, width: "70%" }),
-                /* @__PURE__ */ jsx25(MuiSkeleton, { animation, height: 16, width: "40%" })
+                /* @__PURE__ */ jsx36(MuiSkeleton, { animation, height: 20, width: "70%" }),
+                /* @__PURE__ */ jsx36(MuiSkeleton, { animation, height: 16, width: "40%" })
               ]
             }
           )
@@ -8159,8 +11157,8 @@ var Skeleton = ({
     );
   }
   if (variant === "table-row") {
-    return /* @__PURE__ */ jsx25(Fragment, { children: Array.from(new Array(rows)).map((_, rowIndex) => /* @__PURE__ */ jsx25(
-      Stack2,
+    return /* @__PURE__ */ jsx36(Fragment6, { children: Array.from(new Array(rows)).map((_, rowIndex) => /* @__PURE__ */ jsx36(
+      Stack4,
       {
         direction: "row",
         spacing: 2,
@@ -8168,7 +11166,7 @@ var Skeleton = ({
           { py: 1.5, borderBottom: "1px solid #E0E0E0" },
           ...Array.isArray(sx) ? sx : [sx]
         ],
-        children: Array.from(new Array(cols)).map((_2, colIndex) => /* @__PURE__ */ jsx25(
+        children: Array.from(new Array(cols)).map((_2, colIndex) => /* @__PURE__ */ jsx36(
           MuiSkeleton,
           {
             animation,
@@ -8182,7 +11180,7 @@ var Skeleton = ({
     )) });
   }
   if (variant === "text" && lines > 1) {
-    return /* @__PURE__ */ jsx25(Box20, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(lines)).map((_, index) => /* @__PURE__ */ jsx25(
+    return /* @__PURE__ */ jsx36(Box30, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(lines)).map((_, index) => /* @__PURE__ */ jsx36(
       MuiSkeleton,
       {
         variant: "text",
@@ -8197,12 +11195,12 @@ var Skeleton = ({
   }
   if (variant === "cascading") {
     const numLines = 4;
-    return /* @__PURE__ */ jsx25(Box20, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(numLines)).map((_, index) => {
+    return /* @__PURE__ */ jsx36(Box30, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(numLines)).map((_, index) => {
       const expansionDuration = 40;
       const stagger = expansionDuration * 0.3;
       const startPercent = index * stagger;
       const endPercent = startPercent + expansionDuration;
-      return /* @__PURE__ */ jsx25(
+      return /* @__PURE__ */ jsx36(
         MuiSkeleton,
         {
           variant: "text",
@@ -8231,9 +11229,9 @@ var Skeleton = ({
 };
 
 // src/components/Backdrop/Backdrop.tsx
-import { useEffect as useEffect6, useState as useState10 } from "react";
+import { useEffect as useEffect12, useState as useState19 } from "react";
 import { createPortal } from "react-dom";
-import { Fragment as Fragment2, jsx as jsx26, jsxs as jsxs21 } from "react/jsx-runtime";
+import { Fragment as Fragment7, jsx as jsx37, jsxs as jsxs32 } from "react/jsx-runtime";
 var Backdrop = ({
   open,
   onClick,
@@ -8242,12 +11240,13 @@ var Backdrop = ({
   absolute = false,
   size = 45
 }) => {
-  const [mounted, setMounted] = useState10(false);
+  const [mounted, setMounted] = useState19(false);
   const ringThickness = Math.max(2, Math.round(size * 0.11));
-  useEffect6(() => {
-    setMounted(true);
+  useEffect12(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
-  useEffect6(() => {
+  useEffect12(() => {
     if (!absolute) {
       document.body.style.overflow = open ? "hidden" : "";
       return () => {
@@ -8256,8 +11255,8 @@ var Backdrop = ({
     }
   }, [open, absolute]);
   if (!mounted || !open) return null;
-  const overlay = /* @__PURE__ */ jsxs21(Fragment2, { children: [
-    /* @__PURE__ */ jsx26("style", { children: `
+  const overlay = /* @__PURE__ */ jsxs32(Fragment7, { children: [
+    /* @__PURE__ */ jsx37("style", { children: `
                 @keyframes bd-rotate {
                     to { transform: rotate(360deg); }
                 }
@@ -8266,7 +11265,7 @@ var Backdrop = ({
                     to   { opacity: 1; }
                 }
             ` }),
-    /* @__PURE__ */ jsx26(
+    /* @__PURE__ */ jsx37(
       "div",
       {
         onClick,
@@ -8285,7 +11284,7 @@ var Backdrop = ({
           cursor: onClick ? "pointer" : "default",
           animation: "bd-fade-in 0.15s ease"
         },
-        children: /* @__PURE__ */ jsxs21(
+        children: /* @__PURE__ */ jsxs32(
           "div",
           {
             onClick: (e) => e.stopPropagation(),
@@ -8295,7 +11294,7 @@ var Backdrop = ({
               height: size
             },
             children: [
-              /* @__PURE__ */ jsx26(
+              /* @__PURE__ */ jsx37(
                 "div",
                 {
                   style: {
@@ -8307,7 +11306,7 @@ var Backdrop = ({
                   }
                 }
               ),
-              /* @__PURE__ */ jsx26(
+              /* @__PURE__ */ jsx37(
                 "div",
                 {
                   style: {
@@ -8334,18 +11333,18 @@ var Backdrop = ({
 };
 
 // src/components/Tooltip/Tooltip.tsx
-import MuiTooltip from "@mui/material/Tooltip";
-import { jsx as jsx27 } from "react/jsx-runtime";
-var Tooltip2 = ({
+import Tooltip2 from "@mui/material/Tooltip";
+import { jsx as jsx38 } from "react/jsx-runtime";
+var CustomTooltip = ({
   title,
   children,
   placement = "top",
-  bgColor = "#fff",
-  textColor = "#1F2937",
+  bgColor = "background.paper",
+  textColor = "text.primary",
   ...props
 }) => {
-  return /* @__PURE__ */ jsx27(
-    MuiTooltip,
+  return /* @__PURE__ */ jsx38(
+    Tooltip2,
     {
       title,
       placement,
@@ -8357,11 +11356,12 @@ var Tooltip2 = ({
             fontSize: "12px",
             borderRadius: "6px",
             color: textColor,
-            boxShadow: "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            // Added subtle shadow for white tooltip
-            "& .MuiTooltip-arrow": {
-              color: bgColor
-            }
+            boxShadow: "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
+          }
+        },
+        arrow: {
+          sx: {
+            color: bgColor
           }
         }
       },
@@ -8371,11 +11371,1088 @@ var Tooltip2 = ({
   );
 };
 
+// src/components/Uploads/FileUpload.tsx
+import { useState as useState20, useRef as useRef14, useCallback as useCallback5, useMemo } from "react";
+import Box31 from "@mui/material/Box";
+import Typography20 from "@mui/material/Typography";
+import IconButton4 from "@mui/material/IconButton";
+import Dialog2 from "@mui/material/Dialog";
+import DialogContent2 from "@mui/material/DialogContent";
+import Button2 from "@mui/material/Button";
+import Collapse from "@mui/material/Collapse";
+import { alpha as alpha4 } from "@mui/material/styles";
+import { Close, VisibilityOutlined, DeleteOutline, CloudUploadOutlined } from "@mui/icons-material";
+
+// src/components/Uploads/Uploads.utils.tsx
+import {
+  PictureAsPdfOutlined,
+  DescriptionOutlined,
+  ImageOutlined,
+  InsertDriveFileOutlined
+} from "@mui/icons-material";
+import { jsx as jsx39 } from "react/jsx-runtime";
+var getFileIcon = (fileName, sx) => {
+  const ext = fileName?.split(".").pop()?.toLowerCase();
+  switch (ext) {
+    case "pdf":
+      return /* @__PURE__ */ jsx39(PictureAsPdfOutlined, { sx: { color: "error.main", ...sx } });
+    case "doc":
+    case "docx":
+      return /* @__PURE__ */ jsx39(DescriptionOutlined, { sx: { color: "info.main", ...sx } });
+    case "jpg":
+    case "jpeg":
+    case "png":
+    case "gif":
+    case "webp":
+      return /* @__PURE__ */ jsx39(ImageOutlined, { sx: { color: "success.main", ...sx } });
+    default:
+      return /* @__PURE__ */ jsx39(InsertDriveFileOutlined, { sx: { color: "text.secondary", ...sx } });
+  }
+};
+var ACCEPTED_TYPES_IMAGE = {
+  "image/jpeg": [".jpg", ".jpeg"],
+  "image/png": [".png"],
+  "image/gif": [".gif"],
+  "image/webp": [".webp"]
+};
+var ACCEPTED_TYPES_DOCUMENT = {
+  "application/pdf": [".pdf"],
+  "application/msword": [".doc"],
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
+    ".docx"
+  ]
+};
+var ACCEPTED_TYPES_ALL = {
+  ...ACCEPTED_TYPES_DOCUMENT,
+  ...ACCEPTED_TYPES_IMAGE
+};
+var getAcceptedTypes = (fileTypes) => {
+  switch (fileTypes) {
+    case "image":
+      return ACCEPTED_TYPES_IMAGE;
+    case "document":
+      return ACCEPTED_TYPES_DOCUMENT;
+    default:
+      return ACCEPTED_TYPES_ALL;
+  }
+};
+var getAllowedLabel = (fileTypes) => {
+  switch (fileTypes) {
+    case "image":
+      return "JPG, PNG, GIF, WEBP";
+    case "document":
+      return "PDF, DOC";
+    default:
+      return "PDF, DOC, JPG, PNG";
+  }
+};
+var isImageType = (type) => type?.startsWith("image/");
+var base64ToBlob = (base64, mimeType) => {
+  const byteChars = atob(base64);
+  const byteNumbers = new Array(byteChars.length);
+  for (let i = 0; i < byteChars.length; i++) {
+    byteNumbers[i] = byteChars.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
+};
+var toBase64WithProgress = (file, onProgress) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onprogress = (e) => {
+    if (e.lengthComputable) {
+      const pct = Math.round(e.loaded / e.total * 90);
+      onProgress(pct);
+    }
+  };
+  reader.onloadend = () => {
+    onProgress(100);
+    const result = reader.result;
+    resolve(result.split(",")[1]);
+  };
+  reader.onerror = reject;
+  reader.readAsDataURL(file);
+});
+var resolveFileSrc = (file, endpoint) => {
+  if (file.file_path) return `${endpoint}${file.file_path}`;
+  if (file.preview_url) return file.preview_url;
+  if (file.file_data) {
+    const blob = base64ToBlob(file.file_data, file.file_type);
+    return URL.createObjectURL(blob);
+  }
+  return null;
+};
+
+// src/components/Uploads/FileUpload.tsx
+import { Fragment as Fragment8, jsx as jsx40, jsxs as jsxs33 } from "react/jsx-runtime";
+var FileUpload = ({
+  value = [],
+  onChange,
+  disabled = false,
+  multiple = true,
+  maxFiles,
+  maxSizeMB = 10,
+  label,
+  required = false,
+  error,
+  helperText,
+  fileTypes = "all",
+  imgPreview = false,
+  visibleLimit = 8,
+  imgEndpoint = "http://192.168.0.109:8001/"
+}) => {
+  const [isDragging, setIsDragging] = useState20(false);
+  const [uploadError, setUploadError] = useState20("");
+  const [progressMap, setProgressMap] = useState20({});
+  const [previewFile, setPreviewFile] = useState20(null);
+  const [isExpanded, setIsExpanded] = useState20(false);
+  const inputRef = useRef14(null);
+  const acceptedTypes = useMemo(() => getAcceptedTypes(fileTypes), [fileTypes]);
+  const acceptString = useMemo(() => Object.keys(acceptedTypes).join(","), [acceptedTypes]);
+  const allowedLabel = useMemo(() => getAllowedLabel(fileTypes), [fileTypes]);
+  const getPreviewUrl = (file) => {
+    if (file.type.startsWith("image/")) return URL.createObjectURL(file);
+    return null;
+  };
+  const processFiles = useCallback5(
+    async (rawFiles) => {
+      setUploadError("");
+      const fileArray = Array.from(rawFiles);
+      if (maxFiles && value.length + fileArray.length > maxFiles) {
+        setUploadError(`Maximum ${maxFiles} file(s) allowed.`);
+        return;
+      }
+      const oversized = fileArray.filter((f) => f.size > maxSizeMB * 1024 * 1024);
+      if (oversized.length > 0) {
+        setUploadError(`File(s) exceed ${maxSizeMB}MB limit.`);
+        return;
+      }
+      const unsupported = fileArray.filter((f) => !Object.keys(acceptedTypes).includes(f.type));
+      if (unsupported.length > 0) {
+        setUploadError(`Unsupported file type. Allowed: ${allowedLabel}.`);
+        return;
+      }
+      const placeholders = fileArray.map((file) => ({
+        file_name: file.name,
+        file_type: file.type,
+        file_data: null,
+        preview_url: null,
+        size: file.size,
+        uploading: true
+      }));
+      const baseList = multiple ? [...value, ...placeholders] : [...placeholders];
+      onChange?.(baseList);
+      const initProgress = {};
+      fileArray.forEach((f) => {
+        initProgress[f.name] = 0;
+      });
+      setProgressMap((prev2) => ({ ...prev2, ...initProgress }));
+      const processed = await Promise.all(
+        fileArray.map(async (file) => {
+          const file_data = await toBase64WithProgress(file, (pct) => {
+            setProgressMap((prev2) => ({ ...prev2, [file.name]: pct }));
+          });
+          return {
+            file_name: file.name,
+            file_type: file.type,
+            file_data,
+            preview_url: getPreviewUrl(file),
+            size: file.size,
+            uploading: false
+          };
+        })
+      );
+      const updatedList = multiple ? [...value, ...processed] : processed;
+      onChange?.(updatedList);
+      setProgressMap((prev2) => {
+        const next2 = { ...prev2 };
+        fileArray.forEach((f) => delete next2[f.name]);
+        return next2;
+      });
+    },
+    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel]
+  );
+  const handleDrop = useCallback5(
+    (e) => {
+      e.preventDefault();
+      setIsDragging(false);
+      if (disabled) return;
+      processFiles(e.dataTransfer.files);
+    },
+    [disabled, processFiles]
+  );
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    if (!disabled) setIsDragging(true);
+  };
+  const handleDragLeave = () => setIsDragging(false);
+  const handleBrowseClick = () => {
+    if (!disabled) inputRef.current?.click();
+  };
+  const handleInputChange = (e) => {
+    if (e.target.files?.length) {
+      processFiles(e.target.files);
+      e.target.value = "";
+    }
+  };
+  const handleRemove = (index) => {
+    const file = value[index];
+    if (file?.preview_url) URL.revokeObjectURL(file.preview_url);
+    const updated = value.filter((_, i) => i !== index);
+    onChange?.(updated);
+  };
+  const handlePreview = (e, file) => {
+    e.stopPropagation();
+    setUploadError("");
+    const src = resolveFileSrc(file, imgEndpoint);
+    if (!src) return;
+    if (isImageType(file.file_type)) {
+      setPreviewFile({ ...file, src });
+      return;
+    }
+    const win = window.open(src, "_blank", "noreferrer");
+    setTimeout(() => {
+      if (win && win.closed) {
+        setUploadError("Preview was blocked by the browser. Please allow pop-ups for this site.");
+      }
+    }, 300);
+  };
+  const displayError = uploadError || (typeof error === "string" ? error : error ? "Upload error" : "");
+  const renderFileItem = (file, index) => {
+    const progress = progressMap[file.file_name];
+    const isUploading = file.uploading || progress !== void 0;
+    return /* @__PURE__ */ jsxs33(
+      Box31,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: "12px",
+          width: "100%",
+          maxWidth: "348px",
+          height: "54px",
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
+          boxShadow: "0px 3px 4.6px 0px rgba(0,0,0,0.05)"
+        },
+        children: [
+          /* @__PURE__ */ jsxs33(Box31, { sx: { display: "flex", alignItems: "center", gap: 1, overflow: "hidden", flex: 1 }, children: [
+            /* @__PURE__ */ jsx40(Box31, { sx: { width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: getFileIcon(file.file_name, { fontSize: 20 }) }),
+            isUploading ? /* @__PURE__ */ jsxs33(Box31, { sx: { flex: 1, minWidth: 0 }, children: [
+              /* @__PURE__ */ jsx40(
+                Typography20,
+                {
+                  sx: {
+                    fontSize: "13px",
+                    color: "text.primary",
+                    fontWeight: 400,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    mb: 0.5
+                  },
+                  title: file.file_name,
+                  children: file.file_name
+                }
+              ),
+              /* @__PURE__ */ jsx40(Box31, { sx: { height: "4px", bgcolor: "action.hover", borderRadius: "99px", overflow: "hidden", width: "100%" }, children: /* @__PURE__ */ jsx40(
+                Box31,
+                {
+                  sx: {
+                    height: "100%",
+                    width: `${progress ?? 0}%`,
+                    bgcolor: "primary.main",
+                    borderRadius: "100px",
+                    transition: "width 0.2s ease"
+                  }
+                }
+              ) })
+            ] }) : /* @__PURE__ */ jsx40(
+              Typography20,
+              {
+                sx: {
+                  fontSize: "13px",
+                  color: "text.primary",
+                  fontWeight: 400,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "220px"
+                },
+                title: file.file_name,
+                children: file.file_name
+              }
+            )
+          ] }),
+          isUploading ? /* @__PURE__ */ jsxs33(Typography20, { sx: { fontSize: "13px", fontWeight: 500, color: "primary.main", ml: 1, flexShrink: 0 }, children: [
+            progress ?? 0,
+            "%"
+          ] }) : /* @__PURE__ */ jsxs33(Box31, { sx: { display: "flex", gap: 1, flexShrink: 0 }, children: [
+            /* @__PURE__ */ jsx40(
+              IconButton4,
+              {
+                onClick: (e) => handlePreview(e, file),
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ jsx40(VisibilityOutlined, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            ),
+            !disabled && /* @__PURE__ */ jsx40(
+              IconButton4,
+              {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleRemove(index);
+                },
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ jsx40(DeleteOutline, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            )
+          ] })
+        ]
+      },
+      index
+    );
+  };
+  return /* @__PURE__ */ jsxs33(Box31, { sx: { width: "100%", mb: 2 }, children: [
+    label && /* @__PURE__ */ jsxs33(Typography20, { sx: { fontSize: "14px", fontWeight: 500, color: "text.primary", mb: 1 }, children: [
+      label,
+      " ",
+      required && /* @__PURE__ */ jsx40("span", { style: { color: "red" }, children: "*" })
+    ] }),
+    /* @__PURE__ */ jsxs33(
+      Box31,
+      {
+        onDrop: handleDrop,
+        onDragOver: handleDragOver,
+        onDragLeave: handleDragLeave,
+        onClick: disabled ? void 0 : handleBrowseClick,
+        sx: {
+          border: "1.5px dashed",
+          borderColor: isDragging ? "primary.main" : displayError ? "error.main" : "divider",
+          borderRadius: "10px",
+          height: "93px",
+          width: "100%",
+          maxWidth: "348px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 0.75,
+          cursor: disabled ? "not-allowed" : "pointer",
+          bgcolor: isDragging ? (theme) => alpha4(theme.palette.primary.main, 0.08) : disabled ? "background.default" : "background.paper",
+          transition: "all 0.18s ease",
+          "&:hover": disabled ? {} : { borderColor: "primary.main", bgcolor: (theme) => alpha4(theme.palette.primary.main, 0.04) }
+        },
+        children: [
+          /* @__PURE__ */ jsx40(Box31, { sx: { width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx40(CloudUploadOutlined, { sx: { fontSize: 28, color: "text.secondary" } }) }),
+          /* @__PURE__ */ jsxs33(Typography20, { sx: { color: "text.secondary", fontSize: "14px", fontWeight: 400 }, children: [
+            "Drag & Drop (or) ",
+            /* @__PURE__ */ jsx40("span", { style: { color: "var(--mui-palette-primary-main)", fontWeight: 500 }, children: "Browse" })
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx40(
+      "input",
+      {
+        ref: inputRef,
+        type: "file",
+        multiple,
+        accept: acceptString,
+        style: { display: "none" },
+        onChange: handleInputChange,
+        disabled
+      }
+    ),
+    displayError && /* @__PURE__ */ jsx40(Typography20, { variant: "caption", sx: { color: "error.main", mt: 0.5, display: "block" }, children: displayError }),
+    helperText && !displayError && /* @__PURE__ */ jsx40(Typography20, { variant: "caption", sx: { color: "text.secondary", mt: 0.5, display: "block" }, children: helperText }),
+    value.length > 0 && /* @__PURE__ */ jsx40(Box31, { sx: { mt: 1.5, display: "flex", flexDirection: "column", gap: 1, width: "100%", maxWidth: "348px" }, children: imgPreview && fileTypes === "image" ? /* @__PURE__ */ jsxs33(Fragment8, { children: [
+      /* @__PURE__ */ jsx40(Box31, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap" }, children: value.slice(0, visibleLimit).map((file, index) => {
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ jsxs33(
+          Box31,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ jsx40("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ jsx40(
+                IconButton4,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(index);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ jsx40(Close, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          index
+        );
+      }) }),
+      value.length > visibleLimit && /* @__PURE__ */ jsx40(Collapse, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ jsx40(Box31, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap", mt: 1.5 }, children: value.slice(visibleLimit).map((file, sliceIndex) => {
+        const actualIndex = sliceIndex + visibleLimit;
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ jsxs33(
+          Box31,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ jsx40("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ jsx40(
+                IconButton4,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(actualIndex);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ jsx40(Close, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          actualIndex
+        );
+      }) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ jsx40(
+        Button2,
+        {
+          variant: "text",
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontWeight: 600,
+            fontSize: "13px",
+            color: "primary.main",
+            p: 0.5,
+            px: 1,
+            minWidth: 0,
+            "&:hover": { bgcolor: "action.hover", borderRadius: "6px" }
+          },
+          children: isExpanded ? "View Less" : `View All (+${value.length - visibleLimit})`
+        }
+      )
+    ] }) : /* @__PURE__ */ jsxs33(Fragment8, { children: [
+      value.slice(0, visibleLimit).map(renderFileItem),
+      value.length > visibleLimit && /* @__PURE__ */ jsx40(Collapse, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ jsx40(Box31, { sx: { display: "flex", flexDirection: "column", gap: 1 }, children: value.slice(visibleLimit).map((file, sliceIndex) => renderFileItem(file, sliceIndex + visibleLimit)) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ jsx40(
+        Button2,
+        {
+          variant: "text",
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontWeight: 600,
+            fontSize: "13px",
+            color: "primary.main",
+            p: 0.5,
+            px: 1,
+            minWidth: 0,
+            "&:hover": { bgcolor: "action.hover", borderRadius: "6px" }
+          },
+          children: isExpanded ? "View Less" : `View All (${value.length})`
+        }
+      )
+    ] }) }),
+    /* @__PURE__ */ jsxs33(
+      Dialog2,
+      {
+        open: !!previewFile,
+        onClose: () => setPreviewFile(null),
+        PaperProps: {
+          sx: {
+            borderRadius: "10px",
+            overflow: "visible",
+            position: "relative",
+            bgcolor: "background.paper"
+          }
+        },
+        children: [
+          /* @__PURE__ */ jsx40(
+            IconButton4,
+            {
+              onClick: () => setPreviewFile(null),
+              size: "small",
+              sx: {
+                position: "absolute",
+                top: -16,
+                right: -16,
+                width: 36,
+                height: 36,
+                bgcolor: "background.paper",
+                border: "1px solid",
+                borderColor: "divider",
+                boxShadow: "0px 3px 8px rgba(0,0,0,0.15)",
+                zIndex: 10,
+                "&:hover": { bgcolor: "background.default" }
+              },
+              children: /* @__PURE__ */ jsx40(Close, { sx: { fontSize: 18, color: "text.secondary" } })
+            }
+          ),
+          /* @__PURE__ */ jsx40(DialogContent2, { sx: { p: 2 }, children: previewFile && /* @__PURE__ */ jsx40(Box31, { sx: { width: 400, height: 400, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx40(
+            "img",
+            {
+              src: previewFile.src,
+              alt: previewFile.file_name,
+              style: { maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }
+            }
+          ) }) })
+        ]
+      }
+    )
+  ] });
+};
+
+// src/components/Uploads/UploadButton.tsx
+import { useState as useState21, useRef as useRef15, useCallback as useCallback6, useMemo as useMemo2 } from "react";
+import Box32 from "@mui/material/Box";
+import Typography21 from "@mui/material/Typography";
+import IconButton5 from "@mui/material/IconButton";
+import Dialog3 from "@mui/material/Dialog";
+import DialogContent3 from "@mui/material/DialogContent";
+import Button3 from "@mui/material/Button";
+import Collapse2 from "@mui/material/Collapse";
+import { Close as Close2, VisibilityOutlined as VisibilityOutlined2, DeleteOutline as DeleteOutline2 } from "@mui/icons-material";
+import { Fragment as Fragment9, jsx as jsx41, jsxs as jsxs34 } from "react/jsx-runtime";
+var UploadButton = ({
+  value = [],
+  onChange,
+  disabled = false,
+  multiple = true,
+  maxFiles,
+  maxSizeMB = 10,
+  label = "Upload File",
+  error,
+  fileTypes = "all",
+  imgPreview = false,
+  visibleLimit = 6,
+  imgEndpoint = "http://192.168.0.109:8001/"
+}) => {
+  const [uploadError, setUploadError] = useState21("");
+  const [progressMap, setProgressMap] = useState21({});
+  const [previewFile, setPreviewFile] = useState21(null);
+  const [isExpanded, setIsExpanded] = useState21(false);
+  const inputRef = useRef15(null);
+  const acceptedTypes = useMemo2(() => getAcceptedTypes(fileTypes), [fileTypes]);
+  const acceptString = useMemo2(() => Object.keys(acceptedTypes).join(","), [acceptedTypes]);
+  const allowedLabel = useMemo2(() => getAllowedLabel(fileTypes), [fileTypes]);
+  const getPreviewUrl = (file) => {
+    if (file.type.startsWith("image/")) return URL.createObjectURL(file);
+    return null;
+  };
+  const processFiles = useCallback6(
+    async (rawFiles) => {
+      setUploadError("");
+      const fileArray = Array.from(rawFiles);
+      if (maxFiles && value.length + fileArray.length > maxFiles) {
+        setUploadError(`Maximum ${maxFiles} file(s) allowed.`);
+        return;
+      }
+      const oversized = fileArray.filter((f) => f.size > maxSizeMB * 1024 * 1024);
+      if (oversized.length > 0) {
+        setUploadError(`File(s) exceed ${maxSizeMB}MB limit.`);
+        return;
+      }
+      const unsupported = fileArray.filter((f) => !Object.keys(acceptedTypes).includes(f.type));
+      if (unsupported.length > 0) {
+        setUploadError(`Unsupported file type. Allowed: ${allowedLabel}.`);
+        return;
+      }
+      const placeholders = fileArray.map((file) => ({
+        file_name: file.name,
+        file_type: file.type,
+        file_data: null,
+        preview_url: null,
+        size: file.size,
+        uploading: true
+      }));
+      const baseList = multiple ? [...value, ...placeholders] : [...placeholders];
+      onChange?.(baseList);
+      const initProgress = {};
+      fileArray.forEach((f) => {
+        initProgress[f.name] = 0;
+      });
+      setProgressMap((prev2) => ({ ...prev2, ...initProgress }));
+      const processed = await Promise.all(
+        fileArray.map(async (file) => {
+          const file_data = await toBase64WithProgress(file, (pct) => {
+            setProgressMap((prev2) => ({ ...prev2, [file.name]: pct }));
+          });
+          return {
+            file_name: file.name,
+            file_type: file.type,
+            file_data,
+            preview_url: getPreviewUrl(file),
+            size: file.size,
+            uploading: false
+          };
+        })
+      );
+      const updatedList = multiple ? [...value, ...processed] : processed;
+      onChange?.(updatedList);
+      setProgressMap((prev2) => {
+        const next2 = { ...prev2 };
+        fileArray.forEach((f) => delete next2[f.name]);
+        return next2;
+      });
+    },
+    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel]
+  );
+  const handleInputChange = (e) => {
+    if (e.target.files?.length) {
+      processFiles(e.target.files);
+      e.target.value = "";
+    }
+  };
+  const handleRemove = (index) => {
+    const file = value[index];
+    if (file?.preview_url) URL.revokeObjectURL(file.preview_url);
+    const updated = value.filter((_, i) => i !== index);
+    onChange?.(updated);
+  };
+  const handlePreview = (e, file) => {
+    e.stopPropagation();
+    setUploadError("");
+    const src = resolveFileSrc(file, imgEndpoint);
+    if (!src) return;
+    if (isImageType(file.file_type)) {
+      setPreviewFile({ ...file, src });
+      return;
+    }
+    const win = window.open(src, "_blank", "noreferrer");
+    setTimeout(() => {
+      if (win && win.closed) {
+        setUploadError("Preview was blocked by the browser. Please allow pop-ups for this site.");
+      }
+    }, 300);
+  };
+  const displayError = uploadError || (typeof error === "string" ? error : error ? "Upload error" : "");
+  const renderFileItem = (file, index) => {
+    const progress = progressMap[file.file_name];
+    const isUploading = file.uploading || progress !== void 0;
+    return /* @__PURE__ */ jsxs34(
+      Box32,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 1.5,
+          py: 1,
+          width: "100%",
+          maxWidth: "348px",
+          height: "54px",
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
+          boxShadow: "0px 3px 4.6px 0px rgba(0,0,0,0.05)"
+        },
+        children: [
+          /* @__PURE__ */ jsxs34(Box32, { sx: { display: "flex", alignItems: "center", gap: 1.25, overflow: "hidden", flex: 1 }, children: [
+            /* @__PURE__ */ jsx41(Box32, { sx: { width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: getFileIcon(file.file_name, { fontSize: 22 }) }),
+            isUploading ? /* @__PURE__ */ jsxs34(Box32, { sx: { flex: 1, minWidth: 0 }, children: [
+              /* @__PURE__ */ jsx41(
+                Typography21,
+                {
+                  sx: {
+                    fontSize: "13px",
+                    color: "text.primary",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    mb: 0.5
+                  },
+                  title: file.file_name,
+                  children: file.file_name
+                }
+              ),
+              /* @__PURE__ */ jsx41(Box32, { sx: { height: "4px", bgcolor: "action.hover", borderRadius: "99px", overflow: "hidden" }, children: /* @__PURE__ */ jsx41(
+                Box32,
+                {
+                  sx: {
+                    height: "100%",
+                    width: `${progress ?? 0}%`,
+                    bgcolor: "primary.main",
+                    borderRadius: "99px",
+                    transition: "width 0.2s ease"
+                  }
+                }
+              ) })
+            ] }) : /* @__PURE__ */ jsx41(
+              Typography21,
+              {
+                sx: {
+                  fontSize: "13px",
+                  color: "text.primary",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "220px",
+                  fontWeight: 400
+                },
+                title: file.file_name,
+                children: file.file_name
+              }
+            )
+          ] }),
+          isUploading ? /* @__PURE__ */ jsxs34(Typography21, { sx: { fontSize: "13px", fontWeight: 500, color: "primary.main", ml: 1, flexShrink: 0 }, children: [
+            progress ?? 0,
+            "%"
+          ] }) : /* @__PURE__ */ jsxs34(Box32, { sx: { display: "flex", gap: 0.75, flexShrink: 0 }, children: [
+            /* @__PURE__ */ jsx41(
+              IconButton5,
+              {
+                onClick: (e) => handlePreview(e, file),
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ jsx41(VisibilityOutlined2, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            ),
+            !disabled && /* @__PURE__ */ jsx41(
+              IconButton5,
+              {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleRemove(index);
+                },
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ jsx41(DeleteOutline2, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            )
+          ] })
+        ]
+      },
+      index
+    );
+  };
+  return /* @__PURE__ */ jsxs34(Box32, { sx: { width: "100%", mb: 2 }, children: [
+    /* @__PURE__ */ jsxs34(
+      Box32,
+      {
+        component: "button",
+        onClick: () => !disabled && inputRef.current?.click(),
+        disabled,
+        sx: {
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 1,
+          bgcolor: disabled ? "action.disabledBackground" : "primary.main",
+          color: disabled ? "text.disabled" : "primary.contrastText",
+          border: "none",
+          borderRadius: "8px",
+          px: 2.25,
+          height: "40px",
+          fontSize: "14px",
+          fontWeight: 500,
+          cursor: disabled ? "not-allowed" : "pointer",
+          transition: "background 0.15s",
+          "&:hover": disabled ? {} : { bgcolor: "primary.dark" }
+        },
+        children: [
+          /* @__PURE__ */ jsxs34(
+            "svg",
+            {
+              width: "16",
+              height: "16",
+              viewBox: "0 0 20 20",
+              fill: "none",
+              stroke: "currentColor",
+              strokeWidth: "1.8",
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              children: [
+                /* @__PURE__ */ jsx41("path", { d: "M10 13V4M6 8l4-4 4 4" }),
+                /* @__PURE__ */ jsx41("path", { d: "M3 14v1a2 2 0 002 2h10a2 2 0 002-2v-1" })
+              ]
+            }
+          ),
+          label
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx41(
+      "input",
+      {
+        ref: inputRef,
+        type: "file",
+        multiple,
+        accept: acceptString,
+        style: { display: "none" },
+        onChange: handleInputChange,
+        disabled
+      }
+    ),
+    displayError && /* @__PURE__ */ jsx41(Typography21, { variant: "caption", sx: { color: "error.main", mt: 0.5, display: "block" }, children: displayError }),
+    value.length > 0 && /* @__PURE__ */ jsx41(Box32, { sx: { mt: 1.5, display: "flex", flexDirection: "column", gap: 1, width: "100%", maxWidth: "348px" }, children: imgPreview && fileTypes === "image" ? /* @__PURE__ */ jsxs34(Fragment9, { children: [
+      /* @__PURE__ */ jsx41(Box32, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap" }, children: value.slice(0, visibleLimit).map((file, index) => {
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ jsxs34(
+          Box32,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ jsx41("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ jsx41(
+                IconButton5,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(index);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ jsx41(Close2, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          index
+        );
+      }) }),
+      value.length > visibleLimit && /* @__PURE__ */ jsx41(Collapse2, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ jsx41(Box32, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap", mt: 1.5 }, children: value.slice(visibleLimit).map((file, sliceIndex) => {
+        const actualIndex = sliceIndex + visibleLimit;
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ jsxs34(
+          Box32,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ jsx41("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ jsx41(
+                IconButton5,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(actualIndex);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ jsx41(Close2, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          actualIndex
+        );
+      }) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ jsx41(
+        Button3,
+        {
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontSize: "13px",
+            fontWeight: 500,
+            color: "primary.main",
+            mt: 0.5,
+            p: 0,
+            minWidth: "auto",
+            "&:hover": { bgcolor: "transparent", textDecoration: "underline" }
+          },
+          children: isExpanded ? "Show Less" : `View All (+${value.length - visibleLimit})`
+        }
+      )
+    ] }) : /* @__PURE__ */ jsxs34(Fragment9, { children: [
+      value.slice(0, visibleLimit).map((file, index) => renderFileItem(file, index)),
+      value.length > visibleLimit && /* @__PURE__ */ jsx41(Collapse2, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ jsx41(Box32, { sx: { display: "flex", flexDirection: "column", gap: 1 }, children: value.slice(visibleLimit).map((file, sliceIndex) => renderFileItem(file, sliceIndex + visibleLimit)) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ jsx41(
+        Button3,
+        {
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontSize: "13px",
+            fontWeight: 500,
+            color: "primary.main",
+            mt: 0.5,
+            p: 0,
+            minWidth: "auto",
+            "&:hover": { bgcolor: "transparent", textDecoration: "underline" }
+          },
+          children: isExpanded ? "Show Less" : `View All (${value.length - visibleLimit} more)`
+        }
+      )
+    ] }) }),
+    /* @__PURE__ */ jsxs34(
+      Dialog3,
+      {
+        open: !!previewFile,
+        onClose: () => setPreviewFile(null),
+        PaperProps: {
+          sx: {
+            borderRadius: "10px",
+            overflow: "visible",
+            position: "relative",
+            bgcolor: "background.paper"
+          }
+        },
+        children: [
+          /* @__PURE__ */ jsx41(
+            IconButton5,
+            {
+              onClick: () => setPreviewFile(null),
+              size: "small",
+              sx: {
+                position: "absolute",
+                top: -16,
+                right: -16,
+                width: 36,
+                height: 36,
+                bgcolor: "background.paper",
+                border: "1px solid",
+                borderColor: "divider",
+                boxShadow: "0px 3px 8px rgba(0,0,0,0.15)",
+                zIndex: 10,
+                "&:hover": { bgcolor: "background.default" }
+              },
+              children: /* @__PURE__ */ jsx41(Close2, { sx: { fontSize: 18, color: "text.secondary" } })
+            }
+          ),
+          /* @__PURE__ */ jsx41(DialogContent3, { sx: { p: 2 }, children: previewFile && /* @__PURE__ */ jsx41(Box32, { sx: { width: 400, height: 400, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx41(
+            "img",
+            {
+              src: previewFile.src,
+              alt: previewFile.file_name,
+              style: { maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }
+            }
+          ) }) })
+        ]
+      }
+    )
+  ] });
+};
+
 // src/providers/VortexUIProvider.tsx
-import { createContext as createContext3, useContext as useContext3, useState as useState11, useMemo, useEffect as useEffect7 } from "react";
+import { createContext as createContext3, useContext as useContext3, useState as useState22, useMemo as useMemo3, useEffect as useEffect13 } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import useMediaQuery2 from "@mui/material/useMediaQuery";
 import { CacheProvider } from "@emotion/react";
 
 // ../../node_modules/.pnpm/@emotion+sheet@1.4.0/node_modules/@emotion/sheet/dist/emotion-sheet.esm.js
@@ -9238,10 +13315,12 @@ var createCache = function createCache2(options) {
 import { createTheme } from "@mui/material";
 
 // src/theme/palette.ts
+import { alpha as alpha5 } from "@mui/material/styles";
 var colors = {
   primary: {
     light: {
       main: "#4772FF",
+      lightHover: alpha5("#4772FF", 0.08),
       light: "#7496FF",
       dark: "#2F50C2",
       contrastText: "#FFFFFF",
@@ -9251,6 +13330,7 @@ var colors = {
     },
     dark: {
       main: "#4772FF",
+      lightHover: alpha5("#4772FF", 0.08),
       light: "#688CFF",
       dark: "#3352CC",
       contrastText: "#FFFFFF",
@@ -9262,6 +13342,7 @@ var colors = {
   secondary: {
     light: {
       main: "#0088ab",
+      lightHover: alpha5("#0088ab", 0.08),
       light: "#22d3ee",
       dark: "#00647D",
       contrastText: "#ffffff",
@@ -9271,6 +13352,7 @@ var colors = {
     },
     dark: {
       main: "#0088ab",
+      lightHover: alpha5("#0088ab", 0.08),
       light: "#33A1C2",
       dark: "#00556B",
       contrastText: "#ffffff",
@@ -9282,6 +13364,7 @@ var colors = {
   error: {
     light: {
       main: "#FF4747",
+      lightHover: alpha5("#FF4747", 0.08),
       light: "#FF7373",
       dark: "#E63A3A",
       contrastText: "#FFFFFF",
@@ -9291,6 +13374,7 @@ var colors = {
     },
     dark: {
       main: "#FF4747",
+      lightHover: alpha5("#FF4747", 0.08),
       light: "#FF6666",
       dark: "#CC3939",
       contrastText: "#FFFFFF",
@@ -9302,6 +13386,7 @@ var colors = {
   warning: {
     light: {
       main: "#FFA347",
+      lightHover: alpha5("#FFA347", 0.08),
       light: "#FFBC70",
       dark: "#E68F3F",
       contrastText: "#1A1A1A",
@@ -9311,6 +13396,7 @@ var colors = {
     },
     dark: {
       main: "#FFA347",
+      lightHover: alpha5("#FFA347", 0.08),
       light: "#FFB366",
       dark: "#CC8239",
       contrastText: "#1A1A1A",
@@ -9322,6 +13408,7 @@ var colors = {
   success: {
     light: {
       main: "#47FFA3",
+      lightHover: alpha5("#47FFA3", 0.08),
       light: "#70FFB8",
       dark: "#3FE691",
       contrastText: "#06351D",
@@ -9331,6 +13418,7 @@ var colors = {
     },
     dark: {
       main: "#47FFA3",
+      lightHover: alpha5("#47FFA3", 0.08),
       light: "#66FFB3",
       dark: "#39CC82",
       contrastText: "#06351D",
@@ -9342,6 +13430,7 @@ var colors = {
   info: {
     light: {
       main: "#47C2FF",
+      lightHover: alpha5("#47C2FF", 0.08),
       light: "#70CEFF",
       dark: "#3FADE6",
       contrastText: "#06283A",
@@ -9351,6 +13440,7 @@ var colors = {
     },
     dark: {
       main: "#47C2FF",
+      lightHover: alpha5("#47C2FF", 0.08),
       light: "#66CBFF",
       dark: "#399BCC",
       contrastText: "#06283A",
@@ -9526,7 +13616,7 @@ var getTheme = (mode) => createTheme({
 });
 
 // src/providers/VortexUIProvider.tsx
-import { Fragment as Fragment3, jsx as jsx28, jsxs as jsxs22 } from "react/jsx-runtime";
+import { Fragment as Fragment10, jsx as jsx42, jsxs as jsxs35 } from "react/jsx-runtime";
 var ColorModeContext = createContext3({
   toggleColorMode: () => {
   },
@@ -9538,16 +13628,16 @@ var cache = createCache({
   prepend: true
 });
 function VortexUIProvider({ children, disableCustomCache = false, initialMode = "light" }) {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = useState11(initialMode);
-  useEffect7(() => {
+  const prefersDarkMode = useMediaQuery2("(prefers-color-scheme: dark)");
+  const [mode, setMode] = useState22(initialMode);
+  useEffect13(() => {
     const hasCookie = document.cookie.includes("vortex-ui-theme-mode=");
     if (!hasCookie && prefersDarkMode) {
       setMode("dark");
       document.cookie = `vortex-ui-theme-mode=dark; path=/; max-age=31536000`;
     }
   }, [prefersDarkMode]);
-  const colorMode = useMemo(
+  const colorMode = useMemo3(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => {
@@ -9561,21 +13651,24 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
     }),
     [mode]
   );
-  const theme = useMemo(() => getTheme(mode), [mode]);
-  const content = /* @__PURE__ */ jsx28(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ jsxs22(ThemeProvider, { theme, children: [
-    /* @__PURE__ */ jsx28(CssBaseline, {}),
+  const theme = useMemo3(() => getTheme(mode), [mode]);
+  const content = /* @__PURE__ */ jsx42(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ jsxs35(ThemeProvider, { theme, children: [
+    /* @__PURE__ */ jsx42(CssBaseline, {}),
     children
   ] }) });
   if (disableCustomCache) {
-    return /* @__PURE__ */ jsx28(Fragment3, { children: content });
+    return /* @__PURE__ */ jsx42(Fragment10, { children: content });
   }
-  return /* @__PURE__ */ jsx28(CacheProvider, { value: cache, children: content });
+  return /* @__PURE__ */ jsx42(CacheProvider, { value: cache, children: content });
 }
 export {
   CustomAccordion as Accordion,
   AutoPopulate,
   AutoPopulateItem,
+  Avatar,
   Backdrop,
+  BaseSelect,
+  Breadcrumbs,
   Button,
   ButtonGroup,
   Card,
@@ -9585,11 +13678,19 @@ export {
   ColorModeContext,
   CountBadge_default as CountBadge,
   DataTable,
-  DefaultSelect,
+  DatePicker,
+  DateRangePicker,
+  DateTimePicker,
+  Dialog,
+  Drawer,
+  FileUpload,
   Grid,
+  History,
+  HistoryItem,
+  HorizontalHistoryItem,
   Link,
-  Modal,
   NumberField,
+  PipelineStepper,
   Progress_default as Progress,
   Radio,
   RadioGroup,
@@ -9598,10 +13699,13 @@ export {
   Sheet,
   Skeleton,
   Slider,
+  Stepper,
   TextField,
   Textarea,
+  TimePicker,
   ToggleSwitch,
-  Tooltip2 as Tooltip,
+  CustomTooltip as Tooltip,
+  UploadButton,
   VortexUIProvider,
   useColorMode,
   getTheme as vortexTheme

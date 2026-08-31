@@ -41,11 +41,11 @@ const StyledTextField = styled(
               ]),
             "&:hover": { backgroundColor: bgColor || "background.default" },
             "&:before, &:after": { display: "none" },
-            "&.Mui-focused": {
+            "&.VortexUI-focused": {
               backgroundColor: bgColor || "background.paper",
               borderColor: (theme) => theme.palette.primary.main,
             },
-            "&.Mui-error": {
+            "&.VortexUI-error": {
               borderColor: (theme) => theme.palette.error.main,
               backgroundColor: bgColor || "background.paper",
             },
@@ -65,10 +65,10 @@ const StyledTextField = styled(
       fontSize: "14px",
       fontWeight: 400,
       "&.VortexUIInputLabel-shrink": {
-        transform: "translate(10px, 8px) scale(0.75)",
+        transform: "translate(10px, 10px) scale(0.75)",
         lineHeight: 1,
       },
-      "&.Mui-error": {
+      "&.VortexUI-error": {
         color: theme.palette.error.main,
       },
     },
@@ -85,10 +85,10 @@ const StyledTextField = styled(
 
     "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input":
       {
-        padding: `24px 10px 0 10px`,
+        padding: `24px 10px 10px 10px`,
       },
 
-    "& label.Mui-focused": {
+    "& label.VortexUI-focused": {
       color: theme.palette.text.primary,
     },
 

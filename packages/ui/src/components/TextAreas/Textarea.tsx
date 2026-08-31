@@ -9,29 +9,37 @@ const Wrapper = styled(Box, {
   shouldForwardProp: (p) =>
     p !== "bgColor" && p !== "isError" && p !== "isDisabled",
 })<{ bgColor?: string; isError?: boolean; isDisabled?: boolean }>(
-  ({ theme, bgColor = "#FAFBFF", isError, isDisabled }) => ({
-    width: "100%",
-    borderRadius: "10px",
-    backgroundColor: isDisabled
-      ? theme.palette.action.disabledBackground
-      : bgColor,
-    border: `1px solid ${isError ? theme.palette.error.main : "#D8D9DC"}`,
-    padding: "8px 12px",
-    boxSizing: "border-box",
-    cursor: isDisabled ? "not-allowed" : "text",
-    transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
+  ({ theme, bgColor = "background.default", isError, isDisabled }) => {
+    const resolveColor = (c: string) => {
+      if (c === "background.default" || c === "#FAFBFF") return theme.palette.background.default;
+      if (c === "background.paper" || c === "#fff" || c === "#FFFFFF") return theme.palette.background.paper;
+      return c;
+    };
+    return {
+      width: "100%",
+      borderRadius: "10px",
+      backgroundColor: isDisabled
+        ? theme.palette.action.disabledBackground
+        : resolveColor(bgColor),
+      border: "1px solid",
+      borderColor: isError ? theme.palette.error.main : theme.palette.divider,
+      padding: "8px 12px",
+      boxSizing: "border-box",
+      cursor: isDisabled ? "not-allowed" : "text",
+      transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
 
-    "&:focus-within": {
-      backgroundColor: "#fff",
-      borderColor: isError
-        ? theme.palette.error.main
-        : theme.palette.primary.main,
-    },
+      "&:focus-within": {
+        backgroundColor: theme.palette.background.paper,
+        borderColor: isError
+          ? theme.palette.error.main
+          : theme.palette.primary.main,
+      },
 
-    "&:hover:not(:focus-within)": {
-      backgroundColor: isDisabled ? undefined : "#fff",
-    },
-  })
+      "&:hover:not(:focus-within)": {
+        backgroundColor: isDisabled ? undefined : theme.palette.background.paper,
+      },
+    };
+  }
 );
 
 const StyledTextarea = styled("textarea", {
@@ -76,7 +84,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       maxLength,
       rows = 3,
       minRows,
-      bgColor = "#FAFBFF",
+      bgColor = "background.default",
       error,
       disabled,
       placeholder,

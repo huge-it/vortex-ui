@@ -4087,7 +4087,10 @@ __export(index_exports, {
   Accordion: () => CustomAccordion,
   AutoPopulate: () => AutoPopulate,
   AutoPopulateItem: () => AutoPopulateItem,
+  Avatar: () => Avatar,
   Backdrop: () => Backdrop,
+  BaseSelect: () => BaseSelect,
+  Breadcrumbs: () => Breadcrumbs,
   Button: () => Button,
   ButtonGroup: () => ButtonGroup,
   Card: () => Card,
@@ -4097,11 +4100,19 @@ __export(index_exports, {
   ColorModeContext: () => ColorModeContext,
   CountBadge: () => CountBadge_default,
   DataTable: () => DataTable,
-  DefaultSelect: () => DefaultSelect,
+  DatePicker: () => DatePicker,
+  DateRangePicker: () => DateRangePicker,
+  DateTimePicker: () => DateTimePicker,
+  Dialog: () => Dialog,
+  Drawer: () => Drawer,
+  FileUpload: () => FileUpload,
   Grid: () => Grid,
+  History: () => History,
+  HistoryItem: () => HistoryItem,
+  HorizontalHistoryItem: () => HorizontalHistoryItem,
   Link: () => Link,
-  Modal: () => Modal,
   NumberField: () => NumberField,
+  PipelineStepper: () => PipelineStepper,
   Progress: () => Progress_default,
   Radio: () => Radio,
   RadioGroup: () => RadioGroup,
@@ -4110,10 +4121,13 @@ __export(index_exports, {
   Sheet: () => Sheet,
   Skeleton: () => Skeleton,
   Slider: () => Slider,
+  Stepper: () => Stepper,
   TextField: () => TextField,
   Textarea: () => Textarea,
+  TimePicker: () => TimePicker,
   ToggleSwitch: () => ToggleSwitch,
-  Tooltip: () => Tooltip2,
+  Tooltip: () => CustomTooltip,
+  UploadButton: () => UploadButton,
   VortexUIProvider: () => VortexUIProvider,
   useColorMode: () => useColorMode,
   vortexTheme: () => getTheme
@@ -4282,11 +4296,11 @@ var StyledTextField = (0, import_styles2.styled)(
             ]),
             "&:hover": { backgroundColor: bgColor || "background.default" },
             "&:before, &:after": { display: "none" },
-            "&.Mui-focused": {
+            "&.VortexUI-focused": {
               backgroundColor: bgColor || "background.paper",
               borderColor: (theme) => theme.palette.primary.main
             },
-            "&.Mui-error": {
+            "&.VortexUI-error": {
               borderColor: (theme) => theme.palette.error.main,
               backgroundColor: bgColor || "background.paper"
             },
@@ -4306,10 +4320,10 @@ var StyledTextField = (0, import_styles2.styled)(
       fontSize: "14px",
       fontWeight: 400,
       "&.VortexUIInputLabel-shrink": {
-        transform: "translate(10px, 8px) scale(0.75)",
+        transform: "translate(10px, 10px) scale(0.75)",
         lineHeight: 1
       },
-      "&.Mui-error": {
+      "&.VortexUI-error": {
         color: theme.palette.error.main
       }
     },
@@ -4323,9 +4337,9 @@ var StyledTextField = (0, import_styles2.styled)(
       alignItems: "center"
     },
     "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input": {
-      padding: `24px 10px 0 10px`
+      padding: `24px 10px 10px 10px`
     },
-    "& label.Mui-focused": {
+    "& label.VortexUI-focused": {
       color: theme.palette.text.primary
     },
     "& .VortexUIFormHelperText-root": {
@@ -4385,24 +4399,6 @@ TextField.displayName = "TextField";
 
 // src/components/AutoPopulate/AutoPopulate.tsx
 var import_jsx_runtime3 = require("react/jsx-runtime");
-var scrollbarStyles = `
-  .custom-select-menu::-webkit-scrollbar {
-    width: 5px;
-  }
-  .custom-select-menu::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 6px 0;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
-    border-radius: 35px;
-    max-height: 54px;
-    min-height: 54px;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb:hover {
-    background: #BDBDBD;
-  }
-`;
 var getFocusable = () => Array.from(
   document.querySelectorAll(
     'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
@@ -4424,17 +4420,6 @@ var AutoPopulate = ({
   const menuItemRefs = (0, import_react2.useRef)([]);
   const wrapperRef = (0, import_react2.useRef)(null);
   const hasInteractedRef = (0, import_react2.useRef)(false);
-  (0, import_react2.useEffect)(() => {
-    if (typeof document !== "undefined") {
-      const styleTag = document.getElementById("custom-select-scrollbar");
-      if (!styleTag) {
-        const s = document.createElement("style");
-        s.id = "custom-select-scrollbar";
-        s.textContent = scrollbarStyles;
-        document.head.appendChild(s);
-      }
-    }
-  }, []);
   const childArray = import_react2.Children.toArray(children).filter(
     Boolean
   );
@@ -4585,7 +4570,7 @@ var AutoPopulate = ({
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                color: "rgba(0,0,0,0.54)"
+                color: "action.active"
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_KeyboardArrowDown.default, {})
             }
@@ -4610,11 +4595,27 @@ var AutoPopulate = ({
             sx: {
               mt: 0.5,
               borderRadius: "10px",
-              border: "1px solid #D6DEEA",
+              border: "1px solid",
+              borderColor: "divider",
               maxHeight: 258,
               overflowY: "auto",
-              bgcolor: "#FFFFFF",
-              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)"
+              bgcolor: "background.paper",
+              boxShadow: 3,
+              "&::-webkit-scrollbar": {
+                width: "5px"
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+                my: 0.75
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "divider",
+                borderRadius: "35px",
+                minHeight: "54px"
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "action.active"
+              }
             },
             className: "custom-select-menu",
             children: filteredChildren.length > 0 ? filteredChildren.map((child, index) => {
@@ -4639,12 +4640,12 @@ var AutoPopulate = ({
                     outline: "none",
                     pt: index === 0 ? 1.2 : 1,
                     pb: index === filteredChildren.length - 1 ? 1.2 : 1,
-                    backgroundColor: value === child.props?.value ? "rgba(25, 118, 210, 0.06)" : "transparent",
+                    backgroundColor: value === child.props?.value ? "action.selected" : "transparent",
                     "&:hover": {
-                      backgroundColor: "rgba(25, 118, 210, 0.06)"
+                      backgroundColor: "action.hover"
                     },
                     "&:focus": {
-                      backgroundColor: "rgba(25, 118, 210, 0.08)"
+                      backgroundColor: "action.focus"
                     }
                   },
                   children: [
@@ -4654,7 +4655,7 @@ var AutoPopulate = ({
                         sx: {
                           fontSize: "14px",
                           fontWeight: 500,
-                          color: "#313952",
+                          color: "text.primary",
                           lineHeight: 1.5
                         },
                         children: primaryLabel
@@ -4666,7 +4667,7 @@ var AutoPopulate = ({
                         sx: {
                           fontSize: "11px",
                           fontWeight: 400,
-                          color: "#6F778F",
+                          color: "text.secondary",
                           lineHeight: 1.5,
                           mt: 0.2
                         },
@@ -4677,7 +4678,7 @@ var AutoPopulate = ({
                 },
                 child.key ?? index
               );
-            }) : /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material2.Box, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }, children: "No results found" })
+            }) : /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material2.Box, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "text.disabled" }, children: "No results found" })
           }
         )
       }
@@ -4745,7 +4746,7 @@ var Button = ({
     main: paletteColor.main,
     hover: paletteColor.hover || paletteColor.dark,
     light: paletteColor.disabledBackground || theme.palette.action.hover,
-    lightHover: paletteColor.disabled || theme.palette.action.selected,
+    lightHover: paletteColor.lightHover || (0, import_material3.alpha)(paletteColor.main, 0.08),
     disabledMain: paletteColor.disabled || theme.palette.action.disabledBackground,
     disabledLight: "transparent",
     disabledText: paletteColor.disabled || theme.palette.action.disabled,
@@ -4762,7 +4763,7 @@ var Button = ({
     }
   };
   const outlinedSx = {
-    bgcolor: colors2.light,
+    bgcolor: "transparent",
     color: colors2.main,
     border: `1.5px solid ${colors2.main}`,
     "&:hover": {
@@ -4926,33 +4927,6 @@ var import_material4 = require("@mui/material");
 var import_KeyboardArrowDown2 = __toESM(require("@mui/icons-material/KeyboardArrowDown"));
 var import_jsx_runtime5 = require("react/jsx-runtime");
 var SEARCH_THRESHOLD = 2;
-var scrollbarStyles2 = `
-  .custom-select-menu::-webkit-scrollbar {
-    width: 5px;
-  }
-  .custom-select-menu::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 6px 0;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
-    border-radius: 35px;
-    max-height: 54px;
-    min-height: 54px;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb:hover {
-    background: #BDBDBD;
-  }
-`;
-if (typeof document !== "undefined") {
-  const styleTag = document.getElementById("custom-select-scrollbar");
-  if (!styleTag) {
-    const s = document.createElement("style");
-    s.id = "custom-select-scrollbar";
-    s.textContent = scrollbarStyles2;
-    document.head.appendChild(s);
-  }
-}
 var getFocusable2 = () => Array.from(
   document.querySelectorAll(
     'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
@@ -5148,7 +5122,7 @@ var SearchableSelect = ({
                 cursor: disabled ? "default" : "pointer",
                 display: "flex",
                 alignItems: "center",
-                color: "rgba(0,0,0,0.54)"
+                color: "text.secondary"
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_KeyboardArrowDown2.default, {})
             }
@@ -5173,13 +5147,23 @@ var SearchableSelect = ({
             sx: {
               mt: 0.5,
               borderRadius: "10px",
-              border: "1px solid #D6DEEA",
+              border: 1,
+              borderColor: "divider",
               maxHeight: 258,
               overflowY: "auto",
-              bgcolor: "#FFFFFF",
-              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)"
+              bgcolor: "background.paper",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
+              "&::-webkit-scrollbar": { width: "5px" },
+              "&::-webkit-scrollbar-track": { background: "transparent", margin: "6px 0" },
+              "&::-webkit-scrollbar-thumb": {
+                background: (theme) => theme.palette.divider,
+                borderRadius: "35px",
+                minHeight: "54px"
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                background: (theme) => theme.palette.text.disabled
+              }
             },
-            className: "custom-select-menu",
             children: filteredChildren.length > 0 ? filteredChildren.map((child, index) => {
               const primaryLabel = child.props?.children?.toString() || "";
               const subtitle = child.props?.subtitle || "";
@@ -5205,12 +5189,12 @@ var SearchableSelect = ({
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
-                    backgroundColor: isSelected ? "rgba(25, 118, 210, 0.06)" : "transparent",
+                    backgroundColor: isSelected ? "primary.lightHover" : "transparent",
                     "&:hover": {
-                      backgroundColor: "rgba(25, 118, 210, 0.06)"
+                      backgroundColor: "primary.lightHover"
                     },
                     "&:focus": {
-                      backgroundColor: "rgba(25, 118, 210, 0.08)"
+                      backgroundColor: "primary.lightHover"
                     }
                   },
                   children: [
@@ -5242,7 +5226,7 @@ var SearchableSelect = ({
                               sx: {
                                 fontSize: "14px",
                                 fontWeight: 500,
-                                color: "#313952",
+                                color: "text.primary",
                                 lineHeight: 1.5,
                                 whiteSpace: "nowrap",
                                 overflow: "hidden",
@@ -5257,7 +5241,7 @@ var SearchableSelect = ({
                               sx: {
                                 fontSize: "11px",
                                 fontWeight: 400,
-                                color: "#6F778F",
+                                color: "text.secondary",
                                 lineHeight: 1.5,
                                 mt: 0.2
                               },
@@ -5271,7 +5255,7 @@ var SearchableSelect = ({
                 },
                 child.key ?? index
               );
-            }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_material4.Box, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }, children: "No results found" })
+            }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_material4.Box, { sx: { px: 2, py: 1.5, fontSize: "13px", color: "text.disabled" }, children: "No results found" })
           }
         )
       }
@@ -5335,7 +5319,7 @@ var IconSelect = ({
                 import_material5.Typography,
                 {
                   component: "span",
-                  sx: { fontSize: 13, color: "#9CA3AF" },
+                  sx: { fontSize: 13, color: "text.disabled" },
                   children: placeholder
                 }
               );
@@ -5365,8 +5349,8 @@ var IconSelect = ({
                 component: "span",
                 sx: {
                   fontSize: 13,
-                  fontWeight: 500,
-                  color: "#1F2937",
+                  fontWeight: 400,
+                  color: "text.primary",
                   lineHeight: 1
                 },
                 children: selectedOption.label
@@ -5380,7 +5364,9 @@ var IconSelect = ({
               mt: 0.5,
               borderRadius: "8px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
-              border: "1px solid #E5E7EB",
+              border: 1,
+              borderColor: "divider",
+              maxHeight: 250,
               "& .MuiList-root": { py: 1 }
             }
           }
@@ -5410,10 +5396,10 @@ var IconSelect = ({
             px: 1.8,
             py: 1,
             fontSize: 13,
-            color: "#374151",
-            "&:hover": { bgcolor: "#F0F5FF" },
-            "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
-            "&.Mui-selected:hover": { bgcolor: "#F0F5FF" }
+            color: "text.primary",
+            "&:hover": { bgcolor: "primary.lightHover" },
+            "&.Mui-selected": { bgcolor: "background.default", fontWeight: 500 },
+            "&.Mui-selected:hover": { bgcolor: "primary.lightHover" }
           },
           children: [
             (opt.icon || opt.img) && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
@@ -5446,11 +5432,11 @@ var IconSelect = ({
 var import_icons_material3 = require("@mui/icons-material");
 var import_jsx_runtime7 = require("react/jsx-runtime");
 var OPTIONS = {
-  1: { label: "Low", value: 1, color: "#4772FF" },
-  2: { label: "Medium", value: 2, color: "#FF8447" },
-  3: { label: "High", value: 3, color: "#FF4750" }
+  1: { label: "Low", value: 1, color: "info.main" },
+  2: { label: "Medium", value: 2, color: "warning.main" },
+  3: { label: "High", value: 3, color: "error.main" }
 };
-var DefaultSelect = ({
+var BaseSelect = ({
   value,
   recordId,
   onUpdate,
@@ -5465,7 +5451,8 @@ var DefaultSelect = ({
   helperText,
   name,
   id,
-  sx
+  sx,
+  dropdownHeight = 130
 }) => {
   const generatedId = import_react5.default.useId();
   const selectId = id || generatedId;
@@ -5517,7 +5504,7 @@ var DefaultSelect = ({
                 import_material6.Typography,
                 {
                   component: "span",
-                  sx: { fontSize: 13, color: "#9CA3AF" },
+                  sx: { fontSize: 13, color: "text.disabled" },
                   children: placeholder
                 }
               );
@@ -5532,7 +5519,9 @@ var DefaultSelect = ({
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  border: `2px solid ${cfg.color}`,
+                  border: 2,
+                  borderStyle: "solid",
+                  borderColor: cfg.color,
                   borderTopColor: "transparent",
                   animation: "spin 0.6s linear infinite",
                   flexShrink: 0,
@@ -5558,7 +5547,7 @@ var DefaultSelect = ({
                 sx: {
                   fontSize: 13,
                   fontWeight: 400,
-                  color: "#1F2937",
+                  color: "text.primary",
                   lineHeight: 1
                 },
                 children: cfg.label
@@ -5572,7 +5561,9 @@ var DefaultSelect = ({
               mt: 0.5,
               borderRadius: "8px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
-              border: "1px solid #E5E7EB",
+              border: 1,
+              borderColor: "divider",
+              maxHeight: dropdownHeight,
               "& .MuiList-root": { py: 1 }
             }
           }
@@ -5603,10 +5594,10 @@ var DefaultSelect = ({
               px: 1.8,
               py: 1,
               fontSize: 13,
-              color: "#374151",
-              "&:hover": { bgcolor: "#F0F5FF" },
-              "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
-              "&.Mui-selected:hover": { bgcolor: "#F0F5FF" }
+              color: "text.primary",
+              "&:hover": { bgcolor: "primary.lightHover" },
+              "&.Mui-selected": { bgcolor: "background.default", fontWeight: 500 },
+              "&.Mui-selected:hover": { bgcolor: "primary.lightHover" }
             },
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
@@ -5640,7 +5631,7 @@ var Select = (props) => {
     const { variant, ...rest } = props;
     return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(IconSelect, { ...rest });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DefaultSelect, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(BaseSelect, { ...props });
 };
 
 // src/components/ButtonGroup/ButtonGroup.tsx
@@ -5990,6 +5981,7 @@ var ButtonGroup = ({
 
 // src/components/ChipInput/ChipInput.tsx
 var import_react8 = require("react");
+var import_styles3 = require("@mui/material/styles");
 var import_Box2 = __toESM(require("@mui/material/Box"));
 var import_Typography3 = __toESM(require("@mui/material/Typography"));
 var import_IconButton = __toESM(require("@mui/material/IconButton"));
@@ -6002,20 +5994,20 @@ var Chip = ({
 }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
   import_Box2.default,
   {
-    sx: {
+    sx: (theme) => ({
       display: "inline-flex",
       alignItems: "center",
       gap: 0.5,
-      bgcolor: "#E8EDFF",
-      border: "1px solid #D4DEFF",
-      color: "#313952",
+      bgcolor: (0, import_styles3.alpha)(theme.palette.primary.main, 0.1),
+      border: `1px solid ${(0, import_styles3.alpha)(theme.palette.primary.main, 0.2)}`,
+      color: theme.palette.text.primary,
       fontSize: "13px",
       fontWeight: 400,
       px: 1.2,
       py: 0.5,
       borderRadius: "10px",
       userSelect: "none"
-    },
+    }),
     children: [
       label,
       !disabled && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -6181,59 +6173,798 @@ var DataTable = import_react9.default.forwardRef(
 );
 DataTable.displayName = "DataTable";
 
-// src/components/Modal/Modal.tsx
-var import_react10 = __toESM(require("react"));
+// src/components/Drawer/Drawer.tsx
+var import_react10 = require("react");
+var import_material10 = require("@mui/material");
+var import_Close = __toESM(require("@mui/icons-material/Close"));
+
+// src/components/Dialog/Dialog.tsx
+var React10 = __toESM(require("react"));
 var import_material9 = require("@mui/material");
 var import_jsx_runtime11 = require("react/jsx-runtime");
-var CloseIcon = () => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
-  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
-] });
-var Modal = import_react10.default.forwardRef(
-  ({ open, title, onClose, actions, children, fullWidth = true, maxWidth = "sm", ...props }, ref) => {
+var Dialog = React10.forwardRef(
+  ({
+    open,
+    onClose,
+    onSubmit,
+    title,
+    notes,
+    closeText = "Cancel",
+    actionText = "Submit",
+    variant = "default",
+    maxWidth = "sm",
+    children,
+    ...props
+  }, ref) => {
+    const handleSubmit = () => {
+      if (onSubmit) onSubmit();
+      if (onClose) onClose();
+    };
+    const titleColor = {
+      error: "error.main",
+      success: "success.main",
+      info: "info.main",
+      default: "text.primary"
+    }[variant] || "text.primary";
+    const buttonSeverity = variant === "default" ? "primary" : variant;
     return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
       import_material9.Dialog,
       {
         ref,
         open,
         onClose,
-        fullWidth,
         maxWidth,
+        fullWidth: true,
+        slotProps: {
+          backdrop: {
+            sx: {
+              backdropFilter: "blur(3px)",
+              backgroundColor: "rgba(0, 0, 0, 0.3)"
+            }
+          }
+        },
+        PaperProps: {
+          sx: {
+            borderRadius: "10px"
+          }
+        },
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_material9.Box, { display: "flex", alignItems: "center", justifyContent: "space-between", pr: 1, children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_material9.DialogTitle, { sx: { m: 0, p: 2, flexGrow: 1 }, children: title }),
-            onClose && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-              import_material9.IconButton,
+          title && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            import_material9.DialogTitle,
+            {
+              sx: {
+                color: titleColor,
+                fontSize: 18,
+                fontWeight: 600,
+                px: 3,
+                pt: 3,
+                pb: 1.5
+              },
+              children: title
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+            import_material9.DialogContent,
+            {
+              sx: { px: 3, pt: children || !title ? 3 : 1, pb: children ? 2 : 1 },
+              children: [
+                notes && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                  import_material9.DialogContentText,
+                  {
+                    sx: { color: "text.secondary", fontWeight: 400, pb: children ? 2 : 0 },
+                    children: notes
+                  }
+                ),
+                children
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_material9.DialogActions, { sx: { px: 3, pb: 3 }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_material9.Box, { sx: { display: "flex", gap: 2 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              Button,
               {
-                "aria-label": "close",
+                size: "lg",
+                variant: "outlined",
+                severity: buttonSeverity,
                 onClick: onClose,
-                sx: {
-                  color: (theme) => theme.palette.grey[500]
-                },
-                children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CloseIcon, {})
+                children: closeText
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              Button,
+              {
+                size: "lg",
+                variant: "filled",
+                severity: buttonSeverity,
+                onClick: handleSubmit,
+                children: actionText
               }
             )
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_material9.DialogContent, { sx: { p: 3, pt: title ? 1 : 3 }, children }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_material9.DialogActions, { sx: { p: 2 }, children: actions })
+          ] }) })
         ]
       }
     );
   }
 );
-Modal.displayName = "Modal";
+Dialog.displayName = "Dialog";
+
+// src/components/Drawer/Drawer.tsx
+var import_jsx_runtime12 = require("react/jsx-runtime");
+var Drawer = ({
+  open,
+  onClose,
+  title,
+  anchor = "right",
+  width = 600,
+  children,
+  onSubmit,
+  actionText = "Submit",
+  closeText = "Cancel",
+  showFooter = true,
+  requireConfirmOnClose = true,
+  type = "",
+  subtitle,
+  showHeaderActions = true
+}) => {
+  const isView = type.trim().toLowerCase() === "view";
+  const effectiveRequireConfirm = isView ? false : requireConfirmOnClose;
+  const effectiveOnSubmit = isView ? void 0 : onSubmit;
+  const hasHeaderActions = showHeaderActions;
+  const hasFooterActions = !hasHeaderActions && showFooter;
+  const showCloseIcon = !hasHeaderActions && !hasFooterActions;
+  const [confirmOpen, setConfirmOpen] = (0, import_react10.useState)(false);
+  (0, import_react10.useEffect)(() => {
+    if (!open) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+      if (e.ctrlKey && e.key === "Enter") {
+        if (effectiveOnSubmit) handleSubmit();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose, effectiveOnSubmit, effectiveRequireConfirm]);
+  const handleSubmit = () => {
+    if (effectiveOnSubmit) effectiveOnSubmit();
+    onClose();
+  };
+  const handleClose = (event, reason) => {
+    if (effectiveRequireConfirm) {
+      setConfirmOpen(true);
+      return;
+    }
+    if (onClose) onClose(event, reason);
+  };
+  const handleConfirmDiscard = () => {
+    setConfirmOpen(false);
+    if (onClose) onClose();
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+      import_material10.Drawer,
+      {
+        anchor,
+        open,
+        onClose: handleClose,
+        sx: { zIndex: 1300, "& .MuiDrawer-paper": { zIndex: 1300 } },
+        ModalProps: {
+          BackdropProps: {
+            sx: {
+              backdropFilter: "blur(3px)",
+              backgroundColor: "rgba(0, 0, 0, 0.3)"
+            }
+          }
+        },
+        PaperProps: {
+          sx: {
+            width: anchor === "top" || anchor === "bottom" ? "100%" : { xs: "100%", sm: width },
+            borderRadius: anchor === "top" ? "0 0 16px 16px" : anchor === "bottom" ? "16px 16px 0 0" : anchor === "left" ? "0 16px 16px 0" : "16px 0 0 16px",
+            m: 0,
+            backgroundColor: "background.paper",
+            backgroundImage: "none"
+          }
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+            import_material10.Box,
+            {
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                px: 2.5,
+                py: 2
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.Box, { sx: { display: "flex", flexDirection: "column", gap: 0.5 }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.Box, { sx: { display: "flex", alignItems: "center", gap: 2 }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_material10.Stack, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                    import_material10.Typography,
+                    {
+                      variant: "h6",
+                      color: "text.primary",
+                      sx: { fontWeight: 500, fontSize: "1.1rem", lineHeight: 1.2 },
+                      children: type ? `${type} ${title}` : title
+                    }
+                  ),
+                  subtitle && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.Typography, { variant: "caption", color: "text.secondary", children: subtitle })
+                ] }) }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+                  import_material10.Box,
+                  {
+                    sx: {
+                      display: "flex",
+                      gap: 1.5,
+                      mt: hasHeaderActions && !isView ? 0 : -0.5
+                    },
+                    children: [
+                      hasHeaderActions && !isView && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { onClick: handleClose, variant: "outlined", size: "sm", children: closeText }),
+                        effectiveOnSubmit && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { onClick: handleSubmit, variant: "filled", size: "sm", children: actionText })
+                      ] }),
+                      (hasHeaderActions && isView || showCloseIcon) && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                        import_material10.IconButton,
+                        {
+                          onClick: handleClose,
+                          sx: {
+                            backgroundColor: "action.hover",
+                            "&:hover": { backgroundColor: "action.selected" }
+                          },
+                          size: "small",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_Close.default, { fontSize: "small", sx: { color: "text.primary" } })
+                        }
+                      )
+                    ]
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            import_material10.Box,
+            {
+              sx: {
+                backgroundColor: "action.hover",
+                px: 3,
+                py: 0.8,
+                textAlign: "right"
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+                import_material10.Typography,
+                {
+                  sx: { fontSize: "12px", color: "text.secondary", fontWeight: 400 },
+                  children: [
+                    "Press ",
+                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("b", { children: "ESC" }),
+                    " - Close",
+                    effectiveOnSubmit && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+                      ", ",
+                      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("b", { children: "Ctrl + Enter" }),
+                      " - ",
+                      actionText
+                    ] })
+                  ]
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            import_material10.Box,
+            {
+              sx: {
+                p: 2.5,
+                overflowY: "auto",
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2.5,
+                "&::-webkit-scrollbar": { width: 6 },
+                "&::-webkit-scrollbar-track": { background: "transparent" },
+                "&::-webkit-scrollbar-thumb": {
+                  bgcolor: "divider",
+                  borderRadius: 10
+                }
+              },
+              children
+            }
+          ),
+          hasFooterActions && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_material10.Box, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.Divider, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+              import_material10.Box,
+              {
+                sx: {
+                  display: "flex",
+                  gap: 2,
+                  p: 2.5,
+                  justifyContent: "flex-end"
+                },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { variant: "outlined", onClick: handleClose, size: "md", children: isView ? "Close" : closeText }),
+                  effectiveOnSubmit && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { variant: "filled", onClick: handleSubmit, size: "md", children: actionText })
+                ]
+              }
+            )
+          ] })
+        ]
+      }
+    ),
+    requireConfirmOnClose && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      Dialog,
+      {
+        open: confirmOpen,
+        title: "Discard changes?",
+        notes: "Are you sure you want to close this? Any unsaved changes will be lost.",
+        onClose: () => setConfirmOpen(false),
+        onSubmit: handleConfirmDiscard,
+        actionText: "Discard",
+        closeText: "Cancel",
+        variant: "error",
+        maxWidth: "xs"
+      }
+    )
+  ] });
+};
+
+// src/components/History/History.tsx
+var import_AccessTime = __toESM(require("@mui/icons-material/AccessTime"));
+var import_AddCircleOutline = __toESM(require("@mui/icons-material/AddCircleOutline"));
+var import_CalendarToday = __toESM(require("@mui/icons-material/CalendarToday"));
+var import_DescriptionOutlined = __toESM(require("@mui/icons-material/DescriptionOutlined"));
+var import_EditOutlined = __toESM(require("@mui/icons-material/EditOutlined"));
+var import_EmojiEventsOutlined = __toESM(require("@mui/icons-material/EmojiEventsOutlined"));
+var import_VideocamOutlined = __toESM(require("@mui/icons-material/VideocamOutlined"));
+var import_material11 = require("@mui/material");
+var import_jsx_runtime13 = require("react/jsx-runtime");
+var CalIcon = () => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_CalendarToday.default, { sx: { fontSize: 13 } });
+var ClkIcon = () => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_AccessTime.default, { sx: { fontSize: 13 } });
+var useHistoryIconCfg = () => {
+  const theme = (0, import_material11.useTheme)();
+  return {
+    win: {
+      bg: (0, import_material11.alpha)(theme.palette.success.main, 0.15),
+      icon: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_EmojiEventsOutlined.default, { sx: { fontSize: 18, color: "success.main" } })
+    },
+    proposal: {
+      bg: (0, import_material11.alpha)(theme.palette.info.main, 0.12),
+      icon: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_DescriptionOutlined.default, { sx: { fontSize: 18, color: "info.main" } })
+    },
+    meeting: {
+      bg: (0, import_material11.alpha)(theme.palette.warning.main, 0.15),
+      icon: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_VideocamOutlined.default, { sx: { fontSize: 18, color: "warning.main" } })
+    },
+    edit: {
+      bg: theme.palette.action.selected,
+      icon: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_EditOutlined.default, { sx: { fontSize: 18, color: "text.secondary" } })
+    },
+    created: {
+      bg: theme.palette.action.selected,
+      icon: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_AddCircleOutline.default, { sx: { fontSize: 18, color: "text.secondary" } })
+    }
+  };
+};
+var HistoryItem = ({
+  item,
+  isLast,
+  lineVariant = "solid"
+}) => {
+  const cfgs = useHistoryIconCfg();
+  const cfg = item.icon ? { bg: item.iconBg || cfgs.edit.bg, icon: item.icon } : cfgs[item.type] || cfgs.edit;
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Box, { sx: { display: "flex", gap: 0, position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+      import_material11.Box,
+      {
+        sx: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: 40,
+          flexShrink: 0
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            import_material11.Box,
+            {
+              sx: {
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                bgcolor: cfg.bg,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
+                flexShrink: 0
+              },
+              children: cfg.icon
+            }
+          ),
+          !isLast && lineVariant !== "none" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            import_material11.Box,
+            {
+              sx: {
+                position: "absolute",
+                top: 34,
+                bottom: 0,
+                left: 19,
+                borderLeft: `2px ${lineVariant}`,
+                borderColor: "divider",
+                zIndex: 0
+              }
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+      import_material11.Box,
+      {
+        sx: {
+          pb: isLast ? 0 : 3,
+          pt: 0.5,
+          pl: 1.5,
+          flex: 1
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            import_material11.Box,
+            {
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexWrap: "wrap",
+                mb: 0.4
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Typography, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.title }),
+                item.tag && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                  import_material11.Box,
+                  {
+                    sx: {
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      border: item.tagType === "phone" ? "none" : "1px solid",
+                      borderColor: "divider",
+                      px: item.tagType === "phone" ? 0 : 0.75,
+                      borderRadius: item.tagType === "phone" ? 0 : "8px"
+                    },
+                    children: [
+                      item.tagType !== "phone" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                        import_material11.Box,
+                        {
+                          sx: {
+                            width: 7,
+                            height: 7,
+                            borderRadius: "50%",
+                            bgcolor: "info.main"
+                          }
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Typography, { fontSize: 12, fontWeight: 500, color: "text.secondary", children: item.tag })
+                    ]
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Box, { sx: { display: "flex", gap: 1, flexWrap: "wrap", mb: 0.5 }, children: [
+            item.amount && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Typography, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.amount }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+              import_material11.Box,
+              {
+                sx: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  flexWrap: "wrap"
+                },
+                children: [
+                  item.date && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                    import_material11.Box,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(CalIcon, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                          import_material11.Typography,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.date
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  item.time && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                    import_material11.Box,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ClkIcon, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                          import_material11.Typography,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.time
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  item.createdBy && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Typography, { fontSize: 12, color: "text.secondary", fontWeight: 400, children: [
+                    "Created by",
+                    " ",
+                    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Box, { component: "span", fontWeight: 500, color: "text.primary", children: item.createdBy })
+                  ] })
+                ]
+              }
+            )
+          ] }),
+          item.notes && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Typography, { fontSize: 13, color: "text.secondary", fontWeight: 400, children: [
+            "Notes: ",
+            item.notes
+          ] })
+        ]
+      }
+    )
+  ] });
+};
+var HorizontalHistoryItem = ({
+  item,
+  isLast,
+  lineVariant = "solid"
+}) => {
+  const cfgs = useHistoryIconCfg();
+  const cfg = item.icon ? { bg: item.iconBg || cfgs.edit.bg, icon: item.icon } : cfgs[item.type] || cfgs.edit;
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+    import_material11.Box,
+    {
+      sx: {
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        minWidth: 280,
+        flexShrink: 0
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Box, { sx: { display: "flex", alignItems: "center", mb: 1.5 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            import_material11.Box,
+            {
+              sx: {
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                bgcolor: cfg.bg,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
+                flexShrink: 0
+              },
+              children: cfg.icon
+            }
+          ),
+          !isLast && lineVariant !== "none" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            import_material11.Box,
+            {
+              sx: {
+                flex: 1,
+                height: "0px",
+                borderTop: `2px ${lineVariant}`,
+                borderColor: "divider",
+                mx: 1.5
+              }
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Box, { sx: { pr: 2 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            import_material11.Box,
+            {
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexWrap: "wrap",
+                mb: 0.4
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Typography, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.title }),
+                item.tag && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                  import_material11.Box,
+                  {
+                    sx: {
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      border: item.tagType === "phone" ? "none" : "1px solid",
+                      borderColor: "divider",
+                      px: item.tagType === "phone" ? 0 : 0.75,
+                      borderRadius: item.tagType === "phone" ? 0 : "8px"
+                    },
+                    children: [
+                      item.tagType !== "phone" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                        import_material11.Box,
+                        {
+                          sx: {
+                            width: 7,
+                            height: 7,
+                            borderRadius: "50%",
+                            bgcolor: "info.main"
+                          }
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Typography, { fontSize: 12, fontWeight: 500, color: "text.secondary", children: item.tag })
+                    ]
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_material11.Box, { sx: { display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }, children: [
+            item.amount && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Typography, { fontSize: 14, fontWeight: 500, color: "text.primary", children: item.amount }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+              import_material11.Box,
+              {
+                sx: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  flexWrap: "wrap"
+                },
+                children: [
+                  item.date && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                    import_material11.Box,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(CalIcon, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                          import_material11.Typography,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.date
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  item.time && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                    import_material11.Box,
+                    {
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                        bgcolor: "action.hover",
+                        borderRadius: "5px",
+                        px: "6px",
+                        py: "2px"
+                      },
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ClkIcon, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                          import_material11.Typography,
+                          {
+                            fontSize: 11,
+                            fontWeight: 500,
+                            color: "text.secondary",
+                            children: item.time
+                          }
+                        )
+                      ]
+                    }
+                  )
+                ]
+              }
+            )
+          ] }),
+          item.createdBy && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            import_material11.Typography,
+            {
+              fontSize: 12,
+              color: "text.secondary",
+              fontWeight: 400,
+              mb: 0.5,
+              children: [
+                "Created by",
+                " ",
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Box, { component: "span", fontWeight: 500, color: "text.primary", children: item.createdBy })
+              ]
+            }
+          ),
+          item.notes && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            import_material11.Typography,
+            {
+              fontSize: 13,
+              color: "text.secondary",
+              fontWeight: 400,
+              sx: { mt: 0.5 },
+              children: [
+                "Notes: ",
+                item.notes
+              ]
+            }
+          )
+        ] })
+      ]
+    }
+  );
+};
+var History = ({
+  data = [],
+  isHorizontal = false,
+  lineVariant = "solid"
+}) => {
+  if (isHorizontal) {
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Box, { sx: { display: "flex", overflowX: "auto", pb: 2, pt: 1 }, children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      HorizontalHistoryItem,
+      {
+        item,
+        isLast: index === data.length - 1,
+        lineVariant
+      },
+      item.id
+    )) });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_material11.Box, { sx: { pt: 1 }, children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+    HistoryItem,
+    {
+      item,
+      isLast: index === data.length - 1,
+      lineVariant
+    },
+    item.id
+  )) });
+};
 
 // src/components/NumberField/NumberField.tsx
-var import_material10 = require("@mui/material");
+var import_material12 = require("@mui/material");
 var import_Box3 = __toESM(require("@mui/material/Box"));
 var import_IconButton2 = __toESM(require("@mui/material/IconButton"));
-var import_styles3 = require("@mui/material/styles");
+var import_styles4 = require("@mui/material/styles");
 var import_TextField8 = __toESM(require("@mui/material/TextField"));
 var import_react11 = require("react");
 var import_icons_material4 = require("@mui/icons-material");
-var import_jsx_runtime12 = require("react/jsx-runtime");
-var StyledTextField2 = (0, import_styles3.styled)(
+var import_jsx_runtime14 = require("react/jsx-runtime");
+var StyledTextField2 = (0, import_styles4.styled)(
   ({
     bgColor = "transparent",
     hasLabel,
@@ -6241,7 +6972,7 @@ var StyledTextField2 = (0, import_styles3.styled)(
     showButton,
     InputProps,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+  }) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
     import_TextField8.default,
     {
       variant: "filled",
@@ -6297,13 +7028,13 @@ var StyledTextField2 = (0, import_styles3.styled)(
     alignItems: "center"
   },
   "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input": {
-    padding: "24px 10px 0 10px"
+    padding: "24px 10px 10px 10px"
   },
   "& label.Mui-focused": {
     color: theme.palette.text.secondary
   }
 }));
-var ArrowContainer = (0, import_styles3.styled)(import_Box3.default, {
+var ArrowContainer = (0, import_styles4.styled)(import_Box3.default, {
   shouldForwardProp: (prop) => prop !== "bgColor"
 })(({ theme, bgColor = "transparent" }) => ({
   display: "flex",
@@ -6317,7 +7048,7 @@ var ArrowContainer = (0, import_styles3.styled)(import_Box3.default, {
   height: "46px",
   transition: "border-color 300ms ease"
 }));
-var ArrowButton = (0, import_styles3.styled)(import_IconButton2.default)(({ theme }) => ({
+var ArrowButton = (0, import_styles4.styled)(import_IconButton2.default)(({ theme }) => ({
   borderRadius: 0,
   padding: "2px",
   height: "50%",
@@ -6443,7 +7174,7 @@ function NumberField({
   (0, import_react11.useEffect)(() => stopRepeat, []);
   const canIncrement = !disabled && numericValue < max;
   const canDecrement = !disabled && numericValue > min;
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
     import_Box3.default,
     {
       display: "flex",
@@ -6459,7 +7190,7 @@ function NumberField({
         ...sx
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
           StyledTextField2,
           {
             label,
@@ -6479,17 +7210,17 @@ function NumberField({
             },
             InputProps: {
               ...prefix2 && {
-                startAdornment: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.InputAdornment, { position: "start", children: prefix2 })
+                startAdornment: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_material12.InputAdornment, { position: "start", children: prefix2 })
               },
               ...unit && {
-                endAdornment: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.InputAdornment, { position: "end", sx: { mr: 1, ml: 0 }, children: unit })
+                endAdornment: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_material12.InputAdornment, { position: "end", sx: { mr: 1, ml: 0 }, children: unit })
               }
             },
             ...props
           }
         ),
-        showButton && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(ArrowContainer, { className: "arrow-container", bgColor, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        showButton && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(ArrowContainer, { className: "arrow-container", bgColor, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             ArrowButton,
             {
               onMouseDown: (e) => {
@@ -6506,11 +7237,11 @@ function NumberField({
               disableRipple: true,
               size: "small",
               disabled: !canIncrement,
-              children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_icons_material4.ExpandLess, { color: "secondary" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_icons_material4.ExpandLess, { color: "secondary" })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_material10.Divider, { orientation: "horizontal", flexItem: true, sx: { marginX: "4px" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_material12.Divider, { orientation: "horizontal", flexItem: true, sx: { marginX: "4px" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             ArrowButton,
             {
               onMouseDown: (e) => {
@@ -6527,7 +7258,7 @@ function NumberField({
               disableRipple: true,
               size: "small",
               disabled: !canDecrement,
-              children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_icons_material4.ExpandMore, { color: "secondary" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_icons_material4.ExpandMore, { color: "secondary" })
             }
           )
         ] })
@@ -6536,34 +7267,1583 @@ function NumberField({
   );
 }
 
-// src/components/TextAreas/Textarea.tsx
-var import_react12 = __toESM(require("react"));
+// src/components/DateTimePickers/DatePicker/DatePicker.tsx
+var import_react13 = __toESM(require("react"));
+var import_Popover = __toESM(require("@mui/material/Popover"));
+var import_InputAdornment2 = __toESM(require("@mui/material/InputAdornment"));
+var import_icons_material6 = require("@mui/icons-material");
+var import_dayjs2 = __toESM(require("dayjs"));
+
+// src/components/DateTimePickers/Shared/Calendar.tsx
+var import_react12 = require("react");
 var import_Box4 = __toESM(require("@mui/material/Box"));
-var import_styles4 = require("@mui/material/styles");
+var import_icons_material5 = require("@mui/icons-material");
+var import_dayjs = __toESM(require("dayjs"));
+var import_jsx_runtime15 = require("react/jsx-runtime");
+function DropdownSelect({ value, options, onChange }) {
+  const [open, setOpen] = (0, import_react12.useState)(false);
+  const ref = (0, import_react12.useRef)(null);
+  (0, import_react12.useEffect)(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    if (open) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+  const selectedLabel = options.find((o) => o.val === value)?.label || "";
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_Box4.default, { ref, sx: { position: "relative", display: "inline-block" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+      import_Box4.default,
+      {
+        component: "button",
+        type: "button",
+        onClick: (e) => {
+          e.stopPropagation();
+          setOpen((prev2) => !prev2);
+        },
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          height: "32px",
+          px: "10px",
+          borderRadius: "5px",
+          border: "1px solid",
+          borderColor: "divider",
+          backgroundColor: "background.default",
+          fontSize: "13px",
+          fontWeight: 500,
+          color: "text.primary",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+          minWidth: "60px",
+          "&:hover": {
+            backgroundColor: "action.hover"
+          }
+        },
+        children: [
+          selectedLabel,
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_icons_material5.KeyboardArrowDown, { sx: { width: 16, height: 16, color: "text.secondary" } })
+        ]
+      }
+    ),
+    open && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      import_Box4.default,
+      {
+        sx: {
+          position: "absolute",
+          top: "36px",
+          left: 0,
+          zIndex: 99999,
+          background: (theme) => theme.palette.background.paper,
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: "8px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+          maxHeight: "180px",
+          overflowY: "auto",
+          minWidth: "90px"
+        },
+        children: options.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+          import_Box4.default,
+          {
+            onMouseDown: (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onChange(opt.val);
+              setOpen(false);
+            },
+            sx: {
+              px: 1.75,
+              py: 1,
+              fontSize: "13px",
+              cursor: "pointer",
+              color: opt.val === value ? "primary.main" : "text.primary",
+              backgroundColor: opt.val === value ? "primary.disabledBackground" : "transparent",
+              fontWeight: opt.val === value ? 600 : 400,
+              "&:hover": {
+                backgroundColor: opt.val === value ? "primary.disabledBackground" : "action.hover"
+              }
+            },
+            children: opt.label
+          },
+          opt.val
+        ))
+      }
+    )
+  ] });
+}
+function NavArrow({ direction, onClick, disabled }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    import_Box4.default,
+    {
+      onClick: !disabled ? onClick : void 0,
+      sx: {
+        width: 32,
+        height: 32,
+        borderRadius: "8px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: disabled ? "not-allowed" : "pointer",
+        color: disabled ? "text.disabled" : "text.secondary",
+        "&:hover": !disabled ? { backgroundColor: "action.hover" } : {},
+        flexShrink: 0
+      },
+      children: direction === "left" ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_icons_material5.ChevronLeft, { sx: { width: 20, height: 20 } }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_icons_material5.ChevronRight, { sx: { width: 20, height: 20 } })
+    }
+  );
+}
+var DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+var MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+function Calendar({
+  month,
+  selectedDate,
+  onDayClick,
+  minDate,
+  maxDate,
+  onPrev,
+  onNext,
+  onMonthChange,
+  onYearChange
+}) {
+  const firstDay = month.startOf("month");
+  const daysInMonth = month.daysInMonth();
+  const startOffset = firstDay.day();
+  const cells = [];
+  for (let i = 0; i < startOffset; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(month.date(d));
+  while (cells.length % 7 !== 0) cells.push(null);
+  const currentYear = (0, import_dayjs.default)().year();
+  const yearOptions = Array.from({ length: 21 }, (_, i) => ({
+    label: String(currentYear - 10 + i),
+    val: currentYear - 10 + i
+  }));
+  const monthOptions = MONTHS.map((m, i) => ({ label: m, val: i }));
+  const disablePrev = minDate && month.isSame(minDate.startOf("month"), "month");
+  const disableNext = maxDate && month.isSame(maxDate.startOf("month"), "month");
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_Box4.default, { sx: { width: "270px", pb: 1.5 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_Box4.default, { sx: { display: "flex", alignItems: "center", gap: 1.25, px: 1.5, py: 1.5 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownSelect, { value: month.month(), onChange: onMonthChange, options: monthOptions }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownSelect, { value: month.year(), onChange: onYearChange, options: yearOptions }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_Box4.default, { sx: { display: "flex", alignItems: "center", ml: 0.5 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(NavArrow, { direction: "left", onClick: onPrev, disabled: !!disablePrev }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(NavArrow, { direction: "right", onClick: onNext, disabled: !!disableNext })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_Box4.default, { sx: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 1.5, mb: 0.5 }, children: DAYS.map((d) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_Box4.default, { sx: { textAlign: "center", fontSize: "12px", color: "text.secondary", fontWeight: 400, py: 0.5 }, children: d }, d)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_Box4.default, { sx: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 1.5 }, children: cells.map((day, idx) => {
+      if (!day) return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_Box4.default, {}, `empty-${idx}`);
+      const isToday = day.isSame((0, import_dayjs.default)(), "day");
+      const isSelected = selectedDate && day.isSame(selectedDate, "day");
+      const isDisabled = minDate && day.isBefore(minDate, "day") || maxDate && day.isAfter(maxDate, "day");
+      return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+        import_Box4.default,
+        {
+          onClick: () => !isDisabled && onDayClick(day),
+          sx: {
+            height: "36px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: isDisabled ? "not-allowed" : "pointer"
+          },
+          children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+            import_Box4.default,
+            {
+              sx: {
+                width: "32px",
+                height: "32px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "13px",
+                fontWeight: isSelected ? 600 : 400,
+                backgroundColor: isSelected ? "primary.main" : "transparent",
+                color: isDisabled ? "text.disabled" : isSelected ? "primary.contrastText" : isToday ? "primary.main" : "text.primary",
+                border: isToday && !isSelected ? "1px solid" : "none",
+                borderColor: isToday && !isSelected ? "primary.main" : "transparent",
+                "&:hover": !isDisabled && !isSelected ? { backgroundColor: "action.hover" } : {}
+              },
+              children: day.date()
+            }
+          )
+        },
+        day.format("YYYY-MM-DD")
+      );
+    }) })
+  ] });
+}
+
+// src/components/DateTimePickers/DatePicker/DatePicker.tsx
+var import_jsx_runtime16 = require("react/jsx-runtime");
+var DatePicker = import_react13.default.forwardRef(({
+  label = "Date",
+  value,
+  onChange,
+  minDate,
+  maxDate,
+  bgColor = "background.paper",
+  error,
+  disabled = false,
+  format = "DD/MM/YYYY",
+  ...rest
+}, ref) => {
+  const initial = value ? (0, import_dayjs2.default)(value) : null;
+  const [open, setOpen] = (0, import_react13.useState)(false);
+  const [viewMonth, setViewMonth] = (0, import_react13.useState)(() => (initial || (0, import_dayjs2.default)()).startOf("month"));
+  const [selectedDate, setSelectedDate] = (0, import_react13.useState)(initial ? initial.startOf("day") : null);
+  const anchorRef = (0, import_react13.useRef)(null);
+  (0, import_react13.useEffect)(() => {
+    const next2 = value ? (0, import_dayjs2.default)(value) : null;
+    setSelectedDate(next2 ? next2.startOf("day") : null);
+    if (next2) setViewMonth(next2.startOf("month"));
+  }, [value]);
+  const handleDayClick = (day) => {
+    setSelectedDate(day);
+    onChange?.(day.format("YYYY-MM-DD"));
+    setOpen(false);
+  };
+  const handleOpen = (e) => {
+    if (disabled) return;
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (selectedDate) setViewMonth(selectedDate.startOf("month"));
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const prevMonth = () => setViewMonth((m) => m.subtract(1, "month"));
+  const nextMonth = () => setViewMonth((m) => m.add(1, "month"));
+  const handleMonthChange = (m) => setViewMonth((prev2) => prev2.month(m));
+  const handleYearChange = (y) => setViewMonth((prev2) => prev2.year(y));
+  const minDayjs = minDate ? (0, import_dayjs2.default)(minDate) : null;
+  const maxDayjs = maxDate ? (0, import_dayjs2.default)(maxDate) : null;
+  const displayValue = selectedDate ? selectedDate.format(format) : "";
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      TextField,
+      {
+        ...rest,
+        ref: (node2) => {
+          if (typeof ref === "function") ref(node2);
+          else if (ref) ref.current = node2;
+          anchorRef.current = node2;
+        },
+        label,
+        variant: "filled",
+        bgColor,
+        fullWidth: true,
+        value: displayValue,
+        error,
+        disabled,
+        onClick: handleOpen,
+        InputProps: {
+          readOnly: true,
+          placeholder: format,
+          endAdornment: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_InputAdornment2.default, { position: "end", sx: { mt: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+            import_icons_material6.CalendarMonthOutlined,
+            {
+              sx: { width: 20, height: 20, cursor: disabled ? "not-allowed" : "pointer", mr: 0, color: "text.secondary" },
+              onClick: (e) => {
+                e.stopPropagation();
+                handleOpen();
+              }
+            }
+          ) })
+        },
+        InputLabelProps: { shrink: !!displayValue },
+        sx: { "& .VortexUIFilledInput-input": { cursor: disabled ? "not-allowed" : "pointer" }, ...rest.sx }
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      import_Popover.default,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        onClose: handleClose,
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+        style: { zIndex: 1300 },
+        PaperProps: {
+          elevation: 0,
+          sx: {
+            mt: "8px",
+            borderRadius: "10px",
+            border: "1px solid",
+            borderColor: "divider",
+            backgroundColor: "background.paper",
+            boxShadow: "0px 2px 8px 0px rgba(0,0,0,0.10)",
+            overflow: "hidden",
+            userSelect: "none",
+            display: "flex"
+          }
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          Calendar,
+          {
+            month: viewMonth,
+            selectedDate,
+            onDayClick: handleDayClick,
+            minDate: minDayjs,
+            maxDate: maxDayjs,
+            onPrev: prevMonth,
+            onNext: nextMonth,
+            onMonthChange: handleMonthChange,
+            onYearChange: handleYearChange
+          }
+        )
+      }
+    )
+  ] });
+});
+DatePicker.displayName = "DatePicker";
+
+// src/components/DateTimePickers/TimePicker/TimePicker.tsx
+var import_react14 = __toESM(require("react"));
+var import_Box5 = __toESM(require("@mui/material/Box"));
+var import_Popover2 = __toESM(require("@mui/material/Popover"));
+var import_InputAdornment3 = __toESM(require("@mui/material/InputAdornment"));
+var import_icons_material7 = require("@mui/icons-material");
+var import_jsx_runtime17 = require("react/jsx-runtime");
+var ITEM_HEIGHT = 36;
+var VISIBLE_COUNT = 5;
+var COLUMN_WIDTH = 50;
+var HOURS_12 = Array.from({ length: 12 }, (_, i) => String(i + 1));
+var HOURS_24 = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+var MINUTES = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0"));
+var PERIODS = ["AM", "PM"];
+function parseTime(value, format) {
+  if (!value) return { hour: null, min: null, period: null };
+  if (format === "24h") {
+    const match2 = value.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match2) return { hour: null, min: null, period: null };
+    return { hour: match2[1].padStart(2, "0"), min: match2[2], period: null };
+  } else {
+    const match2 = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match2) return { hour: null, min: null, period: null };
+    return {
+      hour: match2[1],
+      min: match2[2],
+      period: match2[3].toUpperCase()
+    };
+  }
+}
+function ScrollColumn({ items, value, onChange }) {
+  const listRef = (0, import_react14.useRef)(null);
+  const isInitialMount = (0, import_react14.useRef)(true);
+  const [scrollTop, setScrollTop] = (0, import_react14.useState)(0);
+  (0, import_react14.useEffect)(() => {
+    const idx = value ? items.indexOf(value) : -1;
+    if (listRef.current && idx !== -1) {
+      isInitialMount.current = true;
+      listRef.current.scrollTop = idx * ITEM_HEIGHT;
+      setScrollTop(idx * ITEM_HEIGHT);
+    }
+  }, [value, items]);
+  const handleScroll = (0, import_react14.useCallback)((e) => {
+    setScrollTop(e.target.scrollTop);
+  }, []);
+  const handleClick = (0, import_react14.useCallback)(
+    (item) => {
+      const idx = items.indexOf(item);
+      isInitialMount.current = true;
+      listRef.current?.scrollTo({ top: idx * ITEM_HEIGHT, behavior: "smooth" });
+      if (item !== value) onChange(item);
+    },
+    [items, value, onChange]
+  );
+  const totalContentHeight = items.length * ITEM_HEIGHT + ITEM_HEIGHT * (VISIBLE_COUNT - 1);
+  const viewportHeight = ITEM_HEIGHT * VISIBLE_COUNT;
+  const thumbHeight = Math.max(viewportHeight / totalContentHeight * viewportHeight, 20);
+  const maxScroll = totalContentHeight - viewportHeight;
+  const thumbTravel = viewportHeight - thumbHeight;
+  const thumbTop = maxScroll > 0 ? scrollTop / maxScroll * thumbTravel : 0;
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_Box5.default, { sx: { position: "relative", width: "100%", height: ITEM_HEIGHT * VISIBLE_COUNT, overflow: "hidden" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+      "div",
+      {
+        ref: listRef,
+        onScroll: handleScroll,
+        style: {
+          height: "100%",
+          overflowY: "scroll",
+          scrollSnapType: "y mandatory",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none"
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("style", { children: `div::-webkit-scrollbar { display: none; }` }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { style: { height: ITEM_HEIGHT * 2 } }),
+          items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            "div",
+            {
+              onClick: () => handleClick(item),
+              style: {
+                height: 37.5,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "13px",
+                fontWeight: 400,
+                color: item === value ? "var(--mui-palette-primary-contrastText, #fff)" : "var(--mui-palette-text-primary)",
+                backgroundColor: item === value ? "var(--mui-palette-primary-main)" : "transparent",
+                borderRadius: "8px",
+                margin: "0 6px",
+                scrollSnapAlign: "start",
+                cursor: "pointer",
+                userSelect: "none"
+              },
+              children: item
+            },
+            item
+          ))
+        ]
+      }
+    ),
+    maxScroll > 0 && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      import_Box5.default,
+      {
+        sx: {
+          position: "absolute",
+          right: "-1px",
+          top: `${thumbTop}px`,
+          width: "4px",
+          height: `${thumbHeight}px`,
+          borderRadius: "29px",
+          backgroundColor: "action.disabled",
+          pointerEvents: "none"
+        }
+      }
+    )
+  ] });
+}
+var Divider3 = () => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_Box5.default, { sx: { width: "1px", alignSelf: "stretch", bgcolor: "divider", flexShrink: 0 } });
+function TimePickerPanel({
+  hour,
+  min,
+  period,
+  onHourChange,
+  onMinChange,
+  onPeriodChange,
+  format = "12h",
+  onOk,
+  onReset
+}) {
+  const is24h = format === "24h";
+  const hoursList = is24h ? HOURS_24 : HOURS_12;
+  const colWidth = is24h ? 75 : COLUMN_WIDTH;
+  const isOkDisabled = is24h ? !hour || !min : !hour || !min || !period;
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+    import_Box5.default,
+    {
+      sx: {
+        borderRadius: "12px",
+        border: "1px solid",
+        borderColor: "divider",
+        bgcolor: "background.paper",
+        p: "6px",
+        width: "160px"
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_Box5.default, { sx: { display: "flex", mt: 1 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_Box5.default, { sx: { width: colWidth }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_Box5.default, { sx: { textAlign: "center", fontSize: "14px", fontWeight: 400, color: "text.secondary" }, children: "HH" }),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ScrollColumn, { items: hoursList, value: hour, onChange: onHourChange })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Divider3, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_Box5.default, { sx: { width: colWidth }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_Box5.default, { sx: { textAlign: "center", fontSize: "14px", fontWeight: 400, color: "text.secondary" }, children: "MM" }),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ScrollColumn, { items: MINUTES, value: min, onChange: onMinChange })
+          ] }),
+          !is24h && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Divider3, {}),
+          !is24h && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_Box5.default, { sx: { width: COLUMN_WIDTH }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_Box5.default, { sx: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", gap: "10px", mt: 3 }, children: PERIODS.map((p) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            import_Box5.default,
+            {
+              onClick: () => onPeriodChange(p),
+              sx: {
+                height: 32,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "13px",
+                fontWeight: 400,
+                color: p === period ? "primary.contrastText" : "text.primary",
+                backgroundColor: p === period ? "primary.main" : "transparent",
+                borderRadius: "8px",
+                mx: "6px",
+                cursor: "pointer",
+                width: "calc(100% - 12px)",
+                userSelect: "none"
+              },
+              children: p
+            },
+            p
+          )) }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_Box5.default, { sx: { display: "flex", justifyContent: "space-between", px: 1, pt: 1, borderTop: "1px solid", borderColor: "divider", m: 1, mb: 0.5 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_Box5.default, { onClick: onReset, sx: { color: "text.secondary", fontSize: "13px", cursor: "pointer", "&:hover": { color: "text.primary" } }, children: "Reset" }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            import_Box5.default,
+            {
+              onClick: isOkDisabled ? void 0 : onOk,
+              sx: {
+                color: isOkDisabled ? "text.disabled" : "primary.main",
+                fontSize: "13px",
+                fontWeight: 600,
+                cursor: isOkDisabled ? "not-allowed" : "pointer",
+                "&:hover": isOkDisabled ? {} : { color: "primary.dark" }
+              },
+              children: "OK"
+            }
+          )
+        ] })
+      ]
+    }
+  );
+}
+var TimePicker = import_react14.default.forwardRef(({
+  label = "Time",
+  value = "",
+  onChange,
+  bgColor = "background.paper",
+  disabled = false,
+  format = "12h",
+  error,
+  ...props
+}, ref) => {
+  const [open, setOpen] = (0, import_react14.useState)(false);
+  const anchorRef = (0, import_react14.useRef)(null);
+  const is24h = format === "24h";
+  const { hour, min, period } = parseTime(value, format);
+  const handleOpen = (e) => {
+    if (!disabled) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      setOpen((o) => !o);
+    }
+  };
+  const handleHourChange = (0, import_react14.useCallback)(
+    (h) => {
+      if (format === "24h") {
+        onChange?.(`${h}:${min ?? "00"}`);
+      } else {
+        onChange?.(`${h}:${min ?? "00"} ${period ?? "AM"}`);
+      }
+    },
+    [min, period, onChange, format]
+  );
+  const handleMinChange = (0, import_react14.useCallback)(
+    (m) => {
+      if (format === "24h") {
+        onChange?.(`${hour ?? "00"}:${m}`);
+      } else {
+        onChange?.(`${hour ?? "1"}:${m} ${period ?? "AM"}`);
+      }
+    },
+    [hour, period, onChange, format]
+  );
+  const handlePeriodChange = (0, import_react14.useCallback)(
+    (p) => {
+      if (format !== "24h") {
+        onChange?.(`${hour ?? "1"}:${min ?? "00"} ${p}`);
+      }
+    },
+    [hour, min, onChange, format]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_Box5.default, { sx: { position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      TextField,
+      {
+        ...props,
+        ref: (node2) => {
+          if (typeof ref === "function") ref(node2);
+          else if (ref) ref.current = node2;
+          anchorRef.current = node2;
+        },
+        label,
+        variant: "filled",
+        bgColor,
+        fullWidth: true,
+        disabled,
+        value,
+        error,
+        onClick: handleOpen,
+        InputProps: {
+          readOnly: true,
+          placeholder: is24h ? "HH:MM" : "HH:MM AM/PM",
+          endAdornment: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_InputAdornment3.default, { position: "end", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            import_icons_material7.AccessTimeOutlined,
+            {
+              sx: { width: 20, height: 20, cursor: disabled ? "not-allowed" : "pointer", mr: 0, color: "text.secondary" },
+              onClick: (e) => {
+                e.stopPropagation();
+                handleOpen();
+              }
+            }
+          ) })
+        },
+        sx: { "& .VortexUIFilledInput-input": { cursor: disabled ? "not-allowed" : "pointer" }, ...props.sx }
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      import_Popover2.default,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        onClose: () => setOpen(false),
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+        style: { zIndex: 1300 },
+        PaperProps: {
+          elevation: 0,
+          sx: {
+            mt: "8px",
+            borderRadius: "12px",
+            boxShadow: "0px 10px 40px rgba(0,0,0,0.08)"
+          }
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          TimePickerPanel,
+          {
+            hour,
+            min,
+            period,
+            format,
+            onHourChange: handleHourChange,
+            onMinChange: handleMinChange,
+            onPeriodChange: handlePeriodChange,
+            onOk: () => setOpen(false),
+            onReset: () => {
+              onChange?.("");
+              setOpen(false);
+            }
+          }
+        )
+      }
+    )
+  ] });
+});
+TimePicker.displayName = "TimePicker";
+
+// src/components/DateTimePickers/DateTimePicker/DateTimePicker.tsx
+var import_react15 = __toESM(require("react"));
+var import_Box6 = __toESM(require("@mui/material/Box"));
+var import_Popover3 = __toESM(require("@mui/material/Popover"));
+var import_InputAdornment4 = __toESM(require("@mui/material/InputAdornment"));
+var import_icons_material8 = require("@mui/icons-material");
+var import_dayjs3 = __toESM(require("dayjs"));
+var import_jsx_runtime18 = require("react/jsx-runtime");
+var HOUR_OPTIONS = Array.from({ length: 12 }, (_, i) => ({ label: String(i + 1), value: i + 1 }));
+var MINUTE_OPTIONS = Array.from({ length: 12 }, (_, i) => ({ label: String(i * 5).padStart(2, "0"), value: i * 5 }));
+var MERIDIEM_OPTIONS = [{ label: "AM", value: "AM" }, { label: "PM", value: "PM" }];
+function TimeColumn({ label, items, selected, onSelect }) {
+  const listRef = (0, import_react15.useRef)(null);
+  const [scrollTop, setScrollTop] = (0, import_react15.useState)(0);
+  const [maxScroll, setMaxScroll] = (0, import_react15.useState)(0);
+  const [clientHeight, setClientHeight] = (0, import_react15.useState)(0);
+  (0, import_react15.useEffect)(() => {
+    if (!listRef.current) return;
+    const selectedEl = listRef.current.querySelector('[data-selected="true"]');
+    if (selectedEl) {
+      listRef.current.scrollTop = selectedEl.offsetTop - listRef.current.clientHeight / 2 + selectedEl.clientHeight / 2;
+    }
+    const el = listRef.current;
+    setMaxScroll(el.scrollHeight - el.clientHeight);
+    setClientHeight(el.clientHeight);
+    setScrollTop(el.scrollTop);
+  }, [items]);
+  const handleScroll = (e) => {
+    setScrollTop(e.target.scrollTop);
+  };
+  const thumbHeight = maxScroll > 0 ? Math.max(clientHeight / (clientHeight + maxScroll) * clientHeight, 40) : 0;
+  const thumbTravel = clientHeight - thumbHeight;
+  const thumbTop = maxScroll > 0 ? scrollTop / maxScroll * thumbTravel : 0;
+  const showThumb = maxScroll > 0;
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_Box6.default, { sx: { width: "50px", display: "flex", flexDirection: "column", alignItems: "center" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_Box6.default, { sx: { flex: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_Box6.default, { sx: { textAlign: "center", fontSize: "14px", fontWeight: 400, color: "text.secondary", mb: 1 }, children: label }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_Box6.default, { sx: { position: "relative", width: "100%" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        import_Box6.default,
+        {
+          ref: listRef,
+          onScroll: handleScroll,
+          sx: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "5px",
+            overflowY: "auto",
+            maxHeight: "260px",
+            pb: "10px",
+            width: "100%",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": { display: "none" }
+          },
+          children: items.map((item) => {
+            const isSelected = selected === item.value;
+            return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              import_Box6.default,
+              {
+                "data-selected": isSelected,
+                onClick: () => onSelect(item.value),
+                sx: {
+                  width: "32px",
+                  height: "32px",
+                  flexShrink: 0,
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "13px",
+                  fontWeight: isSelected ? 600 : 400,
+                  cursor: "pointer",
+                  backgroundColor: isSelected ? "primary.main" : "transparent",
+                  color: isSelected ? "primary.contrastText" : "text.primary",
+                  "&:hover": !isSelected ? { backgroundColor: "action.hover" } : {}
+                },
+                children: item.label
+              },
+              item.value
+            );
+          })
+        }
+      ),
+      showThumb && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        import_Box6.default,
+        {
+          sx: {
+            position: "absolute",
+            right: "-1px",
+            top: `${thumbTop}px`,
+            width: "4px",
+            height: `60px`,
+            borderRadius: "2px",
+            backgroundColor: "action.disabled",
+            pointerEvents: "none"
+          }
+        }
+      )
+    ] })
+  ] });
+}
+function TimeSelector({ hour, minute, meridiem, onHourChange, onMinuteChange, onMeridiemChange }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_Box6.default, { sx: { display: "flex", borderLeft: "1px solid", borderColor: "divider", pt: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(TimeColumn, { label: "HH", items: HOUR_OPTIONS, selected: hour, onSelect: onHourChange }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_Box6.default, { sx: { width: "1px", backgroundColor: "divider", mb: 1.5 } }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(TimeColumn, { label: "MM", items: MINUTE_OPTIONS, selected: minute, onSelect: onMinuteChange }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_Box6.default, { sx: { width: "1px", backgroundColor: "divider", mb: 1.5 } }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(TimeColumn, { items: MERIDIEM_OPTIONS, selected: meridiem, onSelect: onMeridiemChange })
+  ] });
+}
+var DateTimePicker = import_react15.default.forwardRef(({
+  label = "Date & Time",
+  value,
+  onChange,
+  minDate,
+  maxDate,
+  bgColor = "background.paper",
+  error,
+  disabled = false,
+  format = "DD/MM/YYYY",
+  ...rest
+}, ref) => {
+  const initial = value ? (0, import_dayjs3.default)(value) : null;
+  const [open, setOpen] = (0, import_react15.useState)(false);
+  const [viewMonth, setViewMonth] = (0, import_react15.useState)(() => (initial || (0, import_dayjs3.default)()).startOf("month"));
+  const [selectedDate, setSelectedDate] = (0, import_react15.useState)(initial ? initial.startOf("day") : null);
+  const [selectedHour, setSelectedHour] = (0, import_react15.useState)(initial ? Number(initial.format("h")) : null);
+  const [selectedMinute, setSelectedMinute] = (0, import_react15.useState)(initial ? initial.minute() - initial.minute() % 5 : null);
+  const [selectedMeridiem, setSelectedMeridiem] = (0, import_react15.useState)(initial ? initial.format("A") : null);
+  const anchorRef = (0, import_react15.useRef)(null);
+  (0, import_react15.useEffect)(() => {
+    const next2 = value ? (0, import_dayjs3.default)(value) : null;
+    setSelectedDate(next2 ? next2.startOf("day") : null);
+    setSelectedHour(next2 ? Number(next2.format("h")) : null);
+    setSelectedMinute(next2 ? next2.minute() - next2.minute() % 5 : null);
+    setSelectedMeridiem(next2 ? next2.format("A") : null);
+    if (next2) setViewMonth(next2.startOf("month"));
+  }, [value]);
+  const commitIfComplete = (date, hour, minute, meridiem) => {
+    if (date && hour != null && minute != null && meridiem && onChange) {
+      let h = hour % 12;
+      if (meridiem === "PM") h += 12;
+      const final = date.hour(h).minute(minute).second(0);
+      onChange(final.format("YYYY-MM-DDTHH:mm:ss"));
+      setOpen(false);
+    }
+  };
+  const handleDayClick = (day) => {
+    setSelectedDate(day);
+    commitIfComplete(day, selectedHour, selectedMinute, selectedMeridiem);
+  };
+  const handleHourChange = (h) => {
+    setSelectedHour(h);
+    commitIfComplete(selectedDate, h, selectedMinute, selectedMeridiem);
+  };
+  const handleMinuteChange = (m) => {
+    setSelectedMinute(m);
+    commitIfComplete(selectedDate, selectedHour, m, selectedMeridiem);
+  };
+  const handleMeridiemChange = (mer) => {
+    setSelectedMeridiem(mer);
+    commitIfComplete(selectedDate, selectedHour, selectedMinute, mer);
+  };
+  const handleOpen = (e) => {
+    if (disabled) return;
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (selectedDate) setViewMonth(selectedDate.startOf("month"));
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const prevMonth = () => setViewMonth((m) => m.subtract(1, "month"));
+  const nextMonth = () => setViewMonth((m) => m.add(1, "month"));
+  const handleMonthChange = (m) => setViewMonth((prev2) => prev2.month(m));
+  const handleYearChange = (y) => setViewMonth((prev2) => prev2.year(y));
+  const minDayjs = minDate ? (0, import_dayjs3.default)(minDate) : null;
+  const maxDayjs = maxDate ? (0, import_dayjs3.default)(maxDate) : null;
+  const displayValue = (() => {
+    if (!selectedDate) return "";
+    if (selectedHour != null && selectedMinute != null && selectedMeridiem) {
+      let h = selectedHour % 12;
+      if (selectedMeridiem === "PM") h += 12;
+      return selectedDate.hour(h).minute(selectedMinute).format("DD/MM/YYYY hh:mm A");
+    }
+    return `${selectedDate.format("DD/MM/YYYY")} ...`;
+  })();
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+      TextField,
+      {
+        ...rest,
+        ref: (node2) => {
+          if (typeof ref === "function") ref(node2);
+          else if (ref) ref.current = node2;
+          anchorRef.current = node2;
+        },
+        label,
+        variant: "filled",
+        bgColor,
+        fullWidth: true,
+        value: displayValue,
+        error,
+        disabled,
+        onClick: handleOpen,
+        InputProps: {
+          readOnly: true,
+          placeholder: `${format} HH:MM AM/PM`,
+          endAdornment: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_InputAdornment4.default, { position: "end", sx: { mt: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            import_icons_material8.CalendarMonthOutlined,
+            {
+              sx: { width: 20, height: 20, cursor: disabled ? "not-allowed" : "pointer", mr: 0, color: "text.secondary" },
+              onClick: (e) => {
+                e.stopPropagation();
+                handleOpen();
+              }
+            }
+          ) })
+        },
+        InputLabelProps: { shrink: !!displayValue },
+        sx: { "& .VortexUIFilledInput-input": { cursor: disabled ? "not-allowed" : "pointer" }, ...rest.sx }
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+      import_Popover3.default,
+      {
+        open,
+        anchorEl: anchorRef.current,
+        onClose: handleClose,
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+        style: { zIndex: 1300 },
+        PaperProps: {
+          elevation: 0,
+          sx: {
+            mt: "8px",
+            borderRadius: "10px",
+            border: "1px solid",
+            borderColor: "divider",
+            backgroundColor: "background.paper",
+            boxShadow: "0px 2px 8px 0px rgba(0,0,0,0.10)",
+            overflow: "hidden",
+            userSelect: "none",
+            display: "flex"
+          }
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            Calendar,
+            {
+              month: viewMonth,
+              selectedDate,
+              onDayClick: handleDayClick,
+              minDate: minDayjs,
+              maxDate: maxDayjs,
+              onPrev: prevMonth,
+              onNext: nextMonth,
+              onMonthChange: handleMonthChange,
+              onYearChange: handleYearChange
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            TimeSelector,
+            {
+              hour: selectedHour,
+              minute: selectedMinute,
+              meridiem: selectedMeridiem,
+              onHourChange: handleHourChange,
+              onMinuteChange: handleMinuteChange,
+              onMeridiemChange: handleMeridiemChange
+            }
+          )
+        ]
+      }
+    )
+  ] });
+});
+DateTimePicker.displayName = "DateTimePicker";
+
+// src/components/DateTimePickers/DateRangePicker/DateRangePicker.tsx
+var import_react16 = __toESM(require("react"));
+var import_Box7 = __toESM(require("@mui/material/Box"));
+var import_Popover4 = __toESM(require("@mui/material/Popover"));
+var import_InputAdornment5 = __toESM(require("@mui/material/InputAdornment"));
+var import_icons_material9 = require("@mui/icons-material");
+var import_dayjs4 = __toESM(require("dayjs"));
+var import_isBetween = __toESM(require("dayjs/plugin/isBetween"));
+var import_jsx_runtime19 = require("react/jsx-runtime");
+import_dayjs4.default.extend(import_isBetween.default);
+var QUICK_OPTIONS = [
+  {
+    label: "Today",
+    getRange: () => {
+      const today = (0, import_dayjs4.default)().format("YYYY-MM-DD");
+      return { startDate: today, endDate: today };
+    }
+  },
+  {
+    label: "Last 30 Days",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().subtract(29, "day").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "This Week",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().startOf("week").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().endOf("week").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "Last Week",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().subtract(1, "week").startOf("week").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().subtract(1, "week").endOf("week").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "This Month",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().startOf("month").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().endOf("month").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "Last Month",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().subtract(1, "month").startOf("month").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().subtract(1, "month").endOf("month").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "This Year",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().startOf("year").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().endOf("year").format("YYYY-MM-DD")
+    })
+  },
+  {
+    label: "Last Year",
+    getRange: () => ({
+      startDate: (0, import_dayjs4.default)().subtract(1, "year").startOf("year").format("YYYY-MM-DD"),
+      endDate: (0, import_dayjs4.default)().subtract(1, "year").endOf("year").format("YYYY-MM-DD")
+    })
+  }
+];
+function RangeCalendarMonth({
+  month,
+  startDate,
+  endDate,
+  hoverDate,
+  onDayClick,
+  onDayHover,
+  minDate,
+  maxDate,
+  onPrev,
+  onNext,
+  disablePrev,
+  disableNext,
+  showPrev,
+  showNext,
+  onMonthChange,
+  onYearChange,
+  showDropdowns
+}) {
+  const firstDay = month.startOf("month");
+  const daysInMonth = month.daysInMonth();
+  const startOffset = firstDay.day();
+  const cells = [];
+  for (let i = 0; i < startOffset; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(month.date(d));
+  while (cells.length % 7 !== 0) cells.push(null);
+  const rangeEnd = hoverDate && startDate && !endDate ? hoverDate.isAfter(startDate) ? hoverDate : null : endDate;
+  const currentYear = (0, import_dayjs4.default)().year();
+  const yearOptions = Array.from({ length: 21 }, (_, i) => ({
+    label: String(currentYear - 10 + i),
+    val: currentYear - 10 + i
+  }));
+  const monthOptions = MONTHS.map((m, i) => ({ label: m, val: i }));
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_Box7.default, { sx: { flex: 1, pb: 2, minWidth: "260px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+      import_Box7.default,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 1.5,
+          py: 1.5
+        },
+        children: [
+          showPrev ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(NavArrow, { direction: "left", onClick: onPrev, disabled: disablePrev }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_Box7.default, { sx: { width: 32 } }),
+          showDropdowns ? /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_Box7.default, { sx: { display: "flex", alignItems: "center", gap: 0.5 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              DropdownSelect,
+              {
+                value: month.month(),
+                onChange: onMonthChange,
+                options: monthOptions
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              DropdownSelect,
+              {
+                value: month.year(),
+                onChange: onYearChange,
+                options: yearOptions
+              }
+            )
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+            import_Box7.default,
+            {
+              sx: { fontWeight: 600, fontSize: "14px", color: "text.primary" },
+              children: month.format("MMMM YYYY")
+            }
+          ),
+          showNext ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(NavArrow, { direction: "right", onClick: onNext, disabled: disableNext }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_Box7.default, { sx: { width: 32 } })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      import_Box7.default,
+      {
+        sx: {
+          display: "grid",
+          gridTemplateColumns: "repeat(7, 1fr)",
+          px: 1.5,
+          mb: 0.5
+        },
+        children: DAYS.map((d) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+          import_Box7.default,
+          {
+            sx: {
+              textAlign: "center",
+              fontSize: "12px",
+              color: "text.secondary",
+              fontWeight: 500,
+              py: 0.5
+            },
+            children: d
+          },
+          d
+        ))
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      import_Box7.default,
+      {
+        sx: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 1.5 },
+        children: cells.map((day, idx) => {
+          if (!day) return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_Box7.default, {}, `empty-${idx}`);
+          const isToday = day.isSame((0, import_dayjs4.default)(), "day");
+          const isStart = startDate && day.isSame(startDate, "day");
+          const isEnd = rangeEnd && day.isSame(rangeEnd, "day");
+          const hasRange = startDate && rangeEnd && !startDate.isSame(rangeEnd, "day");
+          const isInRange = hasRange && day.isBetween(startDate, rangeEnd, "day");
+          const isRangeBg = isInRange || hasRange && (isStart || isEnd);
+          const isDisabled = minDate && day.isBefore(minDate, "day") || maxDate && day.isAfter(maxDate, "day");
+          return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+            import_Box7.default,
+            {
+              onMouseEnter: () => !isDisabled && onDayHover(day),
+              onClick: () => !isDisabled && onDayClick(day),
+              sx: {
+                position: "relative",
+                height: "36px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: isDisabled ? "not-allowed" : "pointer",
+                backgroundColor: isRangeBg ? "primary.disabledBackground" : "transparent",
+                borderTopLeftRadius: isStart ? "10px" : 0,
+                borderBottomLeftRadius: isStart ? "10px" : 0,
+                borderTopRightRadius: isEnd ? "10px" : 0,
+                borderBottomRightRadius: isEnd ? "10px" : 0
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                import_Box7.default,
+                {
+                  sx: {
+                    position: "relative",
+                    zIndex: 1,
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "13px",
+                    fontWeight: isStart || isEnd ? 600 : 400,
+                    backgroundColor: isStart || isEnd ? "primary.main" : "transparent",
+                    color: isDisabled ? "text.disabled" : isStart || isEnd ? "primary.contrastText" : isToday ? "primary.main" : "text.primary",
+                    border: isToday && !isStart && !isEnd ? "1px solid" : "none",
+                    borderColor: isToday && !isStart && !isEnd ? "primary.main" : "transparent",
+                    "&:hover": !isDisabled && !isStart && !isEnd ? { backgroundColor: "action.hover" } : {}
+                  },
+                  children: day.date()
+                }
+              )
+            },
+            day.format("YYYY-MM-DD")
+          );
+        })
+      }
+    )
+  ] });
+}
+function QuickSelectSidebar({ startDate, endDate, onSelect }) {
+  const activeLabel = (() => {
+    if (!startDate || !endDate) return null;
+    for (const opt of QUICK_OPTIONS) {
+      const range = opt.getRange();
+      if (range.startDate === startDate && range.endDate === endDate)
+        return opt.label;
+    }
+    return null;
+  })();
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+    import_Box7.default,
+    {
+      sx: {
+        width: "160px",
+        py: 1.5,
+        display: "flex",
+        flexDirection: "column",
+        gap: 0,
+        borderRight: "1px solid",
+        borderColor: "divider"
+      },
+      children: QUICK_OPTIONS.map((opt) => {
+        const isActive = activeLabel === opt.label;
+        return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+          import_Box7.default,
+          {
+            onClick: () => onSelect(opt.getRange()),
+            sx: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              px: 1.5,
+              py: 1,
+              cursor: "pointer",
+              borderRadius: "8px",
+              whiteSpace: "nowrap",
+              mx: 1,
+              fontSize: "13px",
+              fontWeight: isActive ? 500 : 400,
+              color: isActive ? "primary.main" : "text.primary",
+              backgroundColor: isActive ? "primary.disabledBackground" : "transparent",
+              "&:hover": {
+                backgroundColor: isActive ? "primary.disabledBackground" : "action.hover"
+              }
+            },
+            children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { children: opt.label })
+          },
+          opt.label
+        );
+      })
+    }
+  );
+}
+var DateRangePicker = import_react16.default.forwardRef(
+  ({
+    label = "Date Range",
+    startDate,
+    endDate,
+    onChange,
+    minDate,
+    maxDate,
+    bgColor = "background.paper",
+    error,
+    disabled = false,
+    format = "DD/MM/YYYY",
+    showDropdowns = true,
+    showQuickSelect = true,
+    ...rest
+  }, ref) => {
+    const [open, setOpen] = (0, import_react16.useState)(false);
+    const [leftMonth, setLeftMonth] = (0, import_react16.useState)(
+      () => startDate ? (0, import_dayjs4.default)(startDate).startOf("month") : (0, import_dayjs4.default)().startOf("month")
+    );
+    const [hoverDate, setHoverDate] = (0, import_react16.useState)(null);
+    const [selecting, setSelecting] = (0, import_react16.useState)(false);
+    const [rangeError, setRangeError] = (0, import_react16.useState)(false);
+    const anchorRef = (0, import_react16.useRef)(null);
+    const start = startDate ? (0, import_dayjs4.default)(startDate) : null;
+    const end = endDate ? (0, import_dayjs4.default)(endDate) : null;
+    const rightMonth = leftMonth.add(1, "month");
+    const displayValue = (() => {
+      if (start && end)
+        return `${start.format(format)} - ${end.format(format)}`;
+      if (start) return `${start.format(format)} - ...`;
+      return "";
+    })();
+    const handleDayClick = (day) => {
+      if (!selecting || !start) {
+        onChange?.({ startDate: day.format("YYYY-MM-DD"), endDate: "" });
+        setSelecting(true);
+        setRangeError(false);
+      } else {
+        if (day.isBefore(start, "day")) {
+          onChange?.({
+            startDate: day.format("YYYY-MM-DD"),
+            endDate: start.format("YYYY-MM-DD")
+          });
+        } else if (day.isSame(start, "day")) {
+          onChange?.({
+            startDate: day.format("YYYY-MM-DD"),
+            endDate: day.format("YYYY-MM-DD")
+          });
+        } else {
+          onChange?.({
+            startDate: start.format("YYYY-MM-DD"),
+            endDate: day.format("YYYY-MM-DD")
+          });
+        }
+        setSelecting(false);
+        setOpen(false);
+        setHoverDate(null);
+        setRangeError(false);
+      }
+    };
+    const handleDayHover = (day) => {
+      if (selecting) setHoverDate(day);
+    };
+    const handleOpen = (e) => {
+      if (disabled) return;
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      if (startDate) setLeftMonth((0, import_dayjs4.default)(startDate).startOf("month"));
+      setOpen(true);
+      setSelecting(!!start && !end);
+      setHoverDate(null);
+      setRangeError(false);
+    };
+    const handleClose = () => {
+      if (start && !end) setRangeError(true);
+      setOpen(false);
+      setSelecting(false);
+      setHoverDate(null);
+    };
+    const handleQuickSelect = (range) => {
+      onChange?.(range);
+      setLeftMonth((0, import_dayjs4.default)(range.startDate).startOf("month"));
+      setSelecting(false);
+      setOpen(false);
+      setHoverDate(null);
+    };
+    const handleReset = () => {
+      onChange?.({ startDate: "", endDate: "" });
+      setSelecting(false);
+      setHoverDate(null);
+    };
+    const prevMonth = () => setLeftMonth((m) => m.subtract(1, "month"));
+    const nextMonth = () => setLeftMonth((m) => m.add(1, "month"));
+    const handleLeftMonthChange = (m) => setLeftMonth((prev2) => prev2.month(m));
+    const handleLeftYearChange = (y) => setLeftMonth((prev2) => prev2.year(y));
+    const handleRightMonthChange = (m) => setLeftMonth((prev2) => prev2.month(m).subtract(1, "month"));
+    const handleRightYearChange = (y) => setLeftMonth((prev2) => prev2.add(1, "month").year(y).subtract(1, "month"));
+    const minDayjs = minDate ? (0, import_dayjs4.default)(minDate) : null;
+    const maxDayjs = maxDate ? (0, import_dayjs4.default)(maxDate) : null;
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+        TextField,
+        {
+          ...rest,
+          ref: (node2) => {
+            if (typeof ref === "function") ref(node2);
+            else if (ref) ref.current = node2;
+            anchorRef.current = node2;
+          },
+          label,
+          variant: "filled",
+          bgColor,
+          fullWidth: true,
+          value: displayValue,
+          onClick: handleOpen,
+          disabled,
+          InputProps: {
+            readOnly: true,
+            placeholder: `${format} - ${format}`,
+            endAdornment: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_InputAdornment5.default, { position: "end", sx: { mt: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              import_icons_material9.CalendarMonthOutlined,
+              {
+                sx: {
+                  width: 20,
+                  height: 20,
+                  cursor: disabled ? "not-allowed" : "pointer",
+                  mr: 0,
+                  color: "text.secondary"
+                },
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleOpen();
+                }
+              }
+            ) })
+          },
+          InputLabelProps: { shrink: !!displayValue },
+          error: rangeError || !!error,
+          helperText: rangeError ? "Please select an end date to complete the range" : typeof error === "string" ? error : void 0,
+          sx: {
+            "& .VortexUIFilledInput-input": {
+              cursor: disabled ? "not-allowed" : "pointer"
+            },
+            ...rest.sx
+          }
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+        import_Popover4.default,
+        {
+          open,
+          anchorEl: anchorRef.current,
+          onClose: handleClose,
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left"
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left"
+          },
+          style: { zIndex: 1300 },
+          PaperProps: {
+            elevation: 0,
+            sx: {
+              mt: "8px",
+              borderRadius: "10px",
+              border: "1px solid",
+              borderColor: "divider",
+              backgroundColor: "background.paper",
+              boxShadow: "0px 2px 8px 0px rgba(0,0,0,0.10)",
+              overflow: "hidden",
+              userSelect: "none",
+              display: "flex"
+            }
+          },
+          children: [
+            showQuickSelect && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              QuickSelectSidebar,
+              {
+                startDate,
+                endDate,
+                onSelect: handleQuickSelect
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_Box7.default, { sx: { display: "flex", flexDirection: "column" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_Box7.default, { sx: { display: "flex", alignItems: "stretch" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                  RangeCalendarMonth,
+                  {
+                    month: leftMonth,
+                    startDate: start,
+                    endDate: end,
+                    hoverDate,
+                    onDayClick: handleDayClick,
+                    onDayHover: handleDayHover,
+                    minDate: minDayjs,
+                    maxDate: maxDayjs,
+                    showPrev: true,
+                    showNext: false,
+                    onPrev: prevMonth,
+                    disablePrev: minDayjs && leftMonth.isSame(minDayjs.startOf("month"), "month"),
+                    onMonthChange: handleLeftMonthChange,
+                    onYearChange: handleLeftYearChange,
+                    showDropdowns
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                  import_Box7.default,
+                  {
+                    sx: { width: "1px", backgroundColor: "divider", my: 2 }
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                  RangeCalendarMonth,
+                  {
+                    month: rightMonth,
+                    startDate: start,
+                    endDate: end,
+                    hoverDate,
+                    onDayClick: handleDayClick,
+                    onDayHover: handleDayHover,
+                    minDate: minDayjs,
+                    maxDate: maxDayjs,
+                    showPrev: false,
+                    showNext: true,
+                    onNext: nextMonth,
+                    disableNext: maxDayjs && rightMonth.isSame(maxDayjs.startOf("month"), "month"),
+                    onMonthChange: handleRightMonthChange,
+                    onYearChange: handleRightYearChange,
+                    showDropdowns
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                import_Box7.default,
+                {
+                  sx: {
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    pb: 1.5,
+                    pt: 1,
+                    mx: 1,
+                    mr: 2.5,
+                    borderTop: "1px solid",
+                    borderColor: "divider"
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+                    import_Box7.default,
+                    {
+                      onClick: handleReset,
+                      sx: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        cursor: "pointer",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        color: "primary.main",
+                        "&:hover": { color: "primary.dark" }
+                      },
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_icons_material9.Refresh, { sx: { width: 16, height: 16 } }),
+                        "Reset"
+                      ]
+                    }
+                  )
+                }
+              )
+            ] })
+          ]
+        }
+      )
+    ] });
+  }
+);
+DateRangePicker.displayName = "DateRangePicker";
+
+// src/components/TextAreas/Textarea.tsx
+var import_react17 = __toESM(require("react"));
+var import_Box8 = __toESM(require("@mui/material/Box"));
+var import_styles5 = require("@mui/material/styles");
 var import_Typography4 = __toESM(require("@mui/material/Typography"));
-var import_jsx_runtime13 = require("react/jsx-runtime");
-var Wrapper = (0, import_styles4.styled)(import_Box4.default, {
+var import_jsx_runtime20 = require("react/jsx-runtime");
+var Wrapper = (0, import_styles5.styled)(import_Box8.default, {
   shouldForwardProp: (p) => p !== "bgColor" && p !== "isError" && p !== "isDisabled"
 })(
-  ({ theme, bgColor = "#FAFBFF", isError, isDisabled }) => ({
-    width: "100%",
-    borderRadius: "10px",
-    backgroundColor: isDisabled ? theme.palette.action.disabledBackground : bgColor,
-    border: `1px solid ${isError ? theme.palette.error.main : "#D8D9DC"}`,
-    padding: "8px 12px",
-    boxSizing: "border-box",
-    cursor: isDisabled ? "not-allowed" : "text",
-    transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
-    "&:focus-within": {
-      backgroundColor: "#fff",
-      borderColor: isError ? theme.palette.error.main : theme.palette.primary.main
-    },
-    "&:hover:not(:focus-within)": {
-      backgroundColor: isDisabled ? void 0 : "#fff"
-    }
-  })
+  ({ theme, bgColor = "background.default", isError, isDisabled }) => {
+    const resolveColor = (c) => {
+      if (c === "background.default" || c === "#FAFBFF") return theme.palette.background.default;
+      if (c === "background.paper" || c === "#fff" || c === "#FFFFFF") return theme.palette.background.paper;
+      return c;
+    };
+    return {
+      width: "100%",
+      borderRadius: "10px",
+      backgroundColor: isDisabled ? theme.palette.action.disabledBackground : resolveColor(bgColor),
+      border: "1px solid",
+      borderColor: isError ? theme.palette.error.main : theme.palette.divider,
+      padding: "8px 12px",
+      boxSizing: "border-box",
+      cursor: isDisabled ? "not-allowed" : "text",
+      transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
+      "&:focus-within": {
+        backgroundColor: theme.palette.background.paper,
+        borderColor: isError ? theme.palette.error.main : theme.palette.primary.main
+      },
+      "&:hover:not(:focus-within)": {
+        backgroundColor: isDisabled ? void 0 : theme.palette.background.paper
+      }
+    };
+  }
 );
-var StyledTextarea = (0, import_styles4.styled)("textarea", {
+var StyledTextarea = (0, import_styles5.styled)("textarea", {
   shouldForwardProp: (p) => p !== "isExpandable"
 })(({ theme, isExpandable }) => ({
   width: "100%",
@@ -6589,7 +8869,7 @@ var StyledTextarea = (0, import_styles4.styled)("textarea", {
     resize: "none"
   }
 }));
-var Textarea = import_react12.default.forwardRef(
+var Textarea = import_react17.default.forwardRef(
   ({
     variant = "default",
     label,
@@ -6598,7 +8878,7 @@ var Textarea = import_react12.default.forwardRef(
     maxLength,
     rows = 3,
     minRows,
-    bgColor = "#FAFBFF",
+    bgColor = "background.default",
     error,
     disabled,
     placeholder,
@@ -6608,9 +8888,9 @@ var Textarea = import_react12.default.forwardRef(
   }, ref) => {
     const isExpandable = variant === "expandable";
     const isMinLength = variant === "minLength";
-    const internalRef = (0, import_react12.useRef)(null);
+    const internalRef = (0, import_react17.useRef)(null);
     const textareaRef = ref || internalRef;
-    const [internalValue, setInternalValue] = import_react12.default.useState(
+    const [internalValue, setInternalValue] = import_react17.default.useState(
       rest.defaultValue !== void 0 ? String(rest.defaultValue) : ""
     );
     const currentValue = value !== void 0 ? String(value) : internalValue;
@@ -6628,7 +8908,7 @@ var Textarea = import_react12.default.forwardRef(
       el.style.height = "0px";
       el.style.height = `${Math.max(el.scrollHeight, minH)}px`;
     };
-    (0, import_react12.useLayoutEffect)(() => {
+    (0, import_react17.useLayoutEffect)(() => {
       if (isExpandable) {
         resize(textareaRef.current);
       }
@@ -6643,16 +8923,16 @@ var Textarea = import_react12.default.forwardRef(
       onChange?.(e);
     };
     const counterText = isMinLength ? `${charCount}/${maxLength}` : `${charCount}/${maxLength}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_Box4.default, { sx: { width: fullWidth ? "100%" : void 0 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_Box8.default, { sx: { width: fullWidth ? "100%" : void 0 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
         Wrapper,
         {
           bgColor,
           isError: !!resolvedError,
           isDisabled: !!disabled,
           children: [
-            (resolvedLabel || showCounter) && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-              import_Box4.default,
+            (resolvedLabel || showCounter) && /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+              import_Box8.default,
               {
                 sx: {
                   display: "flex",
@@ -6660,7 +8940,7 @@ var Textarea = import_react12.default.forwardRef(
                   alignItems: "center"
                 },
                 children: [
-                  resolvedLabel && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                  resolvedLabel && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
                     import_Typography4.default,
                     {
                       component: "span",
@@ -6674,7 +8954,7 @@ var Textarea = import_react12.default.forwardRef(
                       children: resolvedLabel
                     }
                   ),
-                  showCounter && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+                  showCounter && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
                     import_Typography4.default,
                     {
                       component: "span",
@@ -6692,7 +8972,7 @@ var Textarea = import_react12.default.forwardRef(
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
               StyledTextarea,
               {
                 ref: textareaRef,
@@ -6710,7 +8990,7 @@ var Textarea = import_react12.default.forwardRef(
           ]
         }
       ),
-      resolvedError && typeof resolvedError === "string" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      resolvedError && typeof resolvedError === "string" && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         import_Typography4.default,
         {
           sx: {
@@ -6722,7 +9002,7 @@ var Textarea = import_react12.default.forwardRef(
           children: resolvedError
         }
       ),
-      isMinLength && minLengthError && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      isMinLength && minLengthError && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
         import_Typography4.default,
         {
           sx: {
@@ -6741,8 +9021,8 @@ Textarea.displayName = "Textarea";
 
 // src/components/Link/Link.tsx
 var import_link = __toESM(require_link2());
-var import_material11 = require("@mui/material");
-var import_jsx_runtime14 = require("react/jsx-runtime");
+var import_material13 = require("@mui/material");
+var import_jsx_runtime21 = require("react/jsx-runtime");
 var Link = ({
   href = "#",
   children,
@@ -6782,8 +9062,8 @@ var Link = ({
     }
   };
   const colors2 = getThemeColors();
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
-    import_material11.Link,
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+    import_material13.Link,
     {
       component: import_link.default,
       href: disabled ? "#" : href,
@@ -6805,18 +9085,18 @@ var Link = ({
       },
       ...props,
       children: [
-        startIcon && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_material11.Box, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: startIcon }),
+        startIcon && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_material13.Box, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: startIcon }),
         children,
-        endIcon && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_material11.Box, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: endIcon })
+        endIcon && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_material13.Box, { component: "span", sx: { display: "flex", alignItems: "center", "& svg": { fontSize: "1.2em" } }, children: endIcon })
       ]
     }
   );
 };
 
 // src/components/CheckboxGroup/CheckboxGroup.tsx
-var import_react13 = require("react");
-var import_material12 = require("@mui/material");
-var import_jsx_runtime15 = require("react/jsx-runtime");
+var import_react18 = require("react");
+var import_material14 = require("@mui/material");
+var import_jsx_runtime22 = require("react/jsx-runtime");
 var VARIANTS = {
   sm: {
     size: 18,
@@ -6843,10 +9123,10 @@ var VARIANTS = {
     iconSize: 20
   }
 };
-var CheckboxGroupContext = (0, import_react13.createContext)(void 0);
+var CheckboxGroupContext = (0, import_react18.createContext)(void 0);
 var StyledCheckbox = ({
-  borderColor = "#D3D6E2",
-  checkedColor = "#4772FF",
+  borderColor = "divider",
+  checkedColor = "primary.main",
   variant = "md",
   ...props
 }) => {
@@ -6856,33 +9136,36 @@ var StyledCheckbox = ({
     height: `${v.size}px`,
     borderRadius: v.borderRadius
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-    import_material12.Checkbox,
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    import_material14.Checkbox,
     {
       size: "small",
       ...props,
-      icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-        import_material12.Box,
+      icon: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        import_material14.Box,
         {
           sx: {
             ...boxBase,
-            border: `1px solid ${borderColor}`,
+            border: 1,
+            borderColor,
             backgroundColor: "transparent"
           }
         }
       ),
-      checkedIcon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-        import_material12.Box,
+      checkedIcon: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        import_material14.Box,
         {
           sx: {
             ...boxBase,
-            border: `1px solid ${checkedColor}`,
+            border: 1,
+            borderColor: checkedColor,
             backgroundColor: checkedColor,
+            color: "primary.contrastText",
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
             "svg",
             {
               width: v.tick,
@@ -6890,11 +9173,11 @@ var StyledCheckbox = ({
               viewBox: "0 0 11 8",
               fill: "none",
               xmlns: "http://www.w3.org/2000/svg",
-              children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
                 "path",
                 {
                   d: "M1 3.5L4 6.5L10 1",
-                  stroke: "#fff",
+                  stroke: "currentColor",
                   strokeWidth: "1.8",
                   strokeLinecap: "round",
                   strokeLinejoin: "round"
@@ -6904,24 +9187,25 @@ var StyledCheckbox = ({
           )
         }
       ),
-      indeterminateIcon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-        import_material12.Box,
+      indeterminateIcon: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        import_material14.Box,
         {
           sx: {
             ...boxBase,
-            border: `1px solid ${checkedColor}`,
+            border: 1,
+            borderColor: checkedColor,
             backgroundColor: checkedColor,
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-            import_material12.Box,
+          children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+            import_material14.Box,
             {
               sx: {
                 width: `${v.iconSize}px`,
                 height: "1.8px",
-                backgroundColor: "#fff",
+                backgroundColor: "primary.contrastText",
                 borderRadius: "2px"
               }
             }
@@ -6941,7 +9225,7 @@ var Checkbox = ({
   variant,
   sx = {}
 }) => {
-  const context = (0, import_react13.useContext)(CheckboxGroupContext);
+  const context = (0, import_react18.useContext)(CheckboxGroupContext);
   if (!context) {
     throw new Error("Checkbox must be used within a CheckboxGroup");
   }
@@ -6949,12 +9233,12 @@ var Checkbox = ({
   const isDisabled = disabled || context.disabled;
   const activeVariant = variant || context.variant;
   const activeBorderColor = borderColor || context.borderColor;
-  const activeColor = color || context.color || "#4772FF";
+  const activeColor = color || context.color || "primary.main";
   const { fontSize, fontWeight } = VARIANTS[activeVariant] ?? VARIANTS.md;
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-    import_material12.FormControlLabel,
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    import_material14.FormControlLabel,
     {
-      control: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      control: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
         StyledCheckbox,
         {
           checked: isChecked,
@@ -6967,85 +9251,102 @@ var Checkbox = ({
       ),
       label,
       disabled: isDisabled,
-      sx: {
-        m: 0,
-        gap: 1,
-        "& .MuiFormControlLabel-label": {
-          fontSize,
-          fontWeight,
-          color: isDisabled ? "#9CA3AF" : "#313952"
-        },
-        ...sx
-      }
+      sx: [
+        (theme) => ({
+          m: 0,
+          gap: 1,
+          [`& .${import_material14.formControlLabelClasses.label}`]: {
+            fontSize,
+            fontWeight,
+            color: isDisabled ? theme.palette.text.disabled : theme.palette.text.primary
+          }
+        }),
+        ...Array.isArray(sx) ? sx : [sx]
+      ]
     }
   );
 };
 var CheckboxGroup = ({
-  value = [],
+  value,
+  defaultValue = [],
   onChange,
   options = [],
   orientation = "horizontal",
   variant = "md",
   disabled = false,
   color,
-  borderColor = "#D3D6E2",
+  borderColor = "divider",
   label,
   sx = {},
   children
 }) => {
+  const [internalValue, setInternalValue] = (0, import_react18.useState)(defaultValue);
+  const isControlled = value !== void 0;
+  const currentValue = isControlled ? value : internalValue;
   const handleChange = (optionValue, checked) => {
-    if (!onChange) return;
-    const next2 = checked ? [...value, optionValue] : value.filter((v) => v !== optionValue);
-    onChange(next2);
+    const next2 = checked ? [...currentValue, optionValue] : currentValue.filter((v) => v !== optionValue);
+    if (!isControlled) {
+      setInternalValue(next2);
+    }
+    if (onChange) {
+      onChange(next2);
+    }
   };
   const contextValue = {
-    value,
+    value: currentValue,
     onChange: handleChange,
     disabled,
     variant,
     color,
     borderColor
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CheckboxGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_material12.FormControl, { disabled, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-      import_material12.FormLabel,
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(CheckboxGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_material14.FormControl, { disabled, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      import_material14.FormLabel,
       {
-        sx: {
+        sx: (theme) => ({
           fontSize: "13px",
           fontWeight: 400,
-          color: "#313952",
+          color: theme.palette.text.primary,
           mb: 1,
-          "&.Mui-focused": { color: "#313952" },
-          "&.Mui-disabled": { color: "#313952" }
-        },
+          [`&.${import_material14.formLabelClasses.focused}`]: { color: theme.palette.text.primary },
+          [`&.${import_material14.formLabelClasses.disabled}`]: { color: theme.palette.text.primary }
+        }),
         children: label
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_material12.FormGroup, { row: orientation === "horizontal", sx: { gap: 1.5, ...sx }, children: options.length > 0 ? options.map((opt, i) => {
-      const optObj = typeof opt === "string" ? { label: opt, value: opt } : opt;
-      return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-        Checkbox,
-        {
-          value: optObj.value,
-          label: optObj.label,
-          color: optObj.color
-        },
-        optObj.value ?? i
-      );
-    }) : children })
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      import_material14.FormGroup,
+      {
+        row: orientation === "horizontal",
+        sx: [{ gap: 1.5 }, ...Array.isArray(sx) ? sx : [sx]],
+        children: options.length > 0 ? options.map((opt, i) => {
+          const optObj = typeof opt === "string" ? { label: opt, value: opt } : opt;
+          return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+            Checkbox,
+            {
+              value: optObj.value,
+              label: optObj.label,
+              color: optObj.color
+            },
+            optObj.value ?? i
+          );
+        }) : children
+      }
+    )
   ] }) });
 };
 
 // src/components/RadioGroup/RadioGroup.tsx
-var import_react14 = require("react");
-var import_material13 = require("@mui/material");
-var import_jsx_runtime16 = require("react/jsx-runtime");
+var import_react19 = require("react");
+var import_material15 = require("@mui/material");
+var import_jsx_runtime23 = require("react/jsx-runtime");
 var VARIANTS2 = {
   sm: { size: 18 },
   md: { size: 20 },
   lg: { size: 22 }
 };
-var RadioGroupContext = (0, import_react14.createContext)(
+var RadioGroupContext = (0, import_react19.createContext)(
   void 0
 );
 var Radio = ({
@@ -7057,102 +9358,117 @@ var Radio = ({
   variant,
   sx = {}
 }) => {
-  const context = (0, import_react14.useContext)(RadioGroupContext);
+  const context = (0, import_react19.useContext)(RadioGroupContext);
   if (!context) {
     throw new Error("Radio must be used within a RadioGroup");
   }
   const isDisabled = disabled || context.disabled;
   const activeVariant = variant || context.variant;
-  const activeColor = color || context.color || "#4772FF";
+  const activeColor = color || context.color || "primary.main";
   const activeUnselectedColor = unselectedColor || context.unselectedColor || activeColor;
   const { size } = VARIANTS2[activeVariant] ?? VARIANTS2.md;
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
-    import_material13.FormControlLabel,
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+    import_material15.FormControlLabel,
     {
       value,
-      control: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
-        import_material13.Radio,
+      control: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        import_material15.Radio,
         {
           size: "small",
           disabled: isDisabled,
-          sx: {
-            p: 0,
-            width: size,
-            height: size,
-            color: activeUnselectedColor,
-            "&.Mui-checked": { color: activeColor },
-            "& svg": { width: size, height: size },
-            "&:hover": { bgcolor: "transparent" },
-            ...sx
-          },
+          sx: [
+            {
+              p: 0,
+              width: size,
+              height: size,
+              color: activeUnselectedColor,
+              "&.Mui-checked": { color: activeColor },
+              "& svg": { width: size, height: size },
+              "&:hover": { bgcolor: "transparent" }
+            },
+            ...Array.isArray(sx) ? sx : [sx]
+          ],
           disableRipple: true
         }
       ),
       label,
       disabled: isDisabled,
-      sx: {
+      sx: (theme) => ({
         m: 0,
         gap: 0.5,
-        "& .MuiFormControlLabel-label": {
+        "& .VortexUIFormControlLabel-label": {
           fontSize: "13px",
-          color: isDisabled ? "#9CA3AF" : "#313952",
+          color: isDisabled ? theme.palette.text.disabled : theme.palette.text.primary,
           fontWeight: 400
         }
-      }
+      })
     }
   );
 };
 var RadioGroup = ({
   value,
+  defaultValue,
   onChange,
   options = [],
   orientation = "horizontal",
   variant = "md",
   disabled = false,
   color,
-  unselectedColor = "#4772FF",
+  unselectedColor = "primary.main",
   label,
   sx = {},
   children
 }) => {
+  const [internalValue, setInternalValue] = (0, import_react19.useState)(
+    defaultValue
+  );
+  const isControlled = value !== void 0;
+  const currentValue = isControlled ? value : internalValue;
   const handleChange = (e) => {
+    const val = e.target.value;
+    if (!isControlled) {
+      setInternalValue(val);
+    }
     if (onChange) {
-      onChange(e.target.value);
+      onChange(val);
     }
   };
   const contextValue = {
-    value,
-    onChange: (val) => onChange?.(val),
+    value: currentValue,
+    onChange: (val) => {
+      if (!isControlled) setInternalValue(val);
+      onChange?.(val);
+    },
     disabled,
     variant,
     color,
     unselectedColor
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(RadioGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_material13.FormControl, { disabled, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
-      import_material13.FormLabel,
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(RadioGroupContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_material15.FormControl, { disabled, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+      import_material15.FormLabel,
       {
-        sx: {
+        sx: (theme) => ({
           fontSize: "13px",
           fontWeight: 400,
-          color: "#313952",
+          color: theme.palette.text.primary,
           mb: 1,
-          "&.Mui-focused": { color: "#313952" },
-          "&.Mui-disabled": { color: "#313952" }
-        },
+          [`&.${import_material15.formLabelClasses.focused}`]: { color: theme.palette.text.primary },
+          [`&.${import_material15.formLabelClasses.disabled}`]: { color: theme.palette.text.primary }
+        }),
         children: label
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
-      import_material13.RadioGroup,
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+      import_material15.RadioGroup,
       {
         row: orientation === "horizontal",
-        value,
+        value: currentValue ?? "",
         onChange: handleChange,
-        sx: { gap: 1.5, ...sx },
+        sx: [{ gap: 1.5 }, ...Array.isArray(sx) ? sx : [sx]],
         children: options.length > 0 ? options.map((opt, i) => {
           const optObj = typeof opt === "string" ? { label: opt, value: opt } : opt;
-          return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Radio,
             {
               value: optObj.value,
@@ -7168,9 +9484,9 @@ var RadioGroup = ({
 };
 
 // src/components/ToggleSwitch/ToggleSwitch.tsx
-var import_react15 = require("react");
-var import_material14 = require("@mui/material");
-var import_jsx_runtime17 = require("react/jsx-runtime");
+var import_react20 = require("react");
+var import_material16 = require("@mui/material");
+var import_jsx_runtime24 = require("react/jsx-runtime");
 var TOGGLE_VARIANTS = {
   sm: {
     trackWidth: 32,
@@ -7201,15 +9517,15 @@ var ToggleSwitch = ({
   onChange,
   disabled = false,
   variant = "md",
-  color = "#4772FF",
-  unselectedColor = "#C5C9D6",
+  color = "primary.main",
+  unselectedColor = "action.disabledBackground",
   labelProps = {}
 }) => {
   const isControlled = checked !== void 0;
-  const [internalChecked, setInternalChecked] = (0, import_react15.useState)(
+  const [internalChecked, setInternalChecked] = (0, import_react20.useState)(
     isControlled ? checked : defaultChecked
   );
-  (0, import_react15.useEffect)(() => {
+  (0, import_react20.useEffect)(() => {
     if (isControlled) {
       setInternalChecked(checked);
     }
@@ -7227,8 +9543,8 @@ var ToggleSwitch = ({
       onChange(nextState);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
-    import_material14.Box,
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+    import_material16.Box,
     {
       sx: {
         display: "flex",
@@ -7240,8 +9556,8 @@ var ToggleSwitch = ({
       },
       onClick: handleToggle,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-          import_material14.Box,
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+          import_material16.Box,
           {
             sx: {
               width: trackWidth,
@@ -7252,8 +9568,8 @@ var ToggleSwitch = ({
               transition: "background-color 0.25s ease",
               flexShrink: 0
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-              import_material14.Box,
+            children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              import_material16.Box,
               {
                 sx: {
                   position: "absolute",
@@ -7262,7 +9578,7 @@ var ToggleSwitch = ({
                   width: thumbSize,
                   height: thumbSize,
                   borderRadius: "50%",
-                  bgcolor: "#FFFFFF",
+                  bgcolor: "common.white",
                   boxShadow: "0px 1px 3px rgba(0,0,0,0.25)",
                   transition: "transform 0.25s ease"
                 }
@@ -7270,13 +9586,13 @@ var ToggleSwitch = ({
             )
           }
         ),
-        label && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-          import_material14.Typography,
+        label && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+          import_material16.Typography,
           {
             variant: "body2",
             fontWeight: 400,
             fontSize,
-            color: "#1F2A40",
+            color: "text.primary",
             ...labelProps,
             children: label
           }
@@ -7287,8 +9603,8 @@ var ToggleSwitch = ({
 };
 
 // src/components/Card/Card.tsx
-var import_material15 = require("@mui/material");
-var import_jsx_runtime18 = require("react/jsx-runtime");
+var import_material17 = require("@mui/material");
+var import_jsx_runtime25 = require("react/jsx-runtime");
 var SHADOWS = {
   none: "none",
   sm: "0px 2px 4px 0px rgba(0,0,0,0.075)",
@@ -7304,14 +9620,15 @@ var Card = ({
   ...rest
 }) => {
   const shadow = SHADOWS[variant] ?? SHADOWS.none;
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
-    import_material15.Card,
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+    import_material17.Card,
     {
       elevation: 0,
       sx: {
         ...fullWidth && { width: "100%" },
-        bgcolor: "#FFFFFF",
-        border: "1px solid #CDCDCD",
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
         borderRadius: "10px",
         boxShadow: shadow,
         p: 2,
@@ -7324,8 +9641,8 @@ var Card = ({
 };
 
 // src/components/Sheet/Sheet.tsx
-var import_material16 = require("@mui/material");
-var import_jsx_runtime19 = require("react/jsx-runtime");
+var import_material18 = require("@mui/material");
+var import_jsx_runtime26 = require("react/jsx-runtime");
 var SHADOWS2 = {
   none: "none",
   sm: "0px 2px 4px 0px rgba(0,0,0,0.075)",
@@ -7341,12 +9658,13 @@ var Sheet = ({
   ...rest
 }) => {
   const shadow = SHADOWS2[variant] ?? SHADOWS2.none;
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-    import_material16.Box,
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    import_material18.Box,
     {
       sx: {
-        bgcolor: "#FFFFFF",
-        border: "1px solid #CDCDCD",
+        bgcolor: "background.paper",
+        border: 1,
+        borderColor: "divider",
         borderRadius: "10px",
         boxShadow: shadow,
         ...fullHeight && { flex: 1 },
@@ -7361,9 +9679,9 @@ var Sheet = ({
 };
 
 // src/components/Grid/Grid.tsx
-var import_react16 = __toESM(require("react"));
-var import_material17 = require("@mui/material");
-var import_jsx_runtime20 = require("react/jsx-runtime");
+var import_react21 = __toESM(require("react"));
+var import_material19 = require("@mui/material");
+var import_jsx_runtime27 = require("react/jsx-runtime");
 var CUSTOM_SPACING_MAP = {
   none: 0,
   xs: 1,
@@ -7377,17 +9695,17 @@ var CUSTOM_SPACING_MAP = {
   xl: 6
   // 48px
 };
-var Grid = import_react16.default.forwardRef(
+var Grid = import_react21.default.forwardRef(
   ({ spacing = "sm", children, ...rest }, ref) => {
     const resolvedSpacing = typeof spacing === "string" && spacing in CUSTOM_SPACING_MAP ? CUSTOM_SPACING_MAP[spacing] : spacing;
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_material17.Grid2, { ref, spacing: resolvedSpacing, ...rest, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_material19.Grid2, { ref, spacing: resolvedSpacing, ...rest, children });
   }
 );
 Grid.displayName = "Grid";
 
 // src/components/Badge/CountBadge.tsx
-var import_material18 = require("@mui/material");
-var import_jsx_runtime21 = require("react/jsx-runtime");
+var import_material20 = require("@mui/material");
+var import_jsx_runtime28 = require("react/jsx-runtime");
 var CountBadge = ({
   count,
   maxCount = 9,
@@ -7403,8 +9721,8 @@ var CountBadge = ({
 }) => {
   if (count == null) return null;
   const displayCount = typeof count === "number" && maxCount != null && count > maxCount ? `${maxCount}+` : count;
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
-    import_material18.Box,
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    import_material20.Box,
     {
       sx: {
         bgcolor: active ? activeBg : inactiveBg,
@@ -7427,9 +9745,303 @@ var CountBadge = ({
 };
 var CountBadge_default = CountBadge;
 
+// src/components/Breadcrumbs/Breadcrumbs.tsx
+var import_react22 = __toESM(require("react"));
+var import_material21 = require("@mui/material");
+var import_jsx_runtime29 = require("react/jsx-runtime");
+var Breadcrumbs = ({
+  items,
+  onCrumbClick,
+  separator = "\u203A",
+  maxItems,
+  sx
+}) => {
+  if (!items || items.length === 0) return null;
+  let displayItems = [];
+  if (maxItems && maxItems > 0 && items.length > maxItems) {
+    const startItems = 1;
+    const endItems = maxItems === 1 ? 0 : maxItems - 1;
+    displayItems.push({ type: "item", crumb: items[0], originalIndex: 0 });
+    displayItems.push({ type: "collapsed" });
+    for (let i = items.length - endItems; i < items.length; i++) {
+      displayItems.push({ type: "item", crumb: items[i], originalIndex: i });
+    }
+  } else {
+    displayItems = items.map((crumb, index) => ({
+      type: "item",
+      crumb,
+      originalIndex: index
+    }));
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_material21.Box, { sx: { display: "flex", alignItems: "center", gap: 1, ...sx }, children: displayItems.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(import_react22.default.Fragment, { children: [
+    index > 0 && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+      import_material21.Box,
+      {
+        component: "span",
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          color: "text.secondary",
+          fontSize: "13px"
+        },
+        children: separator
+      }
+    ),
+    item.type === "collapsed" ? /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_material21.Typography, { sx: { color: "text.secondary", fontSize: "13px", px: 0.5, letterSpacing: 1 }, children: "..." }) : /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+      import_material21.Typography,
+      {
+        onClick: () => {
+          if (item.crumb.isNavigable !== false && onCrumbClick) {
+            onCrumbClick(item.crumb, item.originalIndex);
+          }
+        },
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          gap: 0.5,
+          color: item.originalIndex === items.length - 1 ? "text.primary" : "text.secondary",
+          fontSize: "13px",
+          fontWeight: item.originalIndex === items.length - 1 ? 500 : 400,
+          cursor: item.crumb.isNavigable !== false ? "pointer" : "default",
+          "&:hover": item.crumb.isNavigable !== false ? {
+            color: "text.primary",
+            textDecoration: "underline"
+          } : {}
+        },
+        children: [
+          item.crumb.icon && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+            import_material21.Box,
+            {
+              component: "span",
+              sx: {
+                display: "flex",
+                alignItems: "center",
+                "& > svg": { fontSize: "16px" }
+              },
+              children: item.crumb.icon
+            }
+          ),
+          item.crumb.label && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: item.crumb.label })
+        ]
+      }
+    )
+  ] }, index)) });
+};
+
+// src/components/Avatar/Avatar.tsx
+var import_react23 = require("react");
+var import_material22 = require("@mui/material");
+var import_Person = __toESM(require("@mui/icons-material/Person"));
+var import_Edit = __toESM(require("@mui/icons-material/Edit"));
+var import_jsx_runtime30 = require("react/jsx-runtime");
+var VARIANTS3 = {
+  sm: {
+    size: 24,
+    fontSize: "11px",
+    fontWeight: 500,
+    borderRadius: "6px",
+    iconSize: 14
+  },
+  md: {
+    size: 32,
+    fontSize: "14px",
+    fontWeight: 500,
+    borderRadius: "8px",
+    iconSize: 18
+  },
+  lg: {
+    size: 56,
+    fontSize: "24px",
+    fontWeight: 400,
+    borderRadius: "12px",
+    iconSize: 24
+  }
+};
+var Avatar = ({
+  type = "letter",
+  variant = "md",
+  editable = false,
+  name,
+  onLetterChange,
+  src,
+  alt = "",
+  onImageChange,
+  bgcolor = "#E5E7F0",
+  color = "#808697",
+  sx = {}
+}) => {
+  const { size, fontSize, fontWeight, borderRadius, iconSize } = VARIANTS3[variant] ?? VARIANTS3.md;
+  const isImage = type === "image";
+  const [anchorEl, setAnchorEl] = (0, import_react23.useState)(null);
+  const [draft, setDraft] = (0, import_react23.useState)(name || "");
+  const boxRef = (0, import_react23.useRef)(null);
+  const open = Boolean(anchorEl);
+  const handleOpenPopover = () => {
+    setDraft(name || "");
+    setAnchorEl(boxRef.current);
+  };
+  const handleClosePopover = () => setAnchorEl(null);
+  const handleSaveLetter = () => {
+    const trimmed = draft.trim();
+    if (trimmed && trimmed !== name) {
+      onLetterChange?.(trimmed);
+    }
+    handleClosePopover();
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSaveLetter();
+    if (e.key === "Escape") handleClosePopover();
+  };
+  const [imgError, setImgError] = (0, import_react23.useState)(false);
+  const [preview, setPreview] = (0, import_react23.useState)(null);
+  const [hovered, setHovered] = (0, import_react23.useState)(false);
+  const inputRef = (0, import_react23.useRef)(null);
+  const activeSrc = preview ?? src;
+  const showFallback = !activeSrc || imgError;
+  const handleOpenFilePicker = () => inputRef.current?.click();
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    setImgError(false);
+    onImageChange?.(file, url);
+    e.target.value = "";
+  };
+  const handleEditClick = isImage ? handleOpenFilePicker : handleOpenPopover;
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_jsx_runtime30.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+      import_material22.Box,
+      {
+        ref: boxRef,
+        sx: {
+          position: "relative",
+          width: size,
+          height: size,
+          flexShrink: 0,
+          "&:hover .avatar-overlay": editable && !isImage ? { opacity: 1 } : {},
+          ...sx
+        },
+        onMouseEnter: () => isImage && editable && setHovered(true),
+        onMouseLeave: () => isImage && editable && setHovered(false),
+        children: [
+          isImage ? /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            import_material22.Box,
+            {
+              sx: {
+                width: size,
+                height: size,
+                borderRadius,
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                bgcolor: showFallback ? bgcolor : "transparent",
+                color: showFallback ? color : "inherit"
+              },
+              children: showFallback ? /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_Person.default, { sx: { fontSize: size * 0.55 } }) : /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+                import_material22.Box,
+                {
+                  component: "img",
+                  src: activeSrc,
+                  alt,
+                  onError: () => setImgError(true),
+                  sx: {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block"
+                  }
+                }
+              )
+            }
+          ) : /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            import_material22.Box,
+            {
+              sx: {
+                width: size,
+                height: size,
+                borderRadius,
+                bgcolor,
+                color,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight,
+                fontSize,
+                textTransform: "uppercase",
+                userSelect: "none",
+                lineHeight: 1
+              },
+              children: name?.charAt(0) || /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_Person.default, { sx: { fontSize: size * 0.55 } })
+            }
+          ),
+          editable && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            import_material22.Box,
+            {
+              className: "avatar-overlay",
+              onClick: handleEditClick,
+              sx: {
+                position: "absolute",
+                inset: 0,
+                borderRadius,
+                bgcolor: "rgba(0, 0, 0, 0.45)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                opacity: isImage ? hovered ? 1 : 0 : 0,
+                transition: "opacity 0.18s ease"
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_Edit.default, { sx: { fontSize: iconSize, color: "#ffffff" } })
+            }
+          ),
+          isImage && editable && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            "input",
+            {
+              ref: inputRef,
+              type: "file",
+              accept: "image/*",
+              style: { display: "none" },
+              onChange: handleFileChange
+            }
+          )
+        ]
+      }
+    ),
+    !isImage && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      import_material22.Popover,
+      {
+        open,
+        anchorEl,
+        onClose: handleClosePopover,
+        anchorOrigin: { vertical: "bottom", horizontal: "left" },
+        transformOrigin: { vertical: "top", horizontal: "left" },
+        children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_material22.Stack, { spacing: 1.5, sx: { p: 2, width: 240 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            TextField,
+            {
+              autoFocus: true,
+              size: "small",
+              label: "Name",
+              value: draft,
+              onChange: (e) => setDraft(e.target.value),
+              onKeyDown: handleKeyDown
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_material22.Stack, { direction: "row", spacing: 1, justifyContent: "flex-end", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Button, { size: "sm", variant: "outlined", onClick: handleClosePopover, children: "Cancel" }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Button, { size: "sm", variant: "filled", onClick: handleSaveLetter, children: "Save" })
+          ] })
+        ] })
+      }
+    )
+  ] });
+};
+
 // src/components/Slider/Slider.tsx
-var import_material19 = require("@mui/material");
-var import_jsx_runtime22 = require("react/jsx-runtime");
+var import_material23 = require("@mui/material");
+var import_jsx_runtime31 = require("react/jsx-runtime");
 var getSliderSx = (trackColor, railColor) => ({
   color: trackColor,
   height: 6,
@@ -7508,9 +10120,9 @@ var Slider = ({
     { value: min, label: `${min}` },
     { value: max, label: `${max}` }
   ] : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_material19.Box, { sx: { width: "100%", ...sx }, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-      import_material19.Typography,
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_material23.Box, { sx: { width: "100%", ...sx }, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+      import_material23.Typography,
       {
         variant: "caption",
         fontSize: 13,
@@ -7521,8 +10133,8 @@ var Slider = ({
         children: label
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_material19.Box, { sx: { px: 0.5, pb: showMinMaxLabels ? 2.5 : 0, pt: 2.5 }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-      import_material19.Slider,
+    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_material23.Box, { sx: { px: 0.5, pb: showMinMaxLabels ? 2.5 : 0, pt: 2.5 }, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+      import_material23.Slider,
       {
         value,
         onChange: (e, newValue) => onChange(newValue),
@@ -7535,8 +10147,8 @@ var Slider = ({
         sx: getSliderSx(trackColor, railColor)
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
-      import_material19.Typography,
+    /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
+      import_material23.Typography,
       {
         fontSize: 13,
         fontWeight: 500,
@@ -7553,68 +10165,75 @@ var Slider = ({
 };
 
 // src/components/Slider/RangeSlider.tsx
-var import_material20 = require("@mui/material");
-var import_jsx_runtime23 = require("react/jsx-runtime");
-var getRangeSliderSx = (trackColor, railColor) => ({
-  color: trackColor,
-  height: 6,
-  padding: "13px 0",
-  "& .MuiSlider-rail": {
-    backgroundColor: railColor,
-    opacity: 1,
+var import_material24 = require("@mui/material");
+var import_jsx_runtime32 = require("react/jsx-runtime");
+var getThemeColor = (theme, colorPath) => {
+  return colorPath.split(".").reduce((acc, part) => acc && acc[part], theme.palette) || colorPath;
+};
+var getRangeSliderSx = (trackColor, railColor) => (theme) => {
+  const tColor = getThemeColor(theme, trackColor);
+  const rColor = getThemeColor(theme, railColor);
+  return {
+    color: tColor,
     height: 6,
-    borderRadius: 4
-  },
-  "& .MuiSlider-track": {
-    backgroundColor: trackColor,
-    border: "none",
-    height: 6,
-    borderRadius: 4
-  },
-  "& .MuiSlider-thumb": {
-    width: 18,
-    height: 18,
-    backgroundColor: trackColor,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-    "&:hover, &.Mui-focusVisible": {
-      boxShadow: `0 0 0 8px ${trackColor}22`
+    padding: "13px 0",
+    "& .MuiSlider-rail": {
+      backgroundColor: rColor,
+      opacity: 1,
+      height: 6,
+      borderRadius: 4
     },
-    "&.Mui-active": {
-      boxShadow: `0 0 0 10px ${trackColor}33`
-    }
-  },
-  "& .MuiSlider-valueLabel": {
-    backgroundColor: "#E8EDFF",
-    color: "#1E2746",
-    fontSize: 13,
-    fontWeight: 400,
-    borderRadius: "8px",
-    padding: "5px 12px",
-    "&::before": {
-      backgroundColor: "#E8EDFF",
-      width: 8,
-      height: 8
-    }
-  },
-  "& .MuiSlider-mark": {
-    display: "none"
-  },
-  "& .MuiSlider-markLabel": {
-    fontSize: 13,
-    color: "#1E2746",
-    fontWeight: 400,
-    top: 30,
-    '&[data-index="0"]': {
-      left: "0px !important",
-      transform: "none"
+    "& .MuiSlider-track": {
+      backgroundColor: tColor,
+      border: "none",
+      height: 6,
+      borderRadius: 4
     },
-    '&[data-index="1"]': {
-      right: "0px !important",
-      left: "auto !important",
-      transform: "none"
+    "& .MuiSlider-thumb": {
+      width: 18,
+      height: 18,
+      backgroundColor: tColor,
+      boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+      "&:hover, &.Mui-focusVisible": {
+        boxShadow: `0 0 0 8px ${tColor}22`
+      },
+      "&.Mui-active": {
+        boxShadow: `0 0 0 10px ${tColor}33`
+      }
+    },
+    "& .MuiSlider-valueLabel": {
+      backgroundColor: theme.palette.primary.disabledBackground || "#E8EDFF",
+      color: theme.palette.text.primary,
+      fontSize: 13,
+      fontWeight: 400,
+      borderRadius: "8px",
+      padding: "5px 12px",
+      "&::before": {
+        backgroundColor: theme.palette.primary.disabledBackground || "#E8EDFF",
+        width: 8,
+        height: 8
+      }
+    },
+    "& .MuiSlider-mark": {
+      display: "none"
+    },
+    "& .MuiSlider-markLabel": {
+      fontSize: 13,
+      color: theme.palette.text.primary,
+      fontWeight: 400,
+      top: 30,
+      '&[data-index="0"]': {
+        left: "0px !important",
+        transform: "none"
+      },
+      '&[data-index="1"]': {
+        right: "0px !important",
+        left: "auto !important",
+        transform: "none"
+      }
     }
-  }
-});
+  };
+};
 var RangeSlider = ({
   label,
   value,
@@ -7625,8 +10244,8 @@ var RangeSlider = ({
   step = 1,
   minDistance = 0,
   disabled = false,
-  trackColor = "#4772FF",
-  railColor = "#E5EBFF",
+  trackColor = "primary.main",
+  railColor = "primary.disabledBackground",
   showMinMaxLabels = true,
   showRangeText = true,
   sx = {}
@@ -7647,22 +10266,22 @@ var RangeSlider = ({
       onChange(newValue);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_material20.Box, { sx: { width: "100%", ...sx }, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-      import_material20.Typography,
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_material24.Box, { sx: { width: "100%", ...sx }, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+      import_material24.Typography,
       {
         variant: "caption",
         fontSize: 13,
         fontWeight: 400,
-        color: "#374151",
+        color: "text.secondary",
         mb: 1,
         display: "block",
         children: label
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_material20.Box, { sx: { px: 0.5, pb: showMinMaxLabels ? 3.5 : 0, pt: 2.5 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-        import_material20.Slider,
+    /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_material24.Box, { sx: { px: 0.5, pb: showMinMaxLabels ? 3.5 : 0, pt: 2.5 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+        import_material24.Slider,
         {
           value,
           onChange: handleChange,
@@ -7676,14 +10295,14 @@ var RangeSlider = ({
           sx: getRangeSliderSx(trackColor, railColor)
         }
       ),
-      showRangeText && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
-        import_material20.Typography,
+      showRangeText && /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
+        import_material24.Typography,
         {
           sx: {
             textAlign: "center",
             fontSize: 14,
             fontWeight: 500,
-            color: "#4F6FFA",
+            color: "primary.main",
             mt: showMinMaxLabels ? -4 : 1
           },
           children: [
@@ -7698,11 +10317,11 @@ var RangeSlider = ({
 };
 
 // src/components/Progress/Progress.tsx
-var import_react17 = require("react");
-var import_material21 = require("@mui/material");
-var import_styles5 = require("@mui/material/styles");
-var import_jsx_runtime24 = require("react/jsx-runtime");
-var ProgressBarContainer = (0, import_styles5.styled)(import_material21.Box)(
+var import_react24 = require("react");
+var import_material25 = require("@mui/material");
+var import_styles6 = require("@mui/material/styles");
+var import_jsx_runtime33 = require("react/jsx-runtime");
+var ProgressBarContainer = (0, import_styles6.styled)(import_material25.Box)(
   ({ theme, bheight, bgcolor, bradius }) => ({
     width: "100%",
     backgroundColor: bgcolor || "#EEF2FF",
@@ -7712,7 +10331,7 @@ var ProgressBarContainer = (0, import_styles5.styled)(import_material21.Box)(
     position: "relative"
   })
 );
-var ProgressFill = (0, import_styles5.styled)(import_material21.Box)(
+var ProgressFill = (0, import_styles6.styled)(import_material25.Box)(
   ({ fillcolor, duration, stepjump }) => ({
     height: "100%",
     backgroundColor: fillcolor || "#4772FF",
@@ -7736,16 +10355,16 @@ var Progress = ({
   stepJump = 0,
   ...props
 }) => {
-  const [currentValue, setCurrentValue] = (0, import_react17.useState)(0);
-  const targetRef = (0, import_react17.useRef)(0);
-  const intervalRef = (0, import_react17.useRef)(null);
-  (0, import_react17.useEffect)(() => {
+  const [currentValue, setCurrentValue] = (0, import_react24.useState)(0);
+  const targetRef = (0, import_react24.useRef)(0);
+  const intervalRef = (0, import_react24.useRef)(null);
+  (0, import_react24.useEffect)(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
   }, [stepJump, animationDuration]);
-  (0, import_react17.useEffect)(() => {
+  (0, import_react24.useEffect)(() => {
     let finalTarget = Math.min(100, Math.max(0, value));
     if (stepJump > 0) {
       finalTarget = Math.floor(finalTarget / stepJump) * stepJump;
@@ -7786,7 +10405,7 @@ var Progress = ({
       return () => clearTimeout(timer);
     }
   }, [value, stepJump, animationDuration]);
-  (0, import_react17.useEffect)(() => {
+  (0, import_react24.useEffect)(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
@@ -7799,8 +10418,8 @@ var Progress = ({
   };
   const colorValue = stepJump > 0 ? Math.floor(currentValue / stepJump) * stepJump : currentValue;
   const fillColor = getColor ? getColor(colorValue) : defaultGetColor(colorValue);
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-    import_material21.Box,
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+    import_material25.Box,
     {
       sx: [
         {
@@ -7812,8 +10431,8 @@ var Progress = ({
         ...Array.isArray(props.sx) ? props.sx : [props.sx]
       ],
       children: [
-        showValue && valuePosition === "top" && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-          import_material21.Typography,
+        showValue && valuePosition === "top" && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+          import_material25.Typography,
           {
             variant: "caption",
             sx: {
@@ -7828,12 +10447,12 @@ var Progress = ({
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-          import_material21.Box,
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+          import_material25.Box,
           {
             sx: { display: "flex", alignItems: "center", gap: 2, width: "100%" },
             children: [
-              variant === "stepper" ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_material21.Box, { sx: { display: "flex", gap: 1, width: "100%" }, children: Array.from({ length: steps }).map((_, i) => {
+              variant === "stepper" ? /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_material25.Box, { sx: { display: "flex", gap: 1, width: "100%" }, children: Array.from({ length: steps }).map((_, i) => {
                 const stepPercentage = 100 / steps;
                 const stepStart = i * stepPercentage;
                 const stepEnd = (i + 1) * stepPercentage;
@@ -7843,14 +10462,14 @@ var Progress = ({
                 } else if (currentValue > stepStart) {
                   fillPercent = (currentValue - stepStart) / stepPercentage * 100;
                 }
-                return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                   ProgressBarContainer,
                   {
                     bheight: height,
                     bgcolor: bgColor,
                     bradius: borderRadius,
                     sx: { flex: 1 },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                       ProgressFill,
                       {
                         style: { width: `${fillPercent}%` },
@@ -7862,22 +10481,22 @@ var Progress = ({
                   },
                   i
                 );
-              }) }) : /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+              }) }) : /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
                 ProgressBarContainer,
                 {
                   bheight: height,
                   bgcolor: bgColor,
                   bradius: borderRadius,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
                       ProgressFill,
                       {
                         style: { width: `${currentValue}%` },
                         fillcolor: fillColor,
                         duration: animationDuration,
                         stepjump: stepJump,
-                        children: showValue && valuePosition === "inside" && currentValue >= 15 && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-                          import_material21.Typography,
+                        children: showValue && valuePosition === "inside" && currentValue >= 15 && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+                          import_material25.Typography,
                           {
                             variant: "caption",
                             sx: {
@@ -7897,8 +10516,8 @@ var Progress = ({
                         )
                       }
                     ),
-                    showValue && valuePosition === "inside" && currentValue < 15 && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-                      import_material21.Typography,
+                    showValue && valuePosition === "inside" && currentValue < 15 && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+                      import_material25.Typography,
                       {
                         variant: "caption",
                         sx: {
@@ -7919,8 +10538,8 @@ var Progress = ({
                   ]
                 }
               ),
-              showValue && valuePosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-                import_material21.Typography,
+              showValue && valuePosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
+                import_material25.Typography,
                 {
                   variant: "caption",
                   sx: {
@@ -7944,9 +10563,385 @@ var Progress = ({
 };
 var Progress_default = Progress;
 
+// src/components/PipelineStepper/PipelineStepper.tsx
+var import_material26 = require("@mui/material");
+var import_jsx_runtime34 = require("react/jsx-runtime");
+var PipelineStepper = ({
+  stages,
+  value,
+  onChange,
+  width = "100%",
+  height = 38
+}) => {
+  const ARROW = 12;
+  const theme = (0, import_material26.useTheme)();
+  if (!stages || stages.length === 0) return null;
+  const activeIndex = stages.findIndex((s) => s.value === value);
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_material26.Box, { sx: { display: "flex", alignItems: "center", width }, children: stages.map((s, i) => {
+    const isFirst = i === 0;
+    const isDone = activeIndex !== -1 && i < activeIndex;
+    const isActive = activeIndex !== -1 ? i === activeIndex : false;
+    let bgColor;
+    let textColor;
+    if (isDone || isActive) {
+      bgColor = theme.palette.primary.main;
+      textColor = theme.palette.primary.contrastText;
+    } else {
+      bgColor = theme.palette.mode === "dark" ? theme.palette.grey[800] : "#EFEFEF";
+      textColor = theme.palette.mode === "dark" ? theme.palette.grey[400] : "#6B7280";
+    }
+    const clipPath = isFirst ? `polygon(0% 0%, calc(100% - ${ARROW}px) 0%, 100% 50%, calc(100% - ${ARROW}px) 100%, 0% 100%)` : `polygon(0% 0%, calc(100% - ${ARROW}px) 0%, 100% 50%, calc(100% - ${ARROW}px) 100%, 0% 100%, ${ARROW}px 50%)`;
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+      import_material26.Box,
+      {
+        onClick: () => onChange?.(s.value),
+        sx: {
+          position: "relative",
+          flex: 1,
+          height,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: bgColor,
+          color: textColor,
+          cursor: onChange ? "pointer" : "default",
+          clipPath,
+          borderRadius: isFirst ? "8px 0 0 8px" : 0,
+          transition: "filter 0.18s",
+          pl: isFirst ? 1 : ARROW / 12 + 2,
+          pr: 2.5,
+          "&:hover": onChange ? { filter: "brightness(0.93)" } : {}
+        },
+        children: isDone ? /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_material26.Box, { sx: { display: "flex", alignItems: "center", gap: 0.6 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+            "polyline",
+            {
+              points: "2,6 5,9 10,3",
+              stroke: textColor,
+              strokeWidth: "2",
+              strokeLinecap: "round",
+              strokeLinejoin: "round"
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+            import_material26.Typography,
+            {
+              sx: {
+                fontSize: 13,
+                fontWeight: 400,
+                whiteSpace: "nowrap",
+                userSelect: "none",
+                color: textColor
+              },
+              children: s.label
+            }
+          )
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+          import_material26.Typography,
+          {
+            sx: {
+              fontSize: 13,
+              fontWeight: isActive ? 600 : 400,
+              whiteSpace: "nowrap",
+              userSelect: "none",
+              color: textColor
+            },
+            children: s.label
+          }
+        )
+      },
+      s.value
+    );
+  }) });
+};
+
+// src/components/Stepper/Stepper.tsx
+var import_material27 = require("@mui/material");
+var import_Check = __toESM(require("@mui/icons-material/Check"));
+var import_jsx_runtime35 = require("react/jsx-runtime");
+var sizeMap = {
+  sm: { bubble: 26, font: 11, labelFont: 12, connector: 2 },
+  md: { bubble: 32, font: 13, labelFont: 13, connector: 2 },
+  lg: { bubble: 40, font: 15, labelFont: 14, connector: 3 }
+};
+var Stepper = ({
+  steps = [],
+  value = 0,
+  onStepClick,
+  variant = "horizontal",
+  size = "md",
+  color,
+  showLabels = true,
+  connectorStyle = "solid",
+  allowJump = false
+}) => {
+  const theme = (0, import_material27.useTheme)();
+  const isMobile = (0, import_material27.useMediaQuery)(theme.breakpoints.down("sm"));
+  const effectiveVariant = isMobile ? "horizontal" : variant;
+  const primaryColor = color || theme.palette.primary.main;
+  const { bubble, font, labelFont, connector } = sizeMap[size] || sizeMap.md;
+  const activeIndex = steps.findIndex((step, i) => {
+    if (typeof step === "object" && step !== null && "value" in step) {
+      return step.value === value;
+    }
+    return i === value;
+  });
+  const getStepState = (index) => {
+    if (index < activeIndex) return "completed";
+    if (index === activeIndex) return "active";
+    return "pending";
+  };
+  const bubbleStyles = (state) => {
+    return {
+      completed: {
+        bg: primaryColor,
+        border: primaryColor,
+        textColor: theme.palette.primary.contrastText || "#fff",
+        cursor: onStepClick ? "pointer" : "default"
+      },
+      active: {
+        bg: primaryColor,
+        border: primaryColor,
+        textColor: theme.palette.primary.contrastText || "#fff",
+        cursor: "default"
+      },
+      pending: {
+        bg: theme.palette.background.paper,
+        border: theme.palette.divider,
+        textColor: theme.palette.text.disabled,
+        cursor: allowJump && onStepClick ? "pointer" : "default"
+      }
+    }[state];
+  };
+  const connectorColor = (index) => index < activeIndex ? primaryColor : theme.palette.divider;
+  if (effectiveVariant === "horizontal") {
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_material27.Box, { sx: { width: "100%", display: "flex", alignItems: "flex-start" }, children: steps.map((stepItem, i) => {
+      const label = typeof stepItem === "object" && stepItem !== null && "label" in stepItem ? stepItem.label : stepItem;
+      const description = typeof stepItem === "object" && stepItem !== null && "description" in stepItem ? stepItem.description : null;
+      const stepValue = typeof stepItem === "object" && stepItem !== null && "value" in stepItem ? stepItem.value : i;
+      const state = getStepState(i);
+      const styles = bubbleStyles(state);
+      const isLast = i === steps.length - 1;
+      return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+        import_material27.Box,
+        {
+          sx: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            flex: isLast ? "0 0 auto" : 1,
+            minWidth: 0
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+              import_material27.Box,
+              {
+                sx: {
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: bubble
+                },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                    import_material27.Box,
+                    {
+                      onClick: () => (allowJump || state !== "pending") && onStepClick?.(stepValue),
+                      sx: {
+                        width: bubble,
+                        height: bubble,
+                        borderRadius: "50%",
+                        border: `2px solid ${styles.border}`,
+                        bgcolor: styles.bg,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                        cursor: styles.cursor,
+                        transition: "all 0.2s ease",
+                        "&:hover": (state === "completed" || allowJump && state === "pending") && onStepClick ? { opacity: 0.85 } : {}
+                      },
+                      children: state === "completed" ? /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_Check.default, { sx: { fontSize: font + 2, color: theme.palette.primary.contrastText || "#fff" } }) : /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                        import_material27.Typography,
+                        {
+                          sx: {
+                            fontSize: font,
+                            fontWeight: state === "active" ? 700 : 500,
+                            color: styles.textColor,
+                            lineHeight: 1,
+                            userSelect: "none"
+                          },
+                          children: i + 1
+                        }
+                      )
+                    }
+                  ),
+                  showLabels && /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_material27.Box, { sx: { display: "flex", flexDirection: "column", alignItems: "center" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                      import_material27.Typography,
+                      {
+                        sx: {
+                          mt: 0.75,
+                          fontSize: isMobile ? 10 : labelFont,
+                          fontWeight: state === "active" ? 600 : 400,
+                          color: state === "active" ? primaryColor : state === "completed" ? theme.palette.text.primary : theme.palette.text.secondary,
+                          textAlign: "center",
+                          whiteSpace: "nowrap",
+                          lineHeight: 1.3,
+                          userSelect: "none",
+                          transition: "color 0.2s ease"
+                        },
+                        children: label
+                      }
+                    ),
+                    description && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                      import_material27.Typography,
+                      {
+                        sx: {
+                          fontSize: (isMobile ? 10 : labelFont) - 1,
+                          color: theme.palette.text.secondary,
+                          textAlign: "center",
+                          mt: 0.5,
+                          whiteSpace: "nowrap"
+                        },
+                        children: description
+                      }
+                    )
+                  ] })
+                ]
+              }
+            ),
+            !isLast && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              import_material27.Box,
+              {
+                sx: {
+                  flex: 1,
+                  height: connector,
+                  mt: `${bubble / 2 - connector / 2}px`,
+                  bgcolor: connectorStyle === "dashed" ? "transparent" : connectorColor(i),
+                  borderTop: connectorStyle === "dashed" ? `${connector}px dashed ${connectorColor(i)}` : "none",
+                  transition: "background 0.3s ease, border-color 0.3s ease"
+                }
+              }
+            )
+          ]
+        },
+        i
+      );
+    }) });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_material27.Box, { sx: { display: "flex", flexDirection: "column" }, children: steps.map((stepItem, i) => {
+    const label = typeof stepItem === "object" && stepItem !== null && "label" in stepItem ? stepItem.label : stepItem;
+    const description = typeof stepItem === "object" && stepItem !== null && "description" in stepItem ? stepItem.description : null;
+    const stepValue = typeof stepItem === "object" && stepItem !== null && "value" in stepItem ? stepItem.value : i;
+    const state = getStepState(i);
+    const styles = bubbleStyles(state);
+    const isLast = i === steps.length - 1;
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_material27.Box, { sx: { display: "flex", gap: 1.5 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+        import_material27.Box,
+        {
+          sx: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              import_material27.Box,
+              {
+                onClick: () => (allowJump || state !== "pending") && onStepClick?.(stepValue),
+                sx: {
+                  width: bubble,
+                  height: bubble,
+                  borderRadius: "50%",
+                  border: `2px solid ${styles.border}`,
+                  bgcolor: styles.bg,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  cursor: styles.cursor,
+                  transition: "all 0.2s ease",
+                  "&:hover": (state === "completed" || allowJump && state === "pending") && onStepClick ? { opacity: 0.85 } : {}
+                },
+                children: state === "completed" ? /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_Check.default, { sx: { fontSize: font + 2, color: theme.palette.primary.contrastText || "#fff" } }) : /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+                  import_material27.Typography,
+                  {
+                    sx: {
+                      fontSize: font,
+                      fontWeight: state === "active" ? 700 : 500,
+                      color: styles.textColor,
+                      lineHeight: 1,
+                      userSelect: "none"
+                    },
+                    children: i + 1
+                  }
+                )
+              }
+            ),
+            !isLast && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              import_material27.Box,
+              {
+                sx: {
+                  width: connector,
+                  flex: 1,
+                  minHeight: 28,
+                  bgcolor: connectorStyle === "dashed" ? "transparent" : connectorColor(i),
+                  borderLeft: connectorStyle === "dashed" ? `${connector}px dashed ${connectorColor(i)}` : "none",
+                  my: 0.5,
+                  transition: "background 0.3s ease"
+                }
+              }
+            )
+          ]
+        }
+      ),
+      showLabels && /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+        import_material27.Box,
+        {
+          sx: {
+            pt: `${(bubble - labelFont * 1.4) / 2}px`,
+            pb: isLast ? 0 : 3,
+            display: "flex",
+            flexDirection: "column"
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              import_material27.Typography,
+              {
+                sx: {
+                  fontSize: labelFont,
+                  fontWeight: state === "active" ? 600 : 400,
+                  color: state === "active" ? primaryColor : state === "completed" ? theme.palette.text.primary : theme.palette.text.secondary,
+                  lineHeight: 1.4,
+                  userSelect: "none",
+                  transition: "color 0.2s ease"
+                },
+                children: label
+              }
+            ),
+            description && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+              import_material27.Typography,
+              {
+                sx: {
+                  fontSize: labelFont - 1,
+                  color: theme.palette.text.secondary,
+                  mt: 0.25
+                },
+                children: description
+              }
+            )
+          ]
+        }
+      )
+    ] }, i);
+  }) });
+};
+
 // src/components/Skeleton/Skeleton.tsx
-var import_material22 = require("@mui/material");
-var import_jsx_runtime25 = require("react/jsx-runtime");
+var import_material28 = require("@mui/material");
+var import_jsx_runtime36 = require("react/jsx-runtime");
 var Skeleton = ({
   variant = "text",
   orientation,
@@ -7968,8 +10963,8 @@ var Skeleton = ({
     return void 0;
   };
   const borderRadius = getBorderRadius();
-  const BaseSkeleton = (extraSx) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-    import_material22.Skeleton,
+  const BaseSkeleton = (extraSx) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+    import_material28.Skeleton,
     {
       variant: ["card", "list-item", "table-row", "profile"].includes(variant) ? "rectangular" : variant,
       width,
@@ -7985,8 +10980,8 @@ var Skeleton = ({
   );
   if (variant === "card") {
     const isHorizontal = orientation === "horizontal";
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-      import_material22.Box,
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+      import_material28.Box,
       {
         sx: [
           {
@@ -8000,8 +10995,8 @@ var Skeleton = ({
           ...Array.isArray(sx) ? sx : [sx]
         ],
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-            import_material22.Skeleton,
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            import_material28.Skeleton,
             {
               variant: "rectangular",
               height: isHorizontal ? 100 : 140,
@@ -8010,8 +11005,8 @@ var Skeleton = ({
               sx: { borderRadius: 1, flexShrink: 0 }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-            import_material22.Box,
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+            import_material28.Box,
             {
               sx: {
                 pt: isHorizontal ? 0 : 1.5,
@@ -8022,8 +11017,8 @@ var Skeleton = ({
                 gap: 0.5
               },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_material22.Skeleton, { animation, height: 24, width: "80%" }),
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_material22.Skeleton, { animation, height: 20, width: "60%" })
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_material28.Skeleton, { animation, height: 24, width: "80%" }),
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_material28.Skeleton, { animation, height: 20, width: "60%" })
               ]
             }
           )
@@ -8033,8 +11028,8 @@ var Skeleton = ({
   }
   if (variant === "profile") {
     const isVertical = orientation === "vertical";
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-      import_material22.Box,
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+      import_material28.Box,
       {
         sx: [
           {
@@ -8046,8 +11041,8 @@ var Skeleton = ({
           ...Array.isArray(sx) ? sx : [sx]
         ],
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-            import_material22.Skeleton,
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            import_material28.Skeleton,
             {
               variant: "circular",
               width: width || 48,
@@ -8056,8 +11051,8 @@ var Skeleton = ({
               sx: { flexShrink: 0 }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-            import_material22.Box,
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+            import_material28.Box,
             {
               sx: {
                 flex: 1,
@@ -8068,16 +11063,16 @@ var Skeleton = ({
                 width: "100%"
               },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-                  import_material22.Skeleton,
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_material28.Skeleton,
                   {
                     animation,
                     height: 20,
                     width: isVertical ? "80%" : "60%"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-                  import_material22.Skeleton,
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  import_material28.Skeleton,
                   {
                     animation,
                     height: 16,
@@ -8093,8 +11088,8 @@ var Skeleton = ({
   }
   if (variant === "list-item") {
     const isVertical = orientation === "vertical";
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-      import_material22.Box,
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+      import_material28.Box,
       {
         sx: [
           {
@@ -8107,8 +11102,8 @@ var Skeleton = ({
           ...Array.isArray(sx) ? sx : [sx]
         ],
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-            import_material22.Skeleton,
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            import_material28.Skeleton,
             {
               variant: "rectangular",
               width: width || (isVertical ? "100%" : 40),
@@ -8117,8 +11112,8 @@ var Skeleton = ({
               animation
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-            import_material22.Box,
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+            import_material28.Box,
             {
               sx: {
                 flex: 1,
@@ -8128,8 +11123,8 @@ var Skeleton = ({
                 width: "100%"
               },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_material22.Skeleton, { animation, height: 20, width: "70%" }),
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_material22.Skeleton, { animation, height: 16, width: "40%" })
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_material28.Skeleton, { animation, height: 20, width: "70%" }),
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_material28.Skeleton, { animation, height: 16, width: "40%" })
               ]
             }
           )
@@ -8138,8 +11133,8 @@ var Skeleton = ({
     );
   }
   if (variant === "table-row") {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_jsx_runtime25.Fragment, { children: Array.from(new Array(rows)).map((_, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-      import_material22.Stack,
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_jsx_runtime36.Fragment, { children: Array.from(new Array(rows)).map((_, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      import_material28.Stack,
       {
         direction: "row",
         spacing: 2,
@@ -8147,8 +11142,8 @@ var Skeleton = ({
           { py: 1.5, borderBottom: "1px solid #E0E0E0" },
           ...Array.isArray(sx) ? sx : [sx]
         ],
-        children: Array.from(new Array(cols)).map((_2, colIndex) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-          import_material22.Skeleton,
+        children: Array.from(new Array(cols)).map((_2, colIndex) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+          import_material28.Skeleton,
           {
             animation,
             height: 20,
@@ -8161,8 +11156,8 @@ var Skeleton = ({
     )) });
   }
   if (variant === "text" && lines > 1) {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_material22.Box, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(lines)).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-      import_material22.Skeleton,
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_material28.Box, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(lines)).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      import_material28.Skeleton,
       {
         variant: "text",
         height,
@@ -8176,13 +11171,13 @@ var Skeleton = ({
   }
   if (variant === "cascading") {
     const numLines = 4;
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_material22.Box, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(numLines)).map((_, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_material28.Box, { sx: [{ width: width || "100%" }, ...Array.isArray(sx) ? sx : [sx]], children: Array.from(new Array(numLines)).map((_, index) => {
       const expansionDuration = 40;
       const stagger = expansionDuration * 0.3;
       const startPercent = index * stagger;
       const endPercent = startPercent + expansionDuration;
-      return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-        import_material22.Skeleton,
+      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+        import_material28.Skeleton,
         {
           variant: "text",
           height,
@@ -8210,9 +11205,9 @@ var Skeleton = ({
 };
 
 // src/components/Backdrop/Backdrop.tsx
-var import_react18 = require("react");
+var import_react25 = require("react");
 var import_react_dom = require("react-dom");
-var import_jsx_runtime26 = require("react/jsx-runtime");
+var import_jsx_runtime37 = require("react/jsx-runtime");
 var Backdrop = ({
   open,
   onClick,
@@ -8221,12 +11216,13 @@ var Backdrop = ({
   absolute = false,
   size = 45
 }) => {
-  const [mounted, setMounted] = (0, import_react18.useState)(false);
+  const [mounted, setMounted] = (0, import_react25.useState)(false);
   const ringThickness = Math.max(2, Math.round(size * 0.11));
-  (0, import_react18.useEffect)(() => {
-    setMounted(true);
+  (0, import_react25.useEffect)(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
-  (0, import_react18.useEffect)(() => {
+  (0, import_react25.useEffect)(() => {
     if (!absolute) {
       document.body.style.overflow = open ? "hidden" : "";
       return () => {
@@ -8235,8 +11231,8 @@ var Backdrop = ({
     }
   }, [open, absolute]);
   if (!mounted || !open) return null;
-  const overlay = /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("style", { children: `
+  const overlay = /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("style", { children: `
                 @keyframes bd-rotate {
                     to { transform: rotate(360deg); }
                 }
@@ -8245,7 +11241,7 @@ var Backdrop = ({
                     to   { opacity: 1; }
                 }
             ` }),
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
       "div",
       {
         onClick,
@@ -8264,7 +11260,7 @@ var Backdrop = ({
           cursor: onClick ? "pointer" : "default",
           animation: "bd-fade-in 0.15s ease"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
           "div",
           {
             onClick: (e) => e.stopPropagation(),
@@ -8274,7 +11270,7 @@ var Backdrop = ({
               height: size
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
                 "div",
                 {
                   style: {
@@ -8286,7 +11282,7 @@ var Backdrop = ({
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
                 "div",
                 {
                   style: {
@@ -8314,16 +11310,16 @@ var Backdrop = ({
 
 // src/components/Tooltip/Tooltip.tsx
 var import_Tooltip = __toESM(require("@mui/material/Tooltip"));
-var import_jsx_runtime27 = require("react/jsx-runtime");
-var Tooltip2 = ({
+var import_jsx_runtime38 = require("react/jsx-runtime");
+var CustomTooltip = ({
   title,
   children,
   placement = "top",
-  bgColor = "#fff",
-  textColor = "#1F2937",
+  bgColor = "background.paper",
+  textColor = "text.primary",
   ...props
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
     import_Tooltip.default,
     {
       title,
@@ -8336,11 +11332,12 @@ var Tooltip2 = ({
             fontSize: "12px",
             borderRadius: "6px",
             color: textColor,
-            boxShadow: "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            // Added subtle shadow for white tooltip
-            "& .MuiTooltip-arrow": {
-              color: bgColor
-            }
+            boxShadow: "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
+          }
+        },
+        arrow: {
+          sx: {
+            color: bgColor
           }
         }
       },
@@ -8350,12 +11347,1084 @@ var Tooltip2 = ({
   );
 };
 
+// src/components/Uploads/FileUpload.tsx
+var import_react26 = require("react");
+var import_Box9 = __toESM(require("@mui/material/Box"));
+var import_Typography5 = __toESM(require("@mui/material/Typography"));
+var import_IconButton3 = __toESM(require("@mui/material/IconButton"));
+var import_Dialog2 = __toESM(require("@mui/material/Dialog"));
+var import_DialogContent = __toESM(require("@mui/material/DialogContent"));
+var import_Button5 = __toESM(require("@mui/material/Button"));
+var import_Collapse = __toESM(require("@mui/material/Collapse"));
+var import_styles7 = require("@mui/material/styles");
+var import_icons_material11 = require("@mui/icons-material");
+
+// src/components/Uploads/Uploads.utils.tsx
+var import_icons_material10 = require("@mui/icons-material");
+var import_jsx_runtime39 = require("react/jsx-runtime");
+var getFileIcon = (fileName, sx) => {
+  const ext = fileName?.split(".").pop()?.toLowerCase();
+  switch (ext) {
+    case "pdf":
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_icons_material10.PictureAsPdfOutlined, { sx: { color: "error.main", ...sx } });
+    case "doc":
+    case "docx":
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_icons_material10.DescriptionOutlined, { sx: { color: "info.main", ...sx } });
+    case "jpg":
+    case "jpeg":
+    case "png":
+    case "gif":
+    case "webp":
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_icons_material10.ImageOutlined, { sx: { color: "success.main", ...sx } });
+    default:
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_icons_material10.InsertDriveFileOutlined, { sx: { color: "text.secondary", ...sx } });
+  }
+};
+var ACCEPTED_TYPES_IMAGE = {
+  "image/jpeg": [".jpg", ".jpeg"],
+  "image/png": [".png"],
+  "image/gif": [".gif"],
+  "image/webp": [".webp"]
+};
+var ACCEPTED_TYPES_DOCUMENT = {
+  "application/pdf": [".pdf"],
+  "application/msword": [".doc"],
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
+    ".docx"
+  ]
+};
+var ACCEPTED_TYPES_ALL = {
+  ...ACCEPTED_TYPES_DOCUMENT,
+  ...ACCEPTED_TYPES_IMAGE
+};
+var getAcceptedTypes = (fileTypes) => {
+  switch (fileTypes) {
+    case "image":
+      return ACCEPTED_TYPES_IMAGE;
+    case "document":
+      return ACCEPTED_TYPES_DOCUMENT;
+    default:
+      return ACCEPTED_TYPES_ALL;
+  }
+};
+var getAllowedLabel = (fileTypes) => {
+  switch (fileTypes) {
+    case "image":
+      return "JPG, PNG, GIF, WEBP";
+    case "document":
+      return "PDF, DOC";
+    default:
+      return "PDF, DOC, JPG, PNG";
+  }
+};
+var isImageType = (type) => type?.startsWith("image/");
+var base64ToBlob = (base64, mimeType) => {
+  const byteChars = atob(base64);
+  const byteNumbers = new Array(byteChars.length);
+  for (let i = 0; i < byteChars.length; i++) {
+    byteNumbers[i] = byteChars.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
+};
+var toBase64WithProgress = (file, onProgress) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onprogress = (e) => {
+    if (e.lengthComputable) {
+      const pct = Math.round(e.loaded / e.total * 90);
+      onProgress(pct);
+    }
+  };
+  reader.onloadend = () => {
+    onProgress(100);
+    const result = reader.result;
+    resolve(result.split(",")[1]);
+  };
+  reader.onerror = reject;
+  reader.readAsDataURL(file);
+});
+var resolveFileSrc = (file, endpoint) => {
+  if (file.file_path) return `${endpoint}${file.file_path}`;
+  if (file.preview_url) return file.preview_url;
+  if (file.file_data) {
+    const blob = base64ToBlob(file.file_data, file.file_type);
+    return URL.createObjectURL(blob);
+  }
+  return null;
+};
+
+// src/components/Uploads/FileUpload.tsx
+var import_jsx_runtime40 = require("react/jsx-runtime");
+var FileUpload = ({
+  value = [],
+  onChange,
+  disabled = false,
+  multiple = true,
+  maxFiles,
+  maxSizeMB = 10,
+  label,
+  required = false,
+  error,
+  helperText,
+  fileTypes = "all",
+  imgPreview = false,
+  visibleLimit = 8,
+  imgEndpoint = "http://192.168.0.109:8001/"
+}) => {
+  const [isDragging, setIsDragging] = (0, import_react26.useState)(false);
+  const [uploadError, setUploadError] = (0, import_react26.useState)("");
+  const [progressMap, setProgressMap] = (0, import_react26.useState)({});
+  const [previewFile, setPreviewFile] = (0, import_react26.useState)(null);
+  const [isExpanded, setIsExpanded] = (0, import_react26.useState)(false);
+  const inputRef = (0, import_react26.useRef)(null);
+  const acceptedTypes = (0, import_react26.useMemo)(() => getAcceptedTypes(fileTypes), [fileTypes]);
+  const acceptString = (0, import_react26.useMemo)(() => Object.keys(acceptedTypes).join(","), [acceptedTypes]);
+  const allowedLabel = (0, import_react26.useMemo)(() => getAllowedLabel(fileTypes), [fileTypes]);
+  const getPreviewUrl = (file) => {
+    if (file.type.startsWith("image/")) return URL.createObjectURL(file);
+    return null;
+  };
+  const processFiles = (0, import_react26.useCallback)(
+    async (rawFiles) => {
+      setUploadError("");
+      const fileArray = Array.from(rawFiles);
+      if (maxFiles && value.length + fileArray.length > maxFiles) {
+        setUploadError(`Maximum ${maxFiles} file(s) allowed.`);
+        return;
+      }
+      const oversized = fileArray.filter((f) => f.size > maxSizeMB * 1024 * 1024);
+      if (oversized.length > 0) {
+        setUploadError(`File(s) exceed ${maxSizeMB}MB limit.`);
+        return;
+      }
+      const unsupported = fileArray.filter((f) => !Object.keys(acceptedTypes).includes(f.type));
+      if (unsupported.length > 0) {
+        setUploadError(`Unsupported file type. Allowed: ${allowedLabel}.`);
+        return;
+      }
+      const placeholders = fileArray.map((file) => ({
+        file_name: file.name,
+        file_type: file.type,
+        file_data: null,
+        preview_url: null,
+        size: file.size,
+        uploading: true
+      }));
+      const baseList = multiple ? [...value, ...placeholders] : [...placeholders];
+      onChange?.(baseList);
+      const initProgress = {};
+      fileArray.forEach((f) => {
+        initProgress[f.name] = 0;
+      });
+      setProgressMap((prev2) => ({ ...prev2, ...initProgress }));
+      const processed = await Promise.all(
+        fileArray.map(async (file) => {
+          const file_data = await toBase64WithProgress(file, (pct) => {
+            setProgressMap((prev2) => ({ ...prev2, [file.name]: pct }));
+          });
+          return {
+            file_name: file.name,
+            file_type: file.type,
+            file_data,
+            preview_url: getPreviewUrl(file),
+            size: file.size,
+            uploading: false
+          };
+        })
+      );
+      const updatedList = multiple ? [...value, ...processed] : processed;
+      onChange?.(updatedList);
+      setProgressMap((prev2) => {
+        const next2 = { ...prev2 };
+        fileArray.forEach((f) => delete next2[f.name]);
+        return next2;
+      });
+    },
+    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel]
+  );
+  const handleDrop = (0, import_react26.useCallback)(
+    (e) => {
+      e.preventDefault();
+      setIsDragging(false);
+      if (disabled) return;
+      processFiles(e.dataTransfer.files);
+    },
+    [disabled, processFiles]
+  );
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    if (!disabled) setIsDragging(true);
+  };
+  const handleDragLeave = () => setIsDragging(false);
+  const handleBrowseClick = () => {
+    if (!disabled) inputRef.current?.click();
+  };
+  const handleInputChange = (e) => {
+    if (e.target.files?.length) {
+      processFiles(e.target.files);
+      e.target.value = "";
+    }
+  };
+  const handleRemove = (index) => {
+    const file = value[index];
+    if (file?.preview_url) URL.revokeObjectURL(file.preview_url);
+    const updated = value.filter((_, i) => i !== index);
+    onChange?.(updated);
+  };
+  const handlePreview = (e, file) => {
+    e.stopPropagation();
+    setUploadError("");
+    const src = resolveFileSrc(file, imgEndpoint);
+    if (!src) return;
+    if (isImageType(file.file_type)) {
+      setPreviewFile({ ...file, src });
+      return;
+    }
+    const win = window.open(src, "_blank", "noreferrer");
+    setTimeout(() => {
+      if (win && win.closed) {
+        setUploadError("Preview was blocked by the browser. Please allow pop-ups for this site.");
+      }
+    }, 300);
+  };
+  const displayError = uploadError || (typeof error === "string" ? error : error ? "Upload error" : "");
+  const renderFileItem = (file, index) => {
+    const progress = progressMap[file.file_name];
+    const isUploading = file.uploading || progress !== void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+      import_Box9.default,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: "12px",
+          width: "100%",
+          maxWidth: "348px",
+          height: "54px",
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
+          boxShadow: "0px 3px 4.6px 0px rgba(0,0,0,0.05)"
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { sx: { display: "flex", alignItems: "center", gap: 1, overflow: "hidden", flex: 1 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: getFileIcon(file.file_name, { fontSize: 20 }) }),
+            isUploading ? /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { sx: { flex: 1, minWidth: 0 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+                import_Typography5.default,
+                {
+                  sx: {
+                    fontSize: "13px",
+                    color: "text.primary",
+                    fontWeight: 400,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    mb: 0.5
+                  },
+                  title: file.file_name,
+                  children: file.file_name
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { height: "4px", bgcolor: "action.hover", borderRadius: "99px", overflow: "hidden", width: "100%" }, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+                import_Box9.default,
+                {
+                  sx: {
+                    height: "100%",
+                    width: `${progress ?? 0}%`,
+                    bgcolor: "primary.main",
+                    borderRadius: "100px",
+                    transition: "width 0.2s ease"
+                  }
+                }
+              ) })
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+              import_Typography5.default,
+              {
+                sx: {
+                  fontSize: "13px",
+                  color: "text.primary",
+                  fontWeight: 400,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "220px"
+                },
+                title: file.file_name,
+                children: file.file_name
+              }
+            )
+          ] }),
+          isUploading ? /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { fontSize: "13px", fontWeight: 500, color: "primary.main", ml: 1, flexShrink: 0 }, children: [
+            progress ?? 0,
+            "%"
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { sx: { display: "flex", gap: 1, flexShrink: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+              import_IconButton3.default,
+              {
+                onClick: (e) => handlePreview(e, file),
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.VisibilityOutlined, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            ),
+            !disabled && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+              import_IconButton3.default,
+              {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleRemove(index);
+                },
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.DeleteOutline, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            )
+          ] })
+        ]
+      },
+      index
+    );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { sx: { width: "100%", mb: 2 }, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { fontSize: "14px", fontWeight: 500, color: "text.primary", mb: 1 }, children: [
+      label,
+      " ",
+      required && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { style: { color: "red" }, children: "*" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+      import_Box9.default,
+      {
+        onDrop: handleDrop,
+        onDragOver: handleDragOver,
+        onDragLeave: handleDragLeave,
+        onClick: disabled ? void 0 : handleBrowseClick,
+        sx: {
+          border: "1.5px dashed",
+          borderColor: isDragging ? "primary.main" : displayError ? "error.main" : "divider",
+          borderRadius: "10px",
+          height: "93px",
+          width: "100%",
+          maxWidth: "348px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 0.75,
+          cursor: disabled ? "not-allowed" : "pointer",
+          bgcolor: isDragging ? (theme) => (0, import_styles7.alpha)(theme.palette.primary.main, 0.08) : disabled ? "background.default" : "background.paper",
+          transition: "all 0.18s ease",
+          "&:hover": disabled ? {} : { borderColor: "primary.main", bgcolor: (theme) => (0, import_styles7.alpha)(theme.palette.primary.main, 0.04) }
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.CloudUploadOutlined, { sx: { fontSize: 28, color: "text.secondary" } }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { color: "text.secondary", fontSize: "14px", fontWeight: 400 }, children: [
+            "Drag & Drop (or) ",
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { style: { color: "var(--mui-palette-primary-main)", fontWeight: 500 }, children: "Browse" })
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+      "input",
+      {
+        ref: inputRef,
+        type: "file",
+        multiple,
+        accept: acceptString,
+        style: { display: "none" },
+        onChange: handleInputChange,
+        disabled
+      }
+    ),
+    displayError && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Typography5.default, { variant: "caption", sx: { color: "error.main", mt: 0.5, display: "block" }, children: displayError }),
+    helperText && !displayError && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Typography5.default, { variant: "caption", sx: { color: "text.secondary", mt: 0.5, display: "block" }, children: helperText }),
+    value.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { mt: 1.5, display: "flex", flexDirection: "column", gap: 1, width: "100%", maxWidth: "348px" }, children: imgPreview && fileTypes === "image" ? /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap" }, children: value.slice(0, visibleLimit).map((file, index) => {
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+          import_Box9.default,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+                import_IconButton3.default,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(index);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.Close, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          index
+        );
+      }) }),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Collapse.default, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap", mt: 1.5 }, children: value.slice(visibleLimit).map((file, sliceIndex) => {
+        const actualIndex = sliceIndex + visibleLimit;
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+          import_Box9.default,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+                import_IconButton3.default,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(actualIndex);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.Close, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          actualIndex
+        );
+      }) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        import_Button5.default,
+        {
+          variant: "text",
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontWeight: 600,
+            fontSize: "13px",
+            color: "primary.main",
+            p: 0.5,
+            px: 1,
+            minWidth: 0,
+            "&:hover": { bgcolor: "action.hover", borderRadius: "6px" }
+          },
+          children: isExpanded ? "View Less" : `View All (+${value.length - visibleLimit})`
+        }
+      )
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
+      value.slice(0, visibleLimit).map(renderFileItem),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Collapse.default, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { display: "flex", flexDirection: "column", gap: 1 }, children: value.slice(visibleLimit).map((file, sliceIndex) => renderFileItem(file, sliceIndex + visibleLimit)) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        import_Button5.default,
+        {
+          variant: "text",
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontWeight: 600,
+            fontSize: "13px",
+            color: "primary.main",
+            p: 0.5,
+            px: 1,
+            minWidth: 0,
+            "&:hover": { bgcolor: "action.hover", borderRadius: "6px" }
+          },
+          children: isExpanded ? "View Less" : `View All (${value.length})`
+        }
+      )
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+      import_Dialog2.default,
+      {
+        open: !!previewFile,
+        onClose: () => setPreviewFile(null),
+        PaperProps: {
+          sx: {
+            borderRadius: "10px",
+            overflow: "visible",
+            position: "relative",
+            bgcolor: "background.paper"
+          }
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+            import_IconButton3.default,
+            {
+              onClick: () => setPreviewFile(null),
+              size: "small",
+              sx: {
+                position: "absolute",
+                top: -16,
+                right: -16,
+                width: 36,
+                height: 36,
+                bgcolor: "background.paper",
+                border: "1px solid",
+                borderColor: "divider",
+                boxShadow: "0px 3px 8px rgba(0,0,0,0.15)",
+                zIndex: 10,
+                "&:hover": { bgcolor: "background.default" }
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.Close, { sx: { fontSize: 18, color: "text.secondary" } })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_DialogContent.default, { sx: { p: 2 }, children: previewFile && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { width: 400, height: 400, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+            "img",
+            {
+              src: previewFile.src,
+              alt: previewFile.file_name,
+              style: { maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }
+            }
+          ) }) })
+        ]
+      }
+    )
+  ] });
+};
+
+// src/components/Uploads/UploadButton.tsx
+var import_react27 = require("react");
+var import_Box10 = __toESM(require("@mui/material/Box"));
+var import_Typography6 = __toESM(require("@mui/material/Typography"));
+var import_IconButton4 = __toESM(require("@mui/material/IconButton"));
+var import_Dialog3 = __toESM(require("@mui/material/Dialog"));
+var import_DialogContent2 = __toESM(require("@mui/material/DialogContent"));
+var import_Button6 = __toESM(require("@mui/material/Button"));
+var import_Collapse2 = __toESM(require("@mui/material/Collapse"));
+var import_icons_material12 = require("@mui/icons-material");
+var import_jsx_runtime41 = require("react/jsx-runtime");
+var UploadButton = ({
+  value = [],
+  onChange,
+  disabled = false,
+  multiple = true,
+  maxFiles,
+  maxSizeMB = 10,
+  label = "Upload File",
+  error,
+  fileTypes = "all",
+  imgPreview = false,
+  visibleLimit = 6,
+  imgEndpoint = "http://192.168.0.109:8001/"
+}) => {
+  const [uploadError, setUploadError] = (0, import_react27.useState)("");
+  const [progressMap, setProgressMap] = (0, import_react27.useState)({});
+  const [previewFile, setPreviewFile] = (0, import_react27.useState)(null);
+  const [isExpanded, setIsExpanded] = (0, import_react27.useState)(false);
+  const inputRef = (0, import_react27.useRef)(null);
+  const acceptedTypes = (0, import_react27.useMemo)(() => getAcceptedTypes(fileTypes), [fileTypes]);
+  const acceptString = (0, import_react27.useMemo)(() => Object.keys(acceptedTypes).join(","), [acceptedTypes]);
+  const allowedLabel = (0, import_react27.useMemo)(() => getAllowedLabel(fileTypes), [fileTypes]);
+  const getPreviewUrl = (file) => {
+    if (file.type.startsWith("image/")) return URL.createObjectURL(file);
+    return null;
+  };
+  const processFiles = (0, import_react27.useCallback)(
+    async (rawFiles) => {
+      setUploadError("");
+      const fileArray = Array.from(rawFiles);
+      if (maxFiles && value.length + fileArray.length > maxFiles) {
+        setUploadError(`Maximum ${maxFiles} file(s) allowed.`);
+        return;
+      }
+      const oversized = fileArray.filter((f) => f.size > maxSizeMB * 1024 * 1024);
+      if (oversized.length > 0) {
+        setUploadError(`File(s) exceed ${maxSizeMB}MB limit.`);
+        return;
+      }
+      const unsupported = fileArray.filter((f) => !Object.keys(acceptedTypes).includes(f.type));
+      if (unsupported.length > 0) {
+        setUploadError(`Unsupported file type. Allowed: ${allowedLabel}.`);
+        return;
+      }
+      const placeholders = fileArray.map((file) => ({
+        file_name: file.name,
+        file_type: file.type,
+        file_data: null,
+        preview_url: null,
+        size: file.size,
+        uploading: true
+      }));
+      const baseList = multiple ? [...value, ...placeholders] : [...placeholders];
+      onChange?.(baseList);
+      const initProgress = {};
+      fileArray.forEach((f) => {
+        initProgress[f.name] = 0;
+      });
+      setProgressMap((prev2) => ({ ...prev2, ...initProgress }));
+      const processed = await Promise.all(
+        fileArray.map(async (file) => {
+          const file_data = await toBase64WithProgress(file, (pct) => {
+            setProgressMap((prev2) => ({ ...prev2, [file.name]: pct }));
+          });
+          return {
+            file_name: file.name,
+            file_type: file.type,
+            file_data,
+            preview_url: getPreviewUrl(file),
+            size: file.size,
+            uploading: false
+          };
+        })
+      );
+      const updatedList = multiple ? [...value, ...processed] : processed;
+      onChange?.(updatedList);
+      setProgressMap((prev2) => {
+        const next2 = { ...prev2 };
+        fileArray.forEach((f) => delete next2[f.name]);
+        return next2;
+      });
+    },
+    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel]
+  );
+  const handleInputChange = (e) => {
+    if (e.target.files?.length) {
+      processFiles(e.target.files);
+      e.target.value = "";
+    }
+  };
+  const handleRemove = (index) => {
+    const file = value[index];
+    if (file?.preview_url) URL.revokeObjectURL(file.preview_url);
+    const updated = value.filter((_, i) => i !== index);
+    onChange?.(updated);
+  };
+  const handlePreview = (e, file) => {
+    e.stopPropagation();
+    setUploadError("");
+    const src = resolveFileSrc(file, imgEndpoint);
+    if (!src) return;
+    if (isImageType(file.file_type)) {
+      setPreviewFile({ ...file, src });
+      return;
+    }
+    const win = window.open(src, "_blank", "noreferrer");
+    setTimeout(() => {
+      if (win && win.closed) {
+        setUploadError("Preview was blocked by the browser. Please allow pop-ups for this site.");
+      }
+    }, 300);
+  };
+  const displayError = uploadError || (typeof error === "string" ? error : error ? "Upload error" : "");
+  const renderFileItem = (file, index) => {
+    const progress = progressMap[file.file_name];
+    const isUploading = file.uploading || progress !== void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+      import_Box10.default,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 1.5,
+          py: 1,
+          width: "100%",
+          maxWidth: "348px",
+          height: "54px",
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
+          boxShadow: "0px 3px 4.6px 0px rgba(0,0,0,0.05)"
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Box10.default, { sx: { display: "flex", alignItems: "center", gap: 1.25, overflow: "hidden", flex: 1 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: getFileIcon(file.file_name, { fontSize: 22 }) }),
+            isUploading ? /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Box10.default, { sx: { flex: 1, minWidth: 0 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                import_Typography6.default,
+                {
+                  sx: {
+                    fontSize: "13px",
+                    color: "text.primary",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    mb: 0.5
+                  },
+                  title: file.file_name,
+                  children: file.file_name
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { height: "4px", bgcolor: "action.hover", borderRadius: "99px", overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                import_Box10.default,
+                {
+                  sx: {
+                    height: "100%",
+                    width: `${progress ?? 0}%`,
+                    bgcolor: "primary.main",
+                    borderRadius: "99px",
+                    transition: "width 0.2s ease"
+                  }
+                }
+              ) })
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              import_Typography6.default,
+              {
+                sx: {
+                  fontSize: "13px",
+                  color: "text.primary",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "220px",
+                  fontWeight: 400
+                },
+                title: file.file_name,
+                children: file.file_name
+              }
+            )
+          ] }),
+          isUploading ? /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Typography6.default, { sx: { fontSize: "13px", fontWeight: 500, color: "primary.main", ml: 1, flexShrink: 0 }, children: [
+            progress ?? 0,
+            "%"
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Box10.default, { sx: { display: "flex", gap: 0.75, flexShrink: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              import_IconButton4.default,
+              {
+                onClick: (e) => handlePreview(e, file),
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.VisibilityOutlined, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            ),
+            !disabled && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              import_IconButton4.default,
+              {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleRemove(index);
+                },
+                size: "small",
+                sx: {
+                  width: 30,
+                  height: 30,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  bgcolor: "background.default",
+                  borderRadius: "5px",
+                  "&:hover": { bgcolor: "action.hover" }
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.DeleteOutline, { sx: { fontSize: 16, color: "text.secondary" } })
+              }
+            )
+          ] })
+        ]
+      },
+      index
+    );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Box10.default, { sx: { width: "100%", mb: 2 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+      import_Box10.default,
+      {
+        component: "button",
+        onClick: () => !disabled && inputRef.current?.click(),
+        disabled,
+        sx: {
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 1,
+          bgcolor: disabled ? "action.disabledBackground" : "primary.main",
+          color: disabled ? "text.disabled" : "primary.contrastText",
+          border: "none",
+          borderRadius: "8px",
+          px: 2.25,
+          height: "40px",
+          fontSize: "14px",
+          fontWeight: 500,
+          cursor: disabled ? "not-allowed" : "pointer",
+          transition: "background 0.15s",
+          "&:hover": disabled ? {} : { bgcolor: "primary.dark" }
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+            "svg",
+            {
+              width: "16",
+              height: "16",
+              viewBox: "0 0 20 20",
+              fill: "none",
+              stroke: "currentColor",
+              strokeWidth: "1.8",
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M10 13V4M6 8l4-4 4 4" }),
+                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M3 14v1a2 2 0 002 2h10a2 2 0 002-2v-1" })
+              ]
+            }
+          ),
+          label
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      "input",
+      {
+        ref: inputRef,
+        type: "file",
+        multiple,
+        accept: acceptString,
+        style: { display: "none" },
+        onChange: handleInputChange,
+        disabled
+      }
+    ),
+    displayError && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Typography6.default, { variant: "caption", sx: { color: "error.main", mt: 0.5, display: "block" }, children: displayError }),
+    value.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { mt: 1.5, display: "flex", flexDirection: "column", gap: 1, width: "100%", maxWidth: "348px" }, children: imgPreview && fileTypes === "image" ? /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap" }, children: value.slice(0, visibleLimit).map((file, index) => {
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+          import_Box10.default,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                import_IconButton4.default,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(index);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.Close, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          index
+        );
+      }) }),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Collapse2.default, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { display: "flex", gap: 1.5, flexWrap: "wrap", mt: 1.5 }, children: value.slice(visibleLimit).map((file, sliceIndex) => {
+        const actualIndex = sliceIndex + visibleLimit;
+        const src = resolveFileSrc(file, imgEndpoint);
+        if (!src) return null;
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+          import_Box10.default,
+          {
+            onClick: (e) => handlePreview(e, file),
+            sx: {
+              width: 72,
+              height: 72,
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "divider",
+              position: "relative",
+              cursor: "pointer"
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("img", { src, alt: "preview", style: { width: "100%", height: "100%", objectFit: "cover" } }),
+              !disabled && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                import_IconButton4.default,
+                {
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    handleRemove(actualIndex);
+                  },
+                  size: "small",
+                  sx: {
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    width: 20,
+                    height: 20,
+                    bgcolor: "rgba(255,255,255,0.8)",
+                    "&:hover": { bgcolor: "#fff" }
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.Close, { sx: { fontSize: 14, color: "error.main" } })
+                }
+              )
+            ]
+          },
+          actualIndex
+        );
+      }) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        import_Button6.default,
+        {
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontSize: "13px",
+            fontWeight: 500,
+            color: "primary.main",
+            mt: 0.5,
+            p: 0,
+            minWidth: "auto",
+            "&:hover": { bgcolor: "transparent", textDecoration: "underline" }
+          },
+          children: isExpanded ? "Show Less" : `View All (+${value.length - visibleLimit})`
+        }
+      )
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
+      value.slice(0, visibleLimit).map((file, index) => renderFileItem(file, index)),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Collapse2.default, { in: isExpanded, timeout: "auto", unmountOnExit: true, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { display: "flex", flexDirection: "column", gap: 1 }, children: value.slice(visibleLimit).map((file, sliceIndex) => renderFileItem(file, sliceIndex + visibleLimit)) }) }),
+      value.length > visibleLimit && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        import_Button6.default,
+        {
+          onClick: () => setIsExpanded(!isExpanded),
+          disableRipple: true,
+          sx: {
+            alignSelf: "flex-start",
+            textTransform: "none",
+            fontSize: "13px",
+            fontWeight: 500,
+            color: "primary.main",
+            mt: 0.5,
+            p: 0,
+            minWidth: "auto",
+            "&:hover": { bgcolor: "transparent", textDecoration: "underline" }
+          },
+          children: isExpanded ? "Show Less" : `View All (${value.length - visibleLimit} more)`
+        }
+      )
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+      import_Dialog3.default,
+      {
+        open: !!previewFile,
+        onClose: () => setPreviewFile(null),
+        PaperProps: {
+          sx: {
+            borderRadius: "10px",
+            overflow: "visible",
+            position: "relative",
+            bgcolor: "background.paper"
+          }
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+            import_IconButton4.default,
+            {
+              onClick: () => setPreviewFile(null),
+              size: "small",
+              sx: {
+                position: "absolute",
+                top: -16,
+                right: -16,
+                width: 36,
+                height: 36,
+                bgcolor: "background.paper",
+                border: "1px solid",
+                borderColor: "divider",
+                boxShadow: "0px 3px 8px rgba(0,0,0,0.15)",
+                zIndex: 10,
+                "&:hover": { bgcolor: "background.default" }
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.Close, { sx: { fontSize: 18, color: "text.secondary" } })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_DialogContent2.default, { sx: { p: 2 }, children: previewFile && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_Box10.default, { sx: { width: 400, height: 400, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+            "img",
+            {
+              src: previewFile.src,
+              alt: previewFile.file_name,
+              style: { maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }
+            }
+          ) }) })
+        ]
+      }
+    )
+  ] });
+};
+
 // src/providers/VortexUIProvider.tsx
-var import_react19 = require("react");
-var import_styles6 = require("@mui/material/styles");
+var import_react28 = require("react");
+var import_styles9 = require("@mui/material/styles");
 var import_CssBaseline = __toESM(require("@mui/material/CssBaseline"));
 var import_useMediaQuery = __toESM(require("@mui/material/useMediaQuery"));
-var import_react20 = require("@emotion/react");
+var import_react29 = require("@emotion/react");
 
 // ../../node_modules/.pnpm/@emotion+sheet@1.4.0/node_modules/@emotion/sheet/dist/emotion-sheet.esm.js
 var isDevelopment = false;
@@ -9214,13 +13283,15 @@ var createCache = function createCache2(options) {
 };
 
 // src/theme/theme.ts
-var import_material23 = require("@mui/material");
+var import_material29 = require("@mui/material");
 
 // src/theme/palette.ts
+var import_styles8 = require("@mui/material/styles");
 var colors = {
   primary: {
     light: {
       main: "#4772FF",
+      lightHover: (0, import_styles8.alpha)("#4772FF", 0.08),
       light: "#7496FF",
       dark: "#2F50C2",
       contrastText: "#FFFFFF",
@@ -9230,6 +13301,7 @@ var colors = {
     },
     dark: {
       main: "#4772FF",
+      lightHover: (0, import_styles8.alpha)("#4772FF", 0.08),
       light: "#688CFF",
       dark: "#3352CC",
       contrastText: "#FFFFFF",
@@ -9241,6 +13313,7 @@ var colors = {
   secondary: {
     light: {
       main: "#0088ab",
+      lightHover: (0, import_styles8.alpha)("#0088ab", 0.08),
       light: "#22d3ee",
       dark: "#00647D",
       contrastText: "#ffffff",
@@ -9250,6 +13323,7 @@ var colors = {
     },
     dark: {
       main: "#0088ab",
+      lightHover: (0, import_styles8.alpha)("#0088ab", 0.08),
       light: "#33A1C2",
       dark: "#00556B",
       contrastText: "#ffffff",
@@ -9261,6 +13335,7 @@ var colors = {
   error: {
     light: {
       main: "#FF4747",
+      lightHover: (0, import_styles8.alpha)("#FF4747", 0.08),
       light: "#FF7373",
       dark: "#E63A3A",
       contrastText: "#FFFFFF",
@@ -9270,6 +13345,7 @@ var colors = {
     },
     dark: {
       main: "#FF4747",
+      lightHover: (0, import_styles8.alpha)("#FF4747", 0.08),
       light: "#FF6666",
       dark: "#CC3939",
       contrastText: "#FFFFFF",
@@ -9281,6 +13357,7 @@ var colors = {
   warning: {
     light: {
       main: "#FFA347",
+      lightHover: (0, import_styles8.alpha)("#FFA347", 0.08),
       light: "#FFBC70",
       dark: "#E68F3F",
       contrastText: "#1A1A1A",
@@ -9290,6 +13367,7 @@ var colors = {
     },
     dark: {
       main: "#FFA347",
+      lightHover: (0, import_styles8.alpha)("#FFA347", 0.08),
       light: "#FFB366",
       dark: "#CC8239",
       contrastText: "#1A1A1A",
@@ -9301,6 +13379,7 @@ var colors = {
   success: {
     light: {
       main: "#47FFA3",
+      lightHover: (0, import_styles8.alpha)("#47FFA3", 0.08),
       light: "#70FFB8",
       dark: "#3FE691",
       contrastText: "#06351D",
@@ -9310,6 +13389,7 @@ var colors = {
     },
     dark: {
       main: "#47FFA3",
+      lightHover: (0, import_styles8.alpha)("#47FFA3", 0.08),
       light: "#66FFB3",
       dark: "#39CC82",
       contrastText: "#06351D",
@@ -9321,6 +13401,7 @@ var colors = {
   info: {
     light: {
       main: "#47C2FF",
+      lightHover: (0, import_styles8.alpha)("#47C2FF", 0.08),
       light: "#70CEFF",
       dark: "#3FADE6",
       contrastText: "#06283A",
@@ -9330,6 +13411,7 @@ var colors = {
     },
     dark: {
       main: "#47C2FF",
+      lightHover: (0, import_styles8.alpha)("#47C2FF", 0.08),
       light: "#66CBFF",
       dark: "#399BCC",
       contrastText: "#06283A",
@@ -9495,7 +13577,7 @@ var components = {
 };
 
 // src/theme/theme.ts
-var getTheme = (mode) => (0, import_material23.createTheme)({
+var getTheme = (mode) => (0, import_material29.createTheme)({
   palette: getPalette(mode),
   typography,
   components,
@@ -9505,28 +13587,28 @@ var getTheme = (mode) => (0, import_material23.createTheme)({
 });
 
 // src/providers/VortexUIProvider.tsx
-var import_jsx_runtime28 = require("react/jsx-runtime");
-var ColorModeContext = (0, import_react19.createContext)({
+var import_jsx_runtime42 = require("react/jsx-runtime");
+var ColorModeContext = (0, import_react28.createContext)({
   toggleColorMode: () => {
   },
   mode: "light"
 });
-var useColorMode = () => (0, import_react19.useContext)(ColorModeContext);
+var useColorMode = () => (0, import_react28.useContext)(ColorModeContext);
 var cache = createCache({
   key: "vortexui",
   prepend: true
 });
 function VortexUIProvider({ children, disableCustomCache = false, initialMode = "light" }) {
   const prefersDarkMode = (0, import_useMediaQuery.default)("(prefers-color-scheme: dark)");
-  const [mode, setMode] = (0, import_react19.useState)(initialMode);
-  (0, import_react19.useEffect)(() => {
+  const [mode, setMode] = (0, import_react28.useState)(initialMode);
+  (0, import_react28.useEffect)(() => {
     const hasCookie = document.cookie.includes("vortex-ui-theme-mode=");
     if (!hasCookie && prefersDarkMode) {
       setMode("dark");
       document.cookie = `vortex-ui-theme-mode=dark; path=/; max-age=31536000`;
     }
   }, [prefersDarkMode]);
-  const colorMode = (0, import_react19.useMemo)(
+  const colorMode = (0, import_react28.useMemo)(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => {
@@ -9540,22 +13622,25 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
     }),
     [mode]
   );
-  const theme = (0, import_react19.useMemo)(() => getTheme(mode), [mode]);
-  const content = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_styles6.ThemeProvider, { theme, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_CssBaseline.default, {}),
+  const theme = (0, import_react28.useMemo)(() => getTheme(mode), [mode]);
+  const content = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_styles9.ThemeProvider, { theme, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_CssBaseline.default, {}),
     children
   ] }) });
   if (disableCustomCache) {
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_jsx_runtime28.Fragment, { children: content });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_jsx_runtime42.Fragment, { children: content });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_react20.CacheProvider, { value: cache, children: content });
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_react29.CacheProvider, { value: cache, children: content });
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Accordion,
   AutoPopulate,
   AutoPopulateItem,
+  Avatar,
   Backdrop,
+  BaseSelect,
+  Breadcrumbs,
   Button,
   ButtonGroup,
   Card,
@@ -9565,11 +13650,19 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
   ColorModeContext,
   CountBadge,
   DataTable,
-  DefaultSelect,
+  DatePicker,
+  DateRangePicker,
+  DateTimePicker,
+  Dialog,
+  Drawer,
+  FileUpload,
   Grid,
+  History,
+  HistoryItem,
+  HorizontalHistoryItem,
   Link,
-  Modal,
   NumberField,
+  PipelineStepper,
   Progress,
   Radio,
   RadioGroup,
@@ -9578,10 +13671,13 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
   Sheet,
   Skeleton,
   Slider,
+  Stepper,
   TextField,
   Textarea,
+  TimePicker,
   ToggleSwitch,
   Tooltip,
+  UploadButton,
   VortexUIProvider,
   useColorMode,
   vortexTheme

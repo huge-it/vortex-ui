@@ -73,8 +73,7 @@ export default function TextFieldDocs() {
           <TextField
             label="Name"
             placeholder="Enter your full name"
-            value={""}
-            onChange={(e) => console.info(e.target.value)}
+            defaultValue=""
             disabled={false}
           />
         </Stack>

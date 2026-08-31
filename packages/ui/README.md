@@ -1,4 +1,4 @@
-# Vortex UI Package
+# VortexUI Package
 
 This is the shared UI component library for the Vortex ecosystem, built with React and Material UI, and documented using Storybook.
 
@@ -20,7 +20,7 @@ This package uses Storybook for component development and testing. To start the 
 
 ```bash
 # from the root of the monorepo, you can run:
-pnpm dev --filter vortex-ui 
+pnpm dev --filter vortex-ui
 # (assuming the root turbo config maps "dev" to "storybook" for this package)
 
 # or directly from this directory:

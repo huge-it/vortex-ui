@@ -10,7 +10,7 @@ export default function EditorDocs() {
         description={<>Documentation for Editor is coming soon.</>}
       />
       <Typography variant="body1" sx={{ mt: 4 }}>
-        This component is currently being migrated to Vortex UI.
+        This component is currently being migrated to VortexUI.
       </Typography>
     </Box>
   );

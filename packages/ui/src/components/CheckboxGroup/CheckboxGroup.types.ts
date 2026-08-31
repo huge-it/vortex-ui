@@ -9,6 +9,7 @@ export interface CheckboxOption {
 
 export interface CheckboxGroupProps {
   value?: string[];
+  defaultValue?: string[];
   onChange?: (value: string[]) => void;
   options?: (CheckboxOption | string)[];
   orientation?: "horizontal" | "vertical";

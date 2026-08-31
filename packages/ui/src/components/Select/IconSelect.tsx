@@ -62,7 +62,7 @@ export const IconSelect = ({
               return (
                 <Typography
                   component="span"
-                  sx={{ fontSize: 13, color: "#9CA3AF" }}
+                  sx={{ fontSize: 13, color: "text.disabled" }}
                 >
                   {placeholder}
                 </Typography>
@@ -97,8 +97,8 @@ export const IconSelect = ({
                   component="span"
                   sx={{
                     fontSize: 13,
-                    fontWeight: 500,
-                    color: "#1F2937",
+                    fontWeight: 400,
+                    color: "text.primary",
                     lineHeight: 1,
                   }}
                 >
@@ -114,7 +114,9 @@ export const IconSelect = ({
               mt: 0.5,
               borderRadius: "8px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
-              border: "1px solid #E5E7EB",
+              border: 1,
+              borderColor: "divider",
+              maxHeight: 250,
               "& .MuiList-root": { py: 1 },
             },
           },
@@ -145,10 +147,10 @@ export const IconSelect = ({
             px: 1.8,
             py: 1,
             fontSize: 13,
-            color: "#374151",
-            "&:hover": { bgcolor: "#F0F5FF" },
-            "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
-            "&.Mui-selected:hover": { bgcolor: "#F0F5FF" },
+            color: "text.primary",
+            "&:hover": { bgcolor: "primary.lightHover" },
+            "&.Mui-selected": { bgcolor: "background.default", fontWeight: 500 },
+            "&.Mui-selected:hover": { bgcolor: "primary.lightHover" },
           }}
         >
           {(opt.icon || opt.img) && (

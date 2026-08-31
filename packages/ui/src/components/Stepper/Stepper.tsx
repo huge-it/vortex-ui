@@ -44,24 +44,23 @@ export const Stepper = ({
   };
 
   const bubbleStyles = (state: "completed" | "active" | "pending") => {
-    const isDark = theme.palette.mode === "dark";
     return {
       completed: {
         bg: primaryColor,
         border: primaryColor,
-        textColor: "#fff",
+        textColor: theme.palette.primary.contrastText || "#fff",
         cursor: onStepClick ? "pointer" : "default",
       },
       active: {
         bg: primaryColor,
         border: primaryColor,
-        textColor: "#fff",
+        textColor: theme.palette.primary.contrastText || "#fff",
         cursor: "default",
       },
       pending: {
-        bg: isDark ? theme.palette.background.paper : "#fff",
-        border: isDark ? theme.palette.grey[700] : "#D1D5DB",
-        textColor: isDark ? theme.palette.grey[500] : "#9CA3AF",
+        bg: theme.palette.background.paper,
+        border: theme.palette.divider,
+        textColor: theme.palette.text.disabled,
         cursor: allowJump && onStepClick ? "pointer" : "default",
       },
     }[state];
@@ -70,9 +69,7 @@ export const Stepper = ({
   const connectorColor = (index: number) =>
     index < activeIndex
       ? primaryColor
-      : theme.palette.mode === "dark"
-      ? theme.palette.grey[800]
-      : "#E5E7EB";
+      : theme.palette.divider;
 
   // ── HORIZONTAL ──────────────────────────────────────────────────────────
   if (effectiveVariant === "horizontal") {
@@ -128,7 +125,7 @@ export const Stepper = ({
                   }}
                 >
                   {state === "completed" ? (
-                    <CheckIcon sx={{ fontSize: font + 2, color: "#fff" }} />
+                    <CheckIcon sx={{ fontSize: font + 2, color: theme.palette.primary.contrastText || "#fff" }} />
                   ) : (
                     <Typography
                       sx={{
@@ -246,7 +243,7 @@ export const Stepper = ({
                 }}
               >
                 {state === "completed" ? (
-                  <CheckIcon sx={{ fontSize: font + 2, color: "#fff" }} />
+                  <CheckIcon sx={{ fontSize: font + 2, color: theme.palette.primary.contrastText || "#fff" }} />
                 ) : (
                   <Typography
                     sx={{

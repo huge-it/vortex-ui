@@ -4,67 +4,76 @@ import React from "react";
 import { Box, Slider as MuiSlider, Typography } from "@mui/material";
 import { RangeSliderProps } from "./Slider.types";
 
-const getRangeSliderSx = (trackColor: string, railColor: string) => ({
-  color: trackColor,
-  height: 6,
-  padding: "13px 0",
+const getThemeColor = (theme: any, colorPath: string) => {
+  return colorPath.split('.').reduce((acc, part) => acc && acc[part], theme.palette) || colorPath;
+};
 
-  "& .MuiSlider-rail": {
-    backgroundColor: railColor,
-    opacity: 1,
+const getRangeSliderSx = (trackColor: string, railColor: string) => (theme: any) => {
+  const tColor = getThemeColor(theme, trackColor);
+  const rColor = getThemeColor(theme, railColor);
+
+  return {
+    color: tColor,
     height: 6,
-    borderRadius: 4,
-  },
-  "& .MuiSlider-track": {
-    backgroundColor: trackColor,
-    border: "none",
-    height: 6,
-    borderRadius: 4,
-  },
-  "& .MuiSlider-thumb": {
-    width: 18,
-    height: 18,
-    backgroundColor: trackColor,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-    "&:hover, &.Mui-focusVisible": {
-      boxShadow: `0 0 0 8px ${trackColor}22`,
+    padding: "13px 0",
+
+    "& .MuiSlider-rail": {
+      backgroundColor: rColor,
+      opacity: 1,
+      height: 6,
+      borderRadius: 4,
     },
-    "&.Mui-active": {
-      boxShadow: `0 0 0 10px ${trackColor}33`,
+    "& .MuiSlider-track": {
+      backgroundColor: tColor,
+      border: "none",
+      height: 6,
+      borderRadius: 4,
     },
-  },
-  "& .MuiSlider-valueLabel": {
-    backgroundColor: "#E8EDFF",
-    color: "#1E2746",
-    fontSize: 13,
-    fontWeight: 400,
-    borderRadius: "8px",
-    padding: "5px 12px",
-    "&::before": {
-      backgroundColor: "#E8EDFF",
-      width: 8,
-      height: 8,
+    "& .MuiSlider-thumb": {
+      width: 18,
+      height: 18,
+      backgroundColor: tColor,
+      boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+      "&:hover, &.Mui-focusVisible": {
+        boxShadow: `0 0 0 8px ${tColor}22`,
+      },
+      "&.Mui-active": {
+        boxShadow: `0 0 0 10px ${tColor}33`,
+      },
     },
-  },
-  "& .MuiSlider-mark": {
-    display: "none",
-  },
-  "& .MuiSlider-markLabel": {
-    fontSize: 13,
-    color: "#1E2746",
-    fontWeight: 400,
-    top: 30,
-    '&[data-index="0"]': {
-      left: "0px !important",
-      transform: "none",
+    "& .MuiSlider-valueLabel": {
+      backgroundColor: theme.palette.primary.disabledBackground || "#E8EDFF",
+      color: theme.palette.text.primary,
+      fontSize: 13,
+      fontWeight: 400,
+      borderRadius: "8px",
+      padding: "5px 12px",
+      "&::before": {
+        backgroundColor: theme.palette.primary.disabledBackground || "#E8EDFF",
+        width: 8,
+        height: 8,
+      },
     },
-    '&[data-index="1"]': {
-      right: "0px !important",
-      left: "auto !important",
-      transform: "none",
+    "& .MuiSlider-mark": {
+      display: "none",
     },
-  },
-});
+    "& .MuiSlider-markLabel": {
+      fontSize: 13,
+      color: theme.palette.text.primary,
+      fontWeight: 400,
+      top: 30,
+      '&[data-index="0"]': {
+        left: "0px !important",
+        transform: "none",
+      },
+      '&[data-index="1"]': {
+        right: "0px !important",
+        left: "auto !important",
+        transform: "none",
+      },
+    },
+  };
+};
 
 export const RangeSlider = ({
   label,
@@ -75,8 +84,8 @@ export const RangeSlider = ({
   step = 1,
   minDistance = 0,
   disabled = false,
-  trackColor = "#4772FF",
-  railColor = "#E5EBFF",
+  trackColor = "primary.main",
+  railColor = "primary.disabledBackground",
   showMinMaxLabels = true,
   showRangeText = true,
   sx = {},
@@ -115,7 +124,7 @@ export const RangeSlider = ({
           variant="caption"
           fontSize={13}
           fontWeight={400}
-          color="#374151"
+          color="text.secondary"
           mb={1}
           display="block"
         >
@@ -141,7 +150,7 @@ export const RangeSlider = ({
               textAlign: "center",
               fontSize: 14,
               fontWeight: 500,
-              color: "#4F6FFA",
+              color: "primary.main",
               mt: showMinMaxLabels ? -4 : 1,
             }}
           >

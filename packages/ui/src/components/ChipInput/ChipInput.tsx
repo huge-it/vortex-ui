@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -18,20 +19,20 @@ const Chip = ({
   disabled?: boolean;
 }) => (
   <Box
-    sx={{
+    sx={(theme) => ({
       display: "inline-flex",
       alignItems: "center",
       gap: 0.5,
-      bgcolor: "#E8EDFF",
-      border: "1px solid #D4DEFF",
-      color: "#313952",
+      bgcolor: alpha(theme.palette.primary.main, 0.1),
+      border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+      color: theme.palette.text.primary,
       fontSize: "13px",
       fontWeight: 400,
       px: 1.2,
       py: 0.5,
       borderRadius: "10px",
       userSelect: "none",
-    }}
+    })}
   >
     {label}
     {!disabled && (

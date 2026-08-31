@@ -77,7 +77,7 @@ const StyledTextField = styled(
 
   "& .VortexUIInputLabel-shrink ~ .VortexUIFilledInput-root .VortexUIFilledInput-input":
     {
-      padding: "24px 10px 0 10px",
+      padding: "24px 10px 10px 10px",
     },
 
   "& label.Mui-focused": {

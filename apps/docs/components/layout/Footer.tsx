@@ -85,7 +85,7 @@ export function Footer() {
         }}
       >
         <Typography variant="body2" color="text.secondary">
-          Vortex UI by <b>Huge IT Solutions</b>
+          VortexUI by <b>Huge IT Solutions</b>
         </Typography>
         <Typography variant="body2" color="text.secondary">
           &copy; {new Date().getFullYear()} All rights reserved.

@@ -9,6 +9,7 @@ export interface RadioOption {
 
 export interface RadioGroupProps {
   value?: string;
+  defaultValue?: string;
   onChange?: (value: string) => void;
   options?: (RadioOption | string)[];
   orientation?: "horizontal" | "vertical";

@@ -38,5 +38,8 @@
   "files": [
     "dist",
     "package.json"
-  ]
+  ],
+  "dependencies": {
+    "dayjs": "^1.11.23"
+  }
 }

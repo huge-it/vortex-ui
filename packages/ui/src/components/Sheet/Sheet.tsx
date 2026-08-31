@@ -22,8 +22,9 @@ export const Sheet = ({
   return (
     <Box
       sx={{
-        bgcolor: "#FFFFFF",
-        border: "1px solid #CDCDCD",
+        bgcolor: "background.paper",
+        border: 1,
+        borderColor: "divider",
         borderRadius: "10px",
         boxShadow: shadow,
         ...(fullHeight && { flex: 1 }),

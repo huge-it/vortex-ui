@@ -12,35 +12,6 @@ import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 
 const SEARCH_THRESHOLD = 2;
 
-/* ─── Custom scrollbar styles injected once ─── */
-const scrollbarStyles = `
-  .custom-select-menu::-webkit-scrollbar {
-    width: 5px;
-  }
-  .custom-select-menu::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 6px 0;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
-    border-radius: 35px;
-    max-height: 54px;
-    min-height: 54px;
-  }
-  .custom-select-menu::-webkit-scrollbar-thumb:hover {
-    background: #BDBDBD;
-  }
-`;
-
-if (typeof document !== "undefined") {
-  const styleTag = document.getElementById("custom-select-scrollbar");
-  if (!styleTag) {
-    const s = document.createElement("style");
-    s.id = "custom-select-scrollbar";
-    s.textContent = scrollbarStyles;
-    document.head.appendChild(s);
-  }
-}
 
 /* ─── Helper ─── */
 const getFocusable = () =>
@@ -287,7 +258,7 @@ export const SearchableSelect = ({
               cursor: disabled ? "default" : "pointer",
               display: "flex",
               alignItems: "center",
-              color: "rgba(0,0,0,0.54)",
+              color: "text.secondary",
             }}
           >
             <KeyboardArrowDown />
@@ -308,13 +279,23 @@ export const SearchableSelect = ({
             sx={{
               mt: 0.5,
               borderRadius: "10px",
-              border: "1px solid #D6DEEA",
+              border: 1,
+              borderColor: "divider",
               maxHeight: 258,
               overflowY: "auto",
-              bgcolor: "#FFFFFF",
-              boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)",
+              bgcolor: "background.paper",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
+              "&::-webkit-scrollbar": { width: "5px" },
+              "&::-webkit-scrollbar-track": { background: "transparent", margin: "6px 0" },
+              "&::-webkit-scrollbar-thumb": {
+                background: (theme) => theme.palette.divider,
+                borderRadius: "35px",
+                minHeight: "54px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                background: (theme) => theme.palette.text.disabled,
+              },
             }}
-            className="custom-select-menu"
           >
             {filteredChildren.length > 0 ? (
               filteredChildren.map((child, index) => {
@@ -344,13 +325,13 @@ export const SearchableSelect = ({
                       alignItems: "center",
                       gap: 1,
                       backgroundColor: isSelected
-                        ? "rgba(25, 118, 210, 0.06)"
+                        ? "primary.lightHover"
                         : "transparent",
                       "&:hover": {
-                        backgroundColor: "rgba(25, 118, 210, 0.06)",
+                        backgroundColor: "primary.lightHover",
                       },
                       "&:focus": {
-                        backgroundColor: "rgba(25, 118, 210, 0.08)",
+                        backgroundColor: "primary.lightHover",
                       },
                     }}
                   >
@@ -381,7 +362,7 @@ export const SearchableSelect = ({
                         sx={{
                           fontSize: "14px",
                           fontWeight: 500,
-                          color: "#313952",
+                          color: "text.primary",
                           lineHeight: 1.5,
                           whiteSpace: "nowrap",
                           overflow: "hidden",
@@ -396,7 +377,7 @@ export const SearchableSelect = ({
                           sx={{
                             fontSize: "11px",
                             fontWeight: 400,
-                            color: "#6F778F",
+                            color: "text.secondary",
                             lineHeight: 1.5,
                             mt: 0.2,
                           }}
@@ -409,7 +390,7 @@ export const SearchableSelect = ({
                 );
               })
             ) : (
-              <Box sx={{ px: 2, py: 1.5, fontSize: "13px", color: "#9CA3AF" }}>
+              <Box sx={{ px: 2, py: 1.5, fontSize: "13px", color: "text.disabled" }}>
                 No results found
               </Box>
             )}

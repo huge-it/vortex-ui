@@ -49,6 +49,7 @@ export interface DefaultSelectProps {
   name?: string;
   id?: string;
   sx?: any;
+  dropdownHeight?: number;
 }
 
 export type SelectProps =

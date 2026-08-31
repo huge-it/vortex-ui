@@ -16,14 +16,12 @@ import { TextField } from "../TextField";
 
 const OPTIONS: Record<number, { label: string; value: number; color: string }> =
   {
-    1: { label: "Low", value: 1, color: "#4772FF" },
-    2: { label: "Medium", value: 2, color: "#FF8447" },
-    3: { label: "High", value: 3, color: "#FF4750" },
+    1: { label: "Low", value: 1, color: "info.main" },
+    2: { label: "Medium", value: 2, color: "warning.main" },
+    3: { label: "High", value: 3, color: "error.main" },
   };
 
-const DROPDOWN_HEIGHT = 130;
-
-export const DefaultSelect = ({
+export const BaseSelect = ({
   value,
   recordId,
   onUpdate,
@@ -39,6 +37,7 @@ export const DefaultSelect = ({
   name,
   id,
   sx,
+  dropdownHeight = 130,
 }: DefaultSelectProps) => {
   const generatedId = React.useId();
   const selectId = id || generatedId;
@@ -97,7 +96,7 @@ export const DefaultSelect = ({
               return (
                 <Typography
                   component="span"
-                  sx={{ fontSize: 13, color: "#9CA3AF" }}
+                  sx={{ fontSize: 13, color: "text.disabled" }}
                 >
                   {placeholder}
                 </Typography>
@@ -113,7 +112,9 @@ export const DefaultSelect = ({
                     width: 8,
                     height: 8,
                     borderRadius: "50%",
-                    border: `2px solid ${cfg.color}`,
+                    border: 2,
+                    borderStyle: "solid",
+                    borderColor: cfg.color,
                     borderTopColor: "transparent",
                     animation: "spin 0.6s linear infinite",
                     flexShrink: 0,
@@ -136,7 +137,7 @@ export const DefaultSelect = ({
                 sx={{
                   fontSize: 13,
                   fontWeight: 400,
-                  color: "#1F2937",
+                  color: "text.primary",
                   lineHeight: 1,
                 }}
               >
@@ -151,7 +152,9 @@ export const DefaultSelect = ({
               mt: 0.5,
               borderRadius: "8px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.08)",
-              border: "1px solid #E5E7EB",
+              border: 1,
+              borderColor: "divider",
+              maxHeight: dropdownHeight,
               "& .MuiList-root": { py: 1 },
             },
           },
@@ -183,21 +186,26 @@ export const DefaultSelect = ({
               px: 1.8,
               py: 1,
               fontSize: 13,
-              color: "#374151",
-              "&:hover": { bgcolor: "#F0F5FF" },
-              "&.Mui-selected": { bgcolor: "#F9FAFB", fontWeight: 500 },
-              "&.Mui-selected:hover": { bgcolor: "#F0F5FF" },
+              color: "text.primary",
+              "&:hover": { bgcolor: "primary.lightHover" },
+              "&.Mui-selected": {
+                bgcolor: "background.default",
+                fontWeight: 500,
+              },
+              "&.Mui-selected:hover": { bgcolor: "primary.lightHover" },
             }}
           >
-            <Box
-              sx={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                bgcolor: opt.color,
-                flexShrink: 0,
-              }}
-            />
+            {opt.color && (
+              <Box
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  bgcolor: opt.color,
+                  flexShrink: 0,
+                }}
+              />
+            )}
             <Typography component="span" sx={{ fontSize: 13 }}>
               {opt.label}
             </Typography>
@@ -219,5 +227,5 @@ export const Select = (props: SelectProps) => {
     const { variant, ...rest } = props;
     return <IconSelect {...rest} />;
   }
-  return <DefaultSelect {...props} />;
+  return <BaseSelect {...props} />;
 };

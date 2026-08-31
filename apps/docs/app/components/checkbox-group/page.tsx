@@ -132,24 +132,24 @@ export default function CheckboxGroupDocs() {
           {
             name: "Small",
             element: (
-              <CheckboxGroup variant="sm" value={["sm1"]}>
-                <Checkbox value="sm1" label="Small Checkbox" />
+              <CheckboxGroup variant="sm" defaultValue={["sm1"]}>
+                <Checkbox value="sm1" label="Small" />
               </CheckboxGroup>
             ),
           },
           {
             name: "Medium",
             element: (
-              <CheckboxGroup variant="md" value={["md1"]}>
-                <Checkbox value="md1" label="Medium Checkbox" />
+              <CheckboxGroup variant="md" defaultValue={["md1"]}>
+                <Checkbox value="md1" label="Medium" />
               </CheckboxGroup>
             ),
           },
           {
             name: "Large",
             element: (
-              <CheckboxGroup variant="lg" value={["lg1"]}>
-                <Checkbox value="lg1" label="Large Checkbox" />
+              <CheckboxGroup variant="lg" defaultValue={["lg1"]}>
+                <Checkbox value="lg1" label="Large" />
               </CheckboxGroup>
             ),
           },
@@ -165,7 +165,7 @@ export default function CheckboxGroupDocs() {
                 <CheckboxGroup
                   label="Horizontal"
                   orientation="horizontal"
-                  value={["1"]}
+                  defaultValue={["1"]}
                 >
                   <Checkbox value="1" label="Opt 1" />
                   <Checkbox value="2" label="Opt 2" />
@@ -173,7 +173,7 @@ export default function CheckboxGroupDocs() {
                 <CheckboxGroup
                   label="Vertical"
                   orientation="vertical"
-                  value={["2"]}
+                  defaultValue={["2"]}
                 >
                   <Checkbox value="1" label="Opt 1" />
                   <Checkbox value="2" label="Opt 2" />
@@ -184,7 +184,7 @@ export default function CheckboxGroupDocs() {
           {
             name: "Custom Colors",
             element: (
-              <CheckboxGroup value={["red", "green", "blue"]}>
+              <CheckboxGroup defaultValue={["red", "green", "blue"]}>
                 <Checkbox value="red" label="Red" color="#EF4444" />
                 <Checkbox value="green" label="Green" color="#10B981" />
                 <Checkbox value="blue" label="Blue" color="#3B82F6" />
@@ -194,7 +194,11 @@ export default function CheckboxGroupDocs() {
           {
             name: "",
             element: (
-              <CheckboxGroup disabled label="Disabled Group" value={["crm"]}>
+              <CheckboxGroup
+                disabled
+                label="Disabled Group"
+                defaultValue={["crm"]}
+              >
                 <Checkbox value="crm" label="CRM Dashboard" />
                 <Checkbox value="analytics" label="Analytics" />
                 <Checkbox value="billing" label="Billing & Invoicing" />
