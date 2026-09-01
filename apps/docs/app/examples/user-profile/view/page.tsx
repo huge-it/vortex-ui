@@ -1,9 +1,15 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Paper, Grid, Avatar, Divider, Chip } from "@mui/material";
-import { Button } from "vortex-ui";
-import { Email, Phone, LocationOn, LinkedIn, GitHub } from "@mui/icons-material";
+import { Box, Typography, Grid, Divider, Chip } from "@mui/material";
+import { Button, Avatar, Sheet } from "vortex-ui";
+import {
+  Email,
+  Phone,
+  LocationOn,
+  LinkedIn,
+  GitHub,
+} from "@mui/icons-material";
 
 export default function ViewProfileExample() {
   return (
@@ -14,54 +20,84 @@ export default function ViewProfileExample() {
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={4}>
-          <Paper variant="outlined" sx={{ p: 4, borderRadius: 2, textAlign: "center" }}>
-            <Avatar 
-              src="/static/images/avatar/2.jpg" 
+          <Sheet
+            variant="sm"
+            sx={{ p: 4, borderRadius: 2, textAlign: "center" }}
+          >
+            <Avatar
+              src="/static/images/avatar/2.jpg"
               sx={{ width: 120, height: 120, margin: "0 auto", mb: 2 }}
             />
-            <Typography variant="h5" fontWeight={700}>Jane Smith</Typography>
-            <Typography color="primary.main" fontWeight={500} mb={3}>Senior Software Engineer</Typography>
-            
-            <Box display="flex" flexDirection="column" gap={1.5} alignItems="flex-start">
+            <Typography variant="h5" fontWeight={700}>
+              Jane Smith
+            </Typography>
+            <Typography color="primary.main" fontWeight={500} mb={3}>
+              Senior Software Engineer
+            </Typography>
+
+            <Box
+              display="flex"
+              flexDirection="column"
+              gap={1.5}
+              alignItems="flex-start"
+            >
               <Box display="flex" gap={1.5} alignItems="center">
                 <Email color="action" fontSize="small" />
-                <Typography variant="body2" color="text.secondary">jane.smith@example.com</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  jane.smith@example.com
+                </Typography>
               </Box>
               <Box display="flex" gap={1.5} alignItems="center">
                 <Phone color="action" fontSize="small" />
-                <Typography variant="body2" color="text.secondary">+1 (555) 123-4567</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  +1 (555) 123-4567
+                </Typography>
               </Box>
               <Box display="flex" gap={1.5} alignItems="center">
                 <LocationOn color="action" fontSize="small" />
-                <Typography variant="body2" color="text.secondary">San Francisco, CA</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  San Francisco, CA
+                </Typography>
               </Box>
             </Box>
 
             <Divider sx={{ my: 3 }} />
 
             <Box display="flex" justifyContent="center" gap={2}>
-              <LinkedIn color="action" sx={{ cursor: "pointer", "&:hover": { color: "primary.main" } }} />
-              <GitHub color="action" sx={{ cursor: "pointer", "&:hover": { color: "primary.main" } }} />
+              <LinkedIn
+                color="action"
+                sx={{ cursor: "pointer", "&:hover": { color: "primary.main" } }}
+              />
+              <GitHub
+                color="action"
+                sx={{ cursor: "pointer", "&:hover": { color: "primary.main" } }}
+              />
             </Box>
-          </Paper>
+          </Sheet>
         </Grid>
 
         <Grid item xs={12} md={8}>
-          <Paper variant="outlined" sx={{ p: 4, borderRadius: 2, mb: 4 }}>
-            <Typography variant="h6" fontWeight={600} mb={2}>About</Typography>
+          <Sheet variant="sm" sx={{ p: 4, borderRadius: 2, mb: 4 }}>
+            <Typography variant="h6" fontWeight={600} mb={2}>
+              About
+            </Typography>
             <Typography color="text.secondary" paragraph>
-              Passionate software engineer with over 8 years of experience in building scalable web applications. 
-              Specializes in React, Next.js, and Node.js ecosystems. Strong advocate for clean code, accessibility, 
-              and user-centric design.
+              Passionate software engineer with over 8 years of experience in
+              building scalable web applications. Specializes in React, Next.js,
+              and Node.js ecosystems. Strong advocate for clean code,
+              accessibility, and user-centric design.
             </Typography>
             <Typography color="text.secondary">
-              Previously worked at TechNova and CloudScale, leading frontend teams to deliver high-performance 
-              dashboards and e-commerce platforms.
+              Previously worked at TechNova and CloudScale, leading frontend
+              teams to deliver high-performance dashboards and e-commerce
+              platforms.
             </Typography>
-          </Paper>
+          </Sheet>
 
-          <Paper variant="outlined" sx={{ p: 4, borderRadius: 2 }}>
-            <Typography variant="h6" fontWeight={600} mb={3}>Skills</Typography>
+          <Sheet variant="sm" sx={{ p: 4, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} mb={3}>
+              Skills
+            </Typography>
             <Box display="flex" flexWrap="wrap" gap={1}>
               <Chip label="React" color="primary" variant="outlined" />
               <Chip label="Next.js" color="primary" variant="outlined" />
@@ -72,7 +108,7 @@ export default function ViewProfileExample() {
               <Chip label="AWS" color="primary" variant="outlined" />
               <Chip label="Figma" color="primary" variant="outlined" />
             </Box>
-          </Paper>
+          </Sheet>
         </Grid>
       </Grid>
     </Box>

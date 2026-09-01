@@ -21,4 +21,5 @@ export interface DateTimePickerProps {
   fullWidth?: boolean;
   /** Additional styling */
   sx?: SxProps<Theme>;
+  format?: string;
 }

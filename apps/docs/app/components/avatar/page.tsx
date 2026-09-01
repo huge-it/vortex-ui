@@ -71,6 +71,12 @@ const avatarPropsList = [
     default: "'#808697'",
     description: "Text/Icon color for letter mode and image fallback.",
   },
+  {
+    name: "children",
+    type: "React.ReactNode",
+    default: "undefined",
+    description: "Custom children to render inside the avatar (e.g. for initials).",
+  },
 ];
 
 export default function AvatarDocs() {

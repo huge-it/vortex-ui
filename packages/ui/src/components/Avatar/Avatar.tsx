@@ -35,6 +35,8 @@ export interface AvatarProps {
   color?: string;
   /** Custom styles for the container */
   sx?: SxProps<Theme>;
+  /** Custom children to render inside the avatar */
+  children?: React.ReactNode;
 }
 
 const VARIANTS = {
@@ -73,11 +75,12 @@ export const Avatar = ({
   bgcolor = "#E5E7F0",
   color = "#808697",
   sx = {},
+  children,
 }: AvatarProps) => {
   const { size, fontSize, fontWeight, borderRadius, iconSize } =
     VARIANTS[variant] ?? VARIANTS.md;
 
-  const isImage = type === "image";
+  const isImage = type === "image" || !!src;
 
   // ---- letter-mode state ----
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -157,7 +160,7 @@ export const Avatar = ({
             }}
           >
             {showFallback ? (
-              <PersonIcon sx={{ fontSize: size * 0.55 }} />
+              children || (name ? name.charAt(0) : <PersonIcon sx={{ fontSize: size * 0.55 }} />)
             ) : (
               <Box
                 component="img"
@@ -191,7 +194,7 @@ export const Avatar = ({
               lineHeight: 1,
             }}
           >
-            {name?.charAt(0) || <PersonIcon sx={{ fontSize: size * 0.55 }} />}
+            {children || name?.charAt(0) || <PersonIcon sx={{ fontSize: size * 0.55 }} />}
           </Box>
         )}
 

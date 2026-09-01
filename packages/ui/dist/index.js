@@ -4104,8 +4104,8 @@ __export(index_exports, {
   DateRangePicker: () => DateRangePicker,
   DateTimePicker: () => DateTimePicker,
   Dialog: () => Dialog,
+  DragDropUpload: () => DragDropUpload,
   Drawer: () => Drawer,
-  FileUpload: () => FileUpload,
   Grid: () => Grid,
   History: () => History,
   HistoryItem: () => HistoryItem,
@@ -4121,6 +4121,7 @@ __export(index_exports, {
   Sheet: () => Sheet,
   Skeleton: () => Skeleton,
   Slider: () => Slider,
+  Snackbar: () => Snackbar,
   Stepper: () => Stepper,
   TextField: () => TextField,
   Textarea: () => Textarea,
@@ -5596,11 +5597,14 @@ var BaseSelect = ({
               fontSize: 13,
               color: "text.primary",
               "&:hover": { bgcolor: "primary.lightHover" },
-              "&.Mui-selected": { bgcolor: "background.default", fontWeight: 500 },
+              "&.Mui-selected": {
+                bgcolor: "background.default",
+                fontWeight: 500
+              },
               "&.Mui-selected:hover": { bgcolor: "primary.lightHover" }
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+              opt.color && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
                 import_material6.Box,
                 {
                   sx: {
@@ -11347,7 +11351,7 @@ var CustomTooltip = ({
   );
 };
 
-// src/components/Uploads/FileUpload.tsx
+// src/components/Uploads/DragDropUpload.tsx
 var import_react26 = require("react");
 var import_Box9 = __toESM(require("@mui/material/Box"));
 var import_Typography5 = __toESM(require("@mui/material/Typography"));
@@ -11453,9 +11457,9 @@ var resolveFileSrc = (file, endpoint) => {
   return null;
 };
 
-// src/components/Uploads/FileUpload.tsx
+// src/components/Uploads/DragDropUpload.tsx
 var import_jsx_runtime40 = require("react/jsx-runtime");
-var FileUpload = ({
+var DragDropUpload = ({
   value = [],
   onChange,
   disabled = false,
@@ -11469,7 +11473,12 @@ var FileUpload = ({
   fileTypes = "all",
   imgPreview = false,
   visibleLimit = 8,
-  imgEndpoint = "http://192.168.0.109:8001/"
+  imgEndpoint = "http://192.168.0.109:8001/",
+  className,
+  sx,
+  onUploadStart,
+  onUploadError,
+  onUploadSuccess
 }) => {
   const [isDragging, setIsDragging] = (0, import_react26.useState)(false);
   const [uploadError, setUploadError] = (0, import_react26.useState)("");
@@ -11489,19 +11498,26 @@ var FileUpload = ({
       setUploadError("");
       const fileArray = Array.from(rawFiles);
       if (maxFiles && value.length + fileArray.length > maxFiles) {
-        setUploadError(`Maximum ${maxFiles} file(s) allowed.`);
+        const err = `Maximum ${maxFiles} file(s) allowed.`;
+        setUploadError(err);
+        onUploadError?.(err);
         return;
       }
       const oversized = fileArray.filter((f) => f.size > maxSizeMB * 1024 * 1024);
       if (oversized.length > 0) {
-        setUploadError(`File(s) exceed ${maxSizeMB}MB limit.`);
+        const err = `File(s) exceed ${maxSizeMB}MB limit.`;
+        setUploadError(err);
+        onUploadError?.(err);
         return;
       }
       const unsupported = fileArray.filter((f) => !Object.keys(acceptedTypes).includes(f.type));
       if (unsupported.length > 0) {
-        setUploadError(`Unsupported file type. Allowed: ${allowedLabel}.`);
+        const err = `Unsupported file type. Allowed: ${allowedLabel}.`;
+        setUploadError(err);
+        onUploadError?.(err);
         return;
       }
+      onUploadStart?.();
       const placeholders = fileArray.map((file) => ({
         file_name: file.name,
         file_type: file.type,
@@ -11534,13 +11550,14 @@ var FileUpload = ({
       );
       const updatedList = multiple ? [...value, ...processed] : processed;
       onChange?.(updatedList);
+      onUploadSuccess?.(updatedList);
       setProgressMap((prev2) => {
         const next2 = { ...prev2 };
         fileArray.forEach((f) => delete next2[f.name]);
         return next2;
       });
     },
-    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel]
+    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel, onUploadStart, onUploadError, onUploadSuccess]
   );
   const handleDrop = (0, import_react26.useCallback)(
     (e) => {
@@ -11704,11 +11721,11 @@ var FileUpload = ({
       index
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { sx: { width: "100%", mb: 2 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { className, sx: { width: "100%", mb: 2, ...sx }, children: [
     label && /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { fontSize: "14px", fontWeight: 500, color: "text.primary", mb: 1 }, children: [
       label,
       " ",
-      required && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { style: { color: "red" }, children: "*" })
+      required && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { component: "span", sx: { color: "error.main" }, children: "*" })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
       import_Box9.default,
@@ -11721,14 +11738,15 @@ var FileUpload = ({
           border: "1.5px dashed",
           borderColor: isDragging ? "primary.main" : displayError ? "error.main" : "divider",
           borderRadius: "10px",
-          height: "93px",
+          minHeight: "100px",
+          py: 1.5,
           width: "100%",
           maxWidth: "348px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 0.75,
+          gap: 0.5,
           cursor: disabled ? "not-allowed" : "pointer",
           bgcolor: isDragging ? (theme) => (0, import_styles7.alpha)(theme.palette.primary.main, 0.08) : disabled ? "background.default" : "background.paper",
           transition: "all 0.18s ease",
@@ -11736,9 +11754,18 @@ var FileUpload = ({
         },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { sx: { width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.CloudUploadOutlined, { sx: { fontSize: 28, color: "text.secondary" } }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { color: "text.secondary", fontSize: "14px", fontWeight: 400 }, children: [
-            "Drag & Drop (or) ",
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { style: { color: "var(--mui-palette-primary-main)", fontWeight: 500 }, children: "Browse" })
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Box9.default, { sx: { textAlign: "center" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { color: "text.secondary", fontSize: "14px", fontWeight: 400 }, children: [
+              "Drag & Drop (or) ",
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_Box9.default, { component: "span", sx: { color: "primary.main", fontWeight: 500 }, children: "Browse" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_Typography5.default, { sx: { color: "text.secondary", fontSize: "11.5px", fontWeight: 400, opacity: 0.8, mt: 0.25 }, children: [
+              allowedLabel,
+              " \u2022 Max ",
+              maxSizeMB,
+              "MB ",
+              maxFiles ? `\u2022 Up to ${maxFiles} files` : ""
+            ] })
           ] })
         ]
       }
@@ -11791,8 +11818,8 @@ var FileUpload = ({
                     right: 4,
                     width: 20,
                     height: 20,
-                    bgcolor: "rgba(255,255,255,0.8)",
-                    "&:hover": { bgcolor: "#fff" }
+                    bgcolor: (theme) => (0, import_styles7.alpha)(theme.palette.background.paper, 0.8),
+                    "&:hover": { bgcolor: "background.paper" }
                   },
                   children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.Close, { sx: { fontSize: 14, color: "error.main" } })
                 }
@@ -11836,8 +11863,8 @@ var FileUpload = ({
                     right: 4,
                     width: 20,
                     height: 20,
-                    bgcolor: "rgba(255,255,255,0.8)",
-                    "&:hover": { bgcolor: "#fff" }
+                    bgcolor: (theme) => (0, import_styles7.alpha)(theme.palette.background.paper, 0.8),
+                    "&:hover": { bgcolor: "background.paper" }
                   },
                   children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_icons_material11.Close, { sx: { fontSize: 14, color: "error.main" } })
                 }
@@ -11949,6 +11976,7 @@ var import_Dialog3 = __toESM(require("@mui/material/Dialog"));
 var import_DialogContent2 = __toESM(require("@mui/material/DialogContent"));
 var import_Button6 = __toESM(require("@mui/material/Button"));
 var import_Collapse2 = __toESM(require("@mui/material/Collapse"));
+var import_styles8 = require("@mui/material/styles");
 var import_icons_material12 = require("@mui/icons-material");
 var import_jsx_runtime41 = require("react/jsx-runtime");
 var UploadButton = ({
@@ -11963,7 +11991,15 @@ var UploadButton = ({
   fileTypes = "all",
   imgPreview = false,
   visibleLimit = 6,
-  imgEndpoint = "http://192.168.0.109:8001/"
+  imgEndpoint = "http://192.168.0.109:8001/",
+  className,
+  sx,
+  onUploadStart,
+  onUploadError,
+  onUploadSuccess,
+  variant,
+  color,
+  startIcon
 }) => {
   const [uploadError, setUploadError] = (0, import_react27.useState)("");
   const [progressMap, setProgressMap] = (0, import_react27.useState)({});
@@ -11982,19 +12018,26 @@ var UploadButton = ({
       setUploadError("");
       const fileArray = Array.from(rawFiles);
       if (maxFiles && value.length + fileArray.length > maxFiles) {
-        setUploadError(`Maximum ${maxFiles} file(s) allowed.`);
+        const err = `Maximum ${maxFiles} file(s) allowed.`;
+        setUploadError(err);
+        onUploadError?.(err);
         return;
       }
       const oversized = fileArray.filter((f) => f.size > maxSizeMB * 1024 * 1024);
       if (oversized.length > 0) {
-        setUploadError(`File(s) exceed ${maxSizeMB}MB limit.`);
+        const err = `File(s) exceed ${maxSizeMB}MB limit.`;
+        setUploadError(err);
+        onUploadError?.(err);
         return;
       }
       const unsupported = fileArray.filter((f) => !Object.keys(acceptedTypes).includes(f.type));
       if (unsupported.length > 0) {
-        setUploadError(`Unsupported file type. Allowed: ${allowedLabel}.`);
+        const err = `Unsupported file type. Allowed: ${allowedLabel}.`;
+        setUploadError(err);
+        onUploadError?.(err);
         return;
       }
+      onUploadStart?.();
       const placeholders = fileArray.map((file) => ({
         file_name: file.name,
         file_type: file.type,
@@ -12027,13 +12070,14 @@ var UploadButton = ({
       );
       const updatedList = multiple ? [...value, ...processed] : processed;
       onChange?.(updatedList);
+      onUploadSuccess?.(updatedList);
       setProgressMap((prev2) => {
         const next2 = { ...prev2 };
         fileArray.forEach((f) => delete next2[f.name]);
         return next2;
       });
     },
-    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel]
+    [value, onChange, multiple, maxFiles, maxSizeMB, acceptedTypes, allowedLabel, onUploadStart, onUploadError, onUploadSuccess]
   );
   const handleInputChange = (e) => {
     if (e.target.files?.length) {
@@ -12180,49 +12224,39 @@ var UploadButton = ({
       index
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Box10.default, { sx: { width: "100%", mb: 2 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
-      import_Box10.default,
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_Box10.default, { className, sx: { width: "100%", mb: 2, ...sx }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      import_Button6.default,
       {
-        component: "button",
+        variant: variant || (disabled ? "contained" : "contained"),
+        color: color || "primary",
         onClick: () => !disabled && inputRef.current?.click(),
         disabled,
+        startIcon: startIcon || /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+          "svg",
+          {
+            width: "16",
+            height: "16",
+            viewBox: "0 0 20 20",
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: "1.8",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M10 13V4M6 8l4-4 4 4" }),
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M3 14v1a2 2 0 002 2h10a2 2 0 002-2v-1" })
+            ]
+          }
+        ),
         sx: {
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 1,
-          bgcolor: disabled ? "action.disabledBackground" : "primary.main",
-          color: disabled ? "text.disabled" : "primary.contrastText",
-          border: "none",
-          borderRadius: "8px",
-          px: 2.25,
-          height: "40px",
-          fontSize: "14px",
+          textTransform: "none",
           fontWeight: 500,
-          cursor: disabled ? "not-allowed" : "pointer",
-          transition: "background 0.15s",
-          "&:hover": disabled ? {} : { bgcolor: "primary.dark" }
+          borderRadius: "8px",
+          height: "40px",
+          px: 2.25
         },
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
-            "svg",
-            {
-              width: "16",
-              height: "16",
-              viewBox: "0 0 20 20",
-              fill: "none",
-              stroke: "currentColor",
-              strokeWidth: "1.8",
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M10 13V4M6 8l4-4 4 4" }),
-                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M3 14v1a2 2 0 002 2h10a2 2 0 002-2v-1" })
-              ]
-            }
-          ),
-          label
-        ]
+        children: label
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
@@ -12272,8 +12306,8 @@ var UploadButton = ({
                     right: 4,
                     width: 20,
                     height: 20,
-                    bgcolor: "rgba(255,255,255,0.8)",
-                    "&:hover": { bgcolor: "#fff" }
+                    bgcolor: (theme) => (0, import_styles8.alpha)(theme.palette.background.paper, 0.8),
+                    "&:hover": { bgcolor: "background.paper" }
                   },
                   children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.Close, { sx: { fontSize: 14, color: "error.main" } })
                 }
@@ -12317,8 +12351,8 @@ var UploadButton = ({
                     right: 4,
                     width: 20,
                     height: 20,
-                    bgcolor: "rgba(255,255,255,0.8)",
-                    "&:hover": { bgcolor: "#fff" }
+                    bgcolor: (theme) => (0, import_styles8.alpha)(theme.palette.background.paper, 0.8),
+                    "&:hover": { bgcolor: "background.paper" }
                   },
                   children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_icons_material12.Close, { sx: { fontSize: 14, color: "error.main" } })
                 }
@@ -12419,12 +12453,393 @@ var UploadButton = ({
   ] });
 };
 
-// src/providers/VortexUIProvider.tsx
+// src/components/Snackbar/Snackbar.tsx
 var import_react28 = require("react");
-var import_styles9 = require("@mui/material/styles");
+var import_material29 = require("@mui/material");
+var import_jsx_runtime42 = require("react/jsx-runtime");
+var SuccessIcon = ({ color }) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10", cy: "10", r: "9", stroke: color, strokeWidth: "1.8" }),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    "path",
+    {
+      d: "M6 10.5l3 3 5-5",
+      stroke: color,
+      strokeWidth: "1.8",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }
+  )
+] });
+var InfoIcon = ({ color }) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10", cy: "10", r: "9", stroke: color, strokeWidth: "1.8" }),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10", cy: "6.5", r: "1", fill: color }),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    "path",
+    {
+      d: "M10 9.5v5",
+      stroke: color,
+      strokeWidth: "1.8",
+      strokeLinecap: "round"
+    }
+  )
+] });
+var WarningIcon = ({ color }) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    "path",
+    {
+      d: "M10 2.5L18 17H2L10 2.5Z",
+      stroke: color,
+      strokeWidth: "1.8",
+      strokeLinejoin: "round"
+    }
+  ),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: "M10 8v4", stroke: color, strokeWidth: "1.8", strokeLinecap: "round" }),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10", cy: "14.5", r: "1", fill: color })
+] });
+var ErrorIcon = ({ color }) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10", cy: "10", r: "9", stroke: color, strokeWidth: "1.8" }),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: "M10 6v5", stroke: color, strokeWidth: "1.8", strokeLinecap: "round" }),
+  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10", cy: "14", r: "1", fill: color })
+] });
+var CloseIcon2 = ({ color }) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 14 14", fill: "none", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+  "path",
+  {
+    d: "M2 2l10 10M12 2L2 12",
+    stroke: color,
+    strokeWidth: "1.8",
+    strokeLinecap: "round"
+  }
+) });
+var POSITION_MAP = {
+  "top-right": { vertical: "top", horizontal: "right" },
+  "top-left": { vertical: "top", horizontal: "left" },
+  "top-center": { vertical: "top", horizontal: "center" },
+  "bottom-right": { vertical: "bottom", horizontal: "right" },
+  "bottom-left": { vertical: "bottom", horizontal: "left" },
+  "bottom-center": { vertical: "bottom", horizontal: "center" }
+};
+var SLIDE_DIRECTION_MAP = {
+  "top-right": "down",
+  "top-left": "down",
+  "top-center": "down",
+  "bottom-right": "up",
+  "bottom-left": "up",
+  "bottom-center": "up"
+};
+var Snackbar = ({
+  open,
+  onClose,
+  severity = "success",
+  message = "",
+  title = "",
+  variant = "filled",
+  showUndo = false,
+  onAction,
+  autoHideDuration = 5e3,
+  position: position2 = "top-right",
+  topOffset = 64,
+  bottomOffset = 16,
+  actionButtons = [],
+  hideCloseIcon = false
+}) => {
+  const theme = (0, import_material29.useTheme)();
+  const timerRef = (0, import_react28.useRef)(null);
+  const remainRef = (0, import_react28.useRef)(autoHideDuration || 0);
+  const startRef = (0, import_react28.useRef)(null);
+  const startTimer = () => {
+    if (!autoHideDuration) return;
+    startRef.current = Date.now();
+    timerRef.current = setTimeout(() => onClose?.(), remainRef.current);
+  };
+  const pauseTimer = () => {
+    if (!autoHideDuration) return;
+    if (timerRef.current) clearTimeout(timerRef.current);
+    remainRef.current = Math.max(
+      0,
+      remainRef.current - (Date.now() - (startRef.current ?? Date.now()))
+    );
+  };
+  (0, import_react28.useEffect)(() => {
+    if (open && autoHideDuration) {
+      remainRef.current = autoHideDuration;
+      startTimer();
+    }
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [open, autoHideDuration]);
+  const handleMouseEnter = () => {
+    pauseTimer();
+  };
+  const handleMouseLeave = () => {
+    startTimer();
+  };
+  const paletteColor = theme.palette[severity] || theme.palette.success;
+  const isLight = variant === "light";
+  const colors2 = {
+    bg: isLight ? (0, import_material29.alpha)(paletteColor.main, 0.1) : paletteColor.main,
+    text: isLight ? paletteColor.dark || paletteColor.main : paletteColor.contrastText || "#fff",
+    icon: isLight ? paletteColor.main : paletteColor.contrastText || "#fff",
+    border: isLight ? paletteColor.dark || paletteColor.main : "transparent",
+    undoColor: isLight ? paletteColor.main : paletteColor.light || (0, import_material29.alpha)(paletteColor.main, 0.5)
+  };
+  const Icon = severity === "info" ? InfoIcon : severity === "warning" ? WarningIcon : severity === "error" ? ErrorIcon : SuccessIcon;
+  const hasTitle = Boolean(title);
+  const anchorOrigin = POSITION_MAP[position2] ?? POSITION_MAP["top-right"];
+  const slideDirection = SLIDE_DIRECTION_MAP[position2] ?? "down";
+  const SlideTransition = (0, import_react28.useMemo)(
+    () => function Transition(props) {
+      return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_material29.Slide, { ...props, direction: slideDirection });
+    },
+    [slideDirection]
+  );
+  const positionSx = {
+    ...anchorOrigin.vertical === "top" ? { top: `${topOffset}px !important` } : { bottom: `${bottomOffset}px !important` },
+    ...position2.includes("left") ? { left: `calc(var(--sidebar-width, 228px) + 24px) !important` } : {}
+  };
+  if (variant === "cookie") {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+      import_material29.Snackbar,
+      {
+        open,
+        anchorOrigin,
+        TransitionComponent: SlideTransition,
+        sx: {
+          "&.MuiSnackbar-root": positionSx,
+          zIndex: 2e3
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+          import_material29.Paper,
+          {
+            elevation: 4,
+            sx: {
+              p: 2.5,
+              maxWidth: 400,
+              borderRadius: 3,
+              border: `1px solid ${theme.palette.divider}`
+            },
+            onMouseEnter: handleMouseEnter,
+            onMouseLeave: handleMouseLeave,
+            children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_material29.Stack, { spacing: 2.5, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_material29.Stack, { direction: "row", spacing: 2, alignItems: "flex-start", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_material29.Box, { sx: { mt: 0.5, color: theme.palette.primary.main }, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
+                  "svg",
+                  {
+                    width: "28",
+                    height: "28",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    strokeWidth: "1.5",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "10.5", cy: "8.5", r: "1.5" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "8.5", cy: "13.5", r: "1.5" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("circle", { cx: "15", cy: "15", r: "1" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: "M21.95 10.99c-1.79-.03-3.7-1.95-2.68-4.22-2.97 1-5.78-1.59-5.19-4.56C7.11.74 2 6.41 2 12c0 5.52 4.48 10 10 10 5.89 0 10.54-5.08 9.95-11.01M12 20c-4.41 0-8-3.59-8-8 0-3.31 2.73-8.18 8.08-8.02.42 2.54 2.44 4.56 4.99 4.94.07.36.52 2.55 2.92 3.63C19.7 16.86 16.06 20 12 20" })
+                    ]
+                  }
+                ) }),
+                /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_material29.Stack, { spacing: 0.5, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_material29.Typography, { variant: "subtitle2", fontWeight: 600, fontSize: 16, children: title || "Cookie preferences" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+                    import_material29.Typography,
+                    {
+                      variant: "body2",
+                      color: "text.secondary",
+                      lineHeight: 1.5,
+                      children: message
+                    }
+                  )
+                ] })
+              ] }),
+              actionButtons && actionButtons.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_material29.Stack, { direction: "row", spacing: 1.5, children: actionButtons.map((btn, i) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+                Button,
+                {
+                  variant: btn.variant === "contained" || btn.variant === "filled" ? "contained" : btn.variant,
+                  onClick: (e) => {
+                    btn.onClick?.(e);
+                    onClose?.();
+                  },
+                  sx: btn.variant === "contained" || btn.variant === "filled" ? {
+                    bgcolor: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText || "#fff",
+                    "&:hover": { bgcolor: theme.palette.primary.dark }
+                  } : { color: theme.palette.primary.main },
+                  children: btn.label
+                },
+                i
+              )) })
+            ] })
+          }
+        )
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    import_material29.Snackbar,
+    {
+      open,
+      anchorOrigin,
+      TransitionComponent: SlideTransition,
+      sx: {
+        "&.MuiSnackbar-root": positionSx,
+        zIndex: 2e3
+      },
+      children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
+        import_material29.Box,
+        {
+          role: "alert",
+          "aria-live": "assertive",
+          onMouseEnter: handleMouseEnter,
+          onMouseLeave: handleMouseLeave,
+          sx: {
+            display: "flex",
+            alignItems: hasTitle ? "flex-start" : "center",
+            gap: "10px",
+            minWidth: 300,
+            maxWidth: 460,
+            padding: hasTitle ? "12px 14px" : "11px 14px",
+            borderRadius: "10px",
+            border: variant === "light" ? `1px solid ${colors2.icon}` : "none",
+            background: colors2.bg,
+            boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+            fontFamily: "Inter, system-ui, sans-serif",
+            transition: "background 0.2s ease"
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+              "span",
+              {
+                style: { flexShrink: 0, lineHeight: 0, marginTop: hasTitle ? 2 : 0 },
+                children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Icon, { color: colors2.icon })
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("span", { style: { flex: 1 }, children: [
+              hasTitle && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+                "span",
+                {
+                  style: {
+                    display: "block",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: colors2.text,
+                    lineHeight: 1.4,
+                    marginBottom: 2
+                  },
+                  children: title
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+                "span",
+                {
+                  style: {
+                    display: "block",
+                    fontSize: hasTitle ? 13 : 14,
+                    fontWeight: 450,
+                    color: colors2.text,
+                    lineHeight: 1.4,
+                    opacity: hasTitle ? 0.88 : 1
+                  },
+                  children: message
+                }
+              )
+            ] }),
+            actionButtons && actionButtons.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  gap: "8px",
+                  marginLeft: "auto",
+                  flexShrink: 0
+                },
+                children: actionButtons.map((btn, i) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+                  Button,
+                  {
+                    size: "sm",
+                    variant: btn.variant === "contained" || btn.variant === "filled" ? "filled" : btn.variant,
+                    onClick: (e) => {
+                      btn.onClick?.(e);
+                      onClose?.();
+                    },
+                    sx: {
+                      ...btn.variant === "contained" || btn.variant === "filled" ? {
+                        bgcolor: colors2.text,
+                        color: colors2.bg,
+                        "&:hover": { bgcolor: colors2.text, opacity: 0.9 }
+                      } : btn.variant === "outlined" ? {
+                        borderColor: colors2.text,
+                        color: colors2.undoColor,
+                        "&:hover": { borderColor: colors2.text, opacity: 0.9 }
+                      } : { color: colors2.undoColor },
+                      fontSize: 13,
+                      fontWeight: 600,
+                      borderRadius: "6px",
+                      px: "12px",
+                      py: "6px",
+                      height: "auto",
+                      minWidth: "auto"
+                    },
+                    children: btn.label
+                  },
+                  i
+                ))
+              }
+            ),
+            showUndo && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+              "button",
+              {
+                onClick: () => {
+                  onAction?.();
+                  onClose?.();
+                },
+                style: {
+                  flexShrink: 0,
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  color: colors2.undoColor,
+                  padding: "0 6px",
+                  fontFamily: "inherit"
+                },
+                children: "UNDO"
+              }
+            ),
+            !hideCloseIcon && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+              "button",
+              {
+                onClick: onClose,
+                "aria-label": "Close notification",
+                style: {
+                  flexShrink: 0,
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 2,
+                  lineHeight: 0,
+                  opacity: 0.75
+                },
+                onMouseEnter: (e) => e.currentTarget.style.opacity = "1",
+                onMouseLeave: (e) => e.currentTarget.style.opacity = "0.75",
+                children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CloseIcon2, { color: colors2.text })
+              }
+            )
+          ]
+        }
+      )
+    }
+  );
+};
+
+// src/providers/VortexUIProvider.tsx
+var import_react29 = require("react");
+var import_styles10 = require("@mui/material/styles");
 var import_CssBaseline = __toESM(require("@mui/material/CssBaseline"));
 var import_useMediaQuery = __toESM(require("@mui/material/useMediaQuery"));
-var import_react29 = require("@emotion/react");
+var import_react30 = require("@emotion/react");
 
 // ../../node_modules/.pnpm/@emotion+sheet@1.4.0/node_modules/@emotion/sheet/dist/emotion-sheet.esm.js
 var isDevelopment = false;
@@ -13283,167 +13698,167 @@ var createCache = function createCache2(options) {
 };
 
 // src/theme/theme.ts
-var import_material29 = require("@mui/material");
+var import_material30 = require("@mui/material");
 
 // src/theme/palette.ts
-var import_styles8 = require("@mui/material/styles");
+var import_styles9 = require("@mui/material/styles");
 var colors = {
   primary: {
     light: {
       main: "#4772FF",
-      lightHover: (0, import_styles8.alpha)("#4772FF", 0.08),
-      light: "#7496FF",
-      dark: "#2F50C2",
+      lightHover: (0, import_styles9.alpha)("#4772FF", 0.08),
+      light: "#6A91FF",
+      dark: "#3C5FFF",
       contrastText: "#FFFFFF",
-      hover: "#3D63E6",
-      disabled: "#A8B9F5",
-      disabledBackground: "#E8EDFF"
+      hover: "#2643AC",
+      disabled: "#93B2FF",
+      disabledBackground: "#F1F5FF"
     },
     dark: {
       main: "#4772FF",
-      lightHover: (0, import_styles8.alpha)("#4772FF", 0.08),
-      light: "#688CFF",
-      dark: "#3352CC",
+      lightHover: (0, import_styles9.alpha)("#4772FF", 0.08),
+      light: "#6A91FF",
+      dark: "#3C5FFF",
       contrastText: "#FFFFFF",
-      hover: "#5782FF",
-      disabled: "#2A3C73",
-      disabledBackground: "#1A2642"
+      hover: "#6A91FF",
+      disabled: "#2643AC",
+      disabledBackground: "#12268F"
     }
   },
   secondary: {
     light: {
-      main: "#0088ab",
-      lightHover: (0, import_styles8.alpha)("#0088ab", 0.08),
-      light: "#22d3ee",
+      main: "#0088AB",
+      lightHover: (0, import_styles9.alpha)("#0088AB", 0.08),
+      light: "#39B8D4",
       dark: "#00647D",
-      contrastText: "#ffffff",
-      hover: "#0596a7",
-      disabled: "#40e0d0",
-      disabledBackground: "#ccfbf1"
+      contrastText: "#FFFFFF",
+      hover: "#00556B",
+      disabled: "#8DD5E3",
+      disabledBackground: "#E8F8FB"
     },
     dark: {
-      main: "#0088ab",
-      lightHover: (0, import_styles8.alpha)("#0088ab", 0.08),
-      light: "#33A1C2",
-      dark: "#00556B",
-      contrastText: "#ffffff",
+      main: "#0088AB",
+      lightHover: (0, import_styles9.alpha)("#0088AB", 0.08),
+      light: "#39B8D4",
+      dark: "#00647D",
+      contrastText: "#FFFFFF",
       hover: "#1A9AB8",
-      disabled: "#205C6B",
-      disabledBackground: "#0D2B33"
+      disabled: "#00556B",
+      disabledBackground: "#10313A"
     }
   },
   error: {
     light: {
-      main: "#FF4747",
-      lightHover: (0, import_styles8.alpha)("#FF4747", 0.08),
-      light: "#FF7373",
-      dark: "#E63A3A",
+      main: "#D92D3F",
+      lightHover: (0, import_styles9.alpha)("#D92D3F", 0.08),
+      light: "#F06A78",
+      dark: "#B42336",
       contrastText: "#FFFFFF",
-      hover: "#F23D3D",
-      disabled: "#FFBABA",
-      disabledBackground: "#FFF0F0"
+      hover: "#8F1D2B",
+      disabled: "#F5AEB7",
+      disabledBackground: "#FDEBED"
     },
     dark: {
-      main: "#FF4747",
-      lightHover: (0, import_styles8.alpha)("#FF4747", 0.08),
-      light: "#FF6666",
-      dark: "#CC3939",
+      main: "#D92D3F",
+      lightHover: (0, import_styles9.alpha)("#D92D3F", 0.08),
+      light: "#F06A78",
+      dark: "#B42336",
       contrastText: "#FFFFFF",
-      hover: "#FF5C5C",
-      disabled: "#5C2929",
-      disabledBackground: "#2E1515"
+      hover: "#E34757",
+      disabled: "#8F1D2B",
+      disabledBackground: "#35151B"
     }
   },
   warning: {
     light: {
-      main: "#FFA347",
-      lightHover: (0, import_styles8.alpha)("#FFA347", 0.08),
-      light: "#FFBC70",
-      dark: "#E68F3F",
-      contrastText: "#1A1A1A",
-      hover: "#F2943D",
-      disabled: "#FFDDBA",
-      disabledBackground: "#FFF6ED"
+      main: "#C76A00",
+      lightHover: (0, import_styles9.alpha)("#C76A00", 0.08),
+      light: "#E89A3D",
+      dark: "#9E5400",
+      contrastText: "#FFFFFF",
+      hover: "#7D4300",
+      disabled: "#EBC48F",
+      disabledBackground: "#FFF4E5"
     },
     dark: {
-      main: "#FFA347",
-      lightHover: (0, import_styles8.alpha)("#FFA347", 0.08),
-      light: "#FFB366",
-      dark: "#CC8239",
+      main: "#FFA43D",
+      lightHover: (0, import_styles9.alpha)("#FFA43D", 0.08),
+      light: "#FFB96B",
+      dark: "#CC7A18",
       contrastText: "#1A1A1A",
-      hover: "#FFAD5C",
-      disabled: "#5C3A1A",
-      disabledBackground: "#2E1D0D"
+      hover: "#FFAD55",
+      disabled: "#8A5A20",
+      disabledBackground: "#332510"
     }
   },
   success: {
     light: {
-      main: "#47FFA3",
-      lightHover: (0, import_styles8.alpha)("#47FFA3", 0.08),
-      light: "#70FFB8",
-      dark: "#3FE691",
-      contrastText: "#06351D",
-      hover: "#3DF294",
-      disabled: "#BAFFDA",
-      disabledBackground: "#EDFFF5"
+      main: "#178A5B",
+      lightHover: (0, import_styles9.alpha)("#178A5B", 0.08),
+      light: "#55B98A",
+      dark: "#106B45",
+      contrastText: "#FFFFFF",
+      hover: "#0B5235",
+      disabled: "#A7DCC5",
+      disabledBackground: "#E8F7F0"
     },
     dark: {
-      main: "#47FFA3",
-      lightHover: (0, import_styles8.alpha)("#47FFA3", 0.08),
-      light: "#66FFB3",
-      dark: "#39CC82",
+      main: "#47D99A",
+      lightHover: (0, import_styles9.alpha)("#47D99A", 0.08),
+      light: "#70E5B2",
+      dark: "#2DB579",
       contrastText: "#06351D",
-      hover: "#5CFFAD",
-      disabled: "#1A5C3A",
-      disabledBackground: "#0D2E1D"
+      hover: "#5BE0A5",
+      disabled: "#2D664E",
+      disabledBackground: "#102F23"
     }
   },
   info: {
     light: {
-      main: "#47C2FF",
-      lightHover: (0, import_styles8.alpha)("#47C2FF", 0.08),
-      light: "#70CEFF",
-      dark: "#3FADE6",
-      contrastText: "#06283A",
-      hover: "#3DB3F2",
-      disabled: "#BAE8FF",
-      disabledBackground: "#EDF8FF"
+      main: "#087EAF",
+      lightHover: (0, import_styles9.alpha)("#087EAF", 0.08),
+      light: "#48B5D9",
+      dark: "#066386",
+      contrastText: "#FFFFFF",
+      hover: "#04516D",
+      disabled: "#A4D7E8",
+      disabledBackground: "#E8F7FC"
     },
     dark: {
-      main: "#47C2FF",
-      lightHover: (0, import_styles8.alpha)("#47C2FF", 0.08),
-      light: "#66CBFF",
-      dark: "#399BCC",
+      main: "#47BCE8",
+      lightHover: (0, import_styles9.alpha)("#47BCE8", 0.08),
+      light: "#70CCED",
+      dark: "#2999C5",
       contrastText: "#06283A",
-      hover: "#5CCBFF",
-      disabled: "#1A465C",
-      disabledBackground: "#0D232E"
+      hover: "#5AC5EB",
+      disabled: "#2E6175",
+      disabledBackground: "#102A33"
     }
   },
   background: {
     light: {
-      default: "#f8fafc",
-      paper: "#ffffff"
+      default: "#F8FAFC",
+      paper: "#FFFFFF"
     },
     dark: {
-      default: "#1c263c",
-      paper: "#1e293b"
+      default: "#111827",
+      paper: "#1E293B"
     }
   },
   text: {
     light: {
-      primary: "#1c263c",
+      primary: "#111827",
       secondary: "#475569",
-      disabled: "#94a3b8"
+      disabled: "#94A3B8"
     },
     dark: {
-      primary: "#f8fafc",
-      secondary: "#cbd5e1",
-      disabled: "#64748b"
+      primary: "#F8FAFC",
+      secondary: "#CBD5E1",
+      disabled: "#64748B"
     }
   },
   divider: {
-    light: "#e2e8f0",
+    light: "#E2E8F0",
     dark: "#334155"
   }
 };
@@ -13577,7 +13992,7 @@ var components = {
 };
 
 // src/theme/theme.ts
-var getTheme = (mode) => (0, import_material29.createTheme)({
+var getTheme = (mode) => (0, import_material30.createTheme)({
   palette: getPalette(mode),
   typography,
   components,
@@ -13587,28 +14002,28 @@ var getTheme = (mode) => (0, import_material29.createTheme)({
 });
 
 // src/providers/VortexUIProvider.tsx
-var import_jsx_runtime42 = require("react/jsx-runtime");
-var ColorModeContext = (0, import_react28.createContext)({
+var import_jsx_runtime43 = require("react/jsx-runtime");
+var ColorModeContext = (0, import_react29.createContext)({
   toggleColorMode: () => {
   },
   mode: "light"
 });
-var useColorMode = () => (0, import_react28.useContext)(ColorModeContext);
+var useColorMode = () => (0, import_react29.useContext)(ColorModeContext);
 var cache = createCache({
   key: "vortexui",
   prepend: true
 });
 function VortexUIProvider({ children, disableCustomCache = false, initialMode = "light" }) {
   const prefersDarkMode = (0, import_useMediaQuery.default)("(prefers-color-scheme: dark)");
-  const [mode, setMode] = (0, import_react28.useState)(initialMode);
-  (0, import_react28.useEffect)(() => {
+  const [mode, setMode] = (0, import_react29.useState)(initialMode);
+  (0, import_react29.useEffect)(() => {
     const hasCookie = document.cookie.includes("vortex-ui-theme-mode=");
     if (!hasCookie && prefersDarkMode) {
       setMode("dark");
       document.cookie = `vortex-ui-theme-mode=dark; path=/; max-age=31536000`;
     }
   }, [prefersDarkMode]);
-  const colorMode = (0, import_react28.useMemo)(
+  const colorMode = (0, import_react29.useMemo)(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => {
@@ -13622,15 +14037,15 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
     }),
     [mode]
   );
-  const theme = (0, import_react28.useMemo)(() => getTheme(mode), [mode]);
-  const content = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_styles9.ThemeProvider, { theme, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_CssBaseline.default, {}),
+  const theme = (0, import_react29.useMemo)(() => getTheme(mode), [mode]);
+  const content = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ColorModeContext.Provider, { value: colorMode, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(import_styles10.ThemeProvider, { theme, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_CssBaseline.default, {}),
     children
   ] }) });
   if (disableCustomCache) {
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_jsx_runtime42.Fragment, { children: content });
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_jsx_runtime43.Fragment, { children: content });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_react29.CacheProvider, { value: cache, children: content });
+  return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_react30.CacheProvider, { value: cache, children: content });
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
@@ -13654,8 +14069,8 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
   DateRangePicker,
   DateTimePicker,
   Dialog,
+  DragDropUpload,
   Drawer,
-  FileUpload,
   Grid,
   History,
   HistoryItem,
@@ -13671,6 +14086,7 @@ function VortexUIProvider({ children, disableCustomCache = false, initialMode = 
   Sheet,
   Skeleton,
   Slider,
+  Snackbar,
   Stepper,
   TextField,
   Textarea,
