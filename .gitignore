@@ -24,3 +24,5 @@ storybook-static/
 .env*
 .vercel
 *.tsbuildinfo
+
+apps/docs/public/sw.js
