@@ -8,39 +8,53 @@ import Typography from "@mui/material/Typography";
 const Wrapper = styled(Box, {
   shouldForwardProp: (p) =>
     p !== "bgColor" && p !== "isError" && p !== "isDisabled",
-})<{ bgColor?: string; isError?: boolean; isDisabled?: boolean }>(
-  ({ theme, bgColor = "background.default", isError, isDisabled }) => {
-    const resolveColor = (c: string) => {
-      if (c === "background.default" || c === "#FAFBFF") return theme.palette.background.default;
-      if (c === "background.paper" || c === "#fff" || c === "#FFFFFF") return theme.palette.background.paper;
-      return c;
-    };
-    return {
-      width: "100%",
-      borderRadius: "10px",
+})<{ bgColor?: string; isError?: boolean; isDisabled?: boolean }>(({
+  theme,
+  bgColor,
+  isError,
+  isDisabled,
+}) => {
+  const resolveColor = (c?: string) => {
+    if (!c) return undefined;
+    if (c === "background.default") return theme.palette.background.default;
+    if (c === "background.paper") return theme.palette.background.paper;
+    return c;
+  };
+
+  const resolvedBg = resolveColor(bgColor);
+
+  return {
+    width: "100%",
+    borderRadius: "10px",
+    backgroundColor: isDisabled
+      ? theme.palette.action.disabledBackground
+      : isError
+        ? theme.palette.background.paper
+        : theme.palette.background.paper,
+    border: "1px solid",
+    borderColor: isError ? theme.palette.error.main : theme.palette.divider,
+    padding: "8px 12px",
+    boxSizing: "border-box",
+    cursor: isDisabled ? "not-allowed" : "text",
+    transition: theme.transitions.create([
+      "border-color",
+      "background-color",
+      "box-shadow",
+    ]),
+
+    "&:hover": {
       backgroundColor: isDisabled
-        ? theme.palette.action.disabledBackground
-        : resolveColor(bgColor),
-      border: "1px solid",
+        ? undefined
+        : theme.palette.background.default,
+    },
+
+    "&:focus-within": {
+      backgroundColor: theme.palette.background.paper,
       borderColor: isError ? theme.palette.error.main : theme.palette.divider,
-      padding: "8px 12px",
-      boxSizing: "border-box",
-      cursor: isDisabled ? "not-allowed" : "text",
-      transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s",
-
-      "&:focus-within": {
-        backgroundColor: theme.palette.background.paper,
-        borderColor: isError
-          ? theme.palette.error.main
-          : theme.palette.primary.main,
-      },
-
-      "&:hover:not(:focus-within)": {
-        backgroundColor: isDisabled ? undefined : theme.palette.background.paper,
-      },
-    };
-  }
-);
+      // : theme.palette.primary.main,
+    },
+  };
+});
 
 const StyledTextarea = styled("textarea", {
   shouldForwardProp: (p) => p !== "isExpandable",
@@ -84,7 +98,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       maxLength,
       rows = 3,
       minRows,
-      bgColor = "background.default",
+      bgColor = "#fff",
       error,
       disabled,
       placeholder,
@@ -92,16 +106,16 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       inputProps,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const isExpandable = variant === "expandable";
     const isMinLength = variant === "minLength";
 
     const internalRef = useRef<HTMLTextAreaElement>(null);
     const textareaRef = (ref as any) || internalRef;
-    
+
     const [internalValue, setInternalValue] = React.useState(
-      rest.defaultValue !== undefined ? String(rest.defaultValue) : ""
+      rest.defaultValue !== undefined ? String(rest.defaultValue) : "",
     );
     const currentValue = value !== undefined ? String(value) : internalValue;
 
@@ -113,7 +127,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     // ── MinLength-specific logic ────────────────────────────────────────────────
     const minLengthError =
-      isMinLength && charCount > 0 && maxLength != null && charCount < maxLength;
+      isMinLength &&
+      charCount > 0 &&
+      maxLength != null &&
+      charCount < maxLength;
     const resolvedError = isMinLength ? minLengthError || error : error;
     const resolvedLabel = isMinLength
       ? `${label} (Min ${maxLength} chars)`
@@ -244,7 +261,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
       </Box>
     );
-  }
+  },
 );
 
 Textarea.displayName = "Textarea";

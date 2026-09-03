@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Box, Typography, Divider } from "@mui/material";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import {
   TextField,
   Select,
   Grid,
   NumberField,
   CheckboxGroup,
-  UploadButton,
   Button,
+  IconButton,
   FileItem,
   Avatar,
   Sheet,
@@ -20,15 +21,30 @@ export default function CreateProfileExample() {
   const [experience, setExperience] = useState<number>(0);
   const [skills, setSkills] = useState<string[]>([]);
   const [avatarFiles, setAvatarFiles] = useState<FileItem[]>([]);
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const avatarUrl =
-    avatarFiles.length > 0 && avatarFiles[0].preview_url
-      ? avatarFiles[0].preview_url
-      : "";
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setAvatarUrl(url);
+      setAvatarFiles([
+        {
+          file_name: file.name,
+          file_type: file.type,
+          file_data: null,
+          preview_url: url,
+          size: file.size,
+          src: url,
+        },
+      ]);
+    }
+  };
 
   return (
     <Box sx={{ maxWidth: 800, margin: "0 auto", py: 4 }}>
-      <Typography variant="h4" fontWeight={700} mb={1}>
+      <Typography color="text.primary" variant="h4" fontWeight={700} mb={1}>
         Create User Profile
       </Typography>
       <Typography color="text.secondary" mb={4}>
@@ -40,28 +56,76 @@ export default function CreateProfileExample() {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          gap={2}
+          gap={1.5}
           mb={4}
         >
-          <Avatar
-            src={avatarUrl}
-            sx={{
-              width: 96,
-              height: 96,
-              bgcolor: "primary.main",
-              fontSize: "2rem",
-            }}
-          >
-            {avatarUrl ? "" : "U"}
-          </Avatar>
-          <UploadButton
-            label="Upload Avatar"
-            value={avatarFiles}
-            onChange={setAvatarFiles}
-            multiple={false}
-            fileTypes="image"
-            maxSizeMB={5}
-          />
+          <Box sx={{ position: "relative", display: "inline-block" }}>
+            <Avatar
+              type="image"
+              src={avatarUrl}
+              sx={{
+                width: 110,
+                height: 110,
+                borderRadius: "50%",
+                bgcolor: "primary.main",
+                fontSize: "2.5rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                boxShadow: (theme) =>
+                  `0 0 0 4px ${theme.palette.background.paper}, 0 4px 14px rgba(0,0,0,0.1)`,
+              }}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {avatarUrl ? "" : "U"}
+            </Avatar>
+
+            <IconButton
+              aria-label="Upload profile picture"
+              onClick={() => fileInputRef.current?.click()}
+              icon={<PhotoCamera sx={{ fontSize: 18 }} />}
+              sx={{
+                position: "absolute",
+                bottom: 2,
+                right: 2,
+                bgcolor: "primary.main",
+                color: "#ffffff",
+                width: 36,
+                height: 36,
+                border: "2.5px solid",
+                borderColor: "background.paper",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
+                "&:hover": {
+                  bgcolor: "primary.dark",
+                },
+              }}
+            />
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+          </Box>
+
+          {avatarUrl ? (
+            <Button
+              variant="text"
+              severity="error"
+              size="sm"
+              onClick={() => {
+                setAvatarUrl("");
+                setAvatarFiles([]);
+              }}
+            >
+              Remove Photo
+            </Button>
+          ) : (
+            <Typography variant="caption" color="text.secondary">
+              Click avatar or camera icon to upload photo
+            </Typography>
+          )}
         </Box>
 
         <Divider sx={{ mb: 4 }} />
@@ -92,6 +156,7 @@ export default function CreateProfileExample() {
               <Select
                 variant="icon"
                 label="Role"
+                fullWidth
                 options={[
                   { value: "developer", label: "Software Engineer" },
                   { value: "designer", label: "Product Designer" },
@@ -116,7 +181,12 @@ export default function CreateProfileExample() {
           </Grid>
 
           <Box>
-            <Typography variant="subtitle2" fontWeight={600} mb={1}>
+            <Typography
+              variant="subtitle2"
+              color="text.primary"
+              fontWeight={600}
+              mb={1}
+            >
               Core Skills
             </Typography>
             <CheckboxGroup

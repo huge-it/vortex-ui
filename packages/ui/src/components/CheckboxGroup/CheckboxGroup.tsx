@@ -140,6 +140,8 @@ export const Checkbox = ({
   value,
   label,
   disabled,
+  checked,
+  onChange,
   color,
   borderColor,
   variant,
@@ -147,32 +149,41 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   const context = useContext(CheckboxGroupContext);
 
-  if (!context) {
-    throw new Error("Checkbox must be used within a CheckboxGroup");
-  }
-
-  const isChecked = context.value.includes(value);
-  const isDisabled = disabled || context.disabled;
-  const activeVariant = variant || context.variant;
-  const activeBorderColor = borderColor || context.borderColor;
-  const activeColor = color || context.color || "primary.main";
+  const isChecked = context ? context.value.includes(value!) : !!checked;
+  const isDisabled = disabled || (context ? context.disabled : false);
+  const activeVariant = variant || (context ? context.variant : "md");
+  const activeBorderColor = borderColor || (context ? context.borderColor : "divider");
+  const activeColor = color || (context ? context.color : undefined) || "primary.main";
 
   const { fontSize, fontWeight } = VARIANTS[activeVariant] ?? VARIANTS.md;
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (context && value !== undefined) {
+      context.onChange(value, e.target.checked);
+    } else if (onChange) {
+      onChange(e, e.target.checked);
+    }
+  };
+
+  const checkboxComponent = (
+    <StyledCheckbox
+      checked={isChecked}
+      onChange={handleChange}
+      disabled={isDisabled}
+      variant={activeVariant}
+      borderColor={activeBorderColor}
+      checkedColor={activeColor}
+      sx={!label ? sx : undefined}
+    />
+  );
+
+  if (!label) {
+    return checkboxComponent;
+  }
+
   return (
     <FormControlLabel
-      control={
-        <StyledCheckbox
-          checked={isChecked}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            context.onChange(value, e.target.checked)
-          }
-          disabled={isDisabled}
-          variant={activeVariant}
-          borderColor={activeBorderColor}
-          checkedColor={activeColor}
-        />
-      }
+      control={checkboxComponent}
       label={label}
       disabled={isDisabled}
       sx={[

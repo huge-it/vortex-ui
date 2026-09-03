@@ -6,6 +6,74 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.9",
+    date: "September 3, 2026",
+    changes: [
+      {
+        type: "feat",
+        description:
+          "Added new VortexTable component.",
+      },
+      {
+        type: "feat",
+        description:
+          "Added advanced sub-components for DataTable: ColumnHeaderMenu, CustomFilterDropdown, DataTableContainer, SearchFilter, StyledCheckbox, and TableToolbar.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.8",
+    date: "September 2, 2026",
+    changes: [
+      {
+        type: "docs",
+        description:
+          "Added and updated documentation for Avatar and Table components.",
+      },
+      {
+        type: "docs",
+        description:
+          "Added and updated application examples for Project List and User Profile (Create, List, View).",
+      },
+      {
+        type: "docs",
+        description:
+          "Updated README.md with workspace filter commands.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.7",
+    date: "September 1, 2026",
+    changes: [
+      {
+        type: "feat",
+        description:
+          "Added Service Worker scaffolding (sw.js) and offline PWA support configuration.",
+      },
+      {
+        type: "feat",
+        description:
+          "Added User Profile application example pages (create and view user profile pages).",
+      },
+      {
+        type: "changed",
+        description:
+          "Enhanced Select component with fullWidth prop support across variants.",
+      },
+      {
+        type: "changed",
+        description:
+          "Improved Textarea component layout, border styling, and focus handling.",
+      },
+      {
+        type: "changed",
+        description:
+          "Updated package build process and distribution bundle configuration for vortex-ui.",
+      },
+    ],
+  },
+  {
     version: "v0.1.6",
     date: "August 31, 2026",
     changes: [

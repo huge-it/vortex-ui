@@ -2,9 +2,17 @@
 
 import { Add } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import Link from "next/link";
+import NextLink from "next/link";
 import { useState } from "react";
-import { Button, DataTable, Select, TextField, Avatar, Sheet } from "vortex-ui";
+import {
+  Button,
+  DataTable,
+  Select,
+  TextField,
+  Avatar,
+  Sheet,
+  Link as VortexLink,
+} from "vortex-ui";
 
 const usersData = [
   {
@@ -73,19 +81,14 @@ export default function ProfileListExample() {
             {row.name.charAt(0)}
           </Avatar>
           <Box>
-            <Typography
-              component={Link}
+            <VortexLink
               href="/examples/user-profile/view"
-              variant="body2"
-              fontWeight={600}
-              color="primary.main"
-              sx={{
-                textDecoration: "none",
-                "&:hover": { textDecoration: "underline" },
-              }}
+              variant="primary"
+              size="md"
+              sx={{ fontWeight: 600 }}
             >
               {row.name}
-            </Typography>
+            </VortexLink>
             <Typography
               variant="caption"
               color="text.secondary"
@@ -120,7 +123,7 @@ export default function ProfileListExample() {
         mb={4}
       >
         <Box>
-          <Typography variant="h4" fontWeight={700} mb={1}>
+          <Typography variant="h4" color="text.primary" fontWeight={700} mb={1}>
             Team Members
           </Typography>
           <Typography color="text.secondary">
@@ -128,11 +131,11 @@ export default function ProfileListExample() {
           </Typography>
         </Box>
         <Button
-          component={Link}
+          component={NextLink}
           href="/examples/user-profile/create"
           variant="filled"
+          icon={<Add />}
         >
-          <Add sx={{ mr: 1, fontSize: 20 }} />
           Add Member
         </Button>
       </Box>

@@ -23,9 +23,11 @@ export interface CheckboxGroupProps {
 }
 
 export interface CheckboxProps {
-  value: string;
+  value?: string;
   label?: ReactNode;
   disabled?: boolean;
+  checked?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
   color?: string;
   borderColor?: string;
   variant?: "sm" | "md" | "lg";

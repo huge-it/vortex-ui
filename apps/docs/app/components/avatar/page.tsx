@@ -77,6 +77,12 @@ const avatarPropsList = [
     default: "undefined",
     description: "Custom children to render inside the avatar (e.g. for initials).",
   },
+  {
+    name: "onClick",
+    type: "(event: React.MouseEvent<HTMLDivElement>) => void",
+    default: "undefined",
+    description: "Callback function triggered when the avatar component is clicked.",
+  },
 ];
 
 export default function AvatarDocs() {

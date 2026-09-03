@@ -37,6 +37,8 @@ export interface AvatarProps {
   sx?: SxProps<Theme>;
   /** Custom children to render inside the avatar */
   children?: React.ReactNode;
+  /** Callback fired when the avatar is clicked */
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const VARIANTS = {
@@ -76,6 +78,7 @@ export const Avatar = ({
   color = "#808697",
   sx = {},
   children,
+  onClick,
 }: AvatarProps) => {
   const { size, fontSize, fontWeight, borderRadius, iconSize } =
     VARIANTS[variant] ?? VARIANTS.md;
@@ -133,10 +136,12 @@ export const Avatar = ({
     <>
       <Box
         ref={boxRef}
+        onClick={onClick}
         sx={{
           position: "relative",
           width: size,
           height: size,
+          borderRadius,
           flexShrink: 0,
           "&:hover .avatar-overlay": editable && !isImage ? { opacity: 1 } : {},
           ...sx,
@@ -148,9 +153,9 @@ export const Avatar = ({
         {isImage ? (
           <Box
             sx={{
-              width: size,
-              height: size,
-              borderRadius,
+              width: "100%",
+              height: "100%",
+              borderRadius: "inherit",
               overflow: "hidden",
               display: "flex",
               alignItems: "center",
@@ -179,9 +184,9 @@ export const Avatar = ({
         ) : (
           <Box
             sx={{
-              width: size,
-              height: size,
-              borderRadius,
+              width: "100%",
+              height: "100%",
+              borderRadius: "inherit",
               bgcolor,
               color,
               display: "flex",
@@ -206,7 +211,7 @@ export const Avatar = ({
             sx={{
               position: "absolute",
               inset: 0,
-              borderRadius,
+              borderRadius: "inherit",
               bgcolor: "rgba(0, 0, 0, 0.45)",
               display: "flex",
               alignItems: "center",

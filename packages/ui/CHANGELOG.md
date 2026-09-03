@@ -2,6 +2,78 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.9] - 2026-09-03
+
+### Added
+
+- Added new `VortexTable` component.
+- Added advanced sub-components for `DataTable`: `ColumnHeaderMenu`, `CustomFilterDropdown`, `DataTableContainer`, `SearchFilter`, `StyledCheckbox`, and `TableToolbar`.
+
+---
+
+## [0.1.8] - 2026-09-02
+
+### Added
+
+- Added/Updated documentation for `Avatar` and `Table` components.
+- Added/Updated application examples for Project List and User Profile (Create, List, View).
+
+### Changed
+
+- Updated `README.md` in the docs app with workspace filter commands.
+- Updated the Docs Changelog page.
+
+---
+
+## [0.1.7] - 2026-09-01
+### Added
+
+- Added Service Worker scaffolding (`sw.js`) and offline support configuration.
+- Added User Profile application example pages (`create` and `view`).
+
+### Changed
+
+- Enhanced `Select` component with `fullWidth` prop support across variants.
+- Improved `Textarea` component layout, border, and focus state styling.
+- Updated package distribution build pipeline and exports for `vortex-ui`.
+
+---
+
+## [0.1.6] - 2026-08-31
+
+### Added
+
+- Refactored Date/Time pickers into standalone components: `DatePicker`, `DateRangePicker`, `DateTimePicker`, and `TimePicker`.
+- Updated `Uploads` components, adding `DragDropUpload` and `UploadButton`.
+- Added comprehensive application examples for project creation and component showcases.
+
+### Changed
+
+- Updated layout components (`Header`, `Footer`, `Sidebar`) and global styles.
+- Refactored generic input documentation to dedicated `TextField` documentation.
+- Improvements and fixes across `Button`, `CheckboxGroup`, `RadioGroup`, `Select`, `Stepper`, and `Snackbar`.
+
+---
+
+## [0.1.5] - 2026-08-28
+
+### Added
+
+- Added new components: `Breadcrumbs`, `Avatar`, `Dialog`, `Drawer`, `History`, `PipelineStepper`, `Stepper`, and `Tooltip`.
+
+### Changed
+
+- Removed the `Modal` component (replaced by `Dialog`).
+- Refactored `AutoPopulate` component for standard MUI theme color token compatibility.
+- Renamed `CustomAccordionProps` to `AccordionProps`.
+
+### Fixed
+
+- Fixed Accordion panel headers bleeding into table of contents.
+- Fixed layout styling in `ComponentStates` grid view.
+
+---
+
 ## [0.1.4] - 2026-08-27
 
 ### Added

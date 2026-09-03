@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Grid, Divider, Chip } from "@mui/material";
-import { Button, Avatar, Sheet } from "vortex-ui";
+import { Box, Typography, Divider, Chip } from "@mui/material";
+import { Button, Avatar, Sheet, Grid } from "vortex-ui";
 import {
   Email,
   Phone,
@@ -19,7 +19,7 @@ export default function ViewProfileExample() {
       </Box>
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Sheet
             variant="sm"
             sx={{ p: 4, borderRadius: 2, textAlign: "center" }}
@@ -28,7 +28,7 @@ export default function ViewProfileExample() {
               src="/static/images/avatar/2.jpg"
               sx={{ width: 120, height: 120, margin: "0 auto", mb: 2 }}
             />
-            <Typography variant="h5" fontWeight={700}>
+            <Typography variant="h5" color="text.primary" fontWeight={700}>
               Jane Smith
             </Typography>
             <Typography color="primary.main" fontWeight={500} mb={3}>
@@ -76,9 +76,14 @@ export default function ViewProfileExample() {
           </Sheet>
         </Grid>
 
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Sheet variant="sm" sx={{ p: 4, borderRadius: 2, mb: 4 }}>
-            <Typography variant="h6" fontWeight={600} mb={2}>
+            <Typography
+              variant="h6"
+              color="text.primary"
+              fontWeight={600}
+              mb={2}
+            >
               About
             </Typography>
             <Typography color="text.secondary" paragraph>
@@ -95,7 +100,12 @@ export default function ViewProfileExample() {
           </Sheet>
 
           <Sheet variant="sm" sx={{ p: 4, borderRadius: 2 }}>
-            <Typography variant="h6" fontWeight={600} mb={3}>
+            <Typography
+              variant="h6"
+              color="text.primary"
+              fontWeight={600}
+              mb={3}
+            >
               Skills
             </Typography>
             <Box display="flex" flexWrap="wrap" gap={1}>

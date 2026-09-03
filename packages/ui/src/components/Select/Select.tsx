@@ -1,18 +1,11 @@
 "use client";
-import React from "react";
-import { Box, Typography, MenuItem } from "@mui/material";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { SelectProps, DefaultSelectProps } from "./Select.types";
-import { SearchableSelect } from "./SearchableSelect";
-import { IconSelect } from "./IconSelect";
 import { ExpandMore } from "@mui/icons-material";
+import { Box, MenuItem, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { TextField } from "../TextField";
+import { IconSelect } from "./IconSelect";
+import { SearchableSelect } from "./SearchableSelect";
+import { DefaultSelectProps, SelectProps } from "./Select.types";
 
 const OPTIONS: Record<number, { label: string; value: number; color: string }> =
   {
@@ -21,7 +14,7 @@ const OPTIONS: Record<number, { label: string; value: number; color: string }> =
     3: { label: "High", value: 3, color: "error.main" },
   };
 
-export const BaseSelect = ({
+export const VortexUISelect = ({
   value,
   recordId,
   onUpdate,
@@ -227,5 +220,5 @@ export const Select = (props: SelectProps) => {
     const { variant, ...rest } = props;
     return <IconSelect {...rest} />;
   }
-  return <BaseSelect {...props} />;
+  return <VortexUISelect {...props} />;
 };
