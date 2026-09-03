@@ -23,11 +23,22 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
 import React, { useState } from "react";
 import ColumnHeaderMenu from "./ColumnHeaderMenu";
 import { DataTableProps, TableHeadItem, TableRowItem } from "./DataTable.types";
 import StyledCheckbox from "./StyledCheckbox";
+
+const visuallyHidden = {
+  border: 0,
+  clip: "rect(0 0 0 0)",
+  height: "1px",
+  margin: -1,
+  overflow: "hidden",
+  padding: 0,
+  position: "absolute",
+  whiteSpace: "nowrap",
+  width: "1px",
+} as const;
 
 interface UIColors {
   headerBg: string;
