@@ -1,89 +1,91 @@
 # Using Vortex-UI in Another Application
 
-This guide explains how to install and use the `vortex-ui` package in another project using Git.
+This guide explains how to install and use the `vortex-ui` component library in a new project. 
 
-## Option 1: Git Submodule with Monorepo (Recommended for now)
+Because `vortex-ui` is housed inside a monorepo (`packages/ui`), the most reliable way to use it is by adding it as a Git submodule and configuring your package manager's "workspaces" feature.
 
-Since `vortex-ui` is part of a monorepo (located in `packages/ui`), the easiest way to use it in another project via Git is by adding it as a Git submodule and using a package manager's workspace feature (like npm workspaces, yarn workspaces, or pnpm workspaces) to link it.
+---
 
-### 1. Add the repository as a Git Submodule
+## Step-by-Step Installation Guide
 
-Navigate to your other project's root directory and run:
+Follow these steps sequentially in the root folder of your consuming project (e.g., your new Next.js app).
+
+### Step 1: Add the Repository as a Git Submodule
+
+First, bring the `vortex-ui` code into your project by adding it as a Git submodule. We recommend placing it inside an `external` folder:
 
 ```bash
-# Add the vortex-fe repository as a submodule (e.g., inside a 'packages' or 'external' folder)
 git submodule add https://github.com/huge-it/vortex-ui.git external/vortex-fe
 ```
 
-### 2. Configure Workspaces
+### Step 2: Configure Workspaces
 
-Update your project's `package.json` to include the submodule as a workspace. 
+Tell your project's package manager to treat the submodule as a local package. Update your project's `package.json` to include the `workspaces` array:
 
-For **npm** or **yarn**:
 ```json
 {
-  "name": "your-other-project",
+  "name": "your-project-name",
   "workspaces": [
     "external/vortex-fe/packages/ui"
   ]
 }
 ```
 
-For **pnpm** (create or update `pnpm-workspace.yaml`):
-```yaml
-packages:
-  - 'external/vortex-fe/packages/ui'
-```
+*(If you use **pnpm**, create or update a `pnpm-workspace.yaml` file instead and add `- 'external/vortex-fe/packages/ui'` under `packages:`).*
 
-### 3. Install and Link Dependencies
+### Step 3: Link the Workspace
 
-Run the install command for your package manager:
+Run your package manager's install command. This will detect the workspace configuration you just added and link `vortex-ui` locally.
+
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
 ```
 
-Now you can import components from `vortex-ui` in your project:
+### Step 4: Install Required Peer Dependencies
+
+`vortex-ui` relies on React and Material UI to function, but it does not install them automatically. You **must** install these "peer dependencies" directly in your main project:
+
+```bash
+npm install @mui/material @mui/icons-material @emotion/react @emotion/styled @emotion/cache react react-dom
+```
+
+### Step 5: Start Using the Components!
+
+You are now fully set up. You can import components directly from `vortex-ui` in your code:
 
 ```tsx
-import { FilterButton } from 'vortex-ui';
-```
+import { Button } from 'vortex-ui';
 
----
-
-## Option 2: Local File Path (For Local Development)
-
-If you are developing locally and want to test `vortex-ui` in another project without submodules:
-
-### 1. Link the package
-
-Assuming your other project is located in the same parent directory as `vortex-fe` (e.g., both are inside `Standalone_Vortex`), add the relative path to the `vortex-ui` directory in your `package.json`:
-
-```json
-{
-  "dependencies": {
-    "vortex-ui": "file:../vortex-fe/packages/ui"
-  }
+export default function Home() {
+  return <Button>Click Me</Button>;
 }
 ```
 
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
 ---
 
-## Prerequisites & Peer Dependencies
+## Maintenance & Local Development
 
-Ensure the target project has the required peer dependencies installed, as `vortex-ui` relies on them:
+### How to pull the latest updates from Vortex-UI
+If someone makes updates to `vortex-ui` (bug fixes, new components, etc.) and pushes them to the repository, you can easily pull those updates into your project:
 
 ```bash
-npm install @mui/material @mui/icons-material @emotion/react @emotion/styled react react-dom
+# 1. Fetch and update the submodule to the latest commit
+git submodule update --remote external/vortex-fe
 ```
+*Note: After updating, always restart your development server (e.g., `npm run dev`). If changes don't appear, try deleting your framework's cache (like the `.next` folder).*
 
-*(Note: Direct Git URL installation like `npm install git+https://...` is not natively supported for subdirectories in a monorepo without third-party tools like `gitpkg`.)*
+
+### Alternative Setup: Local File Path 
+If you already have the `vortex-fe` repository cloned on your computer and just want to test it locally without submodules, you can link it via a relative file path. 
+Assuming both your new project and `vortex-fe` are side-by-side in the same parent folder:
+
+1. Add the relative path directly to your dependencies in your project's `package.json`:
+   ```json
+   {
+     "dependencies": {
+       "vortex-ui": "file:../vortex-fe/packages/ui"
+     }
+   }
+   ```
+2. Run `npm install`.
+3. Install peer dependencies as shown in Step 4.

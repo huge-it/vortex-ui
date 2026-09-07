@@ -125,30 +125,16 @@ export default function Page() {
           color="text.secondary"
           sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
         >
-          2. Install VortexUI via GitHub
+          2. Add the Repository as a Git Submodule
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-          Since the package is not published to <code>npmjs.com</code>, you can
-          install it directly from your GitHub repository. You must also install
-          the required peer dependencies for MUI and Emotion.
+          Bring the <code>vortex-ui</code> code into your project by adding it
+          as a Git submodule. We recommend placing it inside an{" "}
+          <code>external</code> folder:
         </Typography>
         <ComponentCode
-          code={`# Using npm\nnpm install github:huge-it/vortex-ui @mui/material @emotion/react @emotion/styled\n\n# Using pnpm\npnpm add github:huge-it/vortex-ui @mui/material @emotion/react @emotion/styled`}
+          code={`git submodule add https://github.com/huge-it/vortex-ui.git external/vortex-fe`}
         />
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ mt: 1, mb: 2, fontStyle: "italic" }}
-        >
-          *(Note: If your UI package is located in a specific subdirectory
-          within a monorepo, npm supports installing from a subdirectory like
-          this:{" "}
-          <code>
-            npm install
-            git+https://github.com/huge-it/vortex-ui.git#main:packages/ui
-          </code>
-          )*
-        </Typography>
 
         <Divider sx={{ my: 4, opacity: 0.5 }} />
 
@@ -157,7 +143,51 @@ export default function Page() {
           color="text.secondary"
           sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
         >
-          3. Set up the Provider
+          3. Configure Workspaces & Link
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+          Tell your project`&apos;`s package manager to treat the submodule as a
+          local package. Update your <code>package.json</code> to include the
+          workspaces array:
+        </Typography>
+        <ComponentCode
+          code={`{\n  "name": "your-project-name",\n  "workspaces": [\n    "external/vortex-fe/packages/ui"\n  ]\n}`}
+        />
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ mt: 2, mb: 2 }}
+        >
+          Then, run the install command to link the workspace locally:
+        </Typography>
+        <ComponentCode code={`npm install`} />
+
+        <Divider sx={{ my: 4, opacity: 0.5 }} />
+
+        <Typography
+          variant="h3"
+          color="text.secondary"
+          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
+        >
+          4. Install Required Peer Dependencies
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+          <code>vortex-ui</code> relies on React and Material UI to function,
+          but it does not install them automatically. You must install these
+          peer dependencies directly:
+        </Typography>
+        <ComponentCode
+          code={`npm install @mui/material @mui/icons-material @emotion/react @emotion/styled @emotion/cache react react-dom`}
+        />
+
+        <Divider sx={{ my: 4, opacity: 0.5 }} />
+
+        <Typography
+          variant="h3"
+          color="text.secondary"
+          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
+        >
+          5. Set up the Provider
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
           <code>vortex-ui</code> requires a UI provider at the root of your
@@ -176,7 +206,7 @@ export default function Page() {
           color="text.secondary"
           sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
         >
-          4. Add a Button Component
+          6. Add a Button Component
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
           Now you can import and use components anywhere in your application!
@@ -184,7 +214,7 @@ export default function Page() {
           <code>src/app/page.tsx</code> and replace its contents with:
         </Typography>
         <ComponentCode
-          code={`"use client";\nimport { Button } from "vortex-ui";\n\nexport default function Home() {\n  return (\n    <main style={{ padding: "4rem", display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center" }}>\n      <h1>Welcome to Vortex</h1>\n      \n      <Button \n        variant="filled" \n        onClick={() => alert("Vortex Button Clicked!")}\n      >\n        Click Me\n      </Button>\n    </main>\n  );\n}`}
+          code={`import { Button } from "vortex-ui";\n\nexport default function Home() {\n  return (\n    <main style={{ padding: "4rem", display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center" }}>\n      <h1>Welcome to Vortex</h1>\n      \n      <Button variant="filled">\n        Click Me\n      </Button>\n    </main>\n  );\n}`}
         />
 
         <Divider sx={{ my: 4, opacity: 0.5 }} />
@@ -194,7 +224,7 @@ export default function Page() {
           color="text.secondary"
           sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
         >
-          5. Run the App
+          7. Run the App
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
           Start your development server to see it in action!
