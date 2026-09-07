@@ -11,11 +11,9 @@ import {
   Box,
   Button,
   Divider,
-  FormControlLabel,
   IconButton,
   Menu,
   MenuItem,
-  Switch,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -33,56 +31,124 @@ import {
 
 const tablePropsList = [
   {
-    name: "columns",
-    type: "DataTableColumn[]",
+    name: "data",
+    type: "{ id, data: { id, comp, actionIcon?, align? }[], json? }[]",
     default: "[]",
     description:
-      "Schema array defining column header names, keys, alignment, and custom rendering callbacks.",
+      "Array of row objects. Each row has an id, a data array of pre-rendered cells (matched to tableHead by cell.id), and an optional json array holding the original record.",
   },
   {
-    name: "data",
-    type: "any[]",
+    name: "tableHeadCompact",
+    type: "TableHeadData[]",
     default: "[]",
-    description: "Array of data records containing row cell contents.",
+    description:
+      "Column definitions for compact (grouped) view. Each entry has id, label, and optional value/align/width/filterOptions.",
   },
   {
-    name: "isLoading",
+    name: "tableHeadDetailed",
+    type: "TableHeadData[]",
+    default: "[]",
+    description:
+      "Column definitions for detailed (expanded) view. Same shape as tableHeadCompact.",
+  },
+  {
+    name: "loading",
     type: "boolean",
     default: "false",
-    description: "Triggers global loading spinner overlay.",
+    description: "Shows skeleton loading rows when true and data is empty.",
   },
   {
-    name: "emptyMessage",
+    name: "variant",
+    type: "'simple' | 'advanced'",
+    default: "'advanced'",
+    description:
+      "'simple' hides the column toolbar and freezing. 'advanced' shows full toolbar with column visibility, freezing, and group mode toggle.",
+  },
+  {
+    name: "ActionComponent",
+    type: "React.ElementType",
+    default: "undefined",
+    description:
+      "Component rendered in the bulk-action bar when rows are selected. Enables row selection checkboxes.",
+  },
+  {
+    name: "RowActionComponent",
+    type: "React.ElementType<{ row }>",
+    default: "undefined",
+    description:
+      "Per-row action component (e.g. a ⋮ menu). Receives the original row record via the row prop.",
+  },
+  {
+    name: "filterComponent",
+    type: "React.ReactNode",
+    default: "undefined",
+    description:
+      "Custom filter UI rendered inside a collapsible panel toggled by the filter button.",
+  },
+  {
+    name: "searchValue",
     type: "string",
-    default: "'No data available'",
-    description: "Custom message displayed when data is empty.",
+    default: "''",
+    description: "Controlled value for the built-in search input.",
+  },
+  {
+    name: "onSearchChange",
+    type: "(value: string) => void",
+    default: "() => {}",
+    description: "Callback fired when the search input value changes.",
+  },
+  {
+    name: "maxHeight",
+    type: "number | string",
+    default: "undefined",
+    description: "Maximum height of the scrollable table area.",
+  },
+  {
+    name: "stickyHeader",
+    type: "boolean",
+    default: "false",
+    description: "When true, the table header sticks to the top on scroll.",
   },
 ];
 
 const columnSchemaProps = [
   {
-    name: "key",
-    type: "string",
+    name: "id",
+    type: "string | number",
     default: "required",
-    description: "Unique key mapping to object key values.",
+    description:
+      "Unique identifier that matches cell.id in the data array. Use integer ids for compact columns (e.g. 1, 2) and decimal ids for detailed columns (e.g. 1.1, 1.2).",
   },
   {
-    name: "header",
+    name: "label",
     type: "string",
     default: "required",
-    description: "Text string displayed at top header cell.",
+    description: "Text displayed in the column header.",
+  },
+  {
+    name: "value",
+    type: "string",
+    default: "undefined",
+    description:
+      "Field key used for sorting. When provided, the column header becomes sortable.",
   },
   {
     name: "align",
     type: "'left' | 'center' | 'right'",
     default: "'left'",
-    description: "Text alignment alignment styles inside cells.",
+    description: "Text alignment for the column header and cells.",
   },
   {
-    name: "render",
-    type: "(row: any) => ReactNode",
+    name: "width",
+    type: "string | number",
     default: "undefined",
-    description: "Custom rendering callback for displaying customized cells.",
+    description: "Fixed width for the column (e.g. '160px').",
+  },
+  {
+    name: "filterOptions",
+    type: "{ label: string; value: string }[]",
+    default: "[]",
+    description: "Options shown in the column header dropdown filter menu.",
   },
 ];
 
@@ -97,21 +163,7 @@ export default function TableDocs() {
   >([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const tableHeadCompact: TableHeadData[] = [
-    {
-      id: 1,
-      label: "Opportunity Info",
-      value: "opportunity",
-      renderCell: (row: TableRowData) => (
-        <Box>
-          <Typography variant="body2" fontWeight={500}>
-            {row.opportunity}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            PO: {row.po_num}
-          </Typography>
-        </Box>
-      ),
-    },
+    { id: 1, label: "Opportunity Info", value: "opportunity" },
     {
       id: 2,
       label: "Company & Status",
@@ -119,85 +171,19 @@ export default function TableDocs() {
         label: c.name,
         value: c.name,
       })),
-      renderCell: (row: TableRowData) => (
-        <Box>
-          <Typography variant="body2">{row.company}</Typography>
-          <Typography variant="caption" color="text.secondary">
-            Status: {row.status}
-          </Typography>
-        </Box>
-      ),
     },
-    {
-      id: 3,
-      label: "Budget & Priority",
-      renderCell: (row: TableRowData) => (
-        <Box>
-          <Typography variant="body2" fontWeight={500}>
-            ${row.budget?.toLocaleString()}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Priority: {row.priority}
-          </Typography>
-        </Box>
-      ),
-    },
-    {
-      id: 4,
-      label: "Team",
-      renderCell: (row: TableRowData) => (
-        <Box>
-          <Typography variant="body2" fontWeight={500}>
-            {row.project_manager}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Assignee: {row.assignee}
-          </Typography>
-        </Box>
-      ),
-    },
-    {
-      id: 5,
-      label: "Location",
-      renderCell: (row: TableRowData) => (
-        <Box>
-          <Typography variant="body2" fontWeight={500}>
-            {row.region}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Dept: {row.department}
-          </Typography>
-        </Box>
-      ),
-    },
-    {
-      id: 6,
-      label: "Date",
-      value: "date",
-    },
+    { id: 3, label: "Budget & Priority" },
+    { id: 4, label: "Team" },
+    { id: 5, label: "Location" },
+    { id: 6, label: "Date", value: "date" },
   ];
 
   const tableHeadDetailed: TableHeadData[] = [
     { id: 1.1, label: "# PO", value: "po_num", width: "160px" },
-    {
-      id: 1.2,
-      label: "Opportunity Name",
-      value: "opportunity",
-      renderCell: (row: TableRowData) => (
-        <Typography variant="body2" fontWeight={500}>
-          {row.opportunity}
-        </Typography>
-      ),
-    },
+    { id: 1.2, label: "Opportunity Name", value: "opportunity" },
     { id: 2.1, label: "Company", value: "company" },
     { id: 2.2, label: "Status", value: "status" },
-    {
-      id: 3.1,
-      label: "Budget ($)",
-      value: "budget",
-      align: "right",
-      renderCell: (row: TableRowData) => row.budget?.toLocaleString(),
-    },
+    { id: 3.1, label: "Budget ($)", value: "budget", align: "right" },
     { id: 3.2, label: "Priority", value: "priority" },
     { id: 4.1, label: "Assignee", value: "assignee" },
     { id: 4.2, label: "Project Manager", value: "project_manager" },
@@ -207,22 +193,125 @@ export default function TableDocs() {
   ];
 
   const filteredData = React.useMemo(() => {
-    let data = advancedMockData;
-    if (searchValue) {
-      data = data.filter(
-        (d: TableRowData) =>
-          d.opportunity?.toLowerCase().includes(searchValue.toLowerCase()) ||
-          d.company?.toLowerCase().includes(searchValue.toLowerCase()),
-      );
-    }
-    if (activeStatusFilter.length > 0) {
-      data = data.filter((d: TableRowData) =>
-        activeStatusFilter.includes(d.status as string),
-      );
-    }
+    const data = advancedMockData;
     const limit = Number(limitEnd);
-    return data.slice((pageNumber - 1) * limit, pageNumber * limit);
-  }, [searchValue, activeStatusFilter, limitEnd, pageNumber]);
+    const paginatedData = data.slice(
+      (pageNumber - 1) * limit,
+      pageNumber * limit,
+    );
+
+    const td_data_set: {
+      id: number;
+      data: { id: number; comp: React.ReactNode }[];
+      json: TableRowData[];
+    }[] = [];
+    paginatedData.forEach((item: TableRowData, index: number) => {
+      const allCells = [
+        {
+          id: 1,
+          comp: (
+            <Box>
+              <Typography variant="body2" fontWeight={500}>
+                {item.opportunity}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                PO: {item.po_num}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 2,
+          comp: (
+            <Box>
+              <Typography variant="body2">{item.company}</Typography>
+              <Typography variant="caption" color="text.secondary">
+                Status: {item.status}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 3,
+          comp: (
+            <Box>
+              <Typography variant="body2" fontWeight={500}>
+                ${item.budget?.toLocaleString()}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                Priority: {item.priority}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 4,
+          comp: (
+            <Box>
+              <Typography variant="body2" fontWeight={500}>
+                {item.project_manager}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                Assignee: {item.assignee}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 5,
+          comp: (
+            <Box>
+              <Typography variant="body2" fontWeight={500}>
+                {item.region}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                Dept: {item.department}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 6,
+          comp: item.date,
+        },
+        {
+          id: 1.1,
+          comp: (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="body2">{item.po_num}</Typography>
+              <Typography variant="caption" color="text.secondary">
+                #REG-12345
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 1.2,
+          comp: (
+            <Typography variant="body2" fontWeight={500}>
+              {item.opportunity}
+            </Typography>
+          ),
+        },
+        { id: 2.1, comp: item.company },
+        { id: 2.2, comp: item.status },
+        { id: 3.1, comp: item.budget?.toLocaleString() },
+        { id: 3.2, comp: item.priority },
+        { id: 4.1, comp: item.assignee },
+        { id: 4.2, comp: item.project_manager },
+        { id: 5.1, comp: item.region },
+        { id: 5.2, comp: item.department },
+      ];
+
+      td_data_set.push({
+        id: (item.id as number) || index,
+        data: allCells,
+        json: [item],
+      });
+    });
+
+    return td_data_set;
+  }, [limitEnd, pageNumber]);
 
   const filterComponent = (
     <Box
@@ -231,7 +320,7 @@ export default function TableDocs() {
         p: 2,
         display: "flex",
         gap: 2,
-        bgcolor: "background.paper",
+        // bgcolor: "background.paper",
         justifyContent: "flex-end",
       }}
     >
@@ -265,7 +354,6 @@ export default function TableDocs() {
     const handleActionClose = () => {
       setAnchorEl(null);
     };
-
     return (
       <>
         <IconButton size="small" onClick={handleActionClick}>
@@ -431,43 +519,113 @@ export default function TableDocs() {
 
       <ComponentCode
         title="Usage"
-        code={`import { VortexTable } from "./VortexTable";
-import { mockData, tableHeadCompact, tableHeadDetailed } from "./mockdata";
-import { useState } from "react";
-import { IconButton, Menu, MenuItem, Button } from "@mui/material";
+        code={`import { VortexTable } from "vortex-ui";
+import { useState, useMemo } from "react";
+import { Box, Typography, IconButton, Menu, MenuItem, Button } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const RowActionComponent = ({ row }: any) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  return (
-    <>
-      <IconButton size="small" onClick={(e) => setAnchorEl(e.currentTarget)}>
-        <MoreVertIcon fontSize="small" />
-      </IconButton>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
-        <MenuItem onClick={() => setAnchorEl(null)}>Edit</MenuItem>
-        <MenuItem onClick={() => setAnchorEl(null)}>Delete</MenuItem>
-      </Menu>
-    </>
-  );
-};
+// 1. Define column headers (compact view groups columns, detailed view expands them)
+const tableHeadCompact = [
+  { id: 1, label: "Supplier Info", value: "supplier_name" },
+  { id: 2, label: "Contact" },
+  { id: 3, label: "Amount", align: "right" },
+  { id: 4, label: "Status" },
+];
 
-const BulkActionComponent = () => (
-  <Button variant="contained" size="small">Update Status</Button>
-);
+const tableHeadDetailed = [
+  { id: 1.1, label: "PO #", value: "purchase_order_num", width: "160px" },
+  { id: 1.2, label: "Supplier Name", value: "supplier_name" },
+  { id: 2.1, label: "Phone" },
+  { id: 2.2, label: "Email" },
+  { id: 3, label: "Total", value: "grand_total", align: "right" },
+  { id: 4, label: "Status" },
+];
 
-function Dashboard() {
+// 2. Build pre-rendered cell data (td_data_set pattern)
+function buildTableRows(data) {
+  return data.map((item, index) => {
+    const allCells = [
+      // Compact cells (id matches tableHeadCompact ids)
+      {
+        id: 1,
+        comp: (
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+            <Box>
+              <Typography fontSize="14px" fontWeight={500} color="#4772FF">
+                {item.supplier_name}
+              </Typography>
+              <Typography fontSize="14px" color="#6A759B">
+                {item.purchase_order_num}
+              </Typography>
+            </Box>
+          </Box>
+        ),
+        actionIcon: (
+          <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
+        ),
+      },
+      {
+        id: 2,
+        comp: (
+          <Box>
+            <Typography fontSize="14px">{item.phone}</Typography>
+            <Typography fontSize="14px">{item.email}</Typography>
+          </Box>
+        ),
+      },
+      {
+        id: 3,
+        align: "right",
+        comp: <Typography fontSize="14px" fontWeight={500}>{item.grand_total}</Typography>,
+      },
+      { id: 4, comp: <Typography fontSize="14px">{item.status_label}</Typography> },
+
+      // Detailed cells (id matches tableHeadDetailed ids)
+      { 
+        id: 1.1, 
+        comp: (
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography fontSize="14px">{item.purchase_order_num}</Typography>
+            <Typography fontSize="12px" color="#6A759B">
+              #REG-12345
+            </Typography>
+          </Box>
+        )
+      },
+      {
+        id: 1.2,
+        comp: <Typography fontSize="14px" fontWeight={500}>{item.supplier_name}</Typography>,
+        actionIcon: (
+          <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
+        ),
+      },
+      { id: 2.1, comp: item.phone },
+      { id: 2.2, comp: item.email },
+    ];
+
+    return {
+      id: item.data_uniq_id,     // unique row identifier
+      data: allCells,             // array of pre-rendered cells
+      json: [item],              // original record (passed to RowActionComponent)
+    };
+  });
+}
+
+// 3. Render the table
+function PurchaseOrderList() {
   const [pageNumber, setPageNumber] = useState(1);
-  const [order, setOrder] = useState<"asc" | "desc">("asc");
-  const [orderBy, setOrderBy] = useState<string>("opportunity");
-  const [selectedItems, setSelectedItems] = useState<(string | number)[]>([]);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("supplier_name");
+  const [selected, setSelected] = useState([]);
   const [limitEnd, setLimitEnd] = useState(15);
+
+  const tableData = useMemo(() => buildTableRows(apiData), [apiData]);
 
   return (
     <VortexTable
-      data={mockData}
+      data={tableData}
       tableHeadCompact={tableHeadCompact}
-      tableHeadDetailed={tableHeadDetailed} 
+      tableHeadDetailed={tableHeadDetailed}
       loading={false}
       pageCount={4}
       pageNumber={pageNumber}
@@ -477,15 +635,12 @@ function Dashboard() {
       orderBy={orderBy}
       setOrderBy={setOrderBy}
       setOrder={setOrder}
-      selected={selectedItems}
-      setSelected={setSelectedItems}
-      setPageNumber={setPageNumber}
+      selected={selected}
+      setSelected={setSelected}
       limitEnd={limitEnd}
       onLimitChange={(e) => setLimitEnd(Number(e.target.value))}
       maxHeight={500}
       stickyHeader={true}
-      ActionComponent={BulkActionComponent}
-      RowActionComponent={RowActionComponent}
     />
   );
 }`}
@@ -495,7 +650,7 @@ function Dashboard() {
 
       <Box sx={{ mt: 4 }}>
         <ComponentProps
-          title="Column Schema Properties"
+          title="TableHeadData Properties"
           propsList={columnSchemaProps}
         />
       </Box>

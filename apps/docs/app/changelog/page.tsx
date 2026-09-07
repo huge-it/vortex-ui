@@ -1,10 +1,30 @@
 "use client";
+import React from "react";
 
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
+  {
+    version: "v0.1.11",
+    date: "September 7, 2026",
+    changes: [
+      {
+        type: "feat",
+        description: "Card: Added fullHeight prop.",
+      },
+      {
+        type: "changed",
+        description:
+          "VortexTable: Fixed rendering of nested data arrays and custom action icons. Improved table wrapper styling by using Box instead of Paper and removing default borders/padding for better integration.",
+      },
+      {
+        type: "changed",
+        description: "Docs: Updated table component examples and layout.",
+      },
+    ],
+  },
   {
     version: "v0.1.10",
     date: "September 7, 2026",
@@ -32,8 +52,7 @@ const CHANGELOG_DATA = [
     changes: [
       {
         type: "feat",
-        description:
-          "Added new VortexTable component.",
+        description: "Added new VortexTable component.",
       },
       {
         type: "feat",
@@ -58,8 +77,7 @@ const CHANGELOG_DATA = [
       },
       {
         type: "docs",
-        description:
-          "Updated README.md with workspace filter commands.",
+        description: "Updated README.md with workspace filter commands.",
       },
     ],
   },
@@ -310,90 +328,175 @@ const getChipColor = (type: string) => {
 
 export default function ChangelogPage() {
   return (
-    <Box sx={{ maxWidth: "800px", margin: "0 auto", py: 6, px: 3 }}>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ mb: 4 }}
-      >
-        <Box>
-          <Typography
-            variant="h1"
-            color="text.primary"
-            sx={{ fontWeight: 800, fontSize: "2.5rem", mb: 1 }}
-          >
-            Changelog
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            All notable changes to VortexUI will be documented here.
-          </Typography>
-        </Box>
-        <Button variant="outlined" component={Link} href="/">
-          Back to Home
-        </Button>
-      </Stack>
-
-      <Divider sx={{ mb: 6 }} />
-
-      <Stack spacing={6}>
-        {CHANGELOG_DATA.map((release) => (
-          <Box key={release.version}>
-            <Stack
-              direction="row"
-              alignItems="baseline"
-              spacing={2}
-              sx={{ mb: 3 }}
+    <Box
+      sx={{
+        maxWidth: "1000px",
+        margin: "0 auto",
+        py: 6,
+        px: 3,
+        display: "flex",
+        gap: { xs: 0, md: 6 },
+        alignItems: "flex-start",
+      }}
+    >
+      {/* Main Content */}
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ mb: 4 }}
+        >
+          <Box>
+            <Typography
+              variant="h1"
+              color="text.primary"
+              sx={{ fontWeight: 800, fontSize: "2.5rem", mb: 1 }}
             >
-              <Typography
-                variant="h2"
-                color="text.primary"
-                sx={{ fontWeight: 700, fontSize: "1.75rem" }}
-              >
-                {release.version}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ fontWeight: 500 }}
-              >
-                {release.date}
-              </Typography>
-            </Stack>
-
-            <Stack spacing={2}>
-              {release.changes.map((change, idx) => {
-                const colors = getChipColor(change.type);
-                return (
-                  <Stack
-                    key={idx}
-                    direction="row"
-                    spacing={2}
-                    alignItems="flex-start"
-                  >
-                    <Chip
-                      label={change.type}
-                      size="small"
-                      sx={{
-                        bgcolor: colors.bg,
-                        color: colors.text,
-                        fontWeight: 600,
-                        textTransform: "uppercase",
-                        fontSize: "0.7rem",
-                        borderRadius: "6px",
-                        minWidth: "60px",
-                      }}
-                    />
-                    <Typography variant="body1" sx={{ color: "text.primary" }}>
-                      {change.description}
-                    </Typography>
-                  </Stack>
-                );
-              })}
-            </Stack>
+              Changelog
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              All notable changes to VortexUI will be documented here.
+            </Typography>
           </Box>
-        ))}
-      </Stack>
+          <Button variant="outlined" component={Link} href="/">
+            Back to Home
+          </Button>
+        </Stack>
+
+        <Divider sx={{ mb: 6 }} />
+
+        <Stack spacing={8}>
+          {CHANGELOG_DATA.map((release) => (
+            <Box key={release.version} id={release.version}>
+              <Stack
+                direction="row"
+                alignItems="baseline"
+                spacing={2}
+                sx={{ mb: 3 }}
+              >
+                <Typography
+                  variant="h2"
+                  color="text.primary"
+                  sx={{ fontWeight: 700, fontSize: "1.75rem" }}
+                >
+                  {release.version}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ fontWeight: 500 }}
+                >
+                  {release.date}
+                </Typography>
+              </Stack>
+
+              <Stack spacing={2}>
+                {release.changes.map((change, idx) => {
+                  const colors = getChipColor(change.type);
+                  return (
+                    <Stack
+                      key={idx}
+                      direction="row"
+                      spacing={2}
+                      alignItems="flex-start"
+                    >
+                      <Chip
+                        label={change.type}
+                        size="small"
+                        sx={{
+                          bgcolor: colors.bg,
+                          color: colors.text,
+                          fontWeight: 600,
+                          textTransform: "uppercase",
+                          fontSize: "0.7rem",
+                          borderRadius: "6px",
+                          minWidth: "60px",
+                        }}
+                      />
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "text.primary" }}
+                      >
+                        {change.description}
+                      </Typography>
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            </Box>
+          ))}
+        </Stack>
+      </Box>
+
+      {/* Floating Legend */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: { xs: 16, md: 32 },
+          left: "50%",
+          transform: "translateX(-50%)",
+          bgcolor: "background.paper",
+          boxShadow: 3,
+          borderRadius: 8,
+          py: 1,
+          px: { xs: 2, md: 3 },
+          display: "flex",
+          gap: 1.5,
+          alignItems: "center",
+          border: "1px solid",
+          borderColor: "divider",
+          zIndex: 1000,
+        }}
+      >
+        {/* <Typography
+          variant="caption"
+          sx={{
+            fontWeight: 700,
+            mr: 1,
+            color: "text.secondary",
+            letterSpacing: "0.5px",
+          }}
+        >
+          TAGS:
+        </Typography> */}
+        {[
+          { type: "feat", label: "New Feature" },
+          { type: "fix", label: "Bug Fix" },
+          { type: "changed", label: "Update" },
+          { type: "docs", label: "Documentation" },
+        ].map(({ type, label }) => {
+          const colors = getChipColor(type);
+          return (
+            <Stack key={type} direction="row" alignItems="center" spacing={1}>
+              <Chip
+                label={type}
+                size="small"
+                sx={{
+                  bgcolor: colors.bg,
+                  color: colors.text,
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  fontSize: "0.65rem",
+                  borderRadius: "6px",
+                  height: "22px",
+                  minWidth: "unset",
+                }}
+              />
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "text.secondary",
+                  fontWeight: 500,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {label}
+              </Typography>
+            </Stack>
+          );
+        })}
+      </Box>
     </Box>
   );
 }

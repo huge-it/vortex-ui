@@ -2,6 +2,19 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.11] - 2026-09-07
+
+### Added
+
+- **Card**: Added `fullHeight` prop.
+
+### Changed
+
+- **VortexTable**: Fixed rendering of nested data arrays and custom action icons. Improved table wrapper styling by using `Box` instead of `Paper` and removing default borders/padding for better integration.
+- **Docs**: Updated table component examples and layout.
+
+---
+
 ## [0.1.10] - 2026-09-07
 
 ### Changed

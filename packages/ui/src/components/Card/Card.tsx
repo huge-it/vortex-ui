@@ -13,6 +13,7 @@ const SHADOWS = {
 export const Card = ({
   variant = "none",
   fullWidth = true,
+  fullHeight = false,
   children,
   sx,
   ...rest
@@ -24,6 +25,7 @@ export const Card = ({
       elevation={0}
       sx={{
         ...(fullWidth && { width: "100%" }),
+        ...(fullHeight && { height: "100%" }),
         bgcolor: "background.paper",
         border: "1px solid",
         borderColor: "divider",

@@ -1,17 +1,10 @@
 "use client";
+import { Refresh } from "@mui/icons-material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
-import {
-  Badge,
-  Box,
-  Collapse,
-  IconButton,
-  Paper,
-  Tooltip,
-} from "@mui/material";
+import { Badge, Box, Collapse, IconButton, Tooltip } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import { DataTable, SearchFilter, TableToolbar } from "../DataTable"; // actually SearchFilter and TableToolbar are inside DataTable folder. Let me check packages/ui/src/components/DataTable/index.ts. I'll import from "../DataTable" assuming they are exported there or from "vortex-ui" maybe. But wait, since we are inside packages/ui, we should import internally.
-import { Refresh } from "@mui/icons-material";
 
 export type TableRowData = Record<string, unknown> & {
   opportunity?: string;
@@ -191,22 +184,41 @@ export const VortexTable: React.FC<VortexTableProps> = ({
 
   // Construct Data Rows
   const td_data_set = useMemo(() => {
-    return data.map((item: TableRowData, index: number) => {
+    return data.map((item: any, index: number) => {
       const actionIcon = RowActionComponent ? (
-        <RowActionComponent row={item} />
+        <RowActionComponent row={item.json?.[0] || item} />
       ) : null;
 
       const dataCells = filteredOrderedHead.map((headItem, headIndex) => {
         let comp: React.ReactNode = null;
-        if (headItem.renderCell) {
-          comp = headItem.renderCell(item);
-        } else if (headItem.value) {
-          comp = String(item[headItem.value] ?? "");
+        let cellActionIcon: React.ReactNode = undefined;
+
+        if (Array.isArray(item.data)) {
+          const cell = item.data.find((c: any) => c.id === headItem.id);
+          if (cell) {
+            comp = cell.comp;
+            cellActionIcon = cell.actionIcon;
+          } else if (headItem.renderCell) {
+            comp = headItem.renderCell(item.json?.[0] || item);
+          } else if (headItem.value) {
+            comp = String((item.json?.[0] || item)[headItem.value] ?? "");
+          }
+        } else {
+          if (headItem.renderCell) {
+            comp = headItem.renderCell(item);
+          } else if (headItem.value) {
+            comp = String(item[headItem.value] ?? "");
+          }
         }
 
         return {
           comp,
-          actionIcon: headIndex === 0 ? actionIcon : undefined,
+          actionIcon:
+            headIndex === 0
+              ? cellActionIcon !== undefined
+                ? cellActionIcon
+                : actionIcon
+              : undefined,
           align: headItem.align,
         };
       });
@@ -216,23 +228,18 @@ export const VortexTable: React.FC<VortexTableProps> = ({
   }, [data, filteredOrderedHead, RowActionComponent]);
 
   return (
-    <Paper
+    <Box
       sx={{
         width: "100%",
         overflow: "hidden",
-        border: 1,
-        borderColor: "divider",
-        borderRadius: 2,
       }}
     >
-      {/* Table Toolbar Area */}
       <Box
         sx={{
           display: "flex",
           gap: { xs: 1, sm: 2, md: 1, lg: 1, xl: 1.5 },
           mt: { xs: 1, sm: 2, md: 1, lg: 1, xl: 1.5 },
           mb: { xs: 1, sm: 2, md: 1, lg: 1, xl: 1.5 },
-          px: 2,
           flexShrink: 0,
           alignItems: "center",
         }}
@@ -345,12 +352,7 @@ export const VortexTable: React.FC<VortexTableProps> = ({
       </Box>
 
       {/* Filter Area */}
-      <Collapse
-        in={filtersList}
-        sx={{ borderBottom: 1, borderColor: "divider" }}
-      >
-        {filterComponent}
-      </Collapse>
+      <Collapse in={filtersList}>{filterComponent}</Collapse>
 
       {/* Table */}
       <Box sx={{ width: "100%", overflowX: "auto" }}>
@@ -387,7 +389,7 @@ export const VortexTable: React.FC<VortexTableProps> = ({
           variant={variant}
         />
       </Box>
-    </Paper>
+    </Box>
   );
 };
 
