@@ -1,3 +1,5 @@
+"use client";
+
 import "./theme/classNameSetup"; // Initialize MUI prefix config before anything else
 
 export * from "./components/Accordion";
