@@ -84,6 +84,7 @@ export default function AccordionDocs() {
       <ComponentPreview>
         <Box sx={{ width: "100%", maxWidth: 600 }}>
           <Accordion
+            singleOpen
             data={[
               {
                 title: "Accordion Panel 1",

@@ -187,7 +187,7 @@ export const AutoPopulate: React.FC<AutoPopulateProps> = ({
       <Box ref={wrapperRef} sx={{ display: "contents" }}>
         <Box
           ref={anchorRef}
-          sx={{ position: "relative", display: "inline-flex", width: "100%" }}
+          sx={{ position: "relative", display: "inline-flex", width: "100%", height: "fit-content" }}
         >
           <TextField
             bgColor={bgColor}
