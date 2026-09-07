@@ -68,6 +68,7 @@ export const DataTableContainer: React.FC<DataTableContainerProps> = ({
   onFilterToggle,
   hasActiveFilters = false,
   containerSx,
+  variant = "advanced",
 }) => {
   const theme = useTheme();
 
@@ -130,9 +131,10 @@ export const DataTableContainer: React.FC<DataTableContainerProps> = ({
 
   // Compute Frozen Count & Columns
   const frozenCount = useMemo(() => {
+    if (variant === "simple") return 0;
     if (initialFrozenCount > 0) return initialFrozenCount;
     return 1 + pinnedExtra.length;
-  }, [initialFrozenCount, pinnedExtra]);
+  }, [initialFrozenCount, pinnedExtra, variant]);
 
   const frozenColumnIds = useMemo(() => {
     if (initialFrozenColumnIds.length > 0) return initialFrozenColumnIds;
@@ -199,15 +201,17 @@ export const DataTableContainer: React.FC<DataTableContainerProps> = ({
         )}
 
         {/* Column Display & View Toolbar */}
-        <TableToolbar
-          columns={inputTableHead.map((h) => ({ id: h.id, label: h.label }))}
-          visibleColumns={visibleColumns}
-          onVisibilityChange={handleColumnVisibilityChange}
-          frozenColumnIds={frozenColumnIds}
-          onColumnReorder={handleColumnReorder}
-          groupMode={groupMode}
-          onGroupModeChange={onGroupModeChange}
-        />
+        {variant === "advanced" && (
+          <TableToolbar
+            columns={inputTableHead.map((h) => ({ id: h.id, label: h.label }))}
+            visibleColumns={visibleColumns}
+            onVisibilityChange={handleColumnVisibilityChange}
+            frozenColumnIds={frozenColumnIds}
+            onColumnReorder={handleColumnReorder}
+            groupMode={groupMode}
+            onGroupModeChange={onGroupModeChange}
+          />
+        )}
       </Box>
 
       {/* Filter Drawer / Panel Collapse */}
@@ -272,6 +276,7 @@ export const DataTableContainer: React.FC<DataTableContainerProps> = ({
           onColumnFilter={onColumnFilter}
           columnFilters={columnFilters}
           ActionComponent={ActionComponent}
+          variant={variant}
         />
       </Box>
     </Box>

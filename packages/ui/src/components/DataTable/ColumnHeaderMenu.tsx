@@ -121,35 +121,33 @@ export const ColumnHeaderMenu: React.FC<ColumnHeaderMenuProps> = ({
           </MenuItem>
         )}
 
-        {filterOptions.length > 0 && (
-          <>
-            {(onPin || onHide) && <Divider sx={{ my: 0.5 }} />}
-            <Box sx={{ px: 2, py: 0.5, fontSize: "11px", fontWeight: 600, color: "text.secondary", textTransform: "uppercase" }}>
-              Filter
-            </Box>
-            {filterOptions.map((option, idx) => {
-              const val = typeof option === "object" ? option.value : option;
-              const label = typeof option === "object" ? option.label : option;
-              const checked = filterValues.includes(val);
+        {filterOptions.length > 0 && [
+          (onPin || onHide) ? <Divider key="filter-divider" sx={{ my: 0.5 }} /> : null,
+          <Box key="filter-header" sx={{ px: 2, py: 0.5, fontSize: "11px", fontWeight: 600, color: "text.secondary", textTransform: "uppercase" }}>
+            Filter
+          </Box>,
+          ...filterOptions.map((option, idx) => {
+            const val = typeof option === "object" ? option.value : option;
+            const label = typeof option === "object" ? option.label : option;
+            const checked = filterValues.includes(val);
 
-              return (
-                <MenuItem
-                  key={idx}
-                  onClick={() => handleFilterToggle(val)}
-                  sx={{ fontSize: "13px" }}
-                >
-                  <ListItemIcon sx={{ minWidth: 32 }}>
-                    <Checkbox size="small" checked={checked} sx={{ p: 0 }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primaryTypographyProps={{ fontSize: "13px" }}
-                    primary={label}
-                  />
-                </MenuItem>
-              );
-            })}
-          </>
-        )}
+            return (
+              <MenuItem
+                key={`filter-item-${idx}`}
+                onClick={() => handleFilterToggle(val)}
+                sx={{ fontSize: "13px" }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <Checkbox size="small" checked={checked} sx={{ p: 0 }} />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{ fontSize: "13px" }}
+                  primary={label}
+                />
+              </MenuItem>
+            );
+          })
+        ]}
       </Menu>
     </Box>
   );

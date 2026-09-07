@@ -6,12 +6,11 @@ import NextLink from "next/link";
 import { useState } from "react";
 import {
   Button,
-  DataTable,
+  VortexTable,
   Select,
-  TextField,
   Avatar,
-  Sheet,
   Link as VortexLink,
+  TableHeadData,
 } from "vortex-ui";
 
 const usersData = [
@@ -71,11 +70,11 @@ export default function ProfileListExample() {
     return matchesSearch && matchesDept;
   });
 
-  const columns = [
+  const tableHeadDetailed = [
     {
-      key: "name",
-      header: "User",
-      render: (row: (typeof usersData)[0]) => (
+      id: "name",
+      label: "User",
+      renderCell: (row: (typeof usersData)[0]) => (
         <Box display="flex" alignItems="center" gap={1.5}>
           <Avatar src={row.avatar} sx={{ width: 32, height: 32 }}>
             {row.name.charAt(0)}
@@ -100,13 +99,13 @@ export default function ProfileListExample() {
         </Box>
       ),
     },
-    { key: "role", header: "Role" },
-    { key: "dept", header: "Department" },
+    { id: "role", label: "Role", value: "role" },
+    { id: "dept", label: "Department", value: "dept" },
     {
-      key: "actions",
-      header: "",
+      id: "actions",
+      label: "",
       align: "right" as const,
-      render: () => (
+      renderCell: () => (
         <Button variant="text" size="sm">
           Edit
         </Button>
@@ -140,27 +139,13 @@ export default function ProfileListExample() {
         </Button>
       </Box>
 
-      <Sheet variant="sm" sx={{ borderRadius: 2, overflow: "hidden" }}>
-        <Box
-          sx={{
-            p: 2,
-            borderBottom: "1px solid",
-            borderColor: "divider",
-            display: "flex",
-            gap: 2,
-            bgcolor: "background.default",
-          }}
-        >
-          <Box sx={{ width: 300 }}>
-            <TextField
-              placeholder="Search by name or email..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              size="small"
-              fullWidth
-            />
-          </Box>
-          <Box sx={{ width: 200 }}>
+      <VortexTable
+        tableHeadDetailed={tableHeadDetailed as unknown as TableHeadData[]}
+        data={filteredData as typeof filteredData}
+        searchValue={search}
+        onSearchChange={setSearch}
+        filterComponent={
+          <Box sx={{ p: 2, pt: 0 }}>
             <Select
               variant="icon"
               options={[
@@ -175,13 +160,8 @@ export default function ProfileListExample() {
               size="small"
             />
           </Box>
-        </Box>
-        <DataTable
-          columns={columns}
-          data={filteredData}
-          emptyMessage="No users found."
-        />
-      </Sheet>
+        }
+      />
     </Box>
   );
 }

@@ -41,6 +41,9 @@ export interface DataTableProps {
   /** Array of data records (simple mode) */
   data?: any[];
 
+  /** Table variant */
+  variant?: "simple" | "advanced";
+
   /** Advanced table header definitions */
   tableHead?: TableHeadItem[];
   /** Advanced table row definitions */

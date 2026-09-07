@@ -6,6 +6,27 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.10",
+    date: "September 7, 2026",
+    changes: [
+      {
+        type: "fix",
+        description:
+          "ButtonGroup: Removed custom MUI variant/sx overrides on the internal TextField to properly inherit Vortex UI's native styling.",
+      },
+      {
+        type: "feat",
+        description:
+          "Sidebar (Docs): Alphabetized component categories and items, removed emojis, and updated styling (spacing & typography) to look more professional and visually match the standard frontend.",
+      },
+      {
+        type: "fix",
+        description:
+          "Docs: Fixed a typescript any type warning in the ButtonGroup example.",
+      },
+    ],
+  },
+  {
     version: "v0.1.9",
     date: "September 3, 2026",
     changes: [

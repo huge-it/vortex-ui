@@ -4,15 +4,32 @@ import { ComponentCode } from "@docs/ComponentCode";
 import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentInstallation } from "@docs/ComponentInstallation";
 import { ComponentProps } from "@docs/ComponentProps";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import {
+  Box,
+  Button,
+  Divider,
+  FormControlLabel,
+  IconButton,
+  Menu,
+  MenuItem,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
-import { StatusFilter } from "vortex-ui";
+import {
+  FilterButton,
+  TableHeadData,
+  TableRowData,
+  VortexTable,
+} from "vortex-ui";
 import {
   mockData as advancedMockData,
   customers,
   statusOptions,
 } from "./mockdata";
-import { TableHeadData, TableRowData, VortexTable } from "vortex-ui";
 
 const tablePropsList = [
   {
@@ -79,8 +96,6 @@ export default function TableDocs() {
     (string | number)[]
   >([]);
   const [searchValue, setSearchValue] = useState<string>("");
-
-  console.log(selectedItems, searchValue, "sdfsd");
   const tableHeadCompact: TableHeadData[] = [
     {
       id: 1,
@@ -92,7 +107,7 @@ export default function TableDocs() {
             {row.opportunity}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            PO: {row.po_num} • {row.date}
+            PO: {row.po_num}
           </Typography>
         </Box>
       ),
@@ -108,15 +123,62 @@ export default function TableDocs() {
         <Box>
           <Typography variant="body2">{row.company}</Typography>
           <Typography variant="caption" color="text.secondary">
-            Status: {row.status} • Assignee: {row.assignee}
+            Status: {row.status}
           </Typography>
         </Box>
       ),
     },
+    {
+      id: 3,
+      label: "Budget & Priority",
+      renderCell: (row: TableRowData) => (
+        <Box>
+          <Typography variant="body2" fontWeight={500}>
+            ${row.budget?.toLocaleString()}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Priority: {row.priority}
+          </Typography>
+        </Box>
+      ),
+    },
+    {
+      id: 4,
+      label: "Team",
+      renderCell: (row: TableRowData) => (
+        <Box>
+          <Typography variant="body2" fontWeight={500}>
+            {row.project_manager}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Assignee: {row.assignee}
+          </Typography>
+        </Box>
+      ),
+    },
+    {
+      id: 5,
+      label: "Location",
+      renderCell: (row: TableRowData) => (
+        <Box>
+          <Typography variant="body2" fontWeight={500}>
+            {row.region}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Dept: {row.department}
+          </Typography>
+        </Box>
+      ),
+    },
+    {
+      id: 6,
+      label: "Date",
+      value: "date",
+    },
   ];
 
   const tableHeadDetailed: TableHeadData[] = [
-    { id: 1.1, label: "# PO", value: "po_num" },
+    { id: 1.1, label: "# PO", value: "po_num", width: "160px" },
     {
       id: 1.2,
       label: "Opportunity Name",
@@ -127,21 +189,21 @@ export default function TableDocs() {
         </Typography>
       ),
     },
-    { id: 2, label: "Company", value: "company" },
+    { id: 2.1, label: "Company", value: "company" },
+    { id: 2.2, label: "Status", value: "status" },
     {
-      id: 3,
+      id: 3.1,
       label: "Budget ($)",
       value: "budget",
       align: "right",
       renderCell: (row: TableRowData) => row.budget?.toLocaleString(),
     },
-    { id: 4, label: "Status", value: "status" },
-    { id: 5, label: "Assignee", value: "assignee" },
+    { id: 3.2, label: "Priority", value: "priority" },
+    { id: 4.1, label: "Assignee", value: "assignee" },
+    { id: 4.2, label: "Project Manager", value: "project_manager" },
+    { id: 5.1, label: "Region", value: "region" },
+    { id: 5.2, label: "Department", value: "department" },
     { id: 6, label: "Date", value: "date" },
-    { id: 7, label: "Priority", value: "priority" },
-    { id: 8, label: "Region", value: "region" },
-    { id: 9, label: "Department", value: "department" },
-    { id: 10, label: "Project Manager", value: "project_manager" },
   ];
 
   const filteredData = React.useMemo(() => {
@@ -173,8 +235,8 @@ export default function TableDocs() {
         justifyContent: "flex-end",
       }}
     >
-      <StatusFilter
-        label="Filter Status"
+      <FilterButton
+        label="Status"
         options={statusOptions}
         selectedValues={activeStatusFilter}
         onChange={(vals) => setActiveStatusFilter(vals)}
@@ -194,6 +256,48 @@ export default function TableDocs() {
       Update Status
     </Button>
   );
+
+  const RowActionComponent = ({ row }: { row: TableRowData }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const handleActionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(e.currentTarget);
+    };
+    const handleActionClose = () => {
+      setAnchorEl(null);
+    };
+
+    return (
+      <>
+        <IconButton size="small" onClick={handleActionClick}>
+          <MoreVertIcon fontSize="small" />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleActionClose}
+          PaperProps={{
+            sx: {
+              minWidth: 150,
+              borderRadius: 2,
+              boxShadow: "0px 4px 12px rgba(0,0,0,0.08)",
+            },
+          }}
+        >
+          <MenuItem onClick={handleActionClose} sx={{ fontSize: 14 }}>
+            <EditIcon sx={{ fontSize: 18, mr: 1, color: "text.secondary" }} />
+            Edit
+          </MenuItem>
+          <MenuItem
+            onClick={handleActionClose}
+            sx={{ fontSize: 14, color: "error.main" }}
+          >
+            <DeleteIcon sx={{ fontSize: 18, mr: 1 }} />
+            Delete
+          </MenuItem>
+        </Menu>
+      </>
+    );
+  };
 
   const handlefilterBadgeVisible = () => {
     return activeStatusFilter.length > 0;
@@ -216,10 +320,11 @@ export default function TableDocs() {
         color="text.secondary"
         sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
       >
-        Preview
+        Simple Table
       </Typography>
       <Box sx={{ width: "100%", mb: 4 }}>
         <VortexTable
+          variant="simple"
           data={filteredData}
           tableHeadCompact={tableHeadCompact}
           tableHeadDetailed={tableHeadDetailed}
@@ -242,8 +347,85 @@ export default function TableDocs() {
           filterComponent={filterComponent}
           searchValue={searchValue}
           onSearchChange={setSearchValue}
+          onResetFilters={() => setActiveStatusFilter([])}
           filterBadgeVisible={handlefilterBadgeVisible()}
           ActionComponent={BulkActionComponent}
+          RowActionComponent={RowActionComponent}
+        />
+      </Box>
+
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
+      >
+        Advanced Table (w/ Toolbar & Column Freezing)
+      </Typography>
+      <Box sx={{ width: "100%", mb: 4 }}>
+        <VortexTable
+          variant="advanced"
+          data={filteredData}
+          tableHeadCompact={tableHeadCompact}
+          tableHeadDetailed={tableHeadDetailed}
+          loading={false}
+          pageCount={3}
+          pageNumber={pageNumber}
+          onPageChange={(_, p) => setPageNumber(p)}
+          totalItems={40}
+          order={order}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          setOrder={setOrder}
+          selected={selectedItems}
+          setSelected={setSelectedItems}
+          setPageNumber={setPageNumber}
+          limitEnd={limitEnd}
+          onLimitChange={(e) => setLimitEnd(Number(e.target.value))}
+          maxHeight={500}
+          stickyHeader={true}
+          filterComponent={filterComponent}
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          onResetFilters={() => setActiveStatusFilter([])}
+          filterBadgeVisible={handlefilterBadgeVisible()}
+          ActionComponent={BulkActionComponent}
+          RowActionComponent={RowActionComponent}
+        />
+      </Box>
+
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
+      >
+        Loading State
+      </Typography>
+      <Box sx={{ width: "100%", mb: 4 }}>
+        <VortexTable
+          variant="simple"
+          data={[]}
+          tableHeadCompact={tableHeadCompact}
+          tableHeadDetailed={tableHeadDetailed}
+          loading={true}
+          maxHeight={300}
+        />
+      </Box>
+
+      <Typography
+        variant="h5"
+        color="text.secondary"
+        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
+      >
+        Empty State
+      </Typography>
+      <Box sx={{ width: "100%", mb: 4 }}>
+        <VortexTable
+          variant="simple"
+          data={[]}
+          tableHeadCompact={tableHeadCompact}
+          tableHeadDetailed={tableHeadDetailed}
+          loading={false}
+          maxHeight={300}
         />
       </Box>
 
@@ -252,6 +434,27 @@ export default function TableDocs() {
         code={`import { VortexTable } from "./VortexTable";
 import { mockData, tableHeadCompact, tableHeadDetailed } from "./mockdata";
 import { useState } from "react";
+import { IconButton, Menu, MenuItem, Button } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+const RowActionComponent = ({ row }: any) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  return (
+    <>
+      <IconButton size="small" onClick={(e) => setAnchorEl(e.currentTarget)}>
+        <MoreVertIcon fontSize="small" />
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+        <MenuItem onClick={() => setAnchorEl(null)}>Edit</MenuItem>
+        <MenuItem onClick={() => setAnchorEl(null)}>Delete</MenuItem>
+      </Menu>
+    </>
+  );
+};
+
+const BulkActionComponent = () => (
+  <Button variant="contained" size="small">Update Status</Button>
+);
 
 function Dashboard() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -281,15 +484,20 @@ function Dashboard() {
       onLimitChange={(e) => setLimitEnd(Number(e.target.value))}
       maxHeight={500}
       stickyHeader={true}
+      ActionComponent={BulkActionComponent}
+      RowActionComponent={RowActionComponent}
     />
   );
 }`}
       />
 
-      <ComponentProps propsList={tablePropsList} />
+      <ComponentProps title="Table Properties" propsList={tablePropsList} />
 
-      <Box sx={{ mt: 2 }}>
-        <ComponentProps propsList={columnSchemaProps} />
+      <Box sx={{ mt: 4 }}>
+        <ComponentProps
+          title="Column Schema Properties"
+          propsList={columnSchemaProps}
+        />
       </Box>
 
       <Divider sx={{ my: 4 }} />

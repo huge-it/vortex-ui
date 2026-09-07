@@ -9,6 +9,7 @@ export interface SearchFilterProps {
   searchValue?: string;
   placeholder?: string;
   width?: string | number;
+  debounceDelay?: number;
 }
 
 export const SearchFilter: React.FC<SearchFilterProps> = ({
@@ -16,6 +17,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
   searchValue = "",
   placeholder = "Search...",
   width = "250px",
+  debounceDelay = 500,
 }) => {
   const theme = useTheme();
   const [localValue, setLocalValue] = useState(searchValue);
@@ -23,6 +25,17 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
   useEffect(() => {
     setLocalValue(searchValue);
   }, [searchValue]);
+
+  useEffect(() => {
+    if (debounceDelay > 0) {
+      const handler = setTimeout(() => {
+        if (localValue !== searchValue) {
+          onSearchButtonClick(localValue);
+        }
+      }, debounceDelay);
+      return () => clearTimeout(handler);
+    }
+  }, [localValue, searchValue, debounceDelay, onSearchButtonClick]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalValue(e.target.value);

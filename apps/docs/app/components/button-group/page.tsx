@@ -3,7 +3,12 @@
 import { Box, Typography, Divider } from "@mui/material";
 import React, { useState } from "react";
 import Image from "next/image";
-import { ButtonGroup, ButtonGroupMethod, ButtonGroupValue } from "vortex-ui";
+import {
+  ButtonGroup,
+  ButtonGroupMethod,
+  ButtonGroupValue,
+  ButtonGroupProps,
+} from "vortex-ui";
 import { ComponentCode } from "@comp/docs/ComponentCode";
 import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentPreview } from "@comp/docs/ComponentPreview";
@@ -178,6 +183,13 @@ const buttonGroupPropsList = [
   },
 ];
 
+const StatefulButtonGroup = (props: ButtonGroupProps) => {
+  const [val, setVal] = useState<ButtonGroupValue>(
+    props.value || { type: null, fields: {} },
+  );
+  return <ButtonGroup {...props} value={val} onChange={setVal} />;
+};
+
 export default function ButtonGroupDocs() {
   const [value, setValue] = useState<ButtonGroupValue>({
     type: "video",
@@ -222,7 +234,7 @@ export default function ButtonGroupDocs() {
           {
             name: "Icons Only",
             element: (
-              <ButtonGroup
+              <StatefulButtonGroup
                 methods={DEFAULT_METHODS}
                 variant="icon"
                 value={{ type: "video", fields: {} }}
@@ -232,7 +244,7 @@ export default function ButtonGroupDocs() {
           {
             name: "Text Only",
             element: (
-              <ButtonGroup
+              <StatefulButtonGroup
                 methods={DEFAULT_METHODS}
                 variant="text"
                 value={{ type: "phone", fields: {} }}
@@ -242,7 +254,7 @@ export default function ButtonGroupDocs() {
           {
             name: "Both (Icon + Text)",
             element: (
-              <ButtonGroup
+              <StatefulButtonGroup
                 methods={DEFAULT_METHODS}
                 variant="both"
                 value={{ type: "email", fields: {} }}
@@ -253,7 +265,7 @@ export default function ButtonGroupDocs() {
             name: "Full Width",
             element: (
               <Box sx={{ width: "100%", maxWidth: 600 }}>
-                <ButtonGroup
+                <StatefulButtonGroup
                   methods={DEFAULT_METHODS}
                   variant="both"
                   fullWidth
@@ -266,26 +278,35 @@ export default function ButtonGroupDocs() {
       />
 
       <ComponentStates
+        display="grid"
+        containerSx={{
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: 2,
+        }}
         states={[
           {
             name: "Default",
             element: (
-              <ButtonGroup
-                methods={DEFAULT_METHODS}
-                variant="icon"
-                value={{ type: "video", fields: {} }}
-              />
+              <Box display="flex" width={"100%"}>
+                <StatefulButtonGroup
+                  methods={DEFAULT_METHODS}
+                  variant="icon"
+                  value={{ type: "video", fields: {} }}
+                />
+              </Box>
             ),
           },
           {
             name: "Disabled",
             element: (
-              <ButtonGroup
-                methods={DEFAULT_METHODS}
-                variant="icon"
-                disabled
-                value={{ type: "video", fields: {} }}
-              />
+              <Box display="flex" width={"100%"}>
+                <StatefulButtonGroup
+                  methods={DEFAULT_METHODS}
+                  variant="icon"
+                  disabled
+                  value={{ type: "video", fields: {} }}
+                />
+              </Box>
             ),
           },
         ]}

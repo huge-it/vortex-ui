@@ -1,21 +1,17 @@
 "use client";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   Badge,
   Box,
   Collapse,
   IconButton,
-  Menu,
-  MenuItem,
   Paper,
   Tooltip,
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import { DataTable, SearchFilter, TableToolbar } from "../DataTable"; // actually SearchFilter and TableToolbar are inside DataTable folder. Let me check packages/ui/src/components/DataTable/index.ts. I'll import from "../DataTable" assuming they are exported there or from "vortex-ui" maybe. But wait, since we are inside packages/ui, we should import internally.
+import { Refresh } from "@mui/icons-material";
 
 export type TableRowData = Record<string, unknown> & {
   opportunity?: string;
@@ -24,6 +20,11 @@ export type TableRowData = Record<string, unknown> & {
   po_num?: string;
   date?: string;
   assignee?: string;
+  department?: string;
+  budget?: number;
+  priority?: string;
+  region?: string;
+  project_manager?: string;
 };
 
 export type TableHeadData = {
@@ -34,6 +35,7 @@ export type TableHeadData = {
   filterOptions?: { label: string; value: string }[];
   renderCell?: (row: TableRowData) => React.ReactNode;
   filter?: boolean;
+  width?: string | number;
 };
 
 export interface VortexTableProps {
@@ -54,6 +56,7 @@ export interface VortexTableProps {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   ActionComponent?: React.ElementType;
+  RowActionComponent?: React.ElementType<any>;
   data?: TableRowData[];
   tableHeadCompact?: TableHeadData[];
   tableHeadDetailed?: TableHeadData[];
@@ -63,7 +66,9 @@ export interface VortexTableProps {
   filterComponent?: React.ReactNode;
   searchValue?: string;
   onSearchChange?: (value: string) => void;
+  onResetFilters?: () => void;
   filterBadgeVisible?: boolean;
+  variant?: "simple" | "advanced";
 }
 
 function FilterButton({
@@ -83,7 +88,7 @@ function FilterButton({
           fontSize: "12px",
           fontWeight: "300",
           border: 1,
-          bgcolor: "background.default",
+          bgcolor: "background.paper",
           borderColor: isActive ? "primary.main" : "divider",
           borderRadius: "10px",
           padding: "9px",
@@ -118,6 +123,7 @@ export const VortexTable: React.FC<VortexTableProps> = ({
   limitEnd,
   onLimitChange,
   ActionComponent,
+  RowActionComponent,
   data = [],
   tableHeadCompact = [],
   tableHeadDetailed = [],
@@ -127,7 +133,9 @@ export const VortexTable: React.FC<VortexTableProps> = ({
   filterComponent,
   searchValue = "",
   onSearchChange = () => {},
+  onResetFilters,
   filterBadgeVisible = false,
+  variant = "advanced",
 }) => {
   const [groupMode, setGroupMode] = useState<"compact" | "normal">("normal");
   const tableHead =
@@ -139,23 +147,6 @@ export const VortexTable: React.FC<VortexTableProps> = ({
   const [pinnedExtra, setPinnedExtra] = useState<(string | number)[]>([]);
 
   const [filtersList, setFiltersList] = useState(false); // start hidden to show off the toggle
-
-  // Row Action Menu State
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [activeRow, setActiveRow] = useState<TableRowData | null>(null);
-
-  const handleActionClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    row: TableRowData,
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setActiveRow(row);
-  };
-
-  const handleActionClose = () => {
-    setAnchorEl(null);
-    setActiveRow(null);
-  };
 
   // Derive ordered head
   const getOrderedColumns = <T extends { id: string | number }>(
@@ -176,7 +167,8 @@ export const VortexTable: React.FC<VortexTableProps> = ({
     visibleColumns.includes(h.id),
   );
 
-  const frozenCount = disableColumnFreeze ? 0 : 1 + pinnedExtra.length;
+  const frozenCount =
+    disableColumnFreeze || variant === "simple" ? 0 : 1 + pinnedExtra.length;
 
   const handleColumnVisibilityChange = (
     colId: string | number,
@@ -200,11 +192,9 @@ export const VortexTable: React.FC<VortexTableProps> = ({
   // Construct Data Rows
   const td_data_set = useMemo(() => {
     return data.map((item: TableRowData, index: number) => {
-      const actionIcon = (
-        <IconButton size="small" onClick={(e) => handleActionClick(e, item)}>
-          <MoreVertIcon fontSize="small" />
-        </IconButton>
-      );
+      const actionIcon = RowActionComponent ? (
+        <RowActionComponent row={item} />
+      ) : null;
 
       const dataCells = filteredOrderedHead.map((headItem, headIndex) => {
         let comp: React.ReactNode = null;
@@ -223,7 +213,7 @@ export const VortexTable: React.FC<VortexTableProps> = ({
 
       return { id: item.id ? String(item.id) : String(index), data: dataCells };
     });
-  }, [data, filteredOrderedHead]);
+  }, [data, filteredOrderedHead, RowActionComponent]);
 
   return (
     <Paper
@@ -255,6 +245,48 @@ export const VortexTable: React.FC<VortexTableProps> = ({
         />
 
         <Box sx={{ ml: "auto", display: "flex", gap: 1, alignItems: "center" }}>
+          {filterBadgeVisible || searchValue.trim().length > 0 ? (
+            <Tooltip
+              title={"Refresh"}
+              placement="top"
+              arrow
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    bgcolor: "background.paper",
+                    fontSize: "12px",
+                    borderRadius: "6px",
+                    color: "text.primary",
+                    boxShadow: 1,
+                  },
+                },
+                arrow: { sx: { color: "background.paper" } },
+              }}
+            >
+              <IconButton
+                size="small"
+                onClick={() => {
+                  onSearchChange("");
+                  if (onResetFilters) onResetFilters();
+                }}
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: "300",
+                  border: 1,
+                  bgcolor: "background.paper",
+                  borderColor: "divider",
+                  borderRadius: "10px",
+                  padding: "9px",
+                  height: "40px",
+                  width: "40px",
+                  color: "text.primary",
+                }}
+              >
+                <Refresh />
+              </IconButton>
+            </Tooltip>
+          ) : null}
+
           <Tooltip
             title={"Filters"}
             placement="top"
@@ -284,28 +316,31 @@ export const VortexTable: React.FC<VortexTableProps> = ({
             </Badge>
           </Tooltip>
 
-          <TableToolbar
-            columns={orderedTableHead.map((h) => ({
-              id: h.id,
-              label: h.label,
-            }))}
-            visibleColumns={visibleColumns}
-            onVisibilityChange={handleColumnVisibilityChange}
-            frozenColumnIds={[orderedTableHead[0]?.id, ...pinnedExtra]}
-            onFrozenColumnsChange={(ids) => setPinnedExtra(ids.slice(1))}
-            onColumnReorder={handleColumnReorder}
-            groupMode={groupMode}
-            onGroupModeChange={(mode) => {
-              setGroupMode(mode);
-              setPinnedExtra([]);
-              setVisibleColumns(
-                (mode === "compact" ? tableHeadCompact : tableHeadDetailed).map(
-                  (h) => h.id,
-                ),
-              );
-            }}
-            disableColumnFreeze={disableColumnFreeze}
-          />
+          {variant === "advanced" && (
+            <TableToolbar
+              columns={orderedTableHead.map((h) => ({
+                id: h.id,
+                label: h.label,
+              }))}
+              visibleColumns={visibleColumns}
+              onVisibilityChange={handleColumnVisibilityChange}
+              frozenColumnIds={[orderedTableHead[0]?.id, ...pinnedExtra]}
+              onFrozenColumnsChange={(ids) => setPinnedExtra(ids.slice(1))}
+              onColumnReorder={handleColumnReorder}
+              groupMode={groupMode}
+              onGroupModeChange={(mode) => {
+                setGroupMode(mode);
+                setPinnedExtra([]);
+                setVisibleColumns(
+                  (mode === "compact"
+                    ? tableHeadCompact
+                    : tableHeadDetailed
+                  ).map((h) => h.id),
+                );
+              }}
+              disableColumnFreeze={disableColumnFreeze}
+            />
+          )}
         </Box>
       </Box>
 
@@ -327,7 +362,7 @@ export const VortexTable: React.FC<VortexTableProps> = ({
           stickyHeader={stickyHeader}
           colWidths={
             groupMode === "compact"
-              ? [350, 350]
+              ? [300, 250, 200, 200, 200, 150]
               : [180, 250, 200, 150, 150, 150, 120, 120, 150, 150, 150]
           }
           frozenColumnIds={[orderedTableHead[0]?.id, ...pinnedExtra]}
@@ -349,33 +384,8 @@ export const VortexTable: React.FC<VortexTableProps> = ({
           setPageNumber={setPageNumber}
           limitEnd={limitEnd}
           onLimitChange={onLimitChange}
+          variant={variant}
         />
-
-        {/* Row Action Menu */}
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleActionClose}
-          PaperProps={{
-            sx: {
-              minWidth: 150,
-              borderRadius: 2,
-              boxShadow: "0px 4px 12px rgba(0,0,0,0.08)",
-            },
-          }}
-        >
-          <MenuItem onClick={handleActionClose} sx={{ fontSize: 14 }}>
-            <EditIcon sx={{ fontSize: 18, mr: 1, color: "text.secondary" }} />
-            Edit
-          </MenuItem>
-          <MenuItem
-            onClick={handleActionClose}
-            sx={{ fontSize: 14, color: "error.main" }}
-          >
-            <DeleteIcon sx={{ fontSize: 18, mr: 1 }} />
-            Delete
-          </MenuItem>
-        </Menu>
       </Box>
     </Paper>
   );

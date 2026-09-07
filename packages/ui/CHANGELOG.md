@@ -2,6 +2,16 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.10] - 2026-09-07
+
+### Changed
+
+- **ButtonGroup**: Removed custom MUI variant/sx overrides on the internal TextField to properly inherit Vortex UI's native styling.
+- **Sidebar (Docs)**: Alphabetized component categories and items, removed emojis, and updated styling (spacing & typography) to look more professional and visually match the standard frontend.
+- **Docs**: Fixed a typescript `any` type warning in the ButtonGroup example.
+
+---
+
 ## [0.1.9] - 2026-09-03
 
 ### Added

@@ -28,9 +28,11 @@ export function TableOfContents() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const elements = (Array.from(
-        document.querySelectorAll("main h2, main h3, main h4, main h5"),
-      ) as HTMLElement[]).filter((el) => !el.closest(".toc-ignore"));
+      const elements = (
+        Array.from(
+          document.querySelectorAll("main h2, main h3, main h4, main h5"),
+        ) as HTMLElement[]
+      ).filter((el) => !el.closest(".toc-ignore"));
 
       const newHeadings: HeadingData[] = elements.map((elem, index) => {
         if (!elem.id) {
@@ -98,18 +100,19 @@ export function TableOfContents() {
     const x = heading.level > 2 ? 22 : 6;
     const y = START_Y + i * ITEM_HEIGHT;
     if (i === 0) return `M ${x} ${y}`;
-    
-    const prevX = headings[i-1].level > 2 ? 22 : 6;
-    const prevY = START_Y + (i-1) * ITEM_HEIGHT;
-    
+
+    const prevX = headings[i - 1].level > 2 ? 22 : 6;
+    const prevY = START_Y + (i - 1) * ITEM_HEIGHT;
+
     if (x === prevX) {
-       return acc + ` L ${x} ${y}`;
+      return acc + ` L ${x} ${y}`;
     } else {
-       return acc + ` C ${prevX} ${prevY + 16}, ${x} ${y - 16}, ${x} ${y}`;
+      return acc + ` C ${prevX} ${prevY + 16}, ${x} ${y - 16}, ${x} ${y}`;
     }
   }, "");
 
-  const progressHeight = activeIndex >= 0 ? START_Y + activeIndex * ITEM_HEIGHT : 0;
+  const progressHeight =
+    activeIndex >= 0 ? START_Y + activeIndex * ITEM_HEIGHT : 0;
 
   return (
     <Box
@@ -160,12 +163,16 @@ export function TableOfContents() {
           <path
             d={pathD}
             fill="none"
-            stroke={theme.palette.mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}
+            stroke={
+              theme.palette.mode === "dark"
+                ? "rgba(255,255,255,0.1)"
+                : "rgba(0,0,0,0.1)"
+            }
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          
+
           {/* Animated Active Path (Using clip-path for height animation) */}
           <clipPath id="progress-clip">
             <rect
@@ -176,7 +183,7 @@ export function TableOfContents() {
               style={{ transition: "height 0.4s cubic-bezier(0.4, 0, 0.2, 1)" }}
             />
           </clipPath>
-          
+
           <path
             d={pathD}
             fill="none"
@@ -196,21 +203,25 @@ export function TableOfContents() {
 
             return (
               <circle
-                key={`dot-${heading.id}`}
+                key={`dot-${i}`}
                 cx={x}
                 cy={y}
                 r={isActive ? 4 : 3}
                 fill={
-                  isActive 
-                    ? theme.palette.primary.main 
-                    : isPast 
-                      ? theme.palette.primary.main 
-                      : theme.palette.mode === "dark" ? "#333" : "#fff"
+                  isActive
+                    ? theme.palette.primary.main
+                    : isPast
+                      ? theme.palette.primary.main
+                      : theme.palette.mode === "dark"
+                        ? "#333"
+                        : "#fff"
                 }
                 stroke={
                   isActive || isPast
                     ? theme.palette.primary.main
-                    : theme.palette.mode === "dark" ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"
+                    : theme.palette.mode === "dark"
+                      ? "rgba(255,255,255,0.2)"
+                      : "rgba(0,0,0,0.2)"
                 }
                 strokeWidth="2"
                 style={{ transition: "all 0.3s ease" }}
@@ -228,7 +239,7 @@ export function TableOfContents() {
 
             return (
               <ListItem
-                key={heading.id}
+                key={i}
                 disablePadding
                 sx={{
                   height: ITEM_HEIGHT,
@@ -240,7 +251,7 @@ export function TableOfContents() {
                   disableRipple
                   onClick={() => {
                     heading.element.scrollIntoView({
-                       behavior: "smooth",
+                      behavior: "smooth",
                       block: "start",
                     });
                   }}
@@ -250,10 +261,10 @@ export function TableOfContents() {
                     pr: 1.5,
                     pl: isSub ? 4.5 : 2.5,
                     borderRadius: 1,
-                    color: isActive 
-                      ? "primary.main" 
-                      : isPast 
-                        ? "text.primary" 
+                    color: isActive
+                      ? "primary.main"
+                      : isPast
+                        ? "text.primary"
                         : "text.disabled",
                     transition: "color 0.2s ease-in-out",
                     bgcolor: "transparent !important",

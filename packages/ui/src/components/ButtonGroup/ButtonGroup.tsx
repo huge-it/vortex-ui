@@ -110,7 +110,6 @@ const DynamicFields = ({
             <Select
               variant="icon"
               label={field.label}
-              placeholder={field.label}
               value={values?.[field.name] || ""}
               onChange={(val) => onChange(field.name, String(val))}
               disabled={disabled}
@@ -122,7 +121,6 @@ const DynamicFields = ({
           ) : field.type === "phone" ? (
             <TextField
               fullWidth
-              size="small"
               label={field.label}
               value={values?.[field.name] || ""}
               onChange={(e) =>
@@ -157,38 +155,21 @@ const DynamicFields = ({
                 }
               }}
               disabled={disabled}
+              bgColor={bgColor}
               inputProps={{
                 inputMode: "numeric",
                 pattern: "[0-9]*",
                 maxLength: field.maxLength || undefined,
               }}
-              sx={{
-                "& .VortexUIOutlinedInput-root": {
-                  fontSize: 13,
-                  bgcolor: bgColor || "#fff",
-                  borderRadius: "8px",
-                  "& fieldset": { borderColor: "#E5E7EB" },
-                  "&.Mui-focused fieldset": { borderColor: ACTIVE_COLOR },
-                },
-              }}
             />
           ) : (
             <TextField
               fullWidth
-              size="small"
               label={field.label}
               value={values?.[field.name] || ""}
               onChange={(e) => onChange(field.name, e.target.value)}
               disabled={disabled}
-              sx={{
-                "& .VortexUIOutlinedInput-root": {
-                  fontSize: 13,
-                  bgcolor: bgColor || "#fff",
-                  borderRadius: "8px",
-                  "& fieldset": { borderColor: "#E5E7EB" },
-                  "&.Mui-focused fieldset": { borderColor: ACTIVE_COLOR },
-                },
-              }}
+              bgColor={bgColor}
             />
           )}
         </Box>

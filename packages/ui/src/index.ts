@@ -8,6 +8,7 @@ export * from "./components/ButtonGroup";
 export * from "./components/ChipInput";
 export * from "./components/DataTable";
 export * from "./components/VortexTable";
+export * from "./components/FilterButton";
 export * from "./components/Drawer";
 export * from "./components/History";
 export * from "./components/Dialog";

@@ -25,7 +25,7 @@ const StyledTextField = styled(
         variant={variant as any}
         {...rest}
         InputProps={{
-          disableUnderline: true,
+          ...(variant !== "outlined" && { disableUnderline: true }),
           ...rest.InputProps,
           sx: {
             overflow: "hidden",

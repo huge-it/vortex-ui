@@ -143,6 +143,7 @@ function EnhancedTableHead({
   columnFilters = {},
   uiColors,
   stickyHeader,
+  variant = "advanced",
 }: {
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: "asc" | "desc";
@@ -162,6 +163,7 @@ function EnhancedTableHead({
   columnFilters?: Record<string | number, any[]>;
   uiColors: UIColors;
   stickyHeader?: boolean;
+  variant?: "simple" | "advanced";
 }) {
   return (
     <TableHead>
@@ -262,18 +264,20 @@ function EnhancedTableHead({
                     <SortOrLabel />
                   </Box>
 
-                  <ColumnHeaderMenu
-                    colId={headCell.id}
-                    isFirstColumn={false}
-                    isPinned={
-                      frozenColumnIds.includes(headCell.id) && colIndex !== 0
-                    }
-                    filterOptions={headCell.filterOptions || []}
-                    filterValues={columnFilters[headCell.id] || []}
-                    onFilter={onColumnFilter}
-                    onHide={(colId) => onVisibilityChange?.(colId, false)}
-                    onPin={onColumnReorder}
-                  />
+                  {variant === "advanced" && (
+                    <ColumnHeaderMenu
+                      colId={headCell.id}
+                      isFirstColumn={false}
+                      isPinned={
+                        frozenColumnIds.includes(headCell.id) && colIndex !== 0
+                      }
+                      filterOptions={headCell.filterOptions || []}
+                      filterValues={columnFilters[headCell.id] || []}
+                      onFilter={onColumnFilter}
+                      onHide={(colId) => onVisibilityChange?.(colId, false)}
+                      onPin={onColumnReorder}
+                    />
+                  )}
                 </Box>
               )}
             </TableCell>
@@ -573,6 +577,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps>(
       ActionComponent,
       maxHeight,
       stickyHeader = true,
+      variant = "advanced",
     },
     ref,
   ) => {
@@ -794,6 +799,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps>(
                 onColumnFilter={handleColumnFilter}
                 uiColors={uiColors}
                 stickyHeader={stickyHeader}
+                variant={variant}
               />
               <TableBody>
                 {showInitialLoading ? (

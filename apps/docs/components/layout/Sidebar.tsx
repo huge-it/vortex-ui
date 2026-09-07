@@ -23,106 +23,108 @@ interface SidebarCategory {
 
 export const componentCategories: SidebarCategory[] = [
   {
-    title: "🖱️ Buttons & Actions",
+    title: "Buttons & Actions",
     items: [
       { name: "Button", href: "/components/button" },
       { name: "Button Group", href: "/components/button-group" },
+      { name: "FilterButton", href: "/components/filter-button" },
       { name: "Link", href: "/components/link" },
     ],
   },
   {
-    title: "⌨️ Inputs & Text Fields",
-    items: [
-      { name: "TextField", href: "/components/textfield" },
-      { name: "NumberField", href: "/components/number-field" },
-      { name: "ChipInputField", href: "/components/chip-input" },
-      { name: "Text Areas", href: "/components/text-areas" },
-      { name: "SimpleEditor", href: "/components/editor" },
-    ],
-  },
-  {
-    title: "☑️ Selections & Toggles",
+    title: "Inputs & Text Fields",
     items: [
       { name: "AutoPopulate", href: "/components/auto-populate" },
-      { name: "Select", href: "/components/select" },
-      { name: "Checkbox Group", href: "/components/checkbox-group" },
-      { name: "Radio Group", href: "/components/radio-group" },
-      { name: "Toggle Switch", href: "/components/toggle-switch" },
+      { name: "ChipInputField", href: "/components/chip-input" },
+      { name: "NumberField", href: "/components/number-field" },
+      { name: "Slider", href: "/components/slider" },
+      { name: "Text Areas", href: "/components/text-areas" },
+      { name: "TextField", href: "/components/textfield" },
     ],
   },
   {
-    title: "📅 Pickers & Uploads",
+    title: "Layout & Data Display",
+    items: [
+      { name: "Accordion", href: "/components/accordion" },
+      { name: "Avatar", href: "/components/avatar" },
+      { name: "Card", href: "/components/card" },
+      { name: "DataTable", href: "/components/table" },
+      { name: "Grid", href: "/components/grid" },
+      { name: "Sheet", href: "/components/sheet" },
+    ],
+  },
+  {
+    title: "Modals, Drawers & Feedback",
+    items: [
+      { name: "Dialog", href: "/components/dialog" },
+      { name: "Drawer", href: "/components/drawer" },
+      { name: "Snackbar / Toast", href: "/components/snackbar" },
+      { name: "Tooltip", href: "/components/tooltip" },
+    ],
+  },
+  {
+    title: "Navigation & Steppers",
+    items: [
+      { name: "Breadcrumbs", href: "/components/breadcrumbs" },
+      { name: "History", href: "/components/history" },
+      { name: "PipelineStepper", href: "/components/pipeline-stepper" },
+      { name: "Stepper", href: "/components/stepper" },
+    ],
+  },
+  {
+    title: "Pickers & Uploads",
     items: [
       { name: "Date Picker", href: "/components/date-picker" },
-      { name: "Time Picker", href: "/components/time-picker" },
-      { name: "DateTime Picker", href: "/components/date-time-picker" },
       { name: "DateRange Picker", href: "/components/date-range-picker" },
+      { name: "DateTime Picker", href: "/components/date-time-picker" },
+      { name: "Time Picker", href: "/components/time-picker" },
       { name: "Uploads", href: "/components/uploads" },
     ],
   },
   {
-    title: "📐 Layout & Data Display",
+    title: "Selections & Toggles",
     items: [
-      { name: "Card", href: "/components/card" },
-      { name: "Sheet", href: "/components/sheet" },
-      { name: "Grid", href: "/components/grid" },
-      { name: "Accordion", href: "/components/accordion" },
-      { name: "Avatar", href: "/components/avatar" },
-      { name: "DataTable", href: "/components/table" },
+      { name: "Checkbox Group", href: "/components/checkbox-group" },
+      { name: "Radio Group", href: "/components/radio-group" },
+      { name: "Select", href: "/components/select" },
+      { name: "Toggle Switch", href: "/components/toggle-switch" },
     ],
   },
   {
-    title: "🧭 Navigation & Steppers",
+    title: "Status, Loading & Progress",
     items: [
-      { name: "Breadcrumbs", href: "/components/breadcrumbs" },
-      { name: "Stepper", href: "/components/stepper" },
-      { name: "PipelineStepper", href: "/components/pipeline-stepper" },
-      { name: "History", href: "/components/history" },
-    ],
-  },
-  {
-    title: "💬 Modals, Drawers & Feedback",
-    items: [
-      { name: "Dialog", href: "/components/dialog" },
-      { name: "Drawer", href: "/components/drawer" },
-      { name: "Tooltip", href: "/components/tooltip" },
-      { name: "Snackbar / Toast", href: "/components/snackbar" },
-    ],
-  },
-  {
-    title: "⏳ Status, Loading & Progress",
-    items: [
+      { name: "Backdrop", href: "/components/backdrop" },
       { name: "Badge", href: "/components/badge" },
-      { name: "Slider", href: "/components/slider" },
       { name: "LinearProgress", href: "/components/progress" },
       { name: "Skeleton", href: "/components/skeleton" },
-      { name: "Backdrop", href: "/components/backdrop" },
     ],
   },
 ];
 
 export const exampleCategories: SidebarCategory[] = [
   {
-    title: "📝 Project",
+    title: "Project",
     items: [
       { name: "Create Project", href: "/examples/project/create" },
       { name: "Project Details", href: "/examples/project/view" },
       { name: "Project List", href: "/examples/project/list" },
-    ]
+    ],
   },
   {
-    title: "👤 User Profile",
+    title: "User Profile",
     items: [
       { name: "Create Profile", href: "/examples/user-profile/create" },
       { name: "View Profile", href: "/examples/user-profile/view" },
       { name: "Profile List", href: "/examples/user-profile/list" },
-    ]
-  }
+    ],
+  },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
-  const categories = pathname?.startsWith("/examples") ? exampleCategories : componentCategories;
+  const categories = pathname?.startsWith("/examples")
+    ? exampleCategories
+    : componentCategories;
 
   return (
     <Box
@@ -136,7 +138,8 @@ export function Sidebar() {
         top: 64,
         backgroundColor: "background.paper",
         overflowY: "auto",
-        p: 2,
+        px: 1,
+        py: 2,
         // Hide scrollbar but keep functionality
         "&::-webkit-scrollbar": { width: "0.4em" },
         "&::-webkit-scrollbar-track": { background: "transparent" },
@@ -147,17 +150,17 @@ export function Sidebar() {
       }}
     >
       {categories?.map((category) => (
-        <Box key={category.title} sx={{ mb: 3 }}>
+        <Box key={category.title} sx={{ mb: 2 }}>
           <Typography
-            variant="subtitle2"
+            variant="overline"
             sx={{
-              fontWeight: 700,
-              textTransform: "uppercase",
               color: "text.secondary",
-              letterSpacing: "0.05em",
-              px: 2,
-              mb: 1,
               fontSize: "0.75rem",
+              fontWeight: 600,
+              letterSpacing: "0.5px",
+              display: "block",
+              mb: 1,
+              px: 1,
             }}
           >
             {category.title}
@@ -166,7 +169,7 @@ export function Sidebar() {
             {category.items.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <ListItem key={item.href} disablePadding sx={{ mb: 0.5 }}>
+                <ListItem key={item.href} disablePadding>
                   <ListItemButton
                     component={Link}
                     href={item.href}

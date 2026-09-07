@@ -13,7 +13,7 @@ import {
 interface PropDefinition {
   name: string;
   type: string;
-  default: string;
+  default?: string;
   description: string;
 }
 
@@ -91,7 +91,7 @@ export function ComponentProps({
                     fontSize: "0.8125rem",
                   }}
                 >
-                  {p.default}
+                  {p.default || "-"}
                 </TableCell>
                 <TableCell sx={{ color: "text.primary", fontSize: "0.875rem" }}>
                   {p.description}
