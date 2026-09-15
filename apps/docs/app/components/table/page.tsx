@@ -347,6 +347,7 @@ export default function TableDocs() {
   );
 
   const RowActionComponent = ({ row }: { row: TableRowData }) => {
+    console.log("Selected Row", row);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleActionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(e.currentTarget);
@@ -363,11 +364,13 @@ export default function TableDocs() {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleActionClose}
-          PaperProps={{
-            sx: {
-              minWidth: 150,
-              borderRadius: 2,
-              boxShadow: "0px 4px 12px rgba(0,0,0,0.08)",
+          slotProps={{
+            paper: {
+              sx: {
+                minWidth: 150,
+                borderRadius: 2,
+                boxShadow: "0px 4px 12px rgba(0,0,0,0.08)",
+              },
             },
           }}
         >

@@ -1,10 +1,13 @@
 # 🌪️ VORTEX
+
 **Visual & Operational Rules for Technical EXecution**
 
 ## What is VORTEX?
+
 VORTEX is Huge IT Solutions' official framework for standardizing code architecture, UI/UX design, development practices, and review protocols across all teams and projects.
 
 It is more than just a set of rules — VORTEX is the central force that ensures:
+
 - Every product we build looks, feels, and behaves consistently.
 - Every line of code follows scalable, reviewable, and maintainable patterns.
 - Every team aligns with the same language, structure, and execution principles.
@@ -12,6 +15,7 @@ It is more than just a set of rules — VORTEX is the central force that ensures
 VORTEX is how we bring unity to velocity. Precision to creativity. Discipline to scale.
 
 ## Why VORTEX?
+
 - **Consistency** across all frontend and backend codebases.
 - **Scalable Architecture** that's easy to maintain and audit.
 - **Unified UI/UX Language** with theme, spacing, and interaction patterns.
@@ -19,6 +23,7 @@ VORTEX is how we bring unity to velocity. Precision to creativity. Discipline to
 - **Shared Engineering Culture** across all teams and departments.
 
 ## What Does VORTEX Include?
+
 - **VORTEX.UI** – Shared design tokens, components, and theming.
 - **VORTEX.ARCH** – Architectural patterns and directory structures.
 - **VORTEX.LINT** – Code formatting and static analysis rules.
