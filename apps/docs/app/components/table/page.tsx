@@ -211,7 +211,7 @@ export default function TableDocs() {
           id: 1,
           comp: (
             <Box>
-              <Typography variant="body2" fontWeight={500}>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {item.opportunity}
               </Typography>
               <Typography variant="caption" color="text.secondary">
@@ -235,7 +235,7 @@ export default function TableDocs() {
           id: 3,
           comp: (
             <Box>
-              <Typography variant="body2" fontWeight={500}>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 ${item.budget?.toLocaleString()}
               </Typography>
               <Typography variant="caption" color="text.secondary">
@@ -248,7 +248,7 @@ export default function TableDocs() {
           id: 4,
           comp: (
             <Box>
-              <Typography variant="body2" fontWeight={500}>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {item.project_manager}
               </Typography>
               <Typography variant="caption" color="text.secondary">
@@ -261,7 +261,7 @@ export default function TableDocs() {
           id: 5,
           comp: (
             <Box>
-              <Typography variant="body2" fontWeight={500}>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {item.region}
               </Typography>
               <Typography variant="caption" color="text.secondary">
@@ -288,7 +288,7 @@ export default function TableDocs() {
         {
           id: 1.2,
           comp: (
-            <Typography variant="body2" fontWeight={500}>
+            <Typography variant="body2" sx={{ fontWeight: 500 }}>
               {item.opportunity}
             </Typography>
           ),

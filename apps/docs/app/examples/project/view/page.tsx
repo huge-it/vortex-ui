@@ -104,7 +104,7 @@ export default function ViewProjectExample() {
                 <Typography variant="body2" color="text.secondary">
                   Timeline
                 </Typography>
-                <Typography variant="body2" fontWeight={500}>
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
                   Oct 1, 2026 - Dec 15, 2026
                 </Typography>
               </Box>
@@ -116,7 +116,7 @@ export default function ViewProjectExample() {
                 <Typography variant="body2" color="text.secondary">
                   Budget
                 </Typography>
-                <Typography variant="body2" fontWeight={500}>
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
                   $45,000
                 </Typography>
               </Box>
