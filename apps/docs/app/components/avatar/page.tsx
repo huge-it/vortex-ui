@@ -5,7 +5,7 @@ import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentInstallation } from "@docs/ComponentInstallation";
 import { ComponentPreview } from "@docs/ComponentPreview";
 import { ComponentProps } from "@docs/ComponentProps";
-import { Box, Divider, Typography, Stack } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { Avatar } from "vortex-ui";
 
 const avatarPropsList = [
@@ -75,13 +75,15 @@ const avatarPropsList = [
     name: "children",
     type: "React.ReactNode",
     default: "undefined",
-    description: "Custom children to render inside the avatar (e.g. for initials).",
+    description:
+      "Custom children to render inside the avatar (e.g. for initials).",
   },
   {
     name: "onClick",
     type: "(event: React.MouseEvent<HTMLDivElement>) => void",
     default: "undefined",
-    description: "Callback function triggered when the avatar component is clicked.",
+    description:
+      "Callback function triggered when the avatar component is clicked.",
   },
 ];
 
@@ -104,23 +106,29 @@ export default function AvatarDocs() {
           color: "text.secondary",
           fontWeight: 600,
           mb: 2,
-          fontSize: "1.25rem"
-        }}>
+          fontSize: "1.25rem",
+        }}
+      >
         Basic Usage (Letter Mode)
       </Typography>
       <Typography
         variant="body1"
         sx={{
           color: "text.secondary",
-          mb: 2
-        }}>
+          mb: 2,
+        }}
+      >
         By default, the Avatar renders in letter mode, extracting the first
         character of the <code>name</code> prop.
       </Typography>
       <ComponentPreview>
-        <Stack direction="row" spacing={2} sx={{
-          alignItems: "center"
-        }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            alignItems: "center",
+          }}
+        >
           <Avatar name="Alice" variant="sm" />
           <Avatar name="Bob" variant="md" />
           <Avatar name="Charlie" variant="lg" />
@@ -142,23 +150,29 @@ export default function AvatarDocs() {
           fontWeight: 600,
           mb: 2,
           mt: 4,
-          fontSize: "1.25rem"
-        }}>
+          fontSize: "1.25rem",
+        }}
+      >
         Image Mode
       </Typography>
       <Typography
         variant="body1"
         sx={{
           color: "text.secondary",
-          mb: 2
-        }}>
+          mb: 2,
+        }}
+      >
         Set <code>type=&ldquo;image&ldquo;</code> and provide a <code>src</code>
         . If the image fails to load, it will fallback to a default icon.
       </Typography>
       <ComponentPreview>
-        <Stack direction="row" spacing={2} sx={{
-          alignItems: "center"
-        }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            alignItems: "center",
+          }}
+        >
           <Avatar
             type="image"
             src="https://i.pravatar.cc/150?img=32"
@@ -191,42 +205,57 @@ export default function AvatarDocs() {
           fontWeight: 600,
           mb: 2,
           mt: 4,
-          fontSize: "1.25rem"
-        }}>
+          fontSize: "1.25rem",
+        }}
+      >
         Editable Avatars
       </Typography>
       <Typography
         variant="body1"
         sx={{
           color: "text.secondary",
-          mb: 2
-        }}>
+          mb: 2,
+        }}
+      >
         Setting <code>editable=true</code> allows users to click the avatar to
         change it. In letter mode, it opens a popover to change the name. In
         image mode, it opens a file picker.
       </Typography>
       <ComponentPreview>
-        <Stack direction="row" spacing={4} sx={{
-          alignItems: "center"
-        }}>
-          <Stack spacing={1} sx={{
-            alignItems: "center"
-          }}>
+        <Stack
+          direction="row"
+          spacing={4}
+          sx={{
+            alignItems: "center",
+          }}
+        >
+          <Stack
+            spacing={1}
+            sx={{
+              alignItems: "center",
+            }}
+          >
             <Avatar
               editable
               name="Edit Me"
               variant="lg"
               onLetterChange={(newName) => console.log("New name:", newName)}
             />
-            <Typography variant="caption" sx={{
-              color: "text.secondary"
-            }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "text.secondary",
+              }}
+            >
               Letter Mode
             </Typography>
           </Stack>
-          <Stack spacing={1} sx={{
-            alignItems: "center"
-          }}>
+          <Stack
+            spacing={1}
+            sx={{
+              alignItems: "center",
+            }}
+          >
             <Avatar
               editable
               type="image"
@@ -236,9 +265,12 @@ export default function AvatarDocs() {
                 console.log("New image selected:", file, url)
               }
             />
-            <Typography variant="caption" sx={{
-              color: "text.secondary"
-            }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "text.secondary",
+              }}
+            >
               Image Mode
             </Typography>
           </Stack>

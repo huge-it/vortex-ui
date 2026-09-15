@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
-import { Drawer } from "./Drawer";
-import { Button } from "../Button/Button";
 import { Box, Typography } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Button } from "../Button/Button";
+import { Drawer } from "./Drawer";
 
 const meta: Meta<typeof Drawer> = {
   title: "Components/Drawer",
@@ -53,9 +53,12 @@ const DrawerWithState = (args: any) => {
             borderRadius: 2,
           }}
         >
-          <Typography variant="body2" sx={{
-            color: "text.secondary"
-          }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             Custom drawer content goes here.
           </Typography>
         </Box>
