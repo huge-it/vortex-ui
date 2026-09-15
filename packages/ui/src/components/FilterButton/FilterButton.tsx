@@ -287,7 +287,6 @@ export const FilterButton = ({
               sx: {
                 width: dropdownWidth,
                 borderRadius: "12px",
-                boxShadow: "0px 3px 4.6px 0px rgba(168,168,168,0.5)",
                 border: `1px solid ${theme.palette.divider}`,
                 overflow: "hidden",
                 display: "flex",

@@ -11,7 +11,7 @@ export default function Page() {
       {/* Hero Section */}
       <Box sx={{ mb: 6 }}>
         <Typography
-          variant="h1"
+          variant="h2"
           sx={{
             fontWeight: 800,
             mb: 2,
@@ -128,13 +128,25 @@ export default function Page() {
           2. Add the Repository as a Git Submodule
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-          Bring the <code>vortex-ui</code> code into your project by adding it
-          as a Git submodule. We recommend placing it inside an{" "}
-          <code>external</code> folder:
+          <strong>A. Add the Submodule:</strong> Bring the{" "}
+          <code>vortex-ui</code> code into your project by adding it as a Git
+          submodule. We recommend placing it inside an <code>external</code>{" "}
+          folder:
         </Typography>
         <ComponentCode
           code={`git submodule add https://github.com/huge-it/vortex-ui.git external/vortex-fe`}
         />
+
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          <strong>B. Initialize and Fetch:</strong> If you are cloning a
+          repository that already has the submodule configured, or just want to
+          ensure it`&apos;`s fully initialized locally, run:
+        </Typography>
+        <ComponentCode code={`git submodule update --init --recursive`} />
 
         <Divider sx={{ my: 4, opacity: 0.5 }} />
 
@@ -230,6 +242,45 @@ export default function Page() {
           Start your development server to see it in action!
         </Typography>
         <ComponentCode code={`npm run dev`} />
+
+        <Divider sx={{ my: 4, opacity: 0.5 }} />
+
+        <Typography
+          variant="h3"
+          color="text.secondary"
+          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
+        >
+          8. Updating Vortex-UI
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+          To pull the latest updates (bug fixes, new components, etc.) from the
+          repository, update your submodule to the latest commit:
+        </Typography>
+        <ComponentCode
+          code={`git submodule update --remote external/vortex-fe`}
+        />
+
+        <Typography
+          variant="body2"
+          color="error"
+          sx={{ mt: 2, mb: 2, fontWeight: 500 }}
+        >
+          ⚠️ Important: If you have modified files within the
+          `external/vortex-fe` folder, Git will abort the update and throw an
+          error (`error: Your local changes... would be overwritten by
+          checkout`). You must commit, stash, or discard your local changes in
+          that folder before you can update.
+        </Typography>
+
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontStyle: "italic" }}
+        >
+          *Note: After updating, always restart your development server. If
+          changes don`&apos;`t appear, try deleting your framework`&apos;`s
+          cache (like the `.next` folder).*
+        </Typography>
       </Box>
     </Box>
   );

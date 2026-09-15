@@ -120,11 +120,25 @@ export const exampleCategories: SidebarCategory[] = [
   },
 ];
 
+export const foundationCategories: SidebarCategory[] = [
+  {
+    title: "Design System",
+    items: [
+      { name: "Themes", href: "/foundations/themes" },
+      { name: "Colors", href: "/foundations/colors" },
+      { name: "Typography", href: "/foundations/typography" },
+      { name: "Breakpoints", href: "/foundations/breakpoints" },
+    ],
+  },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const categories = pathname?.startsWith("/examples")
     ? exampleCategories
-    : componentCategories;
+    : pathname?.startsWith("/foundations")
+      ? foundationCategories
+      : componentCategories;
 
   return (
     <Box

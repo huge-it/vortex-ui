@@ -72,6 +72,10 @@ If someone makes updates to `vortex-ui` (bug fixes, new components, etc.) and pu
 # 1. Fetch and update the submodule to the latest commit
 git submodule update --remote external/vortex-fe
 ```
+> [!WARNING]
+> If you have modified files within the `external/vortex-fe` folder, Git will abort the update and throw an error (`error: Your local changes... would be overwritten by checkout`). 
+> **You must commit, stash, or discard your local changes in that folder before you can update.**
+
 *Note: After updating, always restart your development server (e.g., `npm run dev`). If changes don't appear, try deleting your framework's cache (like the `.next` folder).*
 
 

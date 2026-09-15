@@ -17,6 +17,11 @@ import { Search } from "./Search";
 const NAV_LINKS = [
   { label: "Home", href: "/", matchPrefix: null },
   {
+    label: "Foundations",
+    href: "/foundations/themes",
+    matchPrefix: "/foundations",
+  },
+  {
     label: "Components",
     href: "/components/button",
     matchPrefix: "/components",

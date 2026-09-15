@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Box,
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
   Typography,
   useTheme,
 } from "@mui/material";
