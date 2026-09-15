@@ -214,7 +214,9 @@ export default function TableDocs() {
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {item.opportunity}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 PO: {item.po_num}
               </Typography>
             </Box>
@@ -225,7 +227,9 @@ export default function TableDocs() {
           comp: (
             <Box>
               <Typography variant="body2">{item.company}</Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 Status: {item.status}
               </Typography>
             </Box>
@@ -238,7 +242,9 @@ export default function TableDocs() {
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 ${item.budget?.toLocaleString()}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 Priority: {item.priority}
               </Typography>
             </Box>
@@ -251,7 +257,9 @@ export default function TableDocs() {
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {item.project_manager}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 Assignee: {item.assignee}
               </Typography>
             </Box>
@@ -264,7 +272,9 @@ export default function TableDocs() {
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {item.region}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 Dept: {item.department}
               </Typography>
             </Box>
@@ -279,7 +289,9 @@ export default function TableDocs() {
           comp: (
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Typography variant="body2">{item.po_num}</Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 #REG-12345
               </Typography>
             </Box>
@@ -408,9 +420,13 @@ export default function TableDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mt: 4,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Simple Table
       </Typography>
       <Box sx={{ width: "100%", mb: 4 }}>
@@ -447,9 +463,13 @@ export default function TableDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mt: 4,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Advanced Table (w/ Toolbar & Column Freezing)
       </Typography>
       <Box sx={{ width: "100%", mb: 4 }}>
@@ -486,9 +506,13 @@ export default function TableDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mt: 4,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Loading State
       </Typography>
       <Box sx={{ width: "100%", mb: 4 }}>
@@ -504,9 +528,13 @@ export default function TableDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mt: 4, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mt: 4,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Empty State
       </Typography>
       <Box sx={{ width: "100%", mb: 4 }}>

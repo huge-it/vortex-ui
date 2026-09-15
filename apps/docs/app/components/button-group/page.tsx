@@ -213,9 +213,12 @@ export default function ButtonGroupDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Preview
       </Typography>
       <ComponentPreview>
@@ -287,7 +290,11 @@ export default function ButtonGroupDocs() {
           {
             name: "Default",
             element: (
-              <Box display="flex" width={"100%"}>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "100%"
+                }}>
                 <StatefulButtonGroup
                   methods={DEFAULT_METHODS}
                   variant="icon"
@@ -299,7 +306,11 @@ export default function ButtonGroupDocs() {
           {
             name: "Disabled",
             element: (
-              <Box display="flex" width={"100%"}>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "100%"
+                }}>
                 <StatefulButtonGroup
                   methods={DEFAULT_METHODS}
                   variant="icon"

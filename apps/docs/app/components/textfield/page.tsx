@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
-import { Typography, Box, Divider, Stack } from "@mui/material";
-import { TextField } from "vortex-ui";
-import { ComponentPreview } from "@comp/docs/ComponentPreview";
 import { ComponentCode } from "@comp/docs/ComponentCode";
-import { ComponentStates } from "@comp/docs/ComponentStates";
-import { ComponentProps } from "@comp/docs/ComponentProps";
 import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
+import { ComponentPreview } from "@comp/docs/ComponentPreview";
+import { ComponentProps } from "@comp/docs/ComponentProps";
+import { ComponentStates } from "@comp/docs/ComponentStates";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { TextField } from "vortex-ui";
 
 const inputPropsList = [
   {
@@ -63,8 +62,12 @@ export default function TextFieldDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem",
+        }}
       >
         Preview
       </Typography>

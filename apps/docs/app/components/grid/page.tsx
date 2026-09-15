@@ -1,9 +1,9 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
-import { ComponentHeader } from "@docs/ComponentHeader";
-import { ComponentVariants } from "@docs/ComponentVariants";
 import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentProps } from "@docs/ComponentProps";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { Box } from "@mui/material";
+import React from "react";
 import { Grid } from "vortex-ui";
 
 const gridPropsList = [

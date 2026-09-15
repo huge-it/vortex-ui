@@ -85,19 +85,23 @@ export default function FilterButtonDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Preview
       </Typography>
       <ComponentPreview>
         <Box>
           <Typography
             variant="caption"
-            color="text.secondary"
-            display="block"
-            mb={1}
-          >
+            sx={{
+              color: "text.secondary",
+              display: "block",
+              mb: 1
+            }}>
             Multi-select with Search
           </Typography>
           <FilterButton
@@ -112,10 +116,11 @@ export default function FilterButtonDocs() {
         <Box>
           <Typography
             variant="caption"
-            color="text.secondary"
-            display="block"
-            mb={1}
-          >
+            sx={{
+              color: "text.secondary",
+              display: "block",
+              mb: 1
+            }}>
             Multi-select without Search
           </Typography>
           <FilterButton
@@ -131,10 +136,11 @@ export default function FilterButtonDocs() {
         <Box>
           <Typography
             variant="caption"
-            color="text.secondary"
-            display="block"
-            mb={1}
-          >
+            sx={{
+              color: "text.secondary",
+              display: "block",
+              mb: 1
+            }}>
             Single-select
           </Typography>
           <FilterButton

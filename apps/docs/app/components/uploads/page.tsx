@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Stack, Typography } from "@mui/material";
-import { ComponentHeader } from "@docs/ComponentHeader";
-import { ComponentPreview } from "@docs/ComponentPreview";
 import { ComponentCode } from "@docs/ComponentCode";
-import { ComponentProps } from "@docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentInstallation } from "@docs/ComponentInstallation";
-import { Divider } from "@mui/material";
-import { ToggleSwitch } from "vortex-ui";
-import { DragDropUpload, UploadButton, FileItem } from "vortex-ui";
+import { ComponentPreview } from "@docs/ComponentPreview";
+import { ComponentProps } from "@docs/ComponentProps";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import {
+  DragDropUpload,
+  FileItem,
+  ToggleSwitch,
+  UploadButton,
+} from "vortex-ui";
 
 const uploadPropsList = [
   {
@@ -64,7 +67,8 @@ const uploadPropsList = [
     name: "imgPreview",
     type: "boolean",
     default: "false",
-    description: "If true, shows an image preview grid instead of a list for images.",
+    description:
+      "If true, shows an image preview grid instead of a list for images.",
   },
 ];
 
@@ -73,7 +77,9 @@ export default function UploadsDocs() {
 
   // States for each variant
   const [uploadedFiles, setUploadedFiles] = useState<FileItem[]>([]);
-  const [uploadedFilesSingle, setUploadedFilesSingle] = useState<FileItem[]>([]);
+  const [uploadedFilesSingle, setUploadedFilesSingle] = useState<FileItem[]>(
+    [],
+  );
   const [uploadedFilesMulti, setUploadedFilesMulti] = useState<FileItem[]>([]);
   const [uploadedFilesDocs, setUploadedFilesDocs] = useState<FileItem[]>([]);
 
@@ -103,8 +109,12 @@ export default function UploadsDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Drag & Drop Upload
           </Typography>
@@ -125,8 +135,12 @@ export default function UploadsDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Upload (Single)
           </Typography>
@@ -147,8 +161,12 @@ export default function UploadsDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Upload (Multiple)
           </Typography>
@@ -169,8 +187,12 @@ export default function UploadsDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Upload (Documents)
           </Typography>

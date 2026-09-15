@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { Typography, Box, Divider, Stack, MenuItem } from "@mui/material";
-import { Videocam, CalendarMonth, Phone, Email } from "@mui/icons-material";
-import { Select } from "vortex-ui";
-import { ComponentPreview } from "@comp/docs/ComponentPreview";
 import { ComponentCode } from "@comp/docs/ComponentCode";
-import { ComponentVariants } from "@comp/docs/ComponentVariants";
-import { ComponentStates } from "@comp/docs/ComponentStates";
-import { ComponentProps } from "@comp/docs/ComponentProps";
 import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
+import { ComponentPreview } from "@comp/docs/ComponentPreview";
+import { ComponentProps } from "@comp/docs/ComponentProps";
+import { ComponentStates } from "@comp/docs/ComponentStates";
+import { ComponentVariants } from "@comp/docs/ComponentVariants";
+import { CalendarMonth, Phone, Videocam } from "@mui/icons-material";
+import { Box, Divider, MenuItem, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { Select } from "vortex-ui";
 
 const selectPropsList = [
   {
@@ -123,8 +123,12 @@ export default function SelectDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem",
+        }}
       >
         Preview
       </Typography>

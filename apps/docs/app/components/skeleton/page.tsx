@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
-import { Box, Typography, Stack, Divider } from "@mui/material";
-import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentProps } from "@docs/ComponentProps";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { Skeleton } from "vortex-ui";
 
 const skeletonPropsList = [
@@ -83,7 +82,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Text (Line) Variant
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             Used to represent lines of text.
           </Typography>
           <Stack spacing={1}>
@@ -100,7 +105,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Rectangular (Box) Variant
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             Used to represent images, containers, or other rectangular elements.
             Use the <code>rounded</code> prop to easily apply rounded corners.
           </Typography>
@@ -116,7 +127,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Circular Variant
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             Used to represent avatars or circular icons.
           </Typography>
           <Skeleton variant="circular" width={40} height={40} />
@@ -128,7 +145,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Card Variant
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             A predefined skeleton for a card layout.
           </Typography>
           <Stack spacing={2}>
@@ -143,7 +166,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Profile Variant
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             A predefined skeleton for user profiles.
           </Typography>
           <Stack spacing={4}>
@@ -158,7 +187,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             List Item
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             Predefined structures for lists.
           </Typography>
           <Skeleton variant="list-item" />
@@ -170,7 +205,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Table Row
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             Creates a tabular structure. You can customize the number of rows
             and columns using the <code>rows</code> and <code>cols</code> props.
           </Typography>
@@ -192,7 +233,13 @@ export default function SkeletonDocs() {
           <Typography variant="h5" gutterBottom>
             Cascading Skeleton
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+            }}
+          >
             A unique skeleton that cascades the loading animation.
           </Typography>
           <Skeleton variant="cascading" />

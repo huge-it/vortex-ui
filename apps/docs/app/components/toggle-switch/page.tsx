@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Divider, Typography } from "@mui/material";
 import { ComponentCode } from "@comp/docs/ComponentCode";
+import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
 import { ComponentPreview } from "@comp/docs/ComponentPreview";
-import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentProps } from "@comp/docs/ComponentProps";
 import { ComponentStates } from "@comp/docs/ComponentStates";
 import { ComponentVariants } from "@comp/docs/ComponentVariants";
+import { Box, Divider, Typography } from "@mui/material";
+import { useState } from "react";
 import { ToggleSwitch } from "vortex-ui";
 
 const toggleSwitchPropsList = [
@@ -76,8 +76,12 @@ export default function ToggleSwitchDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem",
+        }}
       >
         Preview
       </Typography>

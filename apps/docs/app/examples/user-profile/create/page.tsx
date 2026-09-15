@@ -44,21 +44,32 @@ export default function CreateProfileExample() {
 
   return (
     <Box sx={{ maxWidth: 800, margin: "0 auto", py: 4 }}>
-      <Typography color="text.primary" variant="h4" fontWeight={700} mb={1}>
+      <Typography
+        variant="h4"
+        sx={{
+          color: "text.primary",
+          fontWeight: 700,
+          mb: 1
+        }}>
         Create User Profile
       </Typography>
-      <Typography color="text.secondary" mb={4}>
+      <Typography
+        sx={{
+          color: "text.secondary",
+          mb: 4
+        }}>
         Enter the details for the new team member.
       </Typography>
 
       <Sheet variant="sm" sx={{ p: 4, borderRadius: 2 }}>
         <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          gap={1.5}
-          mb={4}
-        >
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 1.5,
+            mb: 4
+          }}>
           <Box sx={{ position: "relative", display: "inline-block" }}>
             <Avatar
               type="image"
@@ -122,7 +133,9 @@ export default function CreateProfileExample() {
               Remove Photo
             </Button>
           ) : (
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" sx={{
+              color: "text.secondary"
+            }}>
               Click avatar or camera icon to upload photo
             </Typography>
           )}
@@ -183,10 +196,11 @@ export default function CreateProfileExample() {
           <Box>
             <Typography
               variant="subtitle2"
-              color="text.primary"
-              fontWeight={600}
-              mb={1}
-            >
+              sx={{
+                color: "text.primary",
+                fontWeight: 600,
+                mb: 1
+              }}>
               Core Skills
             </Typography>
             <CheckboxGroup
@@ -203,7 +217,13 @@ export default function CreateProfileExample() {
             />
           </Box>
 
-          <Box display="flex" justifyContent="flex-end" gap={2} mt={2}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: 2,
+              mt: 2
+            }}>
             <Button variant="outlined" severity="info">
               Cancel
             </Button>

@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
-import { ComponentHeader } from "@docs/ComponentHeader";
-import { ComponentVariants } from "@docs/ComponentVariants";
 import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentProps } from "@docs/ComponentProps";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Progress } from "vortex-ui";
 
 const progressPropsList = [
@@ -174,7 +174,11 @@ function Example() {
 }`}
       />
 
-      <Box mt={6}>
+      <Box
+        sx={{
+          mt: 6,
+        }}
+      >
         <ComponentProps propsList={progressPropsList} title="Progress Props" />
       </Box>
     </Box>

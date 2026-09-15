@@ -117,7 +117,12 @@ export const HistoryItem = ({
             mb: 0.4,
           }}
         >
-          <Typography fontSize={14} fontWeight={500} color="text.primary">
+          <Typography
+            sx={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: "text.primary"
+            }}>
             {item.title}
           </Typography>
           {item.tag && (
@@ -142,7 +147,12 @@ export const HistoryItem = ({
                   }}
                 />
               )}
-              <Typography fontSize={12} fontWeight={500} color="text.secondary">
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "text.secondary"
+                }}>
                 {item.tag}
               </Typography>
             </Box>
@@ -151,7 +161,12 @@ export const HistoryItem = ({
 
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mb: 0.5 }}>
           {item.amount && (
-            <Typography fontSize={14} fontWeight={500} color="text.primary">
+            <Typography
+              sx={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: "text.primary"
+              }}>
               {item.amount}
             </Typography>
           )}
@@ -178,10 +193,11 @@ export const HistoryItem = ({
               >
                 <CalIcon />
                 <Typography
-                  fontSize={11}
-                  fontWeight={500}
-                  color="text.secondary"
-                >
+                  sx={{
+                    fontSize: 11,
+                    fontWeight: 500,
+                    color: "text.secondary"
+                  }}>
                   {item.date}
                 </Typography>
               </Box>
@@ -200,18 +216,29 @@ export const HistoryItem = ({
               >
                 <ClkIcon />
                 <Typography
-                  fontSize={11}
-                  fontWeight={500}
-                  color="text.secondary"
-                >
+                  sx={{
+                    fontSize: 11,
+                    fontWeight: 500,
+                    color: "text.secondary"
+                  }}>
                   {item.time}
                 </Typography>
               </Box>
             )}
             {item.createdBy && (
-              <Typography fontSize={12} color="text.secondary" fontWeight={400}>
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  color: "text.secondary",
+                  fontWeight: 400
+                }}>
                 Created by{" "}
-                <Box component="span" fontWeight={500} color="text.primary">
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: 500,
+                    color: "text.primary"
+                  }}>
                   {item.createdBy}
                 </Box>
               </Typography>
@@ -220,7 +247,12 @@ export const HistoryItem = ({
         </Box>
 
         {item.notes && (
-          <Typography fontSize={13} color="text.secondary" fontWeight={400}>
+          <Typography
+            sx={{
+              fontSize: 13,
+              color: "text.secondary",
+              fontWeight: 400
+            }}>
             Notes: {item.notes}
           </Typography>
         )}
@@ -289,7 +321,12 @@ export const HorizontalHistoryItem = ({
             mb: 0.4,
           }}
         >
-          <Typography fontSize={14} fontWeight={500} color="text.primary">
+          <Typography
+            sx={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: "text.primary"
+            }}>
             {item.title}
           </Typography>
           {item.tag && (
@@ -314,7 +351,12 @@ export const HorizontalHistoryItem = ({
                   }}
                 />
               )}
-              <Typography fontSize={12} fontWeight={500} color="text.secondary">
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "text.secondary"
+                }}>
                 {item.tag}
               </Typography>
             </Box>
@@ -323,7 +365,12 @@ export const HorizontalHistoryItem = ({
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
           {item.amount && (
-            <Typography fontSize={14} fontWeight={500} color="text.primary">
+            <Typography
+              sx={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: "text.primary"
+              }}>
               {item.amount}
             </Typography>
           )}
@@ -349,10 +396,11 @@ export const HorizontalHistoryItem = ({
               >
                 <CalIcon />
                 <Typography
-                  fontSize={11}
-                  fontWeight={500}
-                  color="text.secondary"
-                >
+                  sx={{
+                    fontSize: 11,
+                    fontWeight: 500,
+                    color: "text.secondary"
+                  }}>
                   {item.date}
                 </Typography>
               </Box>
@@ -371,10 +419,11 @@ export const HorizontalHistoryItem = ({
               >
                 <ClkIcon />
                 <Typography
-                  fontSize={11}
-                  fontWeight={500}
-                  color="text.secondary"
-                >
+                  sx={{
+                    fontSize: 11,
+                    fontWeight: 500,
+                    color: "text.secondary"
+                  }}>
                   {item.time}
                 </Typography>
               </Box>
@@ -384,13 +433,19 @@ export const HorizontalHistoryItem = ({
 
         {item.createdBy && (
           <Typography
-            fontSize={12}
-            color="text.secondary"
-            fontWeight={400}
-            mb={0.5}
-          >
+            sx={{
+              fontSize: 12,
+              color: "text.secondary",
+              fontWeight: 400,
+              mb: 0.5
+            }}>
             Created by{" "}
-            <Box component="span" fontWeight={500} color="text.primary">
+            <Box
+              component="span"
+              sx={{
+                fontWeight: 500,
+                color: "text.primary"
+              }}>
               {item.createdBy}
             </Box>
           </Typography>
@@ -398,11 +453,12 @@ export const HorizontalHistoryItem = ({
 
         {item.notes && (
           <Typography
-            fontSize={13}
-            color="text.secondary"
-            fontWeight={400}
-            sx={{ mt: 0.5 }}
-          >
+            sx={{
+              fontSize: 13,
+              color: "text.secondary",
+              fontWeight: 400,
+              mt: 0.5
+            }}>
             Notes: {item.notes}
           </Typography>
         )}

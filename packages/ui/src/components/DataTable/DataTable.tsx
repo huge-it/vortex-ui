@@ -103,7 +103,12 @@ const TableNoData = ({
         }}
       >
         <NoDataIcon sx={{ fontSize: 60, mb: 1, color: "text.secondary" }} />
-        <Typography variant="body1" color="text.secondary" fontWeight={500}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            fontWeight: 500
+          }}>
           {message || "No Data Available"}
         </Typography>
       </Box>
@@ -506,7 +511,12 @@ export function FreezeColumnsControl({
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
       <LockOutlined sx={{ fontSize: 16, color: "primary.main" }} />
-      <Typography fontSize="13px" color="text.primary" fontWeight={500}>
+      <Typography
+        sx={{
+          fontSize: "13px",
+          color: "text.primary",
+          fontWeight: 500
+        }}>
         Freeze:
       </Typography>
       <ButtonGroup size="small" variant="outlined">

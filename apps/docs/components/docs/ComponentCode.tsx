@@ -53,9 +53,12 @@ export function ComponentCode({ title, code }: ComponentCodeProps) {
       {title && (
         <Typography
           variant="h5"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 2,
+            fontSize: "1.25rem"
+          }}>
           {title}
         </Typography>
       )}

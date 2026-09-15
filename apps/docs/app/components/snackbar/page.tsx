@@ -1,20 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Stack, Typography, Divider } from "@mui/material";
-import { ComponentHeader } from "@docs/ComponentHeader";
-import { ComponentPreview } from "@docs/ComponentPreview";
 import { ComponentCode } from "@docs/ComponentCode";
-import { ComponentProps } from "@docs/ComponentProps";
+import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentInstallation } from "@docs/ComponentInstallation";
-import {
-  Snackbar,
-  Select,
-  TextField,
-  ToggleSwitch,
-  Button,
-  Grid,
-} from "vortex-ui";
+import { ComponentPreview } from "@docs/ComponentPreview";
+import { ComponentProps } from "@docs/ComponentProps";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { Button, Grid, Select, Snackbar, ToggleSwitch } from "vortex-ui";
 
 const snackbarPropsList = [
   {
@@ -202,13 +195,22 @@ export default function SnackbarDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Interactive Playground
           </Typography>
           <ComponentPreview>
-            <Stack spacing={3} width={"100%"}>
+            <Stack
+              spacing={3}
+              sx={{
+                width: "100%",
+              }}
+            >
               <Grid container spacing={2} alignItems="center" columns={5}>
                 <Grid size={1}>
                   <Select
@@ -305,8 +307,12 @@ export default function SnackbarDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Basic Usage
           </Typography>
@@ -328,8 +334,12 @@ export default function SnackbarDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Severities & Variants
           </Typography>
@@ -339,7 +349,13 @@ export default function SnackbarDocs() {
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
                   Filled Variant
                 </Typography>
-                <Stack direction="row" spacing={2} flexWrap="wrap">
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    flexWrap: "wrap",
+                  }}
+                >
                   <Button
                     variant="filled"
                     severity="success"
@@ -374,7 +390,13 @@ export default function SnackbarDocs() {
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
                   Light Variant
                 </Typography>
-                <Stack direction="row" spacing={2} flexWrap="wrap">
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    flexWrap: "wrap",
+                  }}
+                >
                   <Button
                     variant="outlined"
                     severity="success"
@@ -422,8 +444,12 @@ export default function SnackbarDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             With Title and Custom Actions
           </Typography>
@@ -450,8 +476,12 @@ export default function SnackbarDocs() {
         <Box>
           <Typography
             variant="h5"
-            color="text.secondary"
-            sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+            sx={{
+              color: "text.secondary",
+              fontWeight: 600,
+              mb: 2,
+              fontSize: "1.25rem",
+            }}
           >
             Cookie Banner Variant
           </Typography>

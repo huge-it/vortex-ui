@@ -14,7 +14,12 @@ import {
 export default function ViewProfileExample() {
   return (
     <Box sx={{ maxWidth: 900, margin: "0 auto", py: 4 }}>
-      <Box display="flex" justifyContent="flex-end" mb={2}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          mb: 2
+        }}>
         <Button variant="outlined">Edit Profile</Button>
       </Box>
 
@@ -28,34 +33,66 @@ export default function ViewProfileExample() {
               src="/static/images/avatar/2.jpg"
               sx={{ width: 120, height: 120, margin: "0 auto", mb: 2 }}
             />
-            <Typography variant="h5" color="text.primary" fontWeight={700}>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "text.primary",
+                fontWeight: 700
+              }}>
               Jane Smith
             </Typography>
-            <Typography color="primary.main" fontWeight={500} mb={3}>
+            <Typography
+              sx={{
+                color: "primary.main",
+                fontWeight: 500,
+                mb: 3
+              }}>
               Senior Software Engineer
             </Typography>
 
             <Box
-              display="flex"
-              flexDirection="column"
-              gap={1.5}
-              alignItems="flex-start"
-            >
-              <Box display="flex" gap={1.5} alignItems="center">
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 1.5,
+                alignItems: "flex-start"
+              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1.5,
+                  alignItems: "center"
+                }}>
                 <Email color="action" fontSize="small" />
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{
+                  color: "text.secondary"
+                }}>
                   jane.smith@example.com
                 </Typography>
               </Box>
-              <Box display="flex" gap={1.5} alignItems="center">
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1.5,
+                  alignItems: "center"
+                }}>
                 <Phone color="action" fontSize="small" />
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{
+                  color: "text.secondary"
+                }}>
                   +1 (555) 123-4567
                 </Typography>
               </Box>
-              <Box display="flex" gap={1.5} alignItems="center">
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1.5,
+                  alignItems: "center"
+                }}>
                 <LocationOn color="action" fontSize="small" />
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{
+                  color: "text.secondary"
+                }}>
                   San Francisco, CA
                 </Typography>
               </Box>
@@ -63,7 +100,12 @@ export default function ViewProfileExample() {
 
             <Divider sx={{ my: 3 }} />
 
-            <Box display="flex" justifyContent="center" gap={2}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 2
+              }}>
               <LinkedIn
                 color="action"
                 sx={{ cursor: "pointer", "&:hover": { color: "primary.main" } }}
@@ -80,19 +122,24 @@ export default function ViewProfileExample() {
           <Sheet variant="sm" sx={{ p: 4, borderRadius: 2, mb: 4 }}>
             <Typography
               variant="h6"
-              color="text.primary"
-              fontWeight={600}
-              mb={2}
-            >
+              sx={{
+                color: "text.primary",
+                fontWeight: 600,
+                mb: 2
+              }}>
               About
             </Typography>
-            <Typography color="text.secondary" paragraph>
+            <Typography paragraph sx={{
+              color: "text.secondary"
+            }}>
               Passionate software engineer with over 8 years of experience in
               building scalable web applications. Specializes in React, Next.js,
               and Node.js ecosystems. Strong advocate for clean code,
               accessibility, and user-centric design.
             </Typography>
-            <Typography color="text.secondary">
+            <Typography sx={{
+              color: "text.secondary"
+            }}>
               Previously worked at TechNova and CloudScale, leading frontend
               teams to deliver high-performance dashboards and e-commerce
               platforms.
@@ -102,13 +149,19 @@ export default function ViewProfileExample() {
           <Sheet variant="sm" sx={{ p: 4, borderRadius: 2 }}>
             <Typography
               variant="h6"
-              color="text.primary"
-              fontWeight={600}
-              mb={3}
-            >
+              sx={{
+                color: "text.primary",
+                fontWeight: 600,
+                mb: 3
+              }}>
               Skills
             </Typography>
-            <Box display="flex" flexWrap="wrap" gap={1}>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 1
+              }}>
               <Chip label="React" color="primary" variant="outlined" />
               <Chip label="Next.js" color="primary" variant="outlined" />
               <Chip label="TypeScript" color="primary" variant="outlined" />

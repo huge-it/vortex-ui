@@ -18,38 +18,48 @@ export function ComponentVariants({
   variants,
 }: ComponentVariantsProps) {
   return (
-    <Box display="flex" flexDirection="column" gap={2} mb={4}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        mb: 4
+      }}>
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 1, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 1,
+          fontSize: "1.25rem"
+        }}>
         {title}
       </Typography>
       {description && (
         <Typography
           variant="body2"
-          color="text.secondary"
-          sx={{ mb: 2, mt: -1 }}
-        >
+          sx={{
+            color: "text.secondary",
+            mb: 2,
+            mt: -1
+          }}>
           {description}
         </Typography>
       )}
       <Box
         className="toc-ignore"
-        display="flex"
-        gap={3}
-        p={2}
-        flexDirection={direction}
-        flexWrap={direction === "row" ? "wrap" : "nowrap"}
-        alignItems={direction === "row" ? "center" : "stretch"}
         sx={{
+          display: "flex",
+          gap: 3,
+          p: 2,
+          flexDirection: direction,
+          flexWrap: direction === "row" ? "wrap" : "nowrap",
+          alignItems: direction === "row" ? "center" : "stretch",
           border: "1px solid",
           borderColor: "divider",
           borderRadius: "8px",
-          backgroundColor: "background.paper",
-        }}
-      >
+          backgroundColor: "background.paper"
+        }}>
         {variants.map((v, index) => (
           <React.Fragment key={v.name}>
             {index > 0 && (
@@ -58,12 +68,18 @@ export function ComponentVariants({
                 flexItem 
               />
             )}
-            <Box display="flex" flexDirection="column" gap={1}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 1
+              }}>
               <Typography
                 variant="caption"
-                color="text.secondary"
-                sx={{ fontWeight: 500 }}
-              >
+                sx={{
+                  color: "text.secondary",
+                  fontWeight: 500
+                }}>
                 {v.name}
               </Typography>
               <Box

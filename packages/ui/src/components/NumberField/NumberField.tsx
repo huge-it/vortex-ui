@@ -262,16 +262,17 @@ export function NumberField({
 
   return (
     <Box
-      display="flex"
-      alignItems="stretch"
-      width="fit-content"
       sx={{
-        width: 1,
+        display: "flex",
+        alignItems: "stretch",
+        width: "fit-content",
+
         "&:focus-within .arrow-container": {
           borderTopColor: (theme) => theme.palette.primary.main,
           borderRightColor: (theme) => theme.palette.primary.main,
           borderBottomColor: (theme) => theme.palette.primary.main,
         },
+
         ...sx,
       }}
     >

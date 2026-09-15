@@ -178,9 +178,9 @@ export const Snackbar: React.FC<SnackbarProps> = ({
 
   const SlideTransition = useMemo(
     () =>
-      function Transition(props: SlideProps) {
+      (function Transition(props: SlideProps) {
         return <Slide {...props} direction={slideDirection} />;
-      },
+      }),
     [slideDirection],
   );
 
@@ -216,7 +216,9 @@ export const Snackbar: React.FC<SnackbarProps> = ({
           onMouseLeave={handleMouseLeave}
         >
           <Stack spacing={2.5}>
-            <Stack direction="row" spacing={2} alignItems="flex-start">
+            <Stack direction="row" spacing={2} sx={{
+              alignItems: "flex-start"
+            }}>
               <Box sx={{ mt: 0.5, color: theme.palette.primary.main }}>
                 <svg
                   width="28"
@@ -233,14 +235,20 @@ export const Snackbar: React.FC<SnackbarProps> = ({
                 </svg>
               </Box>
               <Stack spacing={0.5}>
-                <Typography variant="subtitle2" fontWeight={600} fontSize={16}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: 16
+                  }}>
                   {title || "Cookie preferences"}
                 </Typography>
                 <Typography
                   variant="body2"
-                  color="text.secondary"
-                  lineHeight={1.5}
-                >
+                  sx={{
+                    color: "text.secondary",
+                    lineHeight: 1.5
+                  }}>
                   {message}
                 </Typography>
               </Stack>

@@ -122,12 +122,13 @@ export const RangeSlider = ({
       {label && (
         <Typography
           variant="caption"
-          fontSize={13}
-          fontWeight={400}
-          color="text.secondary"
-          mb={1}
-          display="block"
-        >
+          sx={{
+            fontSize: 13,
+            fontWeight: 400,
+            color: "text.secondary",
+            mb: 1,
+            display: "block"
+          }}>
           {label}
         </Typography>
       )}

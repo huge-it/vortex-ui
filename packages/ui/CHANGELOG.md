@@ -2,6 +2,19 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.12] - 2026-09-15
+
+### Changed
+
+- **Theme**: Enabled CSS Variables in the MUI theme configuration (`cssVariables: true`) to leverage MUI v6 performance improvements.
+- **Dependencies**: Verified and updated component compatibility with MUI v6 (e.g. standardizing on `Grid2`).
+
+### Fixed
+
+- **NumberField**: Fixed a TypeScript compilation error by removing a duplicate `width` property in the `sx` prop.
+
+---
+
 ## [0.1.11] - 2026-09-07
 
 ### Added

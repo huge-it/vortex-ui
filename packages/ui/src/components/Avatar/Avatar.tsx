@@ -255,7 +255,9 @@ export const Avatar = ({
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <Stack direction="row" spacing={1} justifyContent="flex-end">
+            <Stack direction="row" spacing={1} sx={{
+              justifyContent: "flex-end"
+            }}>
               <Button size="sm" variant="outlined" onClick={handleClosePopover}>
                 Cancel
               </Button>

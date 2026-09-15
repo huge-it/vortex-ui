@@ -7,6 +7,24 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.12",
+    date: "September 15, 2026",
+    changes: [
+      {
+        type: "changed",
+        description: "Theme: Enabled CSS Variables in the MUI theme configuration to leverage MUI v6 performance improvements.",
+      },
+      {
+        type: "changed",
+        description: "Dependencies: Verified and updated component compatibility with MUI v6.",
+      },
+      {
+        type: "fixed",
+        description: "NumberField: Fixed a TypeScript compilation error by removing a duplicate width property in the sx prop.",
+      },
+    ],
+  },
+  {
     version: "v0.1.11",
     date: "September 7, 2026",
     changes: [
@@ -343,19 +361,25 @@ export default function ChangelogPage() {
       <Box sx={{ flex: 1, minWidth: 0 }}>
         <Stack
           direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mb: 4 }}
-        >
+          sx={{
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 4
+          }}>
           <Box>
             <Typography
               variant="h1"
-              color="text.primary"
-              sx={{ fontWeight: 800, fontSize: "2.5rem", mb: 1 }}
-            >
+              sx={{
+                color: "text.primary",
+                fontWeight: 800,
+                fontSize: "2.5rem",
+                mb: 1
+              }}>
               Changelog
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body1" sx={{
+              color: "text.secondary"
+            }}>
               All notable changes to VortexUI will be documented here.
             </Typography>
           </Box>
@@ -371,22 +395,26 @@ export default function ChangelogPage() {
             <Box key={release.version} id={release.version}>
               <Stack
                 direction="row"
-                alignItems="baseline"
                 spacing={2}
-                sx={{ mb: 3 }}
-              >
+                sx={{
+                  alignItems: "baseline",
+                  mb: 3
+                }}>
                 <Typography
                   variant="h2"
-                  color="text.primary"
-                  sx={{ fontWeight: 700, fontSize: "1.75rem" }}
-                >
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 700,
+                    fontSize: "1.75rem"
+                  }}>
                   {release.version}
                 </Typography>
                 <Typography
                   variant="body2"
-                  color="text.secondary"
-                  sx={{ fontWeight: 500 }}
-                >
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 500
+                  }}>
                   {release.date}
                 </Typography>
               </Stack>
@@ -399,7 +427,9 @@ export default function ChangelogPage() {
                       key={idx}
                       direction="row"
                       spacing={2}
-                      alignItems="flex-start"
+                      sx={{
+                        alignItems: "flex-start"
+                      }}
                     >
                       <Chip
                         label={change.type}
@@ -468,7 +498,9 @@ export default function ChangelogPage() {
         ].map(({ type, label }) => {
           const colors = getChipColor(type);
           return (
-            <Stack key={type} direction="row" alignItems="center" spacing={1}>
+            <Stack key={type} direction="row" spacing={1} sx={{
+              alignItems: "center"
+            }}>
               <Chip
                 label={type}
                 size="small"

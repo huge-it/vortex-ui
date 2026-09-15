@@ -111,11 +111,12 @@ export const ToggleSwitch = ({
       {label && (
         <Typography
           variant="body2"
-          fontWeight={400}
-          fontSize={fontSize}
-          color="text.primary"
           {...labelProps}
-        >
+          sx={[{
+            fontWeight: 400,
+            fontSize: fontSize,
+            color: "text.primary"
+          }, ...(Array.isArray(labelProps.sx) ? labelProps.sx : [labelProps.sx])]}>
           {label}
         </Typography>
       )}

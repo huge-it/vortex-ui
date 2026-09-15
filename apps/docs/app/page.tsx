@@ -32,20 +32,21 @@ export default function Page() {
         </Typography>
         <Typography
           variant="body1"
-          color="text.secondary"
           sx={{
+            color: "text.secondary",
             fontSize: "1.25rem",
             lineHeight: 1.6,
             maxWidth: "800px",
-            mb: 4,
-          }}
-        >
+            mb: 4
+          }}>
           VORTEX is Huge IT Solution&apos;s official framework for standardizing
           code architecture, UI/UX design, development practices, and review
           protocols across all teams and projects. Every line of code follows
           scalable, reviewable, and maintainable patterns.
         </Typography>
-        <Stack direction="row" gap={2}>
+        <Stack direction="row" sx={{
+          gap: 2
+        }}>
           <Button
             variant="filled"
             size="lg"
@@ -71,18 +72,22 @@ export default function Page() {
       {/* Setup Guide */}
       <Box sx={{ mb: 6 }}>
         <Typography
-          color="text.primary"
           variant="h2"
           sx={{
+            color: "text.primary",
             fontWeight: 700,
             mb: 2,
             fontSize: "2rem",
-            letterSpacing: "-0.02em",
-          }}
-        >
+            letterSpacing: "-0.02em"
+          }}>
           VortexUI setup for Next.js
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 3
+          }}>
           This guide walks you through creating a brand new Next.js application
           from scratch and installing the <code>vortex-ui</code> library
           directly from GitHub.
@@ -95,25 +100,41 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           1. Create a new Next.js App
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           First, generate a new Next.js application. Open your terminal and run:
         </Typography>
         <ComponentCode code={`npx create-next-app@latest my-vortex-app`} />
         <Typography
           variant="body2"
-          color="text.secondary"
-          sx={{ mt: 1, mb: 3, fontStyle: "italic" }}
-        >
+          sx={{
+            color: "text.secondary",
+            mt: 1,
+            mb: 3,
+            fontStyle: "italic"
+          }}>
           *During setup, it is recommended to say <strong>Yes</strong> to
           TypeScript, ESLint, Tailwind CSS, and the App Router.*
         </Typography>
 
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           Navigate into your new project:
         </Typography>
         <ComponentCode code={`cd my-vortex-app`} />
@@ -122,12 +143,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           2. Add the Repository as a Git Submodule
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           <strong>A. Add the Submodule:</strong> Bring the{" "}
           <code>vortex-ui</code> code into your project by adding it as a Git
           submodule. We recommend placing it inside an <code>external</code>{" "}
@@ -139,9 +168,11 @@ export default function Page() {
 
         <Typography
           variant="body1"
-          color="text.secondary"
-          sx={{ mt: 3, mb: 2 }}
-        >
+          sx={{
+            color: "text.secondary",
+            mt: 3,
+            mb: 2
+          }}>
           <strong>B. Initialize and Fetch:</strong> If you are cloning a
           repository that already has the submodule configured, or just want to
           ensure it`&apos;`s fully initialized locally, run:
@@ -152,12 +183,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           3. Configure Workspaces & Link
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           Tell your project`&apos;`s package manager to treat the submodule as a
           local package. Update your <code>package.json</code> to include the
           workspaces array:
@@ -167,9 +206,11 @@ export default function Page() {
         />
         <Typography
           variant="body1"
-          color="text.secondary"
-          sx={{ mt: 2, mb: 2 }}
-        >
+          sx={{
+            color: "text.secondary",
+            mt: 2,
+            mb: 2
+          }}>
           Then, run the install command to link the workspace locally:
         </Typography>
         <ComponentCode code={`npm install`} />
@@ -178,12 +219,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           4. Install Required Peer Dependencies
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           <code>vortex-ui</code> relies on React and Material UI to function,
           but it does not install them automatically. You must install these
           peer dependencies directly:
@@ -196,12 +245,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           5. Set up the Provider
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           <code>vortex-ui</code> requires a UI provider at the root of your
           application to supply the necessary theme configuration to MUI
           components. Open <code>src/app/layout.tsx</code> and wrap the{" "}
@@ -215,12 +272,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           6. Add a Button Component
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           Now you can import and use components anywhere in your application!
           Let`&apos;`s update the main page to show a button. Open{" "}
           <code>src/app/page.tsx</code> and replace its contents with:
@@ -233,12 +298,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           7. Run the App
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           Start your development server to see it in action!
         </Typography>
         <ComponentCode code={`npm run dev`} />
@@ -247,12 +320,20 @@ export default function Page() {
 
         <Typography
           variant="h3"
-          color="text.secondary"
-          sx={{ fontWeight: 600, mb: 1.5, fontSize: "1.5rem" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontWeight: 600,
+            mb: 1.5,
+            fontSize: "1.5rem"
+          }}>
           8. Updating Vortex-UI
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            mb: 2
+          }}>
           To pull the latest updates (bug fixes, new components, etc.) from the
           repository, update your submodule to the latest commit:
         </Typography>
@@ -274,9 +355,10 @@ export default function Page() {
 
         <Typography
           variant="body2"
-          color="text.secondary"
-          sx={{ fontStyle: "italic" }}
-        >
+          sx={{
+            color: "text.secondary",
+            fontStyle: "italic"
+          }}>
           *Note: After updating, always restart your development server. If
           changes don`&apos;`t appear, try deleting your framework`&apos;`s
           cache (like the `.next` folder).*

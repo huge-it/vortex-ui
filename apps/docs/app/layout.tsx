@@ -40,9 +40,18 @@ export default async function RootLayout({
       <body>
         <AppRouterCacheProvider options={{ key: "vortexui", prepend: true }}>
           <VortexUIProvider disableCustomCache initialMode={themeMode}>
-            <Box display="flex" flexDirection="column" minHeight="100vh">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh"
+              }}>
               <Header />
-              <Box display="flex" flexGrow={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexGrow: 1
+                }}>
                 <Sidebar />
                 <Box
                   component="main"

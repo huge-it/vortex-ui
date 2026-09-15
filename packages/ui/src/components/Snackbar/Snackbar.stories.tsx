@@ -111,9 +111,16 @@ const SnackbarInteractiveWrapper = () => {
 
       <Divider sx={{ mb: 3 }} />
 
-      <Box display="flex" flexWrap="wrap" gap={4}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 4
+        }}>
         <Box>
-          <Typography variant="h6" mb={1}>Filled Variants</Typography>
+          <Typography variant="h6" sx={{
+            mb: 1
+          }}>Filled Variants</Typography>
           <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
             <Button variant="contained" color="success" onClick={() => showToast("success", "This is a success filled toast!", "filled", { title: "" })}>Success</Button>
             <Button variant="contained" color="info" onClick={() => showToast("info", "This is an info filled toast!", "filled", { title: "" })}>Info</Button>
@@ -123,7 +130,9 @@ const SnackbarInteractiveWrapper = () => {
         </Box>
 
         <Box>
-          <Typography variant="h6" mb={1}>Light Variants</Typography>
+          <Typography variant="h6" sx={{
+            mb: 1
+          }}>Light Variants</Typography>
           <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
             <Button variant="outlined" color="success" onClick={() => showToast("success", "This is a success light toast!", "light", { title: "" })}>Success</Button>
             <Button variant="outlined" color="info" onClick={() => showToast("info", "This is an info light toast!", "light", { title: "" })}>Info</Button>
@@ -133,7 +142,9 @@ const SnackbarInteractiveWrapper = () => {
         </Box>
 
         <Box>
-          <Typography variant="h6" mb={1}>Custom & Cookie</Typography>
+          <Typography variant="h6" sx={{
+            mb: 1
+          }}>Custom & Cookie</Typography>
           <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
             <Button variant="contained" sx={{ bgcolor: "#333" }} onClick={() => showToast(toast.severity, "This is a custom snackbar matching your settings!", "filled", { title: "Custom Snackbar" })}>
               Custom Snackbar

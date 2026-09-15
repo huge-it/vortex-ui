@@ -99,7 +99,11 @@ export default function ProjectListExample() {
               >
                 {item.supplier_name}
               </VortexLink>
-              <Typography fontSize="12px" color="text.secondary">
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                  color: "text.secondary"
+                }}>
                 {item.purchase_order_num}
               </Typography>
             </Box>
@@ -111,10 +115,16 @@ export default function ProjectListExample() {
         label: "Contact Details",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
           <Box>
-            <Typography fontSize="13px">
+            <Typography sx={{
+              fontSize: "13px"
+            }}>
               {item.supplier_contacts[0]?.contact}
             </Typography>
-            <Typography fontSize="12px" color="text.secondary">
+            <Typography
+              sx={{
+                fontSize: "12px",
+                color: "text.secondary"
+              }}>
               {item.supplier_contacts[0]?.email}
             </Typography>
           </Box>
@@ -129,10 +139,18 @@ export default function ProjectListExample() {
         })),
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
           <Box>
-            <Typography fontSize="13px" fontWeight={500}>
+            <Typography
+              sx={{
+                fontSize: "13px",
+                fontWeight: 500
+              }}>
               {item.supplier_name}
             </Typography>
-            <Typography fontSize="12px" color="text.secondary">
+            <Typography
+              sx={{
+                fontSize: "12px",
+                color: "text.secondary"
+              }}>
               {item.supplier_state}
             </Typography>
           </Box>
@@ -144,7 +162,11 @@ export default function ProjectListExample() {
         value: "grand_total",
         align: "right" as const,
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" fontWeight={600}>
+          <Typography
+            sx={{
+              fontSize: "13px",
+              fontWeight: 600
+            }}>
             {item.grand_total}
           </Typography>
         ),
@@ -153,35 +175,47 @@ export default function ProjectListExample() {
         id: 5,
         label: "Close Date",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">{item.formatted_created_date}</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>{item.formatted_created_date}</Typography>
         ),
       },
       {
         id: 6,
         label: "Source Info",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">{item.supplier_state}</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>{item.supplier_state}</Typography>
         ),
       },
       {
         id: 7,
         label: "Notes",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">{item.notes}</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>{item.notes}</Typography>
         ),
       },
       {
         id: 8,
         label: "Priority",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">High</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>High</Typography>
         ),
       },
       {
         id: 9,
         label: "Stage",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" color="primary.main">
+          <Typography
+            sx={{
+              fontSize: "13px",
+              color: "primary.main"
+            }}>
             Active
           </Typography>
         ),
@@ -197,7 +231,11 @@ export default function ProjectListExample() {
         label: "#",
         value: "po_num",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" color="text.secondary">
+          <Typography
+            sx={{
+              fontSize: "13px",
+              color: "text.secondary"
+            }}>
             {item.purchase_order_num}
           </Typography>
         ),
@@ -219,7 +257,9 @@ export default function ProjectListExample() {
         id: "21",
         label: "Contact No.",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">
+          <Typography sx={{
+            fontSize: "13px"
+          }}>
             {item.supplier_contacts[0]?.contact}
           </Typography>
         ),
@@ -228,7 +268,9 @@ export default function ProjectListExample() {
         id: "22",
         label: "Email",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">
+          <Typography sx={{
+            fontSize: "13px"
+          }}>
             {item.supplier_contacts[0]?.email}
           </Typography>
         ),
@@ -237,7 +279,11 @@ export default function ProjectListExample() {
         id: "3.1",
         label: "Company",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" fontWeight={500}>
+          <Typography
+            sx={{
+              fontSize: "13px",
+              fontWeight: 500
+            }}>
             {item.supplier_name}
           </Typography>
         ),
@@ -246,7 +292,11 @@ export default function ProjectListExample() {
         id: "3.2",
         label: "Industry",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" color="text.secondary">
+          <Typography
+            sx={{
+              fontSize: "13px",
+              color: "text.secondary"
+            }}>
             {item.supplier_state}
           </Typography>
         ),
@@ -257,7 +307,11 @@ export default function ProjectListExample() {
         value: "grand_total",
         align: "right" as const,
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" fontWeight={600}>
+          <Typography
+            sx={{
+              fontSize: "13px",
+              fontWeight: 600
+            }}>
             {item.grand_total}
           </Typography>
         ),
@@ -266,35 +320,47 @@ export default function ProjectListExample() {
         id: 5,
         label: "Close Date",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">{item.formatted_created_date}</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>{item.formatted_created_date}</Typography>
         ),
       },
       {
         id: 6,
         label: "Source Info",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">{item.supplier_state}</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>{item.supplier_state}</Typography>
         ),
       },
       {
         id: 7,
         label: "Notes",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">{item.notes}</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>{item.notes}</Typography>
         ),
       },
       {
         id: 8,
         label: "Priority",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px">High</Typography>
+          <Typography sx={{
+            fontSize: "13px"
+          }}>High</Typography>
         ),
       },
       {
         id: 9,
         label: "Stage",
         renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
-          <Typography fontSize="13px" color="primary.main">
+          <Typography
+            sx={{
+              fontSize: "13px",
+              color: "primary.main"
+            }}>
             Active
           </Typography>
         ),

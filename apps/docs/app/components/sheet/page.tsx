@@ -1,8 +1,7 @@
-import React from "react";
-import { Box, Typography, Alert } from "@mui/material";
+import { ComponentCode } from "@docs/ComponentCode";
 import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentVariants } from "@docs/ComponentVariants";
-import { ComponentCode } from "@docs/ComponentCode";
+import { Alert, Box, Typography } from "@mui/material";
 import { Sheet } from "vortex-ui";
 
 export default function SheetDocs() {

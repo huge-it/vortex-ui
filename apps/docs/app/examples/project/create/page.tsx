@@ -22,10 +22,20 @@ export default function CreateProjectExample() {
 
   return (
     <Box sx={{ maxWidth: 800, margin: "0 auto", py: 4 }}>
-      <Typography variant="h4" color="text.primary" fontWeight={700} mb={1}>
+      <Typography
+        variant="h4"
+        sx={{
+          color: "text.primary",
+          fontWeight: 700,
+          mb: 1
+        }}>
         Create Project
       </Typography>
-      <Typography color="text.secondary" mb={4}>
+      <Typography
+        sx={{
+          color: "text.secondary",
+          mb: 4
+        }}>
         Fill in the details below to create a new project.
       </Typography>
 
@@ -69,7 +79,9 @@ export default function CreateProjectExample() {
 
         <Divider />
 
-        <Typography variant="h6" fontWeight={600}>
+        <Typography variant="h6" sx={{
+          fontWeight: 600
+        }}>
           Timeline & Settings
         </Typography>
 
@@ -93,7 +105,9 @@ export default function CreateProjectExample() {
 
         <Divider />
 
-        <Typography variant="h6" fontWeight={600}>
+        <Typography variant="h6" sx={{
+          fontWeight: 600
+        }}>
           Resources
         </Typography>
 
@@ -108,7 +122,13 @@ export default function CreateProjectExample() {
           />
         </Box>
 
-        <Box display="flex" justifyContent="flex-end" gap={2} mt={2}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: 2,
+            mt: 2
+          }}>
           <Button variant="outlined" severity="info">
             Cancel
           </Button>

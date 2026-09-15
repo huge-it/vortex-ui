@@ -57,7 +57,12 @@ export function Header() {
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box display="flex" alignItems="center" gap={3}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 3
+          }}>
           <Typography
             variant="h6"
             component="div"
@@ -72,7 +77,12 @@ export function Header() {
           >
             VortexUI
           </Typography>
-          <Box display="flex" gap={3} ml={4}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 3,
+              ml: 4
+            }}>
             {NAV_LINKS.map((item) => {
               const isActive = mounted
                 ? item.matchPrefix
@@ -100,7 +110,12 @@ export function Header() {
             })}
           </Box>
         </Box>
-        <Box display="flex" alignItems="center" gap={2}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2
+          }}>
           <Search />
           <IconButton onClick={toggleColorMode} color="inherit">
             <LightbulbCircle />

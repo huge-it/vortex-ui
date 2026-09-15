@@ -28,7 +28,9 @@ export const Primary: Story = {
   render: (args) => (
     <Card {...args}>
       <Typography variant="h6">Card Title</Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body2" sx={{
+        color: "text.secondary"
+      }}>
         This is a standard card component with predefined shadow variants.
       </Typography>
     </Card>

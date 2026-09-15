@@ -22,23 +22,41 @@ export default function ViewProjectExample() {
   return (
     <Box sx={{ maxWidth: 900, margin: "0 auto", py: 4 }}>
       <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="flex-start"
-        mb={4}
-      >
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          mb: 4
+        }}>
         <Box>
-          <Box display="flex" alignItems="center" gap={1.5} mb={1}>
-            <Typography variant="h4" color="text.primary" fontWeight={700}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              mb: 1
+            }}>
+            <Typography
+              variant="h4"
+              sx={{
+                color: "text.primary",
+                fontWeight: 700
+              }}>
               E-Commerce Platform Redesign
             </Typography>
             <Chip label="In Progress" color="primary" size="small" />
           </Box>
-          <Typography color="text.secondary">
+          <Typography sx={{
+            color: "text.secondary"
+          }}>
             Project ID: #PRJ-8392 • Web Application
           </Typography>
         </Box>
-        <Box display="flex" gap={2}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2
+          }}>
           <Button variant="outlined">Edit Project</Button>
           <Button variant="filled">Complete</Button>
         </Box>
@@ -47,16 +65,25 @@ export default function ViewProjectExample() {
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
           <Paper variant="outlined" sx={{ p: 3, borderRadius: 2, mb: 4 }}>
-            <Typography variant="h6" fontWeight={600} mb={2}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                mb: 2
+              }}>
               Overview
             </Typography>
-            <Typography color="text.secondary" paragraph>
+            <Typography paragraph sx={{
+              color: "text.secondary"
+            }}>
               A complete overhaul of the existing e-commerce frontend to improve
               conversion rates and accessibility. The project includes migrating
               to a modern tech stack (Next.js), implementing a new design
               system, and integrating with a headless CMS.
             </Typography>
-            <Typography color="text.secondary">
+            <Typography sx={{
+              color: "text.secondary"
+            }}>
               Key objectives:
               <ul>
                 <li>Decrease page load time by 40%</li>
@@ -67,12 +94,27 @@ export default function ViewProjectExample() {
           </Paper>
 
           <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
-            <Typography variant="h6" fontWeight={600} mb={2}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                mb: 2
+              }}>
               Recent Activity
             </Typography>
-            <Box display="flex" flexDirection="column" gap={2}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2
+              }}>
               {[1, 2, 3].map((i) => (
-                <Box key={i} display="flex" gap={2}>
+                <Box
+                  key={i}
+                  sx={{
+                    display: "flex",
+                    gap: 2
+                  }}>
                   <Avatar
                     sx={{ width: 32, height: 32, bgcolor: "primary.main" }}
                   >
@@ -82,7 +124,9 @@ export default function ViewProjectExample() {
                     <Typography variant="body2">
                       <strong>Jane Doe</strong> uploaded new design assets.
                     </Typography>
-                    <Typography variant="caption" color="text.secondary">
+                    <Typography variant="caption" sx={{
+                      color: "text.secondary"
+                    }}>
                       2 hours ago
                     </Typography>
                   </Box>
@@ -94,14 +138,26 @@ export default function ViewProjectExample() {
 
         <Grid item xs={12} md={4}>
           <Paper variant="outlined" sx={{ p: 3, borderRadius: 2, mb: 4 }}>
-            <Typography variant="subtitle1" fontWeight={600} mb={2}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: 600,
+                mb: 2
+              }}>
               Details
             </Typography>
 
-            <Box display="flex" gap={1.5} mb={2}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1.5,
+                mb: 2
+              }}>
               <CalendarToday color="action" fontSize="small" />
               <Box>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{
+                  color: "text.secondary"
+                }}>
                   Timeline
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -110,10 +166,17 @@ export default function ViewProjectExample() {
               </Box>
             </Box>
 
-            <Box display="flex" gap={1.5} mb={2}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1.5,
+                mb: 2
+              }}>
               <FolderOpen color="action" fontSize="small" />
               <Box>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{
+                  color: "text.secondary"
+                }}>
                   Budget
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -124,7 +187,12 @@ export default function ViewProjectExample() {
 
             <Divider sx={{ my: 2 }} />
 
-            <Typography variant="subtitle2" fontWeight={600} mb={1}>
+            <Typography
+              variant="subtitle2"
+              sx={{
+                fontWeight: 600,
+                mb: 1
+              }}>
               Team
             </Typography>
             <AvatarGroup max={4} sx={{ justifyContent: "flex-end" }}>
@@ -140,12 +208,29 @@ export default function ViewProjectExample() {
           </Paper>
 
           <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
-            <Typography variant="subtitle1" fontWeight={600} mb={2}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: 600,
+                mb: 2
+              }}>
               Attachments
             </Typography>
-            <Box display="flex" flexDirection="column" gap={1.5}>
-              <Box display="flex" alignItems="center" gap={1}>
-                <LinkIcon color="primary" fontSize="small" />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 1.5
+              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1
+                }}>
+                <LinkIcon color="primary" sx={{
+                  fontSize: "small"
+                }} />
                 <Typography
                   variant="body2"
                   color="primary"
@@ -157,8 +242,15 @@ export default function ViewProjectExample() {
                   Architecture_Diagram.pdf
                 </Typography>
               </Box>
-              <Box display="flex" alignItems="center" gap={1}>
-                <LinkIcon color="primary" fontSize="small" />
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1
+                }}>
+                <LinkIcon color="primary" sx={{
+                  fontSize: "small"
+                }} />
                 <Typography
                   variant="body2"
                   color="primary"

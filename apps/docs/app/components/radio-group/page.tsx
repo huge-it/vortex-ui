@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Divider, Typography } from "@mui/material";
 import { ComponentCode } from "@comp/docs/ComponentCode";
+import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
 import { ComponentPreview } from "@comp/docs/ComponentPreview";
-import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentProps } from "@comp/docs/ComponentProps";
 import { ComponentStates } from "@comp/docs/ComponentStates";
 import { ComponentVariants } from "@comp/docs/ComponentVariants";
-import { RadioGroup, Radio } from "vortex-ui";
+import { Box, Divider, Typography } from "@mui/material";
+import { useState } from "react";
+import { Radio, RadioGroup } from "vortex-ui";
 
 const radioGroupPropsList = [
   {
@@ -91,8 +91,12 @@ export default function RadioGroupDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem",
+        }}
       >
         Preview
       </Typography>
@@ -160,7 +164,11 @@ export default function RadioGroupDocs() {
                   <Radio value="1" label="Opt 1" />
                   <Radio value="2" label="Opt 2" />
                 </RadioGroup>
-                <RadioGroup label="Vertical" orientation="vertical" defaultValue="2">
+                <RadioGroup
+                  label="Vertical"
+                  orientation="vertical"
+                  defaultValue="2"
+                >
                   <Radio value="1" label="Opt 1" />
                   <Radio value="2" label="Opt 2" />
                 </RadioGroup>

@@ -65,7 +65,12 @@ export default function BackdropDocs() {
           <Typography variant="h5" gutterBottom>
             Default Backdrop (Container-Bound)
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2
+            }}>
             Using the <code>absolute</code> prop traps the backdrop inside its
             parent container.
           </Typography>
@@ -84,7 +89,9 @@ export default function BackdropDocs() {
               bgcolor: "background.paper",
             }}
           >
-            <Typography color="text.secondary">
+            <Typography sx={{
+              color: "text.secondary"
+            }}>
               Default size (relative to container)
             </Typography>
             <Backdrop open={true} absolute />
@@ -95,7 +102,12 @@ export default function BackdropDocs() {
           <Typography variant="h5" gutterBottom>
             Custom Color
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2
+            }}>
             You can customize the color of the spinner using the{" "}
             <code>color</code> prop.
           </Typography>
@@ -114,7 +126,9 @@ export default function BackdropDocs() {
               bgcolor: "background.paper",
             }}
           >
-            <Typography color="text.secondary">Custom color spinner</Typography>
+            <Typography sx={{
+              color: "text.secondary"
+            }}>Custom color spinner</Typography>
             <Backdrop open={true} absolute color="#9c27b0" />
           </Box>
         </Box>
@@ -123,7 +137,12 @@ export default function BackdropDocs() {
           <Typography variant="h5" gutterBottom>
             Spinner Size Variants
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2
+            }}>
             You can customize the size of the loading spinner using the{" "}
             <code>size</code> prop.
           </Typography>
@@ -149,7 +168,9 @@ export default function BackdropDocs() {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 24px Spinner
               </Typography>
               <Backdrop open={true} absolute size={24} color="#e91e63" />
@@ -164,7 +185,9 @@ export default function BackdropDocs() {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 45px Spinner
               </Typography>
               <Backdrop open={true} absolute size={45} color="#4772FF" />
@@ -179,7 +202,9 @@ export default function BackdropDocs() {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 80px Spinner
               </Typography>
               <Backdrop open={true} absolute size={80} color="#4caf50" />

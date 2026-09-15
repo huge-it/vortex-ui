@@ -96,14 +96,23 @@ export default function StepperDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Preview
       </Typography>
       <ComponentPreview>
         <Stack>
-          <Box display={"flex"} gap={2} alignItems={"center"} mb={2}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              alignItems: "center",
+              mb: 2
+            }}>
             <ToggleSwitch
               checked={isVertical}
               onChange={(checked) => setIsVertical(checked)}

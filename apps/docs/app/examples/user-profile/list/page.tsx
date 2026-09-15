@@ -75,7 +75,12 @@ export default function ProfileListExample() {
       id: "name",
       label: "User",
       renderCell: (row: (typeof usersData)[0]) => (
-        <Box display="flex" alignItems="center" gap={1.5}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5
+          }}>
           <Avatar src={row.avatar} sx={{ width: 32, height: 32 }}>
             {row.name.charAt(0)}
           </Avatar>
@@ -90,9 +95,10 @@ export default function ProfileListExample() {
             </VortexLink>
             <Typography
               variant="caption"
-              color="text.secondary"
-              display="block"
-            >
+              sx={{
+                color: "text.secondary",
+                display: "block"
+              }}>
               {row.email}
             </Typography>
           </Box>
@@ -116,16 +122,25 @@ export default function ProfileListExample() {
   return (
     <Box sx={{ maxWidth: 1000, margin: "0 auto", py: 4 }}>
       <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="flex-end"
-        mb={4}
-      >
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          mb: 4
+        }}>
         <Box>
-          <Typography variant="h4" color="text.primary" fontWeight={700} mb={1}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "text.primary",
+              fontWeight: 700,
+              mb: 1
+            }}>
             Team Members
           </Typography>
-          <Typography color="text.secondary">
+          <Typography sx={{
+            color: "text.secondary"
+          }}>
             Manage your team directory, roles, and profiles.
           </Typography>
         </Box>

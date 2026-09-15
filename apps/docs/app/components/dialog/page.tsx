@@ -93,13 +93,21 @@ export default function DialogDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Preview
       </Typography>
       <ComponentPreview>
-        <Box display="flex" gap={2} flexWrap="wrap">
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexWrap: "wrap"
+          }}>
           <Button
             variant="outlined"
             onClick={() => {
@@ -191,9 +199,14 @@ export default function DialogDocs() {
                 }}
               >
                 <Typography
-                  color="text.primary"
-                  sx={{ fontWeight: 600, fontSize: 18, px: 3, pt: 3, pb: 1.5 }}
-                >
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 600,
+                    fontSize: 18,
+                    px: 3,
+                    pt: 3,
+                    pb: 1.5
+                  }}>
                   Dialog Footer Example
                 </Typography>
                 <Box sx={{ px: 3, pb: 2 }}>

@@ -97,9 +97,12 @@ export default function BreadcrumbsDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Basic Usage
       </Typography>
       <ComponentPreview>
@@ -111,12 +114,21 @@ export default function BreadcrumbsDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          mt: 4,
+          fontSize: "1.25rem"
+        }}>
         Separators
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         You can customize the separator by providing a <code>separator</code>{" "}
         prop (e.g., <code>/</code> or <code>-</code>).
       </Typography>
@@ -132,9 +144,13 @@ export default function BreadcrumbsDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          mt: 4,
+          fontSize: "1.25rem"
+        }}>
         With Icons
       </Typography>
       <ComponentPreview>
@@ -159,12 +175,21 @@ export default function BreadcrumbsDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          mt: 4,
+          fontSize: "1.25rem"
+        }}>
         Collapsed Breadcrumbs
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Use the <code>maxItems</code> prop to automatically collapse
         intermediate breadcrumbs when the total exceeds the limit.
       </Typography>
@@ -175,12 +200,21 @@ export default function BreadcrumbsDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          mt: 4,
+          fontSize: "1.25rem"
+        }}>
         Dynamic Next.js Example
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Below is an example of creating a custom dynamic breadcrumb wrapper
         using Next.js router.
       </Typography>

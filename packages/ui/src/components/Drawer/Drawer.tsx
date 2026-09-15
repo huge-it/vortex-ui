@@ -131,13 +131,18 @@ export const Drawer: React.FC<DrawerProps> = ({
               <Stack>
                 <Typography
                   variant="h6"
-                  color="text.primary"
-                  sx={{ fontWeight: 500, fontSize: "1.1rem", lineHeight: 1.2 }}
-                >
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 500,
+                    fontSize: "1.1rem",
+                    lineHeight: 1.2
+                  }}>
                   {type ? `${type} ${title}` : title}
                 </Typography>
                 {subtitle && (
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography variant="caption" sx={{
+                    color: "text.secondary"
+                  }}>
                     {subtitle}
                   </Typography>
                 )}

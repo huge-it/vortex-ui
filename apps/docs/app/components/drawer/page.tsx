@@ -99,7 +99,9 @@ export default function DrawerDocs() {
   const [showHeaderActions, setShowHeaderActions] = useState(true);
 
   return (
-    <Box mb={2}>
+    <Box sx={{
+      mb: 2
+    }}>
       <ComponentHeader
         title="Drawer"
         description={
@@ -112,9 +114,12 @@ export default function DrawerDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Preview
       </Typography>
 
@@ -160,15 +165,26 @@ export default function DrawerDocs() {
 
         <Box sx={{ display: "flex", justifyContent: "center", gap: 8 }}>
           <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            gap={1}
-          >
-            <Typography variant="body2" color="text.secondary" fontWeight={500}>
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1
+            }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "text.secondary",
+                fontWeight: 500
+              }}>
               Mode
             </Typography>
-            <Box display="flex" alignItems="center" gap={1.5}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5
+              }}>
               <Typography
                 variant="body2"
                 sx={{
@@ -201,15 +217,26 @@ export default function DrawerDocs() {
           </Box>
 
           <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            gap={1}
-          >
-            <Typography variant="body2" color="text.secondary" fontWeight={500}>
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1
+            }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "text.secondary",
+                fontWeight: 500
+              }}>
               Position
             </Typography>
-            <Box display="flex" alignItems="center" gap={1.5}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5
+              }}>
               <Typography
                 variant="body2"
                 sx={{
@@ -260,7 +287,9 @@ export default function DrawerDocs() {
               textAlign: "center",
             }}
           >
-            <Typography variant="subtitle2" color="text.secondary">
+            <Typography variant="subtitle2" sx={{
+              color: "text.secondary"
+            }}>
               Your Custom Content Goes Here
             </Typography>
           </Box>

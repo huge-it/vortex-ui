@@ -100,17 +100,27 @@ export default function AvatarDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem"
+        }}>
         Basic Usage (Letter Mode)
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         By default, the Avatar renders in letter mode, extracting the first
         character of the <code>name</code> prop.
       </Typography>
       <ComponentPreview>
-        <Stack direction="row" spacing={2} alignItems="center">
+        <Stack direction="row" spacing={2} sx={{
+          alignItems: "center"
+        }}>
           <Avatar name="Alice" variant="sm" />
           <Avatar name="Bob" variant="md" />
           <Avatar name="Charlie" variant="lg" />
@@ -127,17 +137,28 @@ export default function AvatarDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          mt: 4,
+          fontSize: "1.25rem"
+        }}>
         Image Mode
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Set <code>type=&ldquo;image&ldquo;</code> and provide a <code>src</code>
         . If the image fails to load, it will fallback to a default icon.
       </Typography>
       <ComponentPreview>
-        <Stack direction="row" spacing={2} alignItems="center">
+        <Stack direction="row" spacing={2} sx={{
+          alignItems: "center"
+        }}>
           <Avatar
             type="image"
             src="https://i.pravatar.cc/150?img=32"
@@ -165,30 +186,47 @@ export default function AvatarDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, mt: 4, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          mt: 4,
+          fontSize: "1.25rem"
+        }}>
         Editable Avatars
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Setting <code>editable=true</code> allows users to click the avatar to
         change it. In letter mode, it opens a popover to change the name. In
         image mode, it opens a file picker.
       </Typography>
       <ComponentPreview>
-        <Stack direction="row" spacing={4} alignItems="center">
-          <Stack spacing={1} alignItems="center">
+        <Stack direction="row" spacing={4} sx={{
+          alignItems: "center"
+        }}>
+          <Stack spacing={1} sx={{
+            alignItems: "center"
+          }}>
             <Avatar
               editable
               name="Edit Me"
               variant="lg"
               onLetterChange={(newName) => console.log("New name:", newName)}
             />
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" sx={{
+              color: "text.secondary"
+            }}>
               Letter Mode
             </Typography>
           </Stack>
-          <Stack spacing={1} alignItems="center">
+          <Stack spacing={1} sx={{
+            alignItems: "center"
+          }}>
             <Avatar
               editable
               type="image"
@@ -198,7 +236,9 @@ export default function AvatarDocs() {
                 console.log("New image selected:", file, url)
               }
             />
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" sx={{
+              color: "text.secondary"
+            }}>
               Image Mode
             </Typography>
           </Stack>

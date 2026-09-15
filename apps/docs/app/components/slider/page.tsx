@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
-import { Box } from "@mui/material";
-import { ComponentHeader } from "@docs/ComponentHeader";
-import { ComponentVariants } from "@docs/ComponentVariants";
 import { ComponentCode } from "@docs/ComponentCode";
+import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentProps } from "@docs/ComponentProps";
-import { Slider, RangeSlider } from "vortex-ui";
+import { ComponentVariants } from "@docs/ComponentVariants";
+import { Box } from "@mui/material";
+import { useState } from "react";
+import { RangeSlider, Slider } from "vortex-ui";
 
 const sliderPropsList = [
   {
@@ -205,10 +205,18 @@ function Example() {
 }`}
       />
 
-      <Box mt={6}>
+      <Box
+        sx={{
+          mt: 6,
+        }}
+      >
         <ComponentProps propsList={sliderPropsList} title="Slider Props" />
       </Box>
-      <Box mt={6}>
+      <Box
+        sx={{
+          mt: 6,
+        }}
+      >
         <ComponentProps
           propsList={rangeSliderPropsList}
           title="RangeSlider Props"

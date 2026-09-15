@@ -92,12 +92,13 @@ export const Slider = ({
       {label && (
         <Typography
           variant="caption"
-          fontSize={13}
-          fontWeight={400}
-          color="#374151"
-          mb={1}
-          display="block"
-        >
+          sx={{
+            fontSize: 13,
+            fontWeight: 400,
+            color: "#374151",
+            mb: 1,
+            display: "block"
+          }}>
           {label}
         </Typography>
       )}
@@ -117,12 +118,13 @@ export const Slider = ({
 
       {/* Current value displayed below */}
       <Typography
-        fontSize={13}
-        fontWeight={500}
-        color="#4F6FFA"
-        textAlign="center"
-        mt={-6}
-      >
+        sx={{
+          fontSize: 13,
+          fontWeight: 500,
+          color: "#4F6FFA",
+          textAlign: "center",
+          mt: -6
+        }}>
         {value}
         {valueSuffix}
       </Typography>

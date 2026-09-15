@@ -84,10 +84,14 @@ export function Footer() {
           mx: "auto",
         }}
       >
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={{
+          color: "text.secondary"
+        }}>
           VortexUI by <b>Huge IT Solutions</b>
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={{
+          color: "text.secondary"
+        }}>
           &copy; {new Date().getFullYear()} All rights reserved.
         </Typography>
       </Box>

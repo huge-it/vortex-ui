@@ -11,21 +11,22 @@ export function ComponentHeader({ title, description }: ComponentHeaderProps) {
     <>
       <Typography
         variant="h1"
-        color="text.primary"
         sx={{
+          color: "text.primary",
           fontWeight: 800,
           mb: 1,
           fontSize: '2.5rem',
-          letterSpacing: '-0.03em',
-        }}
-      >
+          letterSpacing: '-0.03em'
+        }}>
         {title}
       </Typography>
       <Typography
         variant="body1"
-        color="text.secondary"
-        sx={{ mb: 4, fontSize: '1.1rem' }}
-      >
+        sx={{
+          color: "text.secondary",
+          mb: 4,
+          fontSize: '1.1rem'
+        }}>
         {description}
       </Typography>
     </>

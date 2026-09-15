@@ -1,15 +1,14 @@
 "use client";
 
-import React from "react";
-import { Box, Divider, Typography } from "@mui/material";
 import { ComponentCode } from "@comp/docs/ComponentCode";
+import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentInstallation } from "@comp/docs/ComponentInstallation";
 import { ComponentPreview } from "@comp/docs/ComponentPreview";
-import { ComponentHeader } from "@comp/docs/ComponentHeader";
 import { ComponentProps } from "@comp/docs/ComponentProps";
 import { ComponentStates } from "@comp/docs/ComponentStates";
 import { ComponentVariants } from "@comp/docs/ComponentVariants";
 import { Add, ArrowForward } from "@mui/icons-material";
+import { Box, Divider, Typography } from "@mui/material";
 import { Link } from "vortex-ui";
 
 const linkPropsList = [
@@ -72,8 +71,12 @@ export default function LinkDocs() {
 
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, mb: 2, fontSize: "1.25rem" }}
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 2,
+          fontSize: "1.25rem",
+        }}
       >
         Preview
       </Typography>

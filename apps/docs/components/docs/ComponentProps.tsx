@@ -27,12 +27,20 @@ export function ComponentProps({
   title = "Props / API",
 }: ComponentPropsProps) {
   return (
-    <Box display="flex" flexDirection="column" gap={2} mb={4}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        mb: 4
+      }}>
       <Typography
         variant="h5"
-        color="text.secondary"
-        sx={{ fontWeight: 600, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          fontSize: "1.25rem"
+        }}>
         {title}
       </Typography>
       <TableContainer

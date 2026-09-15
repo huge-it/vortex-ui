@@ -55,10 +55,17 @@ export default function TooltipDocs() {
 
       <Stack spacing={6} sx={{ mt: 4 }}>
         <Box>
-          <Typography variant="h5" color="text.primary" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{
+            color: "text.primary"
+          }}>
             Basic Tooltip
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2
+            }}>
             Hover over the button to see the tooltip.
           </Typography>
           <Box
@@ -80,10 +87,17 @@ export default function TooltipDocs() {
         </Box>
 
         <Box>
-          <Typography variant="h5" color="text.primary" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{
+            color: "text.primary"
+          }}>
             Custom Colors
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mb: 2
+            }}>
             You can customize the tooltip background and text colors.
           </Typography>
           <Box

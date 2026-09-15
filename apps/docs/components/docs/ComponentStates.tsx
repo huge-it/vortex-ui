@@ -16,22 +16,31 @@ export function ComponentStates({
   containerSx,
 }: ComponentStatesProps) {
   return (
-    <Box display="flex" flexDirection="column" gap={2} mb={4}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        mb: 4
+      }}>
       <Typography
-        color="text.secondary"
         variant="h5"
-        sx={{ fontWeight: 600, mb: 1, fontSize: "1.25rem" }}
-      >
+        sx={{
+          color: "text.secondary",
+          fontWeight: 600,
+          mb: 1,
+          fontSize: "1.25rem"
+        }}>
         States
       </Typography>
       <Box
         className="toc-ignore"
-        display={display}
-        gap={3}
-        flexWrap={display === "flex" ? "wrap" : undefined}
-        alignItems={display === "flex" ? "start" : undefined}
-        justifyContent={display === "flex" ? "center" : undefined}
         sx={{
+          display: display,
+          gap: 3,
+          flexWrap: display === "flex" ? "wrap" : undefined,
+          alignItems: display === "flex" ? "start" : undefined,
+          justifyContent: display === "flex" ? "center" : undefined,
           p: 3,
           border: "1px solid",
           borderColor: "divider",
@@ -40,23 +49,33 @@ export function ComponentStates({
           minWidth: "120px",
           width: "100%",
           height: "100%",
-          ...containerSx,
-        }}
-      >
+          ...containerSx
+        }}>
         {states.map((s, index) => (
           <React.Fragment key={s.name}>
             {index > 0 && display !== "grid" && <Divider orientation="vertical" flexItem />}
-            <Box display="flex" gap={1} flexDirection="column">
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                flexDirection: "column"
+              }}>
               {s.name && (
                 <Typography
                   variant="caption"
-                  color="text.secondary"
-                  sx={{ fontWeight: 500 }}
-                >
+                  sx={{
+                    color: "text.secondary",
+                    fontWeight: 500
+                  }}>
                   {s.name}
                 </Typography>
               )}
-              <Box display="flex" alignItems="center" justifyContent="center">
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
                 {s.element}
               </Box>
             </Box>

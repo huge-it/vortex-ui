@@ -53,7 +53,9 @@ const DrawerWithState = (args: any) => {
             borderRadius: 2,
           }}
         >
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" sx={{
+            color: "text.secondary"
+          }}>
             Custom drawer content goes here.
           </Typography>
         </Box>

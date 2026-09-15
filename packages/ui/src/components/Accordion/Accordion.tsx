@@ -77,10 +77,11 @@ const AccordionPanel = ({
       <AccordionSummary>
         <Typography
           component="span"
-          fontWeight={600}
-          fontSize="14px"
-          color="text.primary"
-        >
+          sx={{
+            fontWeight: 600,
+            fontSize: "14px",
+            color: "text.primary"
+          }}>
           {title} {count !== undefined && `(${count})`}
         </Typography>
       </AccordionSummary>
@@ -94,10 +95,18 @@ const AccordionPanel = ({
                 return null;
               return (
                 <Box key={idx} sx={{ display: "flex", gap: 1 }}>
-                  <Typography fontSize="13px" color="text.primary">
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      color: "text.primary"
+                    }}>
                     {idx + 1}.
                   </Typography>
-                  <Typography fontSize="13px" color="text.secondary">
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      color: "text.secondary"
+                    }}>
                     {term}
                   </Typography>
                 </Box>
