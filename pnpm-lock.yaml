@@ -81,10 +81,6 @@ importers:
       '@emotion/cache':
         specifier: ^11.11.0
         version: 11.14.0
-      dayjs:
-        specifier: ^1.11.23
-        version: 1.11.23
-    devDependencies:
       '@emotion/react':
         specifier: ^11.0.0
         version: 11.14.0(@types/react@19.2.18)(react@19.2.8)
@@ -97,6 +93,13 @@ importers:
       '@mui/material':
         specifier: ^6.0.0
         version: 6.5.0(@emotion/react@11.14.0(@types/react@19.2.18)(react@19.2.8))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.18)(react@19.2.8))(@types/react@19.2.18)(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@mui/material-nextjs':
+        specifier: ^6.0.0
+        version: 6.5.0(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.2.18)(react@19.2.8))(@types/react@19.2.18)(next@16.3.3(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+      dayjs:
+        specifier: ^1.11.23
+        version: 1.11.23
+    devDependencies:
       '@storybook/react':
         specifier: ^10.5.10
         version: 10.5.10(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.10(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))(typescript@5.9.3)
@@ -4375,6 +4378,16 @@ snapshots:
       '@babel/runtime': 7.29.7
       '@emotion/react': 11.14.0(@types/react@19.2.18)(react@19.2.8)
       next: 16.3.1(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react: 19.2.8
+    optionalDependencies:
+      '@emotion/cache': 11.14.0
+      '@types/react': 19.2.18
+
+  '@mui/material-nextjs@6.5.0(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.2.18)(react@19.2.8))(@types/react@19.2.18)(next@16.3.3(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      '@babel/runtime': 7.29.7
+      '@emotion/react': 11.14.0(@types/react@19.2.18)(react@19.2.8)
+      next: 16.3.3(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react: 19.2.8
     optionalDependencies:
       '@emotion/cache': 11.14.0

@@ -2,6 +2,64 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.18] - 2026-09-18
+
+### Changed
+
+- **Provider**: Merged `AppRouterCacheProvider` directly into `VortexUIProvider` to eliminate boilerplate code for Next.js App Router consumers.
+- **Dependencies**: Added `@mui/material-nextjs` as a standard dependency to automatically provide Next.js App Router compatibility.
+
+---
+
+## [0.1.17] - 2026-09-18
+
+### Changed
+
+- **Build/Publishing**: Version bump for testing NPM registry publication.
+
+---
+
+## [0.1.16] - 2026-09-18
+
+### Changed
+
+- **Build/Publishing**: Version bump for testing NPM registry publication.
+
+---
+
+## [0.1.15] - 2026-09-17
+
+### Changed
+
+- **Build/Publishing**: Configured the package for standard NPM public distribution.
+  - Corrected `main`, `module`, and `types` entry points to point to compiled `dist` files.
+  - Enabled TypeScript definition generation (`dts: true`) in `tsup`.
+  - Added Node.js `exports` mapping for modern ESModule resolution.
+  - Moved MUI (`@mui/material`, `@mui/icons-material`) and Emotion dependencies from `peerDependencies` to standard `dependencies` to automatically install icons and styles for consuming applications.
+- **Docs**: Rewrote the installation guide in both `HOW_TO_USE.md` and the documentation homepage to reflect the transition from Git Submodule installation to standard NPM package installation.
+
+### Fixed
+
+- **Bundling**: Fixed a major issue where `next` (Next.js internals) was accidentally being compiled and bundled into the UI distribution bundle, causing `dynamic require` errors (Turbopack) in consuming applications. `next` is now correctly externalized via `tsup.config.ts` and marked as a `peerDependency`.
+
+---
+
+## [0.1.14] - 2026-09-17
+
+### Changed
+
+- **Build/Publishing**: Version bump for NPM registry publication.
+
+---
+
+## [0.1.13] - 2026-09-17
+
+### Changed
+
+- **Build/Publishing**: Version bump for NPM registry publication.
+
+---
+
 ## [0.1.12] - 2026-09-15
 
 ### Changed

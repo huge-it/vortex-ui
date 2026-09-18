@@ -7,20 +7,109 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.18",
+    date: "September 18, 2026",
+    changes: [
+      {
+        type: "changed",
+        description:
+          "Provider: Merged AppRouterCacheProvider directly into VortexUIProvider to eliminate boilerplate code for Next.js App Router consumers.",
+      },
+      {
+        type: "changed",
+        description:
+          "Dependencies: Added @mui/material-nextjs as a standard dependency to automatically provide Next.js App Router compatibility.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.17",
+    date: "September 18, 2026",
+    changes: [
+      {
+        type: "changed",
+        description:
+          "Build/Publishing: Version bump for testing NPM registry publication.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.16",
+    date: "September 18, 2026",
+    changes: [
+      {
+        type: "changed",
+        description:
+          "Build/Publishing: Version bump for testing NPM registry publication.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.15",
+    date: "September 17, 2026",
+    changes: [
+      {
+        type: "changed",
+        description:
+          "Build/Publishing: Configured package for NPM public distribution (exports, module mapping, TypeScript definitions).",
+      },
+      {
+        type: "changed",
+        description:
+          "Dependencies: Moved MUI and Emotion to standard dependencies so they auto-install for consumers.",
+      },
+      {
+        type: "changed",
+        description:
+          "Docs: Rewrote the installation guide in both HOW_TO_USE.md and the documentation homepage to reflect the transition from Git Submodule installation to standard NPM package installation.",
+      },
+      {
+        type: "fixed",
+        description:
+          "Bundling: Prevented Next.js internal code from being bundled into the UI library, resolving dynamic require (Turbopack) errors.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.14",
+    date: "September 17, 2026",
+    changes: [
+      {
+        type: "changed",
+        description:
+          "Build/Publishing: Version bump for NPM registry publication.",
+      },
+    ],
+  },
+  {
+    version: "v0.1.13",
+    date: "September 17, 2026",
+    changes: [
+      {
+        type: "changed",
+        description:
+          "Build/Publishing: Version bump for NPM registry publication.",
+      },
+    ],
+  },
+  {
     version: "v0.1.12",
     date: "September 15, 2026",
     changes: [
       {
         type: "changed",
-        description: "Theme: Enabled CSS Variables in the MUI theme configuration to leverage MUI v6 performance improvements.",
+        description:
+          "Theme: Enabled CSS Variables in the MUI theme configuration to leverage MUI v6 performance improvements.",
       },
       {
         type: "changed",
-        description: "Dependencies: Verified and updated component compatibility with MUI v6.",
+        description:
+          "Dependencies: Verified and updated component compatibility with MUI v6.",
       },
       {
         type: "fixed",
-        description: "NumberField: Fixed a TypeScript compilation error by removing a duplicate width property in the sx prop.",
+        description:
+          "NumberField: Fixed a TypeScript compilation error by removing a duplicate width property in the sx prop.",
       },
     ],
   },
@@ -364,8 +453,9 @@ export default function ChangelogPage() {
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
-            mb: 4
-          }}>
+            mb: 4,
+          }}
+        >
           <Box>
             <Typography
               variant="h1"
@@ -373,18 +463,22 @@ export default function ChangelogPage() {
                 color: "text.primary",
                 fontWeight: 800,
                 fontSize: "2.5rem",
-                mb: 1
-              }}>
+                mb: 1,
+              }}
+            >
               Changelog
             </Typography>
-            <Typography variant="body1" sx={{
-              color: "text.secondary"
-            }}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "text.secondary",
+              }}
+            >
               All notable changes to VortexUI will be documented here.
             </Typography>
           </Box>
-          <Button variant="outlined" component={Link} href="/">
-            Back to Home
+          <Button variant="outlined" component={Link} href="/publication-log">
+            Publication log
           </Button>
         </Stack>
 
@@ -398,23 +492,26 @@ export default function ChangelogPage() {
                 spacing={2}
                 sx={{
                   alignItems: "baseline",
-                  mb: 3
-                }}>
+                  mb: 3,
+                }}
+              >
                 <Typography
                   variant="h2"
                   sx={{
                     color: "text.primary",
                     fontWeight: 700,
-                    fontSize: "1.75rem"
-                  }}>
+                    fontSize: "1.75rem",
+                  }}
+                >
                   {release.version}
                 </Typography>
                 <Typography
                   variant="body2"
                   sx={{
                     color: "text.secondary",
-                    fontWeight: 500
-                  }}>
+                    fontWeight: 500,
+                  }}
+                >
                   {release.date}
                 </Typography>
               </Stack>
@@ -428,7 +525,7 @@ export default function ChangelogPage() {
                       direction="row"
                       spacing={2}
                       sx={{
-                        alignItems: "flex-start"
+                        alignItems: "flex-start",
                       }}
                     >
                       <Chip
@@ -498,9 +595,14 @@ export default function ChangelogPage() {
         ].map(({ type, label }) => {
           const colors = getChipColor(type);
           return (
-            <Stack key={type} direction="row" spacing={1} sx={{
-              alignItems: "center"
-            }}>
+            <Stack
+              key={type}
+              direction="row"
+              spacing={1}
+              sx={{
+                alignItems: "center",
+              }}
+            >
               <Chip
                 label={type}
                 size="small"
