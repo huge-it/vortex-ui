@@ -24,6 +24,11 @@ export function Search() {
                 <SearchIcon />
               </InputAdornment>
             ),
+            endAdornment: (
+              <InputAdornment position="end" sx={{ color: 'text.disabled', fontSize: '11px', fontWeight: 600 }}>
+                <kbd style={{ fontFamily: "monospace", padding: "2px 6px", borderRadius: "4px", backgroundColor: "var(--mui-palette-action-hover)" }}>Ctrl K</kbd>
+              </InputAdornment>
+            ),
           },
         }}
         sx={{

@@ -7,6 +7,42 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.20",
+    date: "September 21, 2026",
+    changes: [
+      {
+        type: "added",
+        description:
+          "Docs: Added a comprehensive SearchModal for DocSearch, fully integrated with a Ctrl+K keyboard shortcut and dynamic theme mapping.",
+      },
+      {
+        type: "added",
+        description:
+          "Docs: Replaced the previous lightbulb icon with dynamic LightMode (sun) and DarkMode (moon) icons in the header.",
+      },
+      {
+        type: "changed",
+        description:
+          "Theme: Updated the global typography font family to Rubik.",
+      },
+      {
+        type: "changed",
+        description:
+          "Theme: Updated the primary theme palette color to a vibrant crimson (#E11D48).",
+      },
+      {
+        type: "fixed",
+        description:
+          "Tooltip: Synchronized the Tooltip's arrow color with the body background color using the slotProps.arrow configuration.",
+      },
+      {
+        type: "fixed",
+        description:
+          "Docs: Resolved several any type definitions and setState anti-patterns in SearchModal.tsx.",
+      },
+    ],
+  },
+  {
     version: "v0.1.19",
     date: "September 21, 2026",
     changes: [

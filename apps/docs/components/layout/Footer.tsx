@@ -5,6 +5,14 @@ import { Box, Typography, Link as MuiLink } from "@mui/material";
 import Link from "next/link";
 import { componentCategories } from "./SidebarCategories";
 
+interface ComponentCategory {
+  title: string;
+  items: {
+    name: string;
+    href: string;
+  }[];
+}
+
 export function Footer() {
   return (
     <Box
@@ -33,7 +41,7 @@ export function Footer() {
           mx: "auto",
         }}
       >
-        {componentCategories?.map((category: any) => (
+        {componentCategories?.map((category: ComponentCategory) => (
           <Box key={category.title}>
             <Typography
               variant="subtitle2"
@@ -47,7 +55,7 @@ export function Footer() {
                 .trim()}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-              {category.items.map((item: any) => (
+              {category.items.map((item) => (
                 <MuiLink
                   key={item.href}
                   component={Link}

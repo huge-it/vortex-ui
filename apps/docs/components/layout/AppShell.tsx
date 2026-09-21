@@ -1,11 +1,10 @@
 "use client";
 
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
-import { Footer } from "./Footer";
 import { TableOfContents } from "./TableOfContents";
 
 export function AppShell({ children }: { children: React.ReactNode }) {

@@ -287,9 +287,9 @@ const NavItem = ({ item, pathDirect, isMobileSidebarOpen }: NavItemProps) => {
                   {innerItem.length > 0 && (
                     <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
                       {isOpen ? (
-                        <KeyboardArrowUpIcon sx={{ fontSize: 16 }} />
+                        <KeyboardArrowUpIcon sx={{ fontSize: 16, color: isActive ? "primary.main" : "text.secondary" }} />
                       ) : (
-                        <KeyboardArrowDownIcon sx={{ fontSize: 16 }} />
+                        <KeyboardArrowDownIcon sx={{ fontSize: 16, color: isActive ? "primary.main" : "text.secondary" }} />
                       )}
                     </Box>
                   )}
@@ -569,7 +569,7 @@ export function Sidebar({
     ...rawCategories.map((cat, i) => ({
       id: `cat-${i}`,
       title: cat.title,
-      iconComponent: FolderIcon,
+      iconComponent: cat.icon || FolderIcon,
       innerItem: cat.items.map((item, j) => ({
         id: `item-${i}-${j}`,
         title: item.name,

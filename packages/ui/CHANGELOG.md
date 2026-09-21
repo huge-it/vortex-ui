@@ -2,6 +2,22 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.20] - 2026-09-21
+
+### Added
+- **Docs**: Added a comprehensive `SearchModal` mimicking MUI's Algolia DocSearch, fully integrated with a `Ctrl+K` keyboard shortcut and dynamic theme mapping.
+- **Docs**: Replaced the previous lightbulb icon with dynamic `LightMode` (sun) and `DarkMode` (moon) icons in the header.
+
+### Changed
+- **Theme**: Updated the global typography font family to `Rubik`.
+- **Theme**: Updated the primary theme palette color to a vibrant crimson (`#E11D48`).
+
+### Fixed
+- **Tooltip**: Synchronized the Tooltip's arrow color with the body background color using the `slotProps.arrow` configuration.
+- **Docs**: Resolved several `any` type definitions and `setState` anti-patterns in `SearchModal.tsx`.
+
+---
+
 ## [0.1.19] - 2026-09-21
 
 ### Fixed

@@ -1,14 +1,14 @@
 import { Box, PaletteMode } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Rubik } from "next/font/google";
 import { cookies } from "next/headers";
 import React from "react";
 import { VortexUIProvider } from "vortex-ui";
 import { AppShell } from "@comp/layout/AppShell";
 import "./globals.css";
 
-const inter = Inter({
+const rubik = Rubik({
   subsets: ["latin"],
   display: "swap",
 });
@@ -33,7 +33,7 @@ export default async function RootLayout({
     (cookieStore.get("vortex-ui-theme-mode")?.value as PaletteMode) || "light";
 
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={rubik.className}>
       <body>
         <AppRouterCacheProvider options={{ key: "vortexui", prepend: true }}>
           <VortexUIProvider disableCustomCache initialMode={themeMode}>

@@ -1,3 +1,15 @@
+import React from "react";
+import {
+  TouchAppOutlined,
+  KeyboardOutlined,
+  SpaceDashboardOutlined,
+  WebAssetOutlined,
+  RouteOutlined,
+  EventOutlined,
+  ToggleOnOutlined,
+  DonutLargeOutlined
+} from "@mui/icons-material";
+
 export interface SidebarItem {
   name: string;
   href: string;
@@ -5,12 +17,14 @@ export interface SidebarItem {
 
 export interface SidebarCategory {
   title: string;
+  icon?: React.ElementType;
   items: SidebarItem[];
 }
 
 export const componentCategories: SidebarCategory[] = [
   {
     title: "Buttons & Actions",
+    icon: TouchAppOutlined,
     items: [
       { name: "Button", href: "/components/button" },
       { name: "Button Group", href: "/components/button-group" },
@@ -20,6 +34,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Inputs & Text Fields",
+    icon: KeyboardOutlined,
     items: [
       { name: "AutoPopulate", href: "/components/auto-populate" },
       { name: "ChipInputField", href: "/components/chip-input" },
@@ -31,6 +46,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Layout & Data Display",
+    icon: SpaceDashboardOutlined,
     items: [
       { name: "Accordion", href: "/components/accordion" },
       { name: "Avatar", href: "/components/avatar" },
@@ -42,6 +58,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Modals, Drawers & Feedback",
+    icon: WebAssetOutlined,
     items: [
       { name: "Dialog", href: "/components/dialog" },
       { name: "Drawer", href: "/components/drawer" },
@@ -51,6 +68,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Navigation & Steppers",
+    icon: RouteOutlined,
     items: [
       { name: "Breadcrumbs", href: "/components/breadcrumbs" },
       { name: "History", href: "/components/history" },
@@ -60,6 +78,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Pickers & Uploads",
+    icon: EventOutlined,
     items: [
       { name: "Date Picker", href: "/components/date-picker" },
       { name: "DateRange Picker", href: "/components/date-range-picker" },
@@ -70,6 +89,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Selections & Toggles",
+    icon: ToggleOnOutlined,
     items: [
       { name: "Checkbox Group", href: "/components/checkbox-group" },
       { name: "Radio Group", href: "/components/radio-group" },
@@ -79,6 +99,7 @@ export const componentCategories: SidebarCategory[] = [
   },
   {
     title: "Status, Loading & Progress",
+    icon: DonutLargeOutlined,
     items: [
       { name: "Backdrop", href: "/components/backdrop" },
       { name: "Badge", href: "/components/badge" },
