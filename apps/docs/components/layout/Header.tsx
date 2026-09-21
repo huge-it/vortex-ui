@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LightbulbCircle } from "@mui/icons-material";
+import { LightbulbCircle, Menu as MenuIcon } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -30,7 +30,7 @@ const NAV_LINKS = [
   { label: "Changelog", href: "/changelog", matchPrefix: "/changelog" },
 ];
 
-export function Header() {
+export function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const { mode, toggleColorMode } = useColorMode();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
@@ -61,8 +61,17 @@ export function Header() {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 3
+            gap: 2
           }}>
+          <IconButton 
+            edge="start" 
+            color="inherit" 
+            aria-label="menu" 
+            onClick={onMenuClick}
+            sx={{ mr: 1 }}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography
             variant="h6"
             component="div"

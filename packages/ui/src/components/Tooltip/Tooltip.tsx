@@ -4,7 +4,7 @@ import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import { TooltipProps } from "./Tooltip.types";
 
-const CustomTooltip: React.FC<TooltipProps> = ({
+const VortexTooltip: React.FC<TooltipProps> = ({
   title,
   children,
   placement = "top",
@@ -17,7 +17,7 @@ const CustomTooltip: React.FC<TooltipProps> = ({
       title={title}
       placement={placement}
       arrow
-      componentsProps={{
+      slotProps={{
         tooltip: {
           sx: {
             bgcolor: bgColor,
@@ -28,11 +28,6 @@ const CustomTooltip: React.FC<TooltipProps> = ({
               "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)",
           },
         },
-        arrow: {
-          sx: {
-            color: bgColor,
-          },
-        },
       }}
       {...props}
     >
@@ -41,4 +36,4 @@ const CustomTooltip: React.FC<TooltipProps> = ({
   );
 };
 
-export { CustomTooltip as Tooltip };
+export { VortexTooltip as Tooltip };

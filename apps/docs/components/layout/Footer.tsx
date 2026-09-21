@@ -3,7 +3,7 @@
 import React from "react";
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 import Link from "next/link";
-import { componentCategories } from "./Sidebar";
+import { componentCategories } from "./SidebarCategories";
 
 export function Footer() {
   return (
@@ -33,7 +33,7 @@ export function Footer() {
           mx: "auto",
         }}
       >
-        {componentCategories?.map((category) => (
+        {componentCategories?.map((category: any) => (
           <Box key={category.title}>
             <Typography
               variant="subtitle2"
@@ -47,7 +47,7 @@ export function Footer() {
                 .trim()}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-              {category.items.map((item) => (
+              {category.items.map((item: any) => (
                 <MuiLink
                   key={item.href}
                   component={Link}

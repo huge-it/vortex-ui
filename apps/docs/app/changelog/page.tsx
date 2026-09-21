@@ -7,6 +7,22 @@ import { Button } from "vortex-ui";
 
 const CHANGELOG_DATA = [
   {
+    version: "v0.1.19",
+    date: "September 21, 2026",
+    changes: [
+      {
+        type: "fixed",
+        description:
+          "Tooltip: Upgraded internal componentsProps usage to MUI v5 standard slotProps and removed explicit custom arrow styling to fix an issue where the arrow position misaligned for all placements.",
+      },
+      {
+        type: "fixed",
+        description:
+          "Docs: Updated Tooltip component showcase docs to import Button, Box, Stack, and Typography directly from vortex-ui instead of @mui/material.",
+      },
+    ],
+  },
+  {
     version: "v0.1.18",
     date: "September 18, 2026",
     changes: [

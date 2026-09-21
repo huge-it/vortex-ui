@@ -3,8 +3,7 @@
 import { ComponentCode } from "@docs/ComponentCode";
 import { ComponentHeader } from "@docs/ComponentHeader";
 import { ComponentProps } from "@docs/ComponentProps";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { Tooltip } from "vortex-ui";
+import { Box, Button, Stack, Typography, Tooltip } from "vortex-ui";
 
 const tooltipPropsList = [
   {
@@ -55,17 +54,22 @@ export default function TooltipDocs() {
 
       <Stack spacing={6} sx={{ mt: 4 }}>
         <Box>
-          <Typography variant="h5" gutterBottom sx={{
-            color: "text.primary"
-          }}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{
+              color: "text.primary",
+            }}
+          >
             Basic Tooltip
           </Typography>
           <Typography
             variant="body2"
             sx={{
               color: "text.secondary",
-              mb: 2
-            }}>
+              mb: 2,
+            }}
+          >
             Hover over the button to see the tooltip.
           </Typography>
           <Box
@@ -81,23 +85,28 @@ export default function TooltipDocs() {
             }}
           >
             <Tooltip title="Delete">
-              <Button variant="contained">Hover me</Button>
+              <Button variant="filled">Hover me</Button>
             </Tooltip>
           </Box>
         </Box>
 
         <Box>
-          <Typography variant="h5" gutterBottom sx={{
-            color: "text.primary"
-          }}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{
+              color: "text.primary",
+            }}
+          >
             Custom Colors
           </Typography>
           <Typography
             variant="body2"
             sx={{
               color: "text.secondary",
-              mb: 2
-            }}>
+              mb: 2,
+            }}
+          >
             You can customize the tooltip background and text colors.
           </Typography>
           <Box

@@ -2,6 +2,15 @@
 
 All notable changes to the `vortex-ui` package will be documented in this file.
 
+## [0.1.19] - 2026-09-21
+
+### Fixed
+
+- **Tooltip**: Upgraded internal `componentsProps` usage to MUI v5 standard `slotProps` and removed explicit custom arrow styling (`sx: { color: bgColor }`) which was inadvertently causing a CSS bug that misaligned the arrow position for all placement orientations (e.g. arrow appearing on the right side of the tooltip bubble regardless of the `placement` prop).
+- **Docs**: Updated `Tooltip` component showcase docs to import `Button`, `Box`, `Stack`, and `Typography` directly from `vortex-ui` instead of `@mui/material`.
+
+---
+
 ## [0.1.18] - 2026-09-18
 
 ### Changed
