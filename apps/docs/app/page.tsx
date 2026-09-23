@@ -4,6 +4,7 @@ import { Box, Divider, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { Button } from "vortex-ui";
 import { ComponentCode } from "@comp/docs/ComponentCode";
+import { InlineCode } from "@comp/docs/InlineCode";
 
 export default function Page() {
   return (
@@ -93,7 +94,7 @@ export default function Page() {
           }}
         >
           This guide walks you through creating a brand new Next.js application
-          from scratch and installing the <code>vortex-ui</code> library via
+          from scratch and installing the <InlineCode>vortex-ui</InlineCode> library via
           NPM.
         </Typography>
 
@@ -162,7 +163,7 @@ export default function Page() {
             mb: 2,
           }}
         >
-          Install the <code>@hugeit/vortex-ui</code> library via your package
+          Install the <InlineCode>@hugeit/vortex-ui</InlineCode> library via your package
           manager. All required styling dependencies (like Material UI and
           Emotion) will be automatically installed for you!
         </Typography>
@@ -188,10 +189,10 @@ export default function Page() {
             mb: 2,
           }}
         >
-          <code>vortex-ui</code> requires a UI provider at the root of your
+          <InlineCode>vortex-ui</InlineCode> requires a UI provider at the root of your
           application to supply the necessary theme configuration to MUI
-          components. Open <code>src/app/layout.tsx</code> and wrap the{" "}
-          <code>children</code> with <code>VortexUIProvider</code>:
+          components. Open <InlineCode>src/app/layout.tsx</InlineCode> (or{" "}
+          <InlineCode>app/layout.tsx</InlineCode>) and wrap the <InlineCode>children</InlineCode> with <InlineCode>VortexUIProvider</InlineCode>:
         </Typography>
         <ComponentCode
           code={`import { VortexUIProvider } from "@hugeit/vortex-ui";\nimport "./globals.css";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        <VortexUIProvider>\n          {children}\n        </VortexUIProvider>\n      </body>\n    </html>\n  );\n}`}
@@ -219,7 +220,7 @@ export default function Page() {
         >
           Now you can import and use components anywhere in your application!
           Let`&apos;`s update the main page to show a button. Open{" "}
-          <code>src/app/page.tsx</code> and replace its contents with:
+          <InlineCode>src/app/page.tsx</InlineCode> and replace its contents with:
         </Typography>
         <ComponentCode
           code={`import { Button } from "@hugeit/vortex-ui";\n\nexport default function Home() {\n  return (\n    <main style={{ padding: "4rem", display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center" }}>\n      <h1>Welcome to Vortex</h1>\n      \n      <Button variant="filled">\n        Click Me\n      </Button>\n    </main>\n  );\n}`}
@@ -271,7 +272,7 @@ export default function Page() {
         >
           To pull the latest updates (bug fixes, new components, etc.) from the
           NPM registry, simply run the install command with the{" "}
-          <code>@latest</code> tag:
+          <InlineCode>@latest</InlineCode> tag:
         </Typography>
         <ComponentCode code={`npm install @hugeit/vortex-ui@latest`} />
 

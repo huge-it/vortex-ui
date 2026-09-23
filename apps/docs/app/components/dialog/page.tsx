@@ -5,7 +5,6 @@ import {
   Typography,
   Box,
   Divider,
-  Typography as MuiTypography,
 } from "@mui/material";
 import { Dialog, Button } from "vortex-ui";
 import { ComponentPreview } from "@docs/ComponentPreview";

@@ -59,10 +59,9 @@ const ToolbarButton = ({
   isFirst?: boolean;
 }) => {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const hoverBg = isDark ? alpha(theme.palette.primary.main, 0.16) : "#E8EEFF";
-  const activeBg = isDark ? alpha(theme.palette.primary.main, 0.24) : "#DAE3FF";
-  const borderColor = theme.palette.divider || "#D3D6E2";
+  const hoverBg = theme.palette.primary.lightHover || alpha(theme.palette.primary.main, 0.08);
+  const activeBg = alpha(theme.palette.primary.main, 0.16);
+  const borderColor = theme.palette.divider;
 
   return (
     <Tooltip title={label} placement="top">
@@ -120,7 +119,6 @@ const GroupsDropdown = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   useOutsideClick([dropdownRef, anchorRef], onClose);
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
 
   const options = [
     { value: "compact" as const, label: "Compact", Icon: ViewCompactIcon },
@@ -128,10 +126,10 @@ const GroupsDropdown = ({
   ];
 
   const bgColor = theme.palette.background.paper;
-  const borderColor = theme.palette.divider || "#D6DEEA";
-  const hoverBg = isDark ? alpha(theme.palette.primary.main, 0.16) : "#F0F4FF";
-  const selectedColor = theme.palette.primary.main || "#4772FF";
-  const textColor = theme.palette.text.primary || "#313952";
+  const borderColor = theme.palette.divider;
+  const hoverBg = theme.palette.primary.lightHover || alpha(theme.palette.primary.main, 0.08);
+  const selectedColor = theme.palette.primary.main;
+  const textColor = theme.palette.text.primary;
 
   return (
     <Box
@@ -217,12 +215,11 @@ const ColumnDropdown = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   useOutsideClick([dropdownRef, anchorRef], onClose);
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
 
   const bgColor = theme.palette.background.paper;
-  const borderColor = theme.palette.divider || "#D6DEEA";
-  const hoverBg = isDark ? alpha(theme.palette.primary.main, 0.16) : "#F0F5FF";
-  const textColor = theme.palette.text.primary || "#313952";
+  const borderColor = theme.palette.divider;
+  const hoverBg = theme.palette.primary.lightHover || alpha(theme.palette.primary.main, 0.08);
+  const textColor = theme.palette.text.primary;
   const headerColor = theme.palette.text.secondary;
 
   return (
@@ -326,11 +323,8 @@ export const TableToolbar: React.FC<TableToolbarProps> = ({
   const pinBtnRef = useRef<HTMLDivElement>(null);
 
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const containerBg = isDark
-    ? alpha(theme.palette.background.paper, 0.4)
-    : "#F7F7FA";
-  const borderColor = theme.palette.divider || "#D3D6E2";
+  const containerBg = theme.palette.background.paper;
+  const borderColor = theme.palette.divider;
 
   const handleToggleVisibility = (colId: string | number) => {
     const isVisible = visibleColumns.includes(colId);

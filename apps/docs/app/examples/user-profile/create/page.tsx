@@ -41,7 +41,8 @@ export default function CreateProfileExample() {
       ]);
     }
   };
-
+  console.log("avatarUrl", avatarUrl);
+  console.log("avatarFiles", avatarFiles);
   return (
     <Box sx={{ maxWidth: 800, margin: "0 auto", py: 4 }}>
       <Typography
@@ -49,15 +50,17 @@ export default function CreateProfileExample() {
         sx={{
           color: "text.primary",
           fontWeight: 700,
-          mb: 1
-        }}>
+          mb: 1,
+        }}
+      >
         Create User Profile
       </Typography>
       <Typography
         sx={{
           color: "text.secondary",
-          mb: 4
-        }}>
+          mb: 4,
+        }}
+      >
         Enter the details for the new team member.
       </Typography>
 
@@ -68,8 +71,9 @@ export default function CreateProfileExample() {
             flexDirection: "column",
             alignItems: "center",
             gap: 1.5,
-            mb: 4
-          }}>
+            mb: 4,
+          }}
+        >
           <Box sx={{ position: "relative", display: "inline-block" }}>
             <Avatar
               type="image"
@@ -133,9 +137,12 @@ export default function CreateProfileExample() {
               Remove Photo
             </Button>
           ) : (
-            <Typography variant="caption" sx={{
-              color: "text.secondary"
-            }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "text.secondary",
+              }}
+            >
               Click avatar or camera icon to upload photo
             </Typography>
           )}
@@ -199,8 +206,9 @@ export default function CreateProfileExample() {
               sx={{
                 color: "text.primary",
                 fontWeight: 600,
-                mb: 1
-              }}>
+                mb: 1,
+              }}
+            >
               Core Skills
             </Typography>
             <CheckboxGroup
@@ -222,8 +230,9 @@ export default function CreateProfileExample() {
               display: "flex",
               justifyContent: "flex-end",
               gap: 2,
-              mt: 2
-            }}>
+              mt: 2,
+            }}
+          >
             <Button variant="outlined" severity="info">
               Cancel
             </Button>

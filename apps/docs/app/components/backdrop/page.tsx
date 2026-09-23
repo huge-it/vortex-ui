@@ -1,4 +1,5 @@
 "use client";
+import { InlineCode } from "@comp/docs/InlineCode";
 
 import React from "react";
 import { Box, Typography, Stack } from "@mui/material";
@@ -71,7 +72,7 @@ export default function BackdropDocs() {
               color: "text.secondary",
               mb: 2
             }}>
-            Using the <code>absolute</code> prop traps the backdrop inside its
+            Using the <InlineCode>absolute</InlineCode> prop traps the backdrop inside its
             parent container.
           </Typography>
           <Box
@@ -109,7 +110,7 @@ export default function BackdropDocs() {
               mb: 2
             }}>
             You can customize the color of the spinner using the{" "}
-            <code>color</code> prop.
+            <InlineCode>color</InlineCode> prop.
           </Typography>
           <Box
             sx={{
@@ -144,7 +145,7 @@ export default function BackdropDocs() {
               mb: 2
             }}>
             You can customize the size of the loading spinner using the{" "}
-            <code>size</code> prop.
+            <InlineCode>size</InlineCode> prop.
           </Typography>
 
           <Box

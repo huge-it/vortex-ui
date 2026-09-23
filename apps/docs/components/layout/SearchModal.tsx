@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 
 import {
   componentCategories,
@@ -548,10 +548,13 @@ export const SearchModal = ({
     [filteredSections],
   );
 
-  const navigate = (path: string) => {
-    router.push(path);
-    onClose();
-  };
+  const navigate = useCallback(
+    (path: string) => {
+      router.push(path);
+      onClose();
+    },
+    [router, onClose]
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -577,7 +580,7 @@ export const SearchModal = ({
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, selectedIndex, flatItems]);
+  }, [open, selectedIndex, flatItems, navigate, onClose]);
 
   useEffect(() => {
     if (!open) return;

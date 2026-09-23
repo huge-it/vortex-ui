@@ -1,4 +1,4 @@
-import { Box, PaletteMode } from "@mui/material";
+import { PaletteMode } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Metadata, Viewport } from "next";
 import { Rubik } from "next/font/google";

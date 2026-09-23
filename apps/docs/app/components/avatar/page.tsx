@@ -1,4 +1,5 @@
 "use client";
+import { InlineCode } from "@comp/docs/InlineCode";
 
 import { ComponentCode } from "@docs/ComponentCode";
 import { ComponentHeader } from "@docs/ComponentHeader";
@@ -119,7 +120,7 @@ export default function AvatarDocs() {
         }}
       >
         By default, the Avatar renders in letter mode, extracting the first
-        character of the <code>name</code> prop.
+        character of the <InlineCode>name</InlineCode> prop.
       </Typography>
       <ComponentPreview>
         <Stack
@@ -162,7 +163,7 @@ export default function AvatarDocs() {
           mb: 2,
         }}
       >
-        Set <code>type=&ldquo;image&ldquo;</code> and provide a <code>src</code>
+        Set <InlineCode>type=&ldquo;image&ldquo;</InlineCode> and provide a <InlineCode>src</InlineCode>
         . If the image fails to load, it will fallback to a default icon.
       </Typography>
       <ComponentPreview>
@@ -217,7 +218,7 @@ export default function AvatarDocs() {
           mb: 2,
         }}
       >
-        Setting <code>editable=true</code> allows users to click the avatar to
+        Setting <InlineCode>editable=true</InlineCode> allows users to click the avatar to
         change it. In letter mode, it opens a popover to change the name. In
         image mode, it opens a file picker.
       </Typography>

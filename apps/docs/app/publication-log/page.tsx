@@ -1,4 +1,5 @@
 "use client";
+import { InlineCode } from "@comp/docs/InlineCode";
 
 import { Box, Divider, Stack, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import Link from "next/link";
@@ -28,21 +29,21 @@ export default function PublicationLogPage() {
         1. Why We Moved from Git Submodules to NPM
       </Typography>
       <Typography variant="body1" sx={{ color: "text.secondary", mb: 2, lineHeight: 1.7 }}>
-        Initially, <code>vortex-ui</code> was consumed by adding the entire <code>vortex-fe</code> repository as a Git submodule inside consuming applications. While this allowed for rapid prototyping, it presented significant scalability and performance issues. Moving to NPM standardizes the installation process, reduces the footprint in consuming applications, and adheres to modern JavaScript ecosystem best practices.
+        Initially, <InlineCode>vortex-ui</InlineCode> was consumed by adding the entire <InlineCode>vortex-fe</InlineCode> repository as a Git submodule inside consuming applications. While this allowed for rapid prototyping, it presented significant scalability and performance issues. Moving to NPM standardizes the installation process, reduces the footprint in consuming applications, and adheres to modern JavaScript ecosystem best practices.
       </Typography>
 
       <Typography variant="h5" sx={{ color: "text.primary", fontWeight: 600, mt: 4, mb: 1.5 }}>
         The Problem with Git Submodules
       </Typography>
       <Typography variant="body1" sx={{ color: "text.secondary", mb: 2, lineHeight: 1.7 }}>
-        When using a Git submodule, consuming projects are forced to clone the entire <code>vortex-fe</code> monorepo. This means consumers download the documentation site, storybooks, raw TypeScript files, and all development dependencies. This bloats the consuming repository and requires complex Workspace configurations (<code>pnpm-workspace.yaml</code>) just to link the UI package.
+        When using a Git submodule, consuming projects are forced to clone the entire <InlineCode>vortex-fe</InlineCode> monorepo. This means consumers download the documentation site, storybooks, raw TypeScript files, and all development dependencies. This bloats the consuming repository and requires complex Workspace configurations (<InlineCode>pnpm-workspace.yaml</InlineCode>) just to link the UI package.
       </Typography>
 
       <Typography variant="h5" sx={{ color: "text.primary", fontWeight: 600, mt: 4, mb: 1.5 }}>
         The NPM Solution
       </Typography>
       <Typography variant="body1" sx={{ color: "text.secondary", mb: 4, lineHeight: 1.7 }}>
-        By compiling the package with <code>tsup</code> and publishing it to NPM, consumers only download the compiled distribution files (<code>dist/index.js</code>, <code>dist/index.d.ts</code>). They do not clone the repo, they do not need workspaces, and they can install it via a single command: <code>npm install @hugeit/vortex-ui</code>.
+        By compiling the package with <InlineCode>tsup</InlineCode> and publishing it to NPM, consumers only download the compiled distribution files (<InlineCode>dist/index.js</InlineCode>, <InlineCode>dist/index.d.ts</InlineCode>). They do not clone the repo, they do not need workspaces, and they can install it via a single command: <InlineCode>npm install @hugeit/vortex-ui</InlineCode>.
       </Typography>
 
       <Divider sx={{ mb: 6, opacity: 0.5 }} />
@@ -64,15 +65,15 @@ export default function PublicationLogPage() {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell><strong>Plug-and-Play:</strong> Consumers just run <code>npm install @hugeit/vortex-ui</code>. No complex workspace configurations required.</TableCell>
+              <TableCell><strong>Plug-and-Play:</strong> Consumers just run <InlineCode>npm install @hugeit/vortex-ui</InlineCode>. No complex workspace configurations required.</TableCell>
               <TableCell><strong>Publishing Overhead:</strong> Maintainers must remember to bump the version and run the build/publish commands.</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell><strong>Tiny Footprint:</strong> Only the minified, compiled code (<code>dist/</code>) is downloaded, drastically reducing node_modules size.</TableCell>
+              <TableCell><strong>Tiny Footprint:</strong> Only the minified, compiled code (<InlineCode>dist/</InlineCode>) is downloaded, drastically reducing node_modules size.</TableCell>
               <TableCell><strong>Slower Local Dev:</strong> Testing changes across multiple repositories requires npm link or publishing beta versions.</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell><strong>Automatic Dependencies:</strong> Packages like <code>@mui/material</code> and <code>@emotion</code> are automatically installed.</TableCell>
+              <TableCell><strong>Automatic Dependencies:</strong> Packages like <InlineCode>@mui/material</InlineCode> and <InlineCode>@emotion</InlineCode> are automatically installed.</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
@@ -118,7 +119,7 @@ export default function PublicationLogPage() {
       </Typography>
       
       <Typography variant="body1" sx={{ color: "text.secondary", mb: 3 }}>
-        When you have added new components or fixed bugs in <code>vortex-ui</code>, you must publish a new version to the NPM registry so consumers can install the updates. Ensure you have an NPM account and are logged in via your terminal (<code>npm login</code>).
+        When you have added new components or fixed bugs in <InlineCode>vortex-ui</InlineCode>, you must publish a new version to the NPM registry so consumers can install the updates. Ensure you have an NPM account and are logged in via your terminal (<InlineCode>npm login</InlineCode>).
       </Typography>
 
       <Stack spacing={4}>
@@ -137,7 +138,7 @@ export default function PublicationLogPage() {
             Step 2: Bump the Version
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mb: 1.5 }}>
-            Open <code>packages/ui/package.json</code> and increment the <code>version</code> field. NPM will reject your publication with a 403 Forbidden error if you try to publish an existing version.
+            Open <InlineCode>packages/ui/package.json</InlineCode> and increment the <InlineCode>version</InlineCode> field. NPM will reject your publication with a 403 Forbidden error if you try to publish an existing version.
           </Typography>
         </Box>
 
@@ -146,7 +147,7 @@ export default function PublicationLogPage() {
             Step 3: Build the Distribution Files
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mb: 1.5 }}>
-            You must compile the raw React/TypeScript files into standard JavaScript before publishing. This uses <code>tsup</code> to generate the <code>dist/</code> folder.
+            You must compile the raw React/TypeScript files into standard JavaScript before publishing. This uses <InlineCode>tsup</InlineCode> to generate the <InlineCode>dist/</InlineCode> folder.
           </Typography>
           <ComponentCode code={`npm run build`} />
         </Box>
@@ -156,7 +157,7 @@ export default function PublicationLogPage() {
             Step 4: Publish the Package
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mb: 1.5 }}>
-            Finally, publish the package to the public registry. Note: if you have 2FA enabled, you must append <code>--otp=123456</code>.
+            Finally, publish the package to the public registry. Note: if you have 2FA enabled, you must append <InlineCode>--otp=123456</InlineCode>.
           </Typography>
           <ComponentCode code={`npm publish --access public`} />
         </Box>

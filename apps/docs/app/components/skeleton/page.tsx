@@ -1,4 +1,5 @@
 "use client";
+import { InlineCode } from "@comp/docs/InlineCode";
 
 import { ComponentCode } from "@docs/ComponentCode";
 import { ComponentHeader } from "@docs/ComponentHeader";
@@ -113,7 +114,7 @@ export default function SkeletonDocs() {
             }}
           >
             Used to represent images, containers, or other rectangular elements.
-            Use the <code>rounded</code> prop to easily apply rounded corners.
+            Use the <InlineCode>rounded</InlineCode> prop to easily apply rounded corners.
           </Typography>
           <Stack spacing={2}>
             <Skeleton variant="rectangular" width={210} height={118} />
@@ -213,7 +214,7 @@ export default function SkeletonDocs() {
             }}
           >
             Creates a tabular structure. You can customize the number of rows
-            and columns using the <code>rows</code> and <code>cols</code> props.
+            and columns using the <InlineCode>rows</InlineCode> and <InlineCode>cols</InlineCode> props.
           </Typography>
           <Box
             sx={{

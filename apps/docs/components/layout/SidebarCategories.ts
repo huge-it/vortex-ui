@@ -7,7 +7,7 @@ import {
   RouteOutlined,
   EventOutlined,
   ToggleOnOutlined,
-  DonutLargeOutlined
+  DonutLargeOutlined,
 } from "@mui/icons-material";
 
 export interface SidebarItem {
@@ -51,7 +51,7 @@ export const componentCategories: SidebarCategory[] = [
       { name: "Accordion", href: "/components/accordion" },
       { name: "Avatar", href: "/components/avatar" },
       { name: "Card", href: "/components/card" },
-      { name: "DataTable", href: "/components/table" },
+      { name: "Table", href: "/components/table" },
       { name: "Grid", href: "/components/grid" },
       { name: "Sheet", href: "/components/sheet" },
     ],

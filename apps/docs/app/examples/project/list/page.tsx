@@ -201,7 +201,7 @@ export default function ProjectListExample() {
       {
         id: 8,
         label: "Priority",
-        renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
+        renderCell: () => (
           <Typography sx={{
             fontSize: "13px"
           }}>High</Typography>
@@ -210,7 +210,7 @@ export default function ProjectListExample() {
       {
         id: 9,
         label: "Stage",
-        renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
+        renderCell: () => (
           <Typography
             sx={{
               fontSize: "13px",
@@ -346,7 +346,7 @@ export default function ProjectListExample() {
       {
         id: 8,
         label: "Priority",
-        renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
+        renderCell: () => (
           <Typography sx={{
             fontSize: "13px"
           }}>High</Typography>
@@ -355,7 +355,7 @@ export default function ProjectListExample() {
       {
         id: 9,
         label: "Stage",
-        renderCell: (item: (typeof DUMMY_PURCHASE_ORDERS)[0]) => (
+        renderCell: () => (
           <Typography
             sx={{
               fontSize: "13px",

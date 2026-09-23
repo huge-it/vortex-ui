@@ -1,4 +1,5 @@
 "use client";
+import { InlineCode } from "@comp/docs/InlineCode";
 
 import { ComponentCode } from "@docs/ComponentCode";
 import { ComponentHeader } from "@docs/ComponentHeader";
@@ -129,8 +130,8 @@ export default function BreadcrumbsDocs() {
           color: "text.secondary",
           mb: 2
         }}>
-        You can customize the separator by providing a <code>separator</code>{" "}
-        prop (e.g., <code>/</code> or <code>-</code>).
+        You can customize the separator by providing a <InlineCode>separator</InlineCode>{" "}
+        prop (e.g., <InlineCode>/</InlineCode> or <InlineCode>-</InlineCode>).
       </Typography>
       <ComponentPreview>
         <Stack spacing={2}>
@@ -190,7 +191,7 @@ export default function BreadcrumbsDocs() {
           color: "text.secondary",
           mb: 2
         }}>
-        Use the <code>maxItems</code> prop to automatically collapse
+        Use the <InlineCode>maxItems</InlineCode> prop to automatically collapse
         intermediate breadcrumbs when the total exceeds the limit.
       </Typography>
       <ComponentPreview>
