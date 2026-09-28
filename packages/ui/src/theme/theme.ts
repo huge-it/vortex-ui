@@ -4,7 +4,6 @@ import { typography } from './typography';
 import { components } from './components';
 
 export const getTheme = (mode: PaletteMode) => createTheme({
-  cssVariables: true,
   palette: getPalette(mode),
   typography,
   components,

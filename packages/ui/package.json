@@ -34,7 +34,13 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": ">=14.0.0"
+    "next": ">=14.0.0",
+    "@emotion/cache": ">=11.0.0",
+    "@emotion/react": ">=11.0.0",
+    "@emotion/styled": ">=11.0.0",
+    "@mui/icons-material": ">=6.0.0",
+    "@mui/material": ">=6.0.0",
+    "@mui/material-nextjs": ">=6.0.0"
   },
   "devDependencies": {
     "@emotion/react": "^11.0.0",
@@ -57,12 +63,6 @@
     "package.json"
   ],
   "dependencies": {
-    "dayjs": "^1.11.23",
-    "@emotion/cache": "^11.11.0",
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
-    "@mui/icons-material": "^6.0.0",
-    "@mui/material": "^6.0.0",
-    "@mui/material-nextjs": "^6.0.0"
+    "dayjs": "^1.11.23"
   }
 }

@@ -11,6 +11,7 @@ import "./globals.css";
 const rubik = Rubik({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-rubik",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ export default async function RootLayout({
     (cookieStore.get("vortex-ui-theme-mode")?.value as PaletteMode) || "light";
 
   return (
-    <html lang="en" className={rubik.className}>
+    <html lang="en" className={`${rubik.className} ${rubik.variable}`}>
       <body>
         <AppRouterCacheProvider options={{ key: "vortexui", prepend: true }}>
           <VortexUIProvider disableCustomCache initialMode={themeMode}>
