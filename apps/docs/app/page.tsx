@@ -39,7 +39,7 @@ export default function Page() {
             mb: 4,
           }}
         >
-          VORTEX is Huge IT Solution&apos;s official framework for standardizing
+          VortexUI is Huge IT Solution&apos;s official framework for standardizing
           code architecture, UI/UX design, development practices, and review
           protocols across all teams and projects. Every line of code follows
           scalable, reviewable, and maintainable patterns.
@@ -154,7 +154,7 @@ export default function Page() {
             fontSize: "1.5rem",
           }}
         >
-          2. Install Vortex UI
+          2. Install VortexUI
         </Typography>
         <Typography
           variant="body1"

@@ -191,7 +191,7 @@ const CHANGELOG_DATA = [
       {
         type: "fix",
         description:
-          "ButtonGroup: Removed custom MUI variant/sx overrides on the internal TextField to properly inherit Vortex UI's native styling.",
+          "ButtonGroup: Removed custom MUI variant/sx overrides on the internal TextField to properly inherit VortexUI's native styling.",
       },
       {
         type: "feat",

@@ -479,7 +479,7 @@ export const DateRangePicker = React.forwardRef<
           disabled={disabled}
           InputProps={{
             readOnly: true,
-            placeholder: `${format} - ${format}`,
+            // placeholder: `${format} - ${format}`,
             endAdornment: (
               <InputAdornment position="end" sx={{ mt: 0 }}>
                 <CalendarMonthOutlined

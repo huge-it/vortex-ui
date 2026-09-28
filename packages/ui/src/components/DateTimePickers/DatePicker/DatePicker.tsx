@@ -82,7 +82,7 @@ export const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(({
         onClick={handleOpen}
         InputProps={{
           readOnly: true,
-          placeholder: format,
+          // placeholder: format,
           endAdornment: (
             <InputAdornment position="end" sx={{ mt: 0 }}>
               <CalendarMonthOutlined

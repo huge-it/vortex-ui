@@ -97,6 +97,21 @@ export function Footer() {
         }}>
           VortexUI by <b>Huge IT Solutions</b>
         </Typography>
+        <MuiLink
+          component={Link}
+          href="/blog"
+          sx={{
+            color: "text.secondary",
+            textDecoration: "none",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            "&:hover": {
+              color: "primary.main",
+            },
+          }}
+        >
+          Blog
+        </MuiLink>
         <Typography variant="body2" sx={{
           color: "text.secondary"
         }}>

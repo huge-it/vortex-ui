@@ -65,13 +65,13 @@ export default function CardDocs() {
         <Card variant="md" sx={{ maxWidth: 400 }}>
           <Typography
             variant="h6"
-            sx={{ mb: 1, color: "#1F2A40", fontWeight: 600 }}
+            sx={{ mb: 1, color: "text.primary", fontWeight: 600 }}
           >
             Account Overview
           </Typography>
           <Typography
             variant="body2"
-            sx={{ color: "#6B7280", lineHeight: 1.6 }}
+            sx={{ color: "text.secondary", lineHeight: 1.6 }}
           >
             Manage your personal settings, billing preferences, and security
             options from this dashboard.
@@ -89,7 +89,7 @@ export default function CardDocs() {
               <Card variant="none" sx={{ width: 300 }}>
                 <Typography
                   variant="body2"
-                  sx={{ color: "#1F2A40", fontWeight: 500 }}
+                  sx={{ color: "text.primary", fontWeight: 500 }}
                 >
                   No Shadow (variant=&quot;none&quot;)
                 </Typography>
@@ -102,7 +102,7 @@ export default function CardDocs() {
               <Card variant="sm" sx={{ width: 300 }}>
                 <Typography
                   variant="body2"
-                  sx={{ color: "#1F2A40", fontWeight: 500 }}
+                  sx={{ color: "text.primary", fontWeight: 500 }}
                 >
                   Small Shadow (variant=&quot;sm&quot;)
                 </Typography>
@@ -115,7 +115,7 @@ export default function CardDocs() {
               <Card variant="md" sx={{ width: 300 }}>
                 <Typography
                   variant="body2"
-                  sx={{ color: "#1F2A40", fontWeight: 500 }}
+                  sx={{ color: "text.primary", fontWeight: 500 }}
                 >
                   Medium Shadow (variant=&quot;md&quot;)
                 </Typography>
@@ -128,7 +128,7 @@ export default function CardDocs() {
               <Card variant="lg" sx={{ width: 300 }}>
                 <Typography
                   variant="body2"
-                  sx={{ color: "#1F2A40", fontWeight: 500 }}
+                  sx={{ color: "text.primary", fontWeight: 500 }}
                 >
                   Large Shadow (variant=&quot;lg&quot;)
                 </Typography>
@@ -141,7 +141,7 @@ export default function CardDocs() {
               <Card variant="xl" sx={{ width: 300 }}>
                 <Typography
                   variant="body2"
-                  sx={{ color: "#1F2A40", fontWeight: 500 }}
+                  sx={{ color: "text.primary", fontWeight: 500 }}
                 >
                   Extra Large Shadow (variant=&quot;xl&quot;)
                 </Typography>

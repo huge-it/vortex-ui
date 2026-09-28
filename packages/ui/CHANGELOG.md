@@ -5,14 +5,17 @@ All notable changes to the `vortex-ui` package will be documented in this file.
 ## [0.1.20] - 2026-09-21
 
 ### Added
+
 - **Docs**: Added a comprehensive `SearchModal` mimicking MUI's Algolia DocSearch, fully integrated with a `Ctrl+K` keyboard shortcut and dynamic theme mapping.
 - **Docs**: Replaced the previous lightbulb icon with dynamic `LightMode` (sun) and `DarkMode` (moon) icons in the header.
 
 ### Changed
+
 - **Theme**: Updated the global typography font family to `Rubik`.
 - **Theme**: Updated the primary theme palette color to a vibrant crimson (`#E11D48`).
 
 ### Fixed
+
 - **Tooltip**: Synchronized the Tooltip's arrow color with the body background color using the `slotProps.arrow` configuration.
 - **Docs**: Resolved several `any` type definitions and `setState` anti-patterns in `SearchModal.tsx`.
 
@@ -115,7 +118,7 @@ All notable changes to the `vortex-ui` package will be documented in this file.
 
 ### Changed
 
-- **ButtonGroup**: Removed custom MUI variant/sx overrides on the internal TextField to properly inherit Vortex UI's native styling.
+- **ButtonGroup**: Removed custom MUI variant/sx overrides on the internal TextField to properly inherit VortexUI's native styling.
 - **Sidebar (Docs)**: Alphabetized component categories and items, removed emojis, and updated styling (spacing & typography) to look more professional and visually match the standard frontend.
 - **Docs**: Fixed a typescript `any` type warning in the ButtonGroup example.
 
@@ -145,6 +148,7 @@ All notable changes to the `vortex-ui` package will be documented in this file.
 ---
 
 ## [0.1.7] - 2026-09-01
+
 ### Added
 
 - Added Service Worker scaffolding (`sw.js`) and offline support configuration.

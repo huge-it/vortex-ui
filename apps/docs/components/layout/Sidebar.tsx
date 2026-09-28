@@ -36,6 +36,7 @@ import {
   componentCategories,
   exampleCategories,
   foundationCategories,
+  blogCategories,
 } from "./SidebarCategories";
 import { Tooltip } from "vortex-ui";
 
@@ -556,7 +557,9 @@ export function Sidebar({
     ? exampleCategories
     : pathname?.startsWith("/foundations")
       ? foundationCategories
-      : componentCategories;
+      : pathname?.startsWith("/blog")
+        ? blogCategories
+        : componentCategories;
 
   const menuItems: NavMenuItem[] = [
     {

@@ -116,8 +116,11 @@ const TableNoData = ({
   </TableRow>
 );
 
-const getFrozenLeft = (colIndex: number, colWidths: number[]) => {
-  return colWidths.slice(0, colIndex).reduce((sum, w) => sum + w, 0);
+const getFrozenLeft = (colIndex: number, colWidths: (string | number)[]) => {
+  return colWidths.slice(0, colIndex).reduce((sum: number, w) => {
+    const num = typeof w === "number" ? w : parseInt(String(w).replace(/\D/g, ""), 10) || 150;
+    return sum + num;
+  }, 0);
 };
 
 const sortLabelSx = (uiColors: UIColors) => ({
@@ -160,7 +163,7 @@ function EnhancedTableHead({
   noCheckBox?: boolean;
   showSelection?: boolean;
   frozenCount: number;
-  colWidths: number[];
+  colWidths: (string | number)[];
   frozenColumnIds?: (string | number)[];
   onVisibilityChange?: (colId: string | number, visible: boolean) => void;
   onColumnReorder?: (colId: string | number, isPinning: boolean) => void;
@@ -259,13 +262,13 @@ function EnhancedTableHead({
                     onChange={onSelectAllClick}
                   />
 
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Box sx={{ flexGrow: 1 }}>
                     <SortOrLabel />
                   </Box>
                 </Box>
               ) : (
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Box sx={{ flexGrow: 1 }}>
                     <SortOrLabel />
                   </Box>
 

@@ -139,3 +139,17 @@ export const foundationCategories: SidebarCategory[] = [
     ],
   },
 ];
+
+export const blogCategories: SidebarCategory[] = [
+  {
+    title: "Blog Posts",
+    items: [
+      { name: "VortexUI with NPM", href: "/blog/welcome-to-vortexui-npm" },
+      { name: "Public, Private & Pricing", href: "/blog/npm-public-vs-private" },
+      { name: "Setup & Publishing", href: "/blog/how-to-publish-npm-packages" },
+      { name: "Licenses & Privacy", href: "/blog/npm-licenses-and-privacy" },
+      { name: "Peer vs Dependencies", href: "/blog/peer-vs-dependencies" },
+      { name: "Changelog & Migration", href: "/blog/changelog-and-migration" },
+    ],
+  },
+];

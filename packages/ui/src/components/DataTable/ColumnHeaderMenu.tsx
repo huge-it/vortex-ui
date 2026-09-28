@@ -1,20 +1,19 @@
 "use client";
-import React, { useState } from "react";
-import {
-  IconButton,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Checkbox,
-  Divider,
-  Box,
-} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import {
+  Box,
+  Checkbox,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import React, { useState } from "react";
 
 export interface ColumnHeaderMenuProps {
   colId: string | number;
@@ -95,7 +94,7 @@ export const ColumnHeaderMenu: React.FC<ColumnHeaderMenuProps> = ({
       >
         {onPin && !isFirstColumn && (
           <MenuItem onClick={handlePinToggle} sx={{ fontSize: "13px" }}>
-            <ListItemIcon>
+            <ListItemIcon sx={{width:'fit-content',minWidth:'auto',pr:1}}>
               {isPinned ? (
                 <PushPinIcon sx={{ fontSize: 16 }} color="primary" />
               ) : (
@@ -111,7 +110,7 @@ export const ColumnHeaderMenu: React.FC<ColumnHeaderMenuProps> = ({
 
         {onHide && (
           <MenuItem onClick={handleHide} sx={{ fontSize: "13px" }}>
-            <ListItemIcon>
+         <ListItemIcon sx={{width:'fit-content',minWidth:'auto',pr:1}}>
               <VisibilityOffOutlinedIcon sx={{ fontSize: 16 }} />
             </ListItemIcon>
             <ListItemText

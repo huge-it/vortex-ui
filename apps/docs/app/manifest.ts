@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Vortex Docs",
-    short_name: "Vortex",
-    description: "Vortex Documentation",
+    name: "VortexUI Docs",
+    short_name: "VortexUI",
+    description: "VortexUI Documentation",
     start_url: "/",
     display: "standalone",
     background_color: "#121212",

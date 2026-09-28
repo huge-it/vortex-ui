@@ -321,7 +321,7 @@ export const DateTimePicker = React.forwardRef<
           onClick={handleOpen}
           InputProps={{
             readOnly: true,
-            placeholder: `${format} HH:MM AM/PM`,
+            // placeholder: `${format} HH:MM AM/PM`,
             endAdornment: (
               <InputAdornment position="end" sx={{ mt: 0 }}>
                 <CalendarMonthOutlined

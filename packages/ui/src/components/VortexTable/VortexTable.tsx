@@ -227,6 +227,17 @@ export const VortexTable: React.FC<VortexTableProps> = ({
     });
   }, [data, filteredOrderedHead, RowActionComponent]);
 
+  const dynamicColWidths = useMemo(() => {
+    return filteredOrderedHead.map((h) => {
+      if (h.width) {
+        return typeof h.width === "number"
+          ? h.width
+          : parseInt(String(h.width).replace(/[^0-9]/g, ""), 10) || 150;
+      }
+      return h.label.length * 8 + 80;
+    });
+  }, [filteredOrderedHead]);
+
   return (
     <Box
       sx={{
@@ -362,11 +373,7 @@ export const VortexTable: React.FC<VortexTableProps> = ({
           frozenCount={frozenCount}
           maxHeight={maxHeight}
           stickyHeader={stickyHeader}
-          colWidths={
-            groupMode === "compact"
-              ? [300, 250, 200, 200, 200, 150]
-              : [180, 250, 200, 150, 150, 150, 120, 120, 150, 150, 150]
-          }
+          colWidths={dynamicColWidths}
           frozenColumnIds={[orderedTableHead[0]?.id, ...pinnedExtra]}
           onVisibilityChange={handleColumnVisibilityChange}
           onColumnReorder={handleColumnReorder}

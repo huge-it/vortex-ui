@@ -2,6 +2,7 @@
 
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -11,6 +12,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [drawerWidth, setDrawerWidth] = useState(260);
   const theme = useTheme();
+  const pathname = usePathname();
+  const isBlogPage = pathname?.startsWith("/blog");
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const toggleSidebar = () => {
@@ -36,11 +39,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           flexGrow: 1,
         }}
       >
-        <Sidebar
-          isMobileSidebarOpen={isMobileSidebarOpen}
-          onSidebarClose={() => setIsMobileSidebarOpen(false)}
-          drawerWidth={drawerWidth}
-        />
+          <Sidebar
+            isMobileSidebarOpen={isMobileSidebarOpen}
+            onSidebarClose={() => setIsMobileSidebarOpen(false)}
+            drawerWidth={drawerWidth}
+          />
         <Box
           component="main"
           sx={{

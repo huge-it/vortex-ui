@@ -550,129 +550,313 @@ export default function TableDocs() {
 
       <ComponentCode
         title="Usage"
-        code={`import { VortexTable } from "vortex-ui";
-import { useState, useMemo } from "react";
-import { Box, Typography, IconButton, Menu, MenuItem, Button } from "@mui/material";
+        code={`"use client";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  VortexTable,
+  FilterButton,
+  TableHeadData,
+  TableRowData,
+} from "@murali-dev/vortex-ui";
 
-// 1. Define column headers (compact view groups columns, detailed view expands them)
-const tableHeadCompact = [
-  { id: 1, label: "Supplier Info", value: "supplier_name" },
-  { id: 2, label: "Contact" },
-  { id: 3, label: "Amount", align: "right" },
-  { id: 4, label: "Status" },
+const statusOptions = [
+  { label: "Active", value: "active" },
+  { label: "Inactive", value: "inactive" },
+  { label: "Pending", value: "pending" },
 ];
 
-const tableHeadDetailed = [
-  { id: 1.1, label: "PO #", value: "purchase_order_num", width: "160px" },
-  { id: 1.2, label: "Supplier Name", value: "supplier_name" },
-  { id: 2.1, label: "Phone" },
-  { id: 2.2, label: "Email" },
-  { id: 3, label: "Total", value: "grand_total", align: "right" },
-  { id: 4, label: "Status" },
+const customers = [
+  { name: "Acme Corp", data_uniq_id: "CUST-001" },
+  { name: "Globex", data_uniq_id: "CUST-002" },
+  { name: "Soylent", data_uniq_id: "CUST-003" },
 ];
+const mockData = Array.from({ length: 40 }).map((_, i) => ({
+  id: i + 1,
+  data_uniq_id: crypto.randomUUID(),
+  po_num: \`PO-\${1000 + i + 1}\`,
+  opportunity: [
+    "Cloud Migration",
+    "Security Audit",
+    "ERP Implementation",
+    "IT Support",
+    "Network Upgrade",
+    "Software Licensing",
+  ][i % 6],
+  company: [
+    "Acme Corp",
+    "Globex",
+    "Soylent",
+    "Initech",
+    "Umbrella Corp",
+    "Stark Industries",
+  ][i % 6],
+  budget: Math.floor(Math.random() * 50000) + 2000,
+  status: ["active", "pending", "inactive"][i % 3],
+  assignee: ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"][i % 6],
+  date: \`2023-10-\${String((i % 28) + 1).padStart(2, "0")}\`,
+  priority: ["High", "Medium", "Low"][i % 3],
+  region: ["North America", "Europe", "Asia-Pacific", "Latin America"][i % 4],
+  department: ["IT", "Sales", "HR", "Finance", "Operations"][i % 5],
+  project_manager: ["Grace", "Heidi", "Ivan", "Judy", "Mallory"][i % 5],
+}));
 
-// 2. Build pre-rendered cell data (td_data_set pattern)
-function buildTableRows(data) {
-  return data.map((item, index) => {
-    const allCells = [
-      // Compact cells (id matches tableHeadCompact ids)
-      {
-        id: 1,
-        comp: (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+export default function SimpleTableExample() {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [order, setOrder] = useState<"asc" | "desc">("asc");
+  const [orderBy, setOrderBy] = useState<string>("opportunity");
+  const [selectedItems, setSelectedItems] = useState<(string | number)[]>([]);
+  const [limitEnd, setLimitEnd] = useState(15);
+  const [activeStatusFilter, setActiveStatusFilter] = useState<
+    (string | number)[]
+  >([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  const tableHeadCompact: TableHeadData[] = [
+    { id: 1, label: "Opportunity Info", value: "opportunity" },
+    {
+      id: 2,
+      label: "Company & Status",
+      filterOptions: customers.map((c) => ({ label: c.name, value: c.name })),
+    },
+    { id: 3, label: "Budget & Priority" },
+    { id: 4, label: "Team" },
+    { id: 5, label: "Location" },
+    { id: 6, label: "Date", value: "date" },
+  ];
+
+  const tableHeadDetailed: TableHeadData[] = [
+    { id: 1.1, label: "# PO", value: "po_num", width: "160px" },
+    { id: 1.2, label: "Opportunity Name", value: "opportunity" },
+    { id: 2.1, label: "Company", value: "company" },
+    { id: 2.2, label: "Status", value: "status" },
+    { id: 3.1, label: "Budget ($)", value: "budget", align: "right" },
+    { id: 3.2, label: "Priority", value: "priority" },
+    { id: 4.1, label: "Assignee", value: "assignee" },
+    { id: 4.2, label: "Project Manager", value: "project_manager" },
+    { id: 5.1, label: "Region", value: "region" },
+    { id: 5.2, label: "Department", value: "department" },
+    { id: 6, label: "Date", value: "date" },
+  ];
+
+  const filteredData = React.useMemo(() => {
+    // Basic pagination logic
+    const limit = Number(limitEnd);
+    const paginatedData = mockData.slice(
+      (pageNumber - 1) * limit,
+      pageNumber * limit,
+    );
+
+    const td_data_set: { id: number; data: { id: number; comp: React.ReactNode }[]; json: (typeof mockData[0])[] }[] = [];
+    paginatedData.forEach((item: typeof mockData[0], index: number) => {
+      const allCells = [
+        {
+          id: 1,
+          comp: (
             <Box>
-              <Typography fontSize="14px" fontWeight={500} color="#4772FF">
-                {item.supplier_name}
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                {item.opportunity}
               </Typography>
-              <Typography fontSize="14px" color="#6A759B">
-                {item.purchase_order_num}
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                PO: {item.po_num}
               </Typography>
             </Box>
-          </Box>
-        ),
-        actionIcon: (
-          <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-        ),
-      },
-      {
-        id: 2,
-        comp: (
-          <Box>
-            <Typography fontSize="14px">{item.phone}</Typography>
-            <Typography fontSize="14px">{item.email}</Typography>
-          </Box>
-        ),
-      },
-      {
-        id: 3,
-        align: "right",
-        comp: <Typography fontSize="14px" fontWeight={500}>{item.grand_total}</Typography>,
-      },
-      { id: 4, comp: <Typography fontSize="14px">{item.status_label}</Typography> },
+          ),
+        },
+        {
+          id: 2,
+          comp: (
+            <Box>
+              <Typography variant="body2">{item.company}</Typography>
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                Status: {item.status}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 3,
+          comp: (
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                \${item.budget?.toLocaleString()}
+              </Typography>
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                Priority: {item.priority}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 4,
+          comp: (
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                {item.project_manager}
+              </Typography>
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                Assignee: {item.assignee}
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 5,
+          comp: (
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                {item.region}
+              </Typography>
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                Dept: {item.department}
+              </Typography>
+            </Box>
+          ),
+        },
+        { id: 6, comp: item.date },
 
-      // Detailed cells (id matches tableHeadDetailed ids)
-      { 
-        id: 1.1, 
-        comp: (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Typography fontSize="14px">{item.purchase_order_num}</Typography>
-            <Typography fontSize="12px" color="#6A759B">
-              #REG-12345
+        // Detailed Cells
+        {
+          id: 1.1,
+          comp: (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="body2">{item.po_num}</Typography>
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                #REG-12345
+              </Typography>
+            </Box>
+          ),
+        },
+        {
+          id: 1.2,
+          comp: (
+            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+              {item.opportunity}
             </Typography>
-          </Box>
-        )
-      },
-      {
-        id: 1.2,
-        comp: <Typography fontSize="14px" fontWeight={500}>{item.supplier_name}</Typography>,
-        actionIcon: (
-          <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-        ),
-      },
-      { id: 2.1, comp: item.phone },
-      { id: 2.2, comp: item.email },
-    ];
+          ),
+        },
+        { id: 2.1, comp: item.company },
+        { id: 2.2, comp: item.status },
+        { id: 3.1, comp: item.budget?.toLocaleString() },
+        { id: 3.2, comp: item.priority },
+        { id: 4.1, comp: item.assignee },
+        { id: 4.2, comp: item.project_manager },
+        { id: 5.1, comp: item.region },
+        { id: 5.2, comp: item.department },
+      ];
 
-    return {
-      id: item.data_uniq_id,     // unique row identifier
-      data: allCells,             // array of pre-rendered cells
-      json: [item],              // original record (passed to RowActionComponent)
-    };
-  });
-}
+      td_data_set.push({
+        id: item.id || index,
+        data: allCells,
+        json: [item],
+      });
+    });
 
-// 3. Render the table
-function PurchaseOrderList() {
-  const [pageNumber, setPageNumber] = useState(1);
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("supplier_name");
-  const [selected, setSelected] = useState([]);
-  const [limitEnd, setLimitEnd] = useState(15);
+    return td_data_set;
+  }, [limitEnd, pageNumber]);
 
-  const tableData = useMemo(() => buildTableRows(apiData), [apiData]);
+  const filterComponent = (
+    <Box
+      sx={{
+        pt: 0.5,
+        p: 2,
+        display: "flex",
+        gap: 2,
+        justifyContent: "flex-end",
+      }}
+    >
+      <FilterButton
+        label="Status"
+        options={statusOptions}
+        selectedValues={activeStatusFilter}
+        onChange={(vals) => setActiveStatusFilter(vals)}
+        multiSelect={true}
+        buttonWidth="140px"
+      />
+    </Box>
+  );
+
+  const BulkActionComponent = () => (
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      sx={{ textTransform: "none" }}
+    >
+      Update Status
+    </Button>
+  );
+
+  const RowActionComponent = ({ row }: { row: TableRowData }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    return (
+      <>
+        <IconButton size="small" onClick={(e) => setAnchorEl(e.currentTarget)}>
+          <MoreVertIcon fontSize="small" />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={() => setAnchorEl(null)}
+        >
+          <MenuItem onClick={() => setAnchorEl(null)} sx={{ fontSize: 14 }}>
+            <EditIcon sx={{ fontSize: 18, mr: 1, color: "text.secondary" }} />
+            Edit
+          </MenuItem>
+          <MenuItem
+            onClick={() => setAnchorEl(null)}
+            sx={{ fontSize: 14, color: "error.main" }}
+          >
+            <DeleteIcon sx={{ fontSize: 18, mr: 1 }} />
+            Delete
+          </MenuItem>
+        </Menu>
+      </>
+    );
+  };
 
   return (
-    <VortexTable
-      data={tableData}
-      tableHeadCompact={tableHeadCompact}
-      tableHeadDetailed={tableHeadDetailed}
-      loading={false}
-      pageCount={4}
-      pageNumber={pageNumber}
-      onPageChange={(_, p) => setPageNumber(p)}
-      totalItems={40}
-      order={order}
-      orderBy={orderBy}
-      setOrderBy={setOrderBy}
-      setOrder={setOrder}
-      selected={selected}
-      setSelected={setSelected}
-      limitEnd={limitEnd}
-      onLimitChange={(e) => setLimitEnd(Number(e.target.value))}
-      maxHeight={500}
-      stickyHeader={true}
-    />
+    <Box sx={{ width: "100%", height: 500 }}>
+      <VortexTable
+        variant="simple"
+        data={filteredData}
+        tableHeadCompact={tableHeadCompact}
+        tableHeadDetailed={tableHeadDetailed}
+        loading={false}
+        pageCount={3}
+        pageNumber={pageNumber}
+        onPageChange={(_, p) => setPageNumber(p)}
+        totalItems={40}
+        order={order}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+        setOrder={setOrder}
+        selected={selectedItems}
+        setSelected={setSelectedItems}
+        setPageNumber={setPageNumber}
+        limitEnd={limitEnd}
+        onLimitChange={(e) => setLimitEnd(Number(e.target.value))}
+        maxHeight={500}
+        stickyHeader={true}
+        filterComponent={filterComponent}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        onResetFilters={() => setActiveStatusFilter([])}
+        filterBadgeVisible={activeStatusFilter.length > 0}
+        ActionComponent={BulkActionComponent}
+        RowActionComponent={RowActionComponent}
+      />
+    </Box>
   );
 }`}
       />
